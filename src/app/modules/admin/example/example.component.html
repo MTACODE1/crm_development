@@ -1,0 +1,26 @@
+<div class="flex flex-col flex-auto min-w-0">
+  <div class="flex-auto p-6 sm:p-10">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>BookKeeping Status.</th>
+          <th> VAT Status</th>
+          <th>Annual Accounts Status</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        <tr>
+          <td>
+            <button mat-raised-button [class]="bgColor"  (click)="changeBookStatus()">{{bookBtnName}}</button>
+          </td>
+          <td>
+            <button mat-raised-button [class]="vatbgColor" (click)="changeVatStatus()">{{vatStatus}}</button>
+          </td>
+          <td>
+            <button mat-raised-button [class]="annualbgColor" (click)="changeAnnualStatus()">{{annualStatus}}</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
