@@ -1,0 +1,91 @@
+{
+  "error_message": null,
+  "data": [
+    {
+      "id": 1,
+      "companyName": "Bespoke Alpha Ltd",
+      "customerName": "Komey Tetteh",
+      "package": "Unlimited",
+      "accountant": "RizwanKhan",
+      "bookKeeper": "Asad",
+      "accountsTeam": "AliEjaz",
+      "companyType": "Limited",
+      "lastDispo": "2020-05-01T16:13:28.682Z",
+      "lastEmail": "2020-05-01T16:13:28.682Z",
+      "lastSms": "2020-05-12T16:13:28.682Z",
+      "openOne": "2",
+      "openOff": "1",
+      "bookKeeping": "2020-05-01T16:13:28.682Z",
+      "bookkeepingWeek": "2020-05-01T16:13:28.682Z",
+      "last": "2022-02-01T16:13:28.682Z",
+      "unreconciled": 51,
+      "accountsWith": 2,
+      "vatRegistered": "no",
+      "vatStatus": [
+        { "id":1, "text":"Bookkeeping Stage" },
+        { "id":2,"status": "start", "text":"VAT Return Sent to Accountatnt" },
+        { "id":3,"status": "start", "text":"VAT Return Sent to Accountatnt" },
+        { "id":4,"status": "in-progress", "text":"VAT Reviewed by Accountatnt" },
+        { "id":5,"status": "in-progress", "text":"VAt Return sent to client" },
+        { "id":6,"status": "complete", "text":"VAt return confimed by client" },
+        { "id":6,"status": "complete", "text":"VAt return Failed" }
+      ],
+      "bookKeepingStatus": [
+        {
+          "id":1,
+          "text":"Information Requested"
+        },
+        {
+          "id":2,"status": "start",
+          "text":"Information Request sent to client"
+        },
+        {
+          "id":3,"status": "start",
+          "text":"Information received from client"
+        },
+        {
+          "id":4,"status": "start",
+          "text":"Queries Requested"
+        },
+        {
+          "id":5,"status": "in-progress",
+          "text":"Query request sent to client"
+        },
+        {
+          "id":6,"status": "in-progress",
+          "text":"Query Received by client"
+        },
+        {
+          "id":7,"status": "in-progress",
+          "text":"MR Received by Accountant"
+        },
+        {
+          "id":8,"status": "in-progress",
+          "text":"Level 1 MR completed"
+        },
+        { "id":9,"status": "in-progress", "text":"Level 2 MR completed" },
+        { "id": 10,"status": "in-progress",  "text": "Review completed" },
+        { "id": 11,"status": "complete",  "text": "Level 1 MR sent to client" },
+        { "id": 12, "status": "complete", "text": "Level 2 MR sent to client" },
+        { "id": 13, "status": "complete", "text": "Level 3 MR sent to client" }
+      ],
+      "nextVatStatus": "",
+      "vatQuarter": "1-4-7-10",
+      "lastVat": "5/3/2022",
+      "vat": "Standard",
+      "management": "1-4-7-10",
+      "lastManagement": "5/3/2022",
+      "lastType": "Type 2",
+      "accountsStatus1": "1. Filed 12/02/22",
+      "accountsStatus2": "1. Filed 12/02/22",
+      "chNextAccountsDate": "1. Filed 12/02/22",
+      "chConfirmatation": "7-May-22",
+      "number": 3,
+      "avgLast": "£30,000",
+      "avgLast1": "£250",
+      "clientBilling": "£149"
+    }
+  ],
+ 
+  "status": "ok"
+}

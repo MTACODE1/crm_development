@@ -1,83 +1,69 @@
-import { Component, OnInit } from '@angular/core';
-
-export interface PeriodicElement {
-  id: number;
-  info?: string;
-  stage?: string;
-  request?: string;
-}
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { UserService } from 'app/core/user/user.service';
+import { Subject, takeUntil } from 'rxjs';
+import { TableModel } from './../../../core/user/user.types';
 
 @Component({
-    selector     : 'example',
-    templateUrl  : './example.component.html',
-    styleUrls: ['./example.component.scss'],
+  selector : 'example',
+  templateUrl : './example.component.html',
+  styleUrls: ['./example.component.scss'],
 })
 
-export class ExampleComponent implements OnInit {
-  dataSource: PeriodicElement[] = [];
-  bookBtnCount: number = 0;
-  vatBtnCount: number = 0;
-  annualBtnCount: number = 0;
-  bookBtnName = 'Information Requested';
-  vatStatus = 'Bookkeeping Stage';
-  annualStatus = 'Information Request sent to Client';
-  bgColor: any;
-  vatbgColor: any;
-  annualbgColor: any;
+export class ExampleComponent implements OnInit, OnDestroy {
+  max = 0;
+  vatMax = 0;
+  displayedColumns: string[] = ['companyName', 'customerName', 'package', 'accountant','bookkeeper','accountsTeam','companyType', 'lastDispo','lastEmail',
+    'lastSms','openOne','openOff','bookKeepingStatus','unreconciled','last', 'accountsWith','vatRegistered', 'vatStatus', 'vatQuarter','lastVat','vat', 'payroll',
+    'management','lastManagement','lastType','accountsStatus1','accountsStatus2','chNextAccountsDate','chConfirmatation','number','avgLast','avgLast1','clientBilling'];
 
-  constructor() { }
+  public userTableList: TableModel[];
+
+  private readonly destroyer$: Subject<void> = new Subject();
+
+  constructor(private userService: UserService, private _fuseConfirmationService: FuseConfirmationService) { }
 
   ngOnInit(): void {
-    this.getBookStatus();
+    this.getTableDetails();
   }
 
-  private getBookStatus(): void {
-    this.dataSource = [
-      { id: 0, info: 'Information Requested', stage: 'Bookkeeping Stage', request: 'Information Request sent to Client' },
-      { id: 1, info: 'Information Request sent to client', stage: 'VAT Return Sent to Accountatnt', request: 'Query Request sent to client' },
-      { id: 2, info: 'Information received from client', stage: 'VAT reviewed by Accountatnt', request: 'Work in progress' },
-      { id: 3, info: 'Queries Requested', stage: 'VAt return sent to client', request: 'Accounts Reviews by Accountatnt' },
-      { id: 4, info: "Query request sent to client", stage: 'VAt return confimed by client', request: 'Review Complete' },
-      { id: 5, info: "Query Received by client", stage: 'VAt return Failed', request: 'Accounts sent to client' },
-      { id: 6, info: "MR Received by Accountant", request: 'Accounts Fail' },
-      { id: 7, info: "Level 1 MR completed" },
-      { id: 8, info: "Level 2 MR completed" },
-      { id: 9, info: "Level 3 MR completed" },
-      { id: 10, info: "Review completed" },
-      { id: 11, info: "Level 1 MR sent to client" },
-      { id: 12, info: "Level 2 MR sent to client" },
-      { id: 13, info: "Level 3 MR sent to client" }
-    ]
+  ngOnDestroy(): void {
+    this.destroyer$.next();
+    this.destroyer$.complete();
   }
 
-  public changeBookStatus(): void {
-    this.bookBtnCount = this.bookBtnCount + 1;
-    this.dataSource.forEach(element => {
-      if (element.id === this.bookBtnCount) {
-        this.bookBtnName = element.info;
-        this.bgColor = element.id !== 0 && element.id <= 4?'start':element.id != 4 && element.id <= 10?'in-progress':'complete'
-      }
+  private getTableDetails() {
+    this.userService.getUserTable().pipe(takeUntil(this.destroyer$))
+    .subscribe(res => {
+      this.userTableList = res['data'];
     });
   }
 
-  public changeVatStatus(): void {
-    this.vatBtnCount = this.vatBtnCount + 1;
-    this.dataSource.forEach(element => {
-      if (element.id === this.vatBtnCount) {
-        this.vatStatus = element.stage;
-        if (element.stage == undefined) this.vatBtnCount = 0, this.vatStatus = this.dataSource[0].stage;
-        this.vatbgColor = element.id !== 0 && element.id <= 2?'start':element.id != 2 && element.id <= 4?'in-progress':'complete'
-      }
-    });
+  public getNextStatus(data, i): void {
+    data=== 'book'?this.max = i + 1: this.vatMax = i + 1;
   }
 
-  public changeAnnualStatus(): void {
-    this.annualBtnCount = this.annualBtnCount + 1;
-    this.dataSource.forEach(element => {
-      if (element.id === this.annualBtnCount) {
-        this.annualStatus = element.request;
-        if (element.request == undefined) this.annualBtnCount = 0, this.annualStatus = this.dataSource[0].request;
-        this.annualbgColor = element.id !== 0 && element.id <= 5?'start':'complete'
+  private getPreviosStatus(key, i): void {
+    key === 'book'?this.max = i - 1: this.vatMax = i-1;
+  }
+
+  public openConfirmationDialog(key, value, statsuName): void {
+    const dialogRef = this._fuseConfirmationService.open(
+      {
+        title : 'Are you sure?',
+        message : `This will revert to the previous task: ${statsuName[value - 1].text}`,
+        dismissible: true,
+        actions:{
+          confirm :{
+            show : true,
+            label: 'Yes',
+            color: 'warn'
+          }
+        }
+      });
+    dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(result => {
+      if(result === 'confirmed') {
+        this.getPreviosStatus(key, value);
       }
     });
   }

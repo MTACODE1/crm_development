@@ -1,31 +1,30 @@
 :host ::ng-deep {
   table {
-    width: 100%;
-    box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024, 0 3px 14px 2px #0000001f;
-    thead, tr {
-      border-bottom: 1px solid #cbd5e1;
-    }
-    th {
-      height: 56px;
-    }
-    tbody {
-      td {
-        padding: 20px;
-      }
+    .mat-header-cell, .mat-cell {
+      padding: 20px;
+      text-align: center;
     }
   }
 }
 
 .mat-raised-button {
-background-color: #f44336 !important;
+  background-color: #f44336 !important;
+  color: white !important;
+  width: 195px;
+  font-size: 12px;
+  font-weight: normal;
+  box-shadow: none !important;
+  &.complete {
+    background-color: #198754 !important;
+  }
+  &.in-progress {
+    background-color: #ffc107 !important;
+  }
+  &.start {
+    background-color: #e57808  !important;
+  }
+}
 
-&.complete {
-  background-color: #198754 !important;
-}
-&.in-progress {
-  background-color: #ffc107 !important;
-}
-&.start {
-  background-color: #e57808  !important;
-}
+.example-container {
+  overflow: auto;
 }
