@@ -22,7 +22,7 @@ export interface TableModel
   lastSms: string;
   openOne: string;
   openOff: string;
-  bookKeeping: string;
+  frequency: string;
   bookkeepingWeek: string;
   last: string;
   unreconciled: number;
@@ -42,4 +42,11 @@ export interface TableModel
       status?:string,
     }
   ];
+  accountsStatus1:[
+    {
+      id:number,
+      text:string,
+      status?:string,
+    }
+  ]
 }
