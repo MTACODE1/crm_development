@@ -10,13 +10,13 @@
       "bookKeeper": "Asad",
       "accountsTeam": "AliEjaz",
       "companyType": "Limited",
-      "lastDispo": "2020-05-01T16:13:28.682Z",
-      "lastEmail": "2020-05-01T16:13:28.682Z",
+      "lastDispo": "2020-05-12T16:13:28.682Z",
+      "lastEmail": "2020-05-12T16:13:28.682Z",
       "lastSms": "2020-05-12T16:13:28.682Z",
       "openOne": "2",
       "openOff": "1",
-      "bookKeeping": "2020-05-01T16:13:28.682Z",
-      "bookkeepingWeek": "2020-05-01T16:13:28.682Z",
+      "frequency": "1-4-7-10",
+      "bookkeepingWeek": "2020-05-07T16:13:28.682Z",
       "last": "2022-02-01T16:13:28.682Z",
       "unreconciled": 51,
       "accountsWith": 2,
@@ -27,8 +27,8 @@
         { "id":3,"status": "start", "text":"VAT Return Sent to Accountatnt" },
         { "id":4,"status": "in-progress", "text":"VAT Reviewed by Accountatnt" },
         { "id":5,"status": "in-progress", "text":"VAt Return sent to client" },
-        { "id":6,"status": "complete", "text":"VAt return confimed by client" },
-        { "id":6,"status": "complete", "text":"VAt return Failed" }
+        { "id":6,"status": "complete", "text":"VAt Return confimed by client" },
+        { "id":7,"status": "complete", "text":"VAt Return Failed" }
       ],
       "bookKeepingStatus": [
         {
@@ -37,11 +37,11 @@
         },
         {
           "id":2,"status": "start",
-          "text":"Information Request sent to client"
+          "text":"Information Request sent to Client"
         },
         {
           "id":3,"status": "start",
-          "text":"Information received from client"
+          "text":"Information Received from Client"
         },
         {
           "id":4,"status": "start",
@@ -49,26 +49,19 @@
         },
         {
           "id":5,"status": "in-progress",
-          "text":"Query request sent to client"
+          "text":"Query Request sent to Client"
         },
-        {
-          "id":6,"status": "in-progress",
-          "text":"Query Received by client"
-        },
-        {
-          "id":7,"status": "in-progress",
-          "text":"MR Received by Accountant"
-        },
-        {
-          "id":8,"status": "in-progress",
-          "text":"Level 1 MR completed"
-        },
-        { "id":9,"status": "in-progress", "text":"Level 2 MR completed" },
-        { "id": 10,"status": "in-progress",  "text": "Review completed" },
-        { "id": 11,"status": "complete",  "text": "Level 1 MR sent to client" },
-        { "id": 12, "status": "complete", "text": "Level 2 MR sent to client" },
-        { "id": 13, "status": "complete", "text": "Level 3 MR sent to client" }
+        { "id":6,"status": "in-progress", "text":"Query Received by Client" },
+        { "id":7,"status": "in-progress", "text":"MR Reviewed by Accountant" },
+        { "id":8,"status": "in-progress", "text":"Level 1 MR Completed" },
+        { "id":9,"status": "in-progress", "text":"Level 2 MR Completed" },
+        { "id":10,"status": "in-progress", "text":"Level 3 MR Completed" },
+        { "id": 11,"status": "in-progress",  "text": "Review Completed" },
+        { "id": 12,"status": "complete",  "text": "Level 1 MR Sent to Client" },
+        { "id": 13, "status": "complete", "text": "Level 2 MR Sent to Client" },
+        { "id": 14, "status": "complete", "text": "Level 3 MR Sent to Client" }
       ],
+      "nextbookKeepingStatus":"",
       "nextVatStatus": "",
       "vatQuarter": "1-4-7-10",
       "lastVat": "5/3/2022",
@@ -76,9 +69,25 @@
       "management": "1-4-7-10",
       "lastManagement": "5/3/2022",
       "lastType": "Type 2",
-      "accountsStatus1": "1. Filed 12/02/22",
-      "accountsStatus2": "1. Filed 12/02/22",
-      "chNextAccountsDate": "1. Filed 12/02/22",
+      "accountsStatus1": [
+        { "id":1, "text":"Information Request sent to Client" },
+        { "id":2,"status": "start", "text":"Query Request sent to client" },
+        { "id":3,"status": "start", "text":"Work in progress" },
+        { "id":4,"status": "start", "text":"Accounts Reviews by Accountant" },
+        { "id":5,"status": "start", "text":"Review Complete" },
+        { "id":6,"status": "start", "text":"Accounts Sent to Client" },
+        { "id":7,"status": "complete", "text":"Accounts Failed" }
+      ],
+      "accountsStatus2": [
+        { "id":1, "text":"Information Request sent to Client" },
+        { "id":2,"status": "start", "text":"Query Request sent to client" },
+        { "id":3,"status": "start", "text":"Work in progress" },
+        { "id":4,"status": "start", "text":"Accounts Reviews by Accountant" },
+        { "id":5,"status": "start", "text":"Review Complete" },
+        { "id":6,"status": "start", "text":"Accounts Sent to Client" },
+        { "id":7,"status": "complete", "text":"Accounts Failed" }
+      ],
+      "chNextAccountsDate": "30/11/21",
       "chConfirmatation": "7-May-22",
       "number": 3,
       "avgLast": "£30,000",
