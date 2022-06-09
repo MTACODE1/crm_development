@@ -1,10 +1,24 @@
 :host ::ng-deep {
   table {
+    .mat-header-cell {
+      font-size: 14px;
+    }
+    .mat-cell{
+      font-size: 13px;
+    }
     .mat-header-cell, .mat-cell {
       padding: 20px;
       text-align: center;
-      min-width: 170px;
+      min-width: 140px;
+      &:first-child {
+        min-width: 170px;
+      }
+      
     }
+  }
+  svg {
+    width: 20px;
+    height: 20px;
   }
 }
 
@@ -24,8 +38,4 @@
   &.start {
     background-color: #e57808  !important;
   }
-}
-
-.example-container {
-  overflow: auto;
 }

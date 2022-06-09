@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { UserService } from 'app/core/user/user.service';
-import { Subject, takeUntil } from 'rxjs';
+import { filter, Subject, takeUntil } from 'rxjs';
 import { TableModel } from './../../../core/user/user.types';
-import * as moment from 'moment';
+import { OnbordingFormComponent } from './onbording-form/onbording-form.component';
 
 @Component({
   selector : 'example',
@@ -16,18 +17,24 @@ export class ExampleComponent implements OnInit, OnDestroy {
   vatMax = 0;
   accountMax = 0;
   accountNewMax = 0;
-  displayedColumns: string[] = ['companyName', 'customerName', 'package', 'accountant','bookkeeper','accountsTeam','companyType', 'lastDispo','lastEmail',
-    'lastSms','onboarding','openOne','openOff','frequency','bookkeepingWeek','bookKeepingStatus','nextbookKeepingStatus','unreconciled','last', 'accountsWith','vatRegistered', 'vatStatus', 
-    'nextVatStatus','vatQuarter','lastVat','vat', 'payroll', 'management','lastManagement','lastType','accountsStatus1','accountsStatus2','chNextAccountsDate',
-    'chConfirmatation','number','self1','self2','avgLast','avgLast1','clientBilling'];
+  displayedColumns: string[] = [];
 
   public userTableList: TableModel[];
+  public columSort = [ 
+    {name:'Company Name', value:'companyName'},
+    {name:'BookKeeping Status', value:'bookKeepingStatus'},
+    {name:'May VAT Status', value:'vatStatus'},
+    {name:'2021 Accounts Status', value:'accountsStatus1'},
+    {name:'2022 Accounts Status', value:'accountsStatus2'},
+  ]
 
   private readonly destroyer$: Subject<void> = new Subject();
 
-  constructor(private userService: UserService, private _fuseConfirmationService: FuseConfirmationService) { }
+  constructor(private userService: UserService, private _fuseConfirmationService: FuseConfirmationService,
+    public readonly dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.displayedColumns = this.userService.getColumns();
     this.getTableDetails();
   }
 
@@ -74,6 +81,26 @@ export class ExampleComponent implements OnInit, OnDestroy {
       if(result === 'confirmed') {
         this.getPreviosStatus(key, value);
       }
+    });
+  }
+
+  public radioChange(item): void {
+    this.displayedColumns = this.userService.getColumns();
+    const colIndex = this.displayedColumns.findIndex(col => col === item);
+    if (colIndex != -1) {
+      this.displayedColumns.splice(colIndex, 1);
+    }
+  }
+
+  public openOnboarding(): void {
+    const dialogRef = this.dialog.open(OnbordingFormComponent, {
+      width: '60vw',
+      data: { typeForm: 'edit' }
+    });
+
+    dialogRef.afterClosed().pipe(filter(s => !!s), takeUntil(this.destroyer$))
+      .subscribe(() => {
+      
     });
   }
 

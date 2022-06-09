@@ -1,0 +1,294 @@
+<h1 mat-dialog-tilte align="end">
+  <mat-icon mat-dialog-close svgIcon="heroicons_outline:x"></mat-icon>
+</h1>
+<mat-dialog-content>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+        <th >Onboarding</th>
+        <th >Completed</th>
+        <th >Date</th>
+        <th >User Completed</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr >
+        <td >Professional clearance received</td>
+        <td>
+          <label class="form-switch">
+            <input type="checkbox" (click)="statusChanged($event)">
+            <i></i>
+          </label>
+        </td>
+        <td ><input type="datetime" value="" id="time-holder1"></td>
+        <td ></td>
+    </tr>
+    <tr >
+        <td >64-8 sent</td>
+        <td > 
+          <label class="form-switch">
+            <input type="checkbox" >
+            <i></i>
+          </label>
+        </td>
+        <td ><input type="datetime" value="" id="time-holder2"></td>
+        <td ></td>
+    </tr>
+  
+    <tr>
+        <td >64-8 received</td>
+        <td > 
+          <label class="form-switch">
+            <input type="checkbox" >
+            <i></i>
+          </label>
+        </td>
+        <td ><input type="datetime" value="" id="time-holder3"></td>
+        <td ></td>
+    </tr>
+  
+    <tr>
+        <td >KYC completed</td>
+        <td > 
+          <label class="form-switch">
+            <input type="checkbox" >
+            <i></i>
+          </label>
+        </td>
+        <td ><input type="datetime" value="" id="time-holder4"></td>
+        <td ></td>
+    </tr>
+  
+    <tr>
+        <td >Bookkeeping strategy call completed</td>
+        <td > 
+          <label class="form-switch">
+            <input type="checkbox" >
+            <i></i>
+          </label>
+        </td>
+        <td ><input type="datetime" value="" id="time-holder5"></td>
+        <td ></td>
+    </tr>
+  
+    <tr>
+        <td >Welcome email sent</td>
+        <td > 
+          <label class="form-switch">
+            <input type="checkbox" >
+            <i></i>
+          </label>
+        </td>
+        <td ><input type="datetime" value="" id="time-holder6"></td>
+        <td></td>
+    </tr>
+  
+    <tr>
+        <td >Client provided expenses guide</td>
+        <td > 
+          <label class="form-switch">
+            <input type="checkbox" >
+            <i></i>
+          </label>
+        </td>
+        <td ><input type="datetime" value="" id="time-holder7"></td>
+        <td ></td>
+    </tr>
+  
+    <tr>
+        <td >Call back set to go through first management report</td>
+        <td > 
+          <label class="form-switch">
+            <input type="checkbox" >
+            <i></i>
+          </label>
+        </td>
+        <td ><input type="datetime" value="" id="time-holder8"></td>
+        <td ></td>
+    </tr>
+  
+    <tr>
+        <td >Cut off date for bookkeeping agreed</td>
+        <td > 
+          <label class="form-switch">
+            <input type="checkbox" >
+            <i></i>
+          </label>
+        </td>
+        <td ><input type="datetime" value="" id="time-holder9"></td>
+        <td ></td>
+    </tr>
+  
+    <tr style="text-align:left">
+      <th colspan="4">VAT</th>
+    </tr>
+  
+    <tr>
+      <td >VAT Certificate</td>
+      <td > 
+        <label class="form-switch">
+          <input type="checkbox" >
+          <i></i>
+        </label>
+      </td>
+      <td ><input type="datetime" value="" id="time-holder11"></td>
+      <td ></td>
+    </tr>
+  
+    <tr>
+        <td >VAT Gateway Received</td>
+        <td > 
+          <label class="form-switch">
+            <input type="checkbox" >
+            <i></i>
+          </label>
+        </td>
+        <td ><input type="datetime" value="" id="time-holder12"></td>
+        <td ></td>
+    </tr>
+  
+    <tr>
+        <td >Client Registered for VAT if applicable</td>
+        <td > 
+          <label class="form-switch">
+            <input type="checkbox" >
+            <i></i>
+          </label>
+        </td>
+        <td ><input type="datetime" value="" id="time-holder13"></td>
+        <td ></td>
+    </tr>
+    <tr style="text-align: left;">
+        <th colspan="4" >Software</th>
+    </tr>
+  
+    <tr>
+        <td >Login detail for current software received</td>
+        <td > 
+          <label class="form-switch">
+            <input type="checkbox" >
+            <i></i>
+          </label>
+        </td>
+        <td ><input type="datetime" value="" id="time-holder15"></td>
+        <td ></td>
+    </tr>
+  
+    <tr>
+        <td >Balances from current software imported to Xero</td>
+        <td > 
+          <label class="form-switch">
+            <input type="checkbox" >
+            <i></i>
+          </label>
+        </td>
+        <td ><input type="datetime" value="" id="time-holder16"></td>
+        <td ></td>
+    </tr>
+    <tr>
+        <td >If Xero, has license been transferred to us</td>
+        <td > 
+          <label class="form-switch">
+            <input type="checkbox" >
+            <i></i>
+          </label>
+        </td>
+        <td ><input type="datetime" value="" id="time-holder17"></td>
+        <td ></td>
+    </tr>
+    <tr>
+        <td >Login details for third party software received (EPOS) etc.</td>
+        <td > 
+          <label class="form-switch">
+            <input type="checkbox" >
+            <i></i>
+          </label>
+        </td>
+        <td ><input type="datetime" value="" id="time-holder18"></td>
+        <td ></td>
+    </tr>
+    <tr>
+        <td >Xero Setup</td>
+        <td > 
+          <label class="form-switch">
+            <input type="checkbox" >
+            <i></i>
+          </label>
+        </td>
+        <td ><input type="datetime" value="" id="time-holder19"></td>
+        <td ></td>
+    </tr>
+    <tr>
+        <td >Dext Setup</td>
+        <td > 
+          <label class="form-switch">
+            <input type="checkbox" >
+            <i></i>
+          </label>
+        </td>
+        <td ><input type="datetime" value="" id="time-holder20"></td>
+        <td ></td>
+    </tr>
+    <tr>
+        <td >Linked Xero and Dext</td>
+        <td > 
+          <label class="form-switch">
+            <input type="checkbox" >
+            <i></i>
+          </label>
+        </td>
+        <td ><input type="datetime" value="" id="time-holder21"></td>
+        <td ></td>
+    </tr>
+    <tr>
+        <td >Bank Feed Setup on Xero</td>
+        <td > 
+          <label class="form-switch">
+            <input type="checkbox" >
+            <i></i>
+          </label>
+        </td>
+        <td ><input type="datetime" value="" id="time-holder22"></td>
+        <td ></td>
+    </tr>
+    <tr>
+        <td >Client company logo on Xero</td>
+        <td > 
+          <label class="form-switch">
+            <input type="checkbox" >
+            <i></i>
+          </label>
+        </td>
+        <td ><input type="datetime" value="" id="time-holder23"></td>
+        <td ></td>
+    </tr>
+    <tr>
+        <td >Relevant company accounts added to chart of accounts</td>
+        <td > 
+          <label class="form-switch">
+            <input type="checkbox" >
+            <i></i>
+          </label>
+        </td>
+        <td ><input type="datetime" value="" id="time-holder24"></td>
+        <td ></td>
+    </tr>
+    <tr>
+        <td >Payment terms and info added to invoice template on Xero</td>
+        <td > 
+          <label class="form-switch">
+            <input type="checkbox" >
+            <i></i>
+          </label>
+        </td>
+        <td ><input type="datetime" value="" id="time-holder25"></td>
+        <td ></td>
+    </tr>
+    </tbody>
+  </table>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close color="warn">Close</button>
+  <button mat-raised-button color="primary" >Add Customer</button>
+</mat-dialog-actions>
