@@ -1,12 +1,12 @@
 
-<div class="close-icon">
+<div class="close-icon items-center">
   <mat-icon svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
 </div>
 
 <div class="content">
-	<p>Client Status Updated	</p>
+	<p class="font-bold">Client Status Updated	</p>
   <span >
-    Braine Hugh has updated bookkeeping statsu for <b>Bespoke Alpha Limited</b> to <b>Query Request Sent to Client</b>
+    Braine Hugh has updated {{PlanTypeEnum[this.data.plan]}} for <b>Bespoke Alpha Limited</b> to <b>{{this.data.item.text}}</b>
   </span>
 </div>
 

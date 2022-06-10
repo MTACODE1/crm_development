@@ -120,11 +120,11 @@
               <th mat-header-cell *matHeaderCellDef>May Bookkeeping Status</th>
               <td mat-cell *matCellDef="let element" class="text-center">
                <div class="flex">
-                <button mat-icon-button *ngIf="max > 0">
+                <button mat-icon-button *ngIf="max > 0 && max !== element.bookKeepingStatus.length -1" >
                   <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" (click)="openConfirmationDialog('book', max,element.bookKeepingStatus)"></mat-icon>
                 </button>
                 <button mat-raised-button [class]="max < element.bookKeepingStatus.length ?element.bookKeepingStatus[max].status:''" 
-                  (click)="max < element.bookKeepingStatus.length ?getNextStatus('book', max):$event.stopPropagation()"> 
+                  (click)="max < element.bookKeepingStatus.length -1 ?getNextStatus('book', max,element.bookKeepingStatus):$event.stopPropagation()"> 
                   {{max < element.bookKeepingStatus.length ?element.bookKeepingStatus[max].text:element.bookKeepingStatus[0].text}} 
                 </button>
                </div>
@@ -169,11 +169,11 @@
               <th mat-header-cell *matHeaderCellDef>May VAT Status</th>
               <td mat-cell *matCellDef="let element" class="text-center">
                 <div class="flex">
-                  <button mat-icon-button *ngIf="vatMax > 0">
+                  <button mat-icon-button *ngIf="vatMax > 0 && vatMax !== element.vatStatus.length -1">
                     <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" (click)="openConfirmationDialog('vat', vatMax,element.vatStatus)"></mat-icon>
                   </button>
                   <button mat-raised-button [class]="vatMax < element.vatStatus.length ?element.vatStatus[vatMax].status:''" 
-                    (click)="vatMax < element.vatStatus.length ?getNextStatus('vat',vatMax):$event.stopPropagation()"> 
+                    (click)="vatMax < element.vatStatus.length-1 ?getNextStatus('vat',vatMax,element.vatStatus):$event.stopPropagation()"> 
                     {{vatMax < element.vatStatus.length ?element.vatStatus[vatMax].text:element.vatStatus[0].text}} 
                   </button>
                 </div>
@@ -237,12 +237,12 @@
               <th mat-header-cell *matHeaderCellDef>2021 Accounts Status</th>
               <td mat-cell *matCellDef="let element">
                 <div class="flex">
-                  <button mat-icon-button *ngIf="accountMax > 0">
+                  <button mat-icon-button *ngIf="accountMax > 0 && accountMax !== element.accountsStatus1.length -1">
                     <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
                     (click)="openConfirmationDialog('acc', accountMax,element.accountsStatus1)"></mat-icon>
                   </button>
                   <button mat-raised-button [class]="accountMax < element.accountsStatus1.length ?element.accountsStatus1[accountMax].status:''"
-                  (click)="accountMax < element.accountsStatus1.length ?getNextStatus('acc',accountMax):$event.stopPropagation()"> 
+                  (click)="accountMax < element.accountsStatus1.length-1 ?getNextStatus('acc',accountMax,element.accountsStatus1):$event.stopPropagation()"> 
                   {{accountMax < element.accountsStatus1.length ?element.accountsStatus1[accountMax].text:element.accountsStatus1[0].text}} 
                 </button>
                 </div>
@@ -253,12 +253,12 @@
               <th mat-header-cell *matHeaderCellDef>2022 Accounts Status</th>
               <td mat-cell *matCellDef="let element">
                 <div class="flex">
-                  <button mat-icon-button *ngIf="accountNewMax > 0">
+                  <button mat-icon-button *ngIf="accountNewMax > 0 && accountNewMax !== element.accountsStatus2.length -1">
                     <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
                     (click)="openConfirmationDialog('accNew', accountNewMax,element.accountsStatus2)"></mat-icon>
                   </button>
                   <button mat-raised-button [class]="accountNewMax < element.accountsStatus2.length ?element.accountsStatus2[accountNewMax].status:''"
-                  (click)="accountNewMax < element.accountsStatus2.length ?getNextStatus('accNew',accountNewMax):$event.stopPropagation()"> 
+                  (click)="accountNewMax < element.accountsStatus2.length-1 ?getNextStatus('accNew',accountNewMax,element.accountsStatus2):$event.stopPropagation()"> 
                   {{accountNewMax < element.accountsStatus2.length ?element.accountsStatus2[accountNewMax].text:element.accountsStatus2[0].text}} 
                 </button>
                 </div>

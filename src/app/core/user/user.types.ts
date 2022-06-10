@@ -7,8 +7,7 @@ export interface User
   status?: string;
 }
 
-export interface TableModel
-{
+export interface TableModel {
   id: number;
   companyName: string;
   customerName: string;
@@ -49,4 +48,11 @@ export interface TableModel
       status?:string,
     }
   ]
+}
+
+export enum statusType {
+  'book' = 'BookKeeping Status',
+  'vat' = 'VAT Return Status',
+  'acc' = '2021 Accounts Status',
+  'accNew' ='2022 Accounts Status',
 }

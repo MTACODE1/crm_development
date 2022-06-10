@@ -1,7 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
-import { SuccessModalComponent } from '../../success-modal/success-modal.component';
 
 @Component({
   selector: 'app-onbording-form',
@@ -10,21 +8,16 @@ import { SuccessModalComponent } from '../../success-modal/success-modal.compone
 })
 export class OnbordingFormComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public readonly data: any, public readonly dialogRef: MatDialogRef<OnbordingFormComponent>,
-          private readonly snackBar: MatSnackBar) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public readonly data: any, 
+    public readonly dialogRef: MatDialogRef<OnbordingFormComponent>) 
+    { }
 
   ngOnInit(): void {
   }
 
   statusChanged(event): void {
     console.log(event)
-    const snackBarParams: MatSnackBarConfig = {
-      horizontalPosition: 'right',
-      verticalPosition: 'bottom',
-      panelClass: 'default-snack-bar',
-      data: event
-    };
-    this.snackBar.openFromComponent(SuccessModalComponent, snackBarParams);
+    
   }
 
 }

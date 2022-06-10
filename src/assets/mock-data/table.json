@@ -76,7 +76,7 @@
         { "id":4,"status": "start", "text":"Accounts Reviews by Accountant" },
         { "id":5,"status": "start", "text":"Review Complete" },
         { "id":6,"status": "start", "text":"Accounts Sent to Client" },
-        { "id":7,"status": "complete", "text":"Accounts Failed" }
+        { "id":7,"status": "complete", "text":"Accounts Filed" }
       ],
       "accountsStatus2": [
         { "id":1, "text":"Information Request sent to Client" },
@@ -85,7 +85,7 @@
         { "id":4,"status": "start", "text":"Accounts Reviews by Accountant" },
         { "id":5,"status": "start", "text":"Review Complete" },
         { "id":6,"status": "start", "text":"Accounts Sent to Client" },
-        { "id":7,"status": "complete", "text":"Accounts Failed" }
+        { "id":7,"status": "complete", "text":"Accounts Filed" }
       ],
       "chNextAccountsDate": "30/11/21",
       "chConfirmatation": "7-May-22",

@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { UserService } from 'app/core/user/user.service';
 import { filter, Subject, takeUntil } from 'rxjs';
+import { SuccessModalComponent } from '../success-modal/success-modal.component';
 import { TableModel } from './../../../core/user/user.types';
 import { OnbordingFormComponent } from './onbording-form/onbording-form.component';
 
@@ -31,7 +33,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   private readonly destroyer$: Subject<void> = new Subject();
 
   constructor(private userService: UserService, private _fuseConfirmationService: FuseConfirmationService,
-    public readonly dialog: MatDialog) { }
+    public readonly dialog: MatDialog, private readonly snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.displayedColumns = this.userService.getColumns();
@@ -55,8 +57,9 @@ export class ExampleComponent implements OnInit, OnDestroy {
     return Math.ceil((d.getDate() + (firstDay - 1)) / 7);
   }
 
-  public getNextStatus(data, i): void {
+  public getNextStatus(data, i,statsuName): void {
     data=== 'book'?this.max = i + 1:data === 'vat'? this.vatMax = i + 1:data === 'acc'?this.accountMax = i+1:this.accountNewMax = i + 1;
+    this.triggerStatusSnackBar(statsuName[i + 1], data);
   }
 
   private getPreviosStatus(key, i): void {
@@ -98,10 +101,17 @@ export class ExampleComponent implements OnInit, OnDestroy {
       data: { typeForm: 'edit' }
     });
 
-    dialogRef.afterClosed().pipe(filter(s => !!s), takeUntil(this.destroyer$))
-      .subscribe(() => {
-      
-    });
+    dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe();
   }
 
+  private triggerStatusSnackBar(data, plan): void {
+    const snackBarParams: MatSnackBarConfig = {
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+      panelClass: 'default-snack-bar',
+      data: { item: data, plan: plan }
+    };
+    this.snackBar.openFromComponent(SuccessModalComponent, snackBarParams);
+  }
+ 
 }
