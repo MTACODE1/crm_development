@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable, ReplaySubject, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, ReplaySubject, tap } from 'rxjs';
 import { TableModel, User } from 'app/core/user/user.types';
 
 @Injectable({
@@ -8,6 +8,7 @@ import { TableModel, User } from 'app/core/user/user.types';
 })
 export class UserService {
   private _user: ReplaySubject<User> = new ReplaySubject<User>(1);
+  private readonly usersSatus$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor(private _httpClient: HttpClient) { }
   /** Setter & getter for user
@@ -50,5 +51,13 @@ export class UserService {
       'lastSms', 'onboarding', 'openOne', 'openOff', 'frequency', 'bookkeepingWeek', 'bookKeepingStatus', 'nextbookKeepingStatus', 'unreconciled', 'last', 'accountsWith', 'vatRegistered', 'vatStatus',
       'nextVatStatus', 'vatQuarter', 'lastVat', 'vat', 'payroll', 'management', 'lastManagement', 'lastType', 'accountsStatus1', 'accountsStatus2', 'chNextAccountsDate',
       'chConfirmatation', 'number', 'self1', 'self2', 'avgLast', 'avgLast1', 'clientBilling']
+  }
+
+  public setUsersStatus(data): void {
+    this.usersSatus$.next(data);
+  }
+
+  public getUsersStatus(): Observable<any> {
+    return this.usersSatus$.asObservable();
   }
 }

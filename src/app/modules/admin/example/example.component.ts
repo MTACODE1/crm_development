@@ -38,6 +38,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.displayedColumns = this.userService.getColumns();
     this.getTableDetails();
+    this.getUsersStatusInfo();
   }
 
   ngOnDestroy(): void {
@@ -112,6 +113,13 @@ export class ExampleComponent implements OnInit, OnDestroy {
       data: { item: data, plan: plan }
     };
     this.snackBar.openFromComponent(SuccessModalComponent, snackBarParams);
+  }
+
+  private getUsersStatusInfo(): void {
+    this.userService.getUsersStatus().pipe(takeUntil(this.destroyer$))
+    .subscribe(state => {
+      if(state) this.vatMax = state.order -1;
+    });
   }
  
 }

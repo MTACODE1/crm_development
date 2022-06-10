@@ -1,3 +1,4 @@
+import { UserService } from 'app/core/user/user.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,7 +18,8 @@ export class TaskListComponent implements OnInit {
     total     : 0
 };
   max = 2;
-  constructor(private readonly ref:ChangeDetectorRef, private router:Router, private route: ActivatedRoute) { }
+  constructor(private readonly ref:ChangeDetectorRef, private router:Router, 
+    private route: ActivatedRoute, private userService:UserService) { }
 
   ngOnInit() {
     this.loadOnboardingTasks();
@@ -37,6 +39,7 @@ export class TaskListComponent implements OnInit {
     if(!task.completed) {
       task.completed = true;
       this.max = this.max+1;
+      this.userService.setUsersStatus(task);
     }
   }
 
