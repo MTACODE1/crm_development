@@ -24,11 +24,10 @@
       "vatStatus": [
         { "id":1, "text":"Bookkeeping Stage" },
         { "id":2,"status": "start", "text":"VAT Return Sent to Accountatnt" },
-        { "id":3,"status": "start", "text":"VAT Return Sent to Accountatnt" },
-        { "id":4,"status": "in-progress", "text":"VAT Reviewed by Accountatnt" },
-        { "id":5,"status": "in-progress", "text":"VAt Return sent to client" },
-        { "id":6,"status": "complete", "text":"VAt Return confimed by client" },
-        { "id":7,"status": "complete", "text":"VAt Return Failed" }
+        { "id":3,"status": "start", "text":"VAT Reviewed by Accountatnt" },
+        { "id":4,"status": "in-progress", "text":"VAt Return sent to client" },
+        { "id":5,"status": "in-progress", "text":"VAt Return confimed by client" },
+        { "id":6,"status": "complete", "text":"VAt Return Filed" }
       ],
       "bookKeepingStatus": [
         {
@@ -76,7 +75,7 @@
         { "id":4,"status": "start", "text":"Accounts Reviews by Accountant" },
         { "id":5,"status": "start", "text":"Review Complete" },
         { "id":6,"status": "start", "text":"Accounts Sent to Client" },
-        { "id":7,"status": "complete", "text":"Accounts Failed" }
+        { "id":7,"status": "complete", "text":"Accounts Filed" }
       ],
       "accountsStatus2": [
         { "id":1, "text":"Information Request sent to Client" },
@@ -85,7 +84,7 @@
         { "id":4,"status": "start", "text":"Accounts Reviews by Accountant" },
         { "id":5,"status": "start", "text":"Review Complete" },
         { "id":6,"status": "start", "text":"Accounts Sent to Client" },
-        { "id":7,"status": "complete", "text":"Accounts Failed" }
+        { "id":7,"status": "complete", "text":"Accounts Filed" }
       ],
       "chNextAccountsDate": "30/11/21",
       "chConfirmatation": "7-May-22",
