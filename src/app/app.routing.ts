@@ -21,61 +21,63 @@ export const appRoutes: Route[] = [
 
     // Auth routes for guests
     {
-        path: '',
-        canActivate: [NoAuthGuard],
-        canActivateChild: [NoAuthGuard],
-        component: LayoutComponent,
-        data: {
-            layout: 'empty'
-        },
-        children: [
-            {path: 'confirmation-required', loadChildren: () => import('app/modules/auth/confirmation-required/confirmation-required.module').then(m => m.AuthConfirmationRequiredModule)},
-            {path: 'forgot-password', loadChildren: () => import('app/modules/auth/forgot-password/forgot-password.module').then(m => m.AuthForgotPasswordModule)},
-            {path: 'reset-password', loadChildren: () => import('app/modules/auth/reset-password/reset-password.module').then(m => m.AuthResetPasswordModule)},
-            {path: 'sign-in', loadChildren: () => import('app/modules/auth/sign-in/sign-in.module').then(m => m.AuthSignInModule)},
-            {path: 'sign-up', loadChildren: () => import('app/modules/auth/sign-up/sign-up.module').then(m => m.AuthSignUpModule)}
-        ]
+      path: '',
+      canActivate: [NoAuthGuard],
+      canActivateChild: [NoAuthGuard],
+      component: LayoutComponent,
+      data: {
+        layout: 'empty'
+      },
+      children: [
+        {path: 'confirmation-required', loadChildren: () => import('app/modules/auth/confirmation-required/confirmation-required.module').then(m => m.AuthConfirmationRequiredModule)},
+        {path: 'forgot-password', loadChildren: () => import('app/modules/auth/forgot-password/forgot-password.module').then(m => m.AuthForgotPasswordModule)},
+        {path: 'reset-password', loadChildren: () => import('app/modules/auth/reset-password/reset-password.module').then(m => m.AuthResetPasswordModule)},
+        {path: 'sign-in', loadChildren: () => import('app/modules/auth/sign-in/sign-in.module').then(m => m.AuthSignInModule)},
+        {path: 'sign-up', loadChildren: () => import('app/modules/auth/sign-up/sign-up.module').then(m => m.AuthSignUpModule)}
+      ]
     },
 
     // Auth routes for authenticated users
     {
-        path: '',
-        canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
-        component: LayoutComponent,
-        data: {
-            layout: 'empty'
-        },
-        children: [
-            {path: 'sign-out', loadChildren: () => import('app/modules/auth/sign-out/sign-out.module').then(m => m.AuthSignOutModule)},
-            {path: 'unlock-session', loadChildren: () => import('app/modules/auth/unlock-session/unlock-session.module').then(m => m.AuthUnlockSessionModule)}
-        ]
+      path: '',
+      canActivate: [AuthGuard],
+      canActivateChild: [AuthGuard],
+      component: LayoutComponent,
+      data: {
+        layout: 'empty'
+      },
+      children: [
+        {path: 'sign-out', loadChildren: () => import('app/modules/auth/sign-out/sign-out.module').then(m => m.AuthSignOutModule)},
+        {path: 'unlock-session', loadChildren: () => import('app/modules/auth/unlock-session/unlock-session.module').then(m => m.AuthUnlockSessionModule)}
+      ]
     },
 
     // Landing routes
     {
-        path: '',
-        component  : LayoutComponent,
-        data: {
-            layout: 'empty'
-        },
-        children   : [
-            {path: 'home', loadChildren: () => import('app/modules/landing/home/home.module').then(m => m.LandingHomeModule)},
-        ]
+      path: '',
+      component  : LayoutComponent,
+      data: {
+        layout: 'empty'
+      },
+      children : [
+        {path: 'home', loadChildren: () => import('app/modules/landing/home/home.module').then(m => m.LandingHomeModule)},
+      ]
     },
 
     // Admin routes
     {
-        path       : '',
-        canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
-        component  : LayoutComponent,
-        resolve    : {
-            initialData: InitialDataResolver,
-        },
-        children   : [
-            {path: 'health', loadChildren: () => import('app/modules/admin/example/example.module').then(m => m.ExampleModule)},
-            {path: 'tasks', loadChildren: () => import('app/modules/admin/task-list/task-list.module').then(m => m.TaskListModule)},
-        ]
-    }
+      path : '',
+      canActivate: [AuthGuard],
+      canActivateChild: [AuthGuard],
+      component  : LayoutComponent,
+      resolve    : {
+        initialData: InitialDataResolver,
+      },
+      children : [
+        {path: 'health', loadChildren: () => import('app/modules/admin/example/example.module').then(m => m.ExampleModule)},
+        {path: 'tasks', loadChildren: () => import('app/modules/admin/task-list/task-list.module').then(m => m.TaskListModule)},
+      ]
+    },
+    {path: '404-not-found', pathMatch: 'full', loadChildren: () => import('app/modules/not-found/not-found.module').then(m => m.NotFoundModule)},
+    {path: '**', redirectTo: '404-not-found'}
 ];
