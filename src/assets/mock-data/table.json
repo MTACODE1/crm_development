@@ -27,9 +27,9 @@
         { "id":1, "text":"Bookkeeping Stage" },
         { "id":2,"status": "start", "text":"VAT Return Sent to Accountatnt" },
         { "id":3,"status": "start", "text":"VAT Reviewed by Accountatnt" },
-        { "id":4,"status": "in-progress", "text":"VAt Return sent to client" },
-        { "id":5,"status": "in-progress", "text":"VAt Return confimed by client" },
-        { "id":6,"status": "complete", "text":"VAt Return Filed" }
+        { "id":4,"status": "in-progress", "text":"VAT Return sent to client" },
+        { "id":5,"status": "in-progress", "text":"VAT Return confimed by client" },
+        { "id":6,"status": "complete", "text":"VAT Return Filed" }
       ],
       "bookKeepingStatus": [
         {

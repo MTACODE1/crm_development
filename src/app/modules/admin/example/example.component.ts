@@ -22,13 +22,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [];
 
   public userTableList: TableModel[];
-  public columSort = [ 
-    {name:'Company Name', value:'companyName'},
-    {name:'BookKeeping Status', value:'bookKeepingStatus'},
-    {name:'May VAT Status', value:'vatStatus'},
-    {name:'2021 Accounts Status', value:'accountsStatus1'},
-    {name:'2022 Accounts Status', value:'accountsStatus2'},
-  ]
+  featureStatus: boolean;
 
   private readonly destroyer$: Subject<void> = new Subject();
 
@@ -88,11 +82,12 @@ export class ExampleComponent implements OnInit, OnDestroy {
     });
   }
 
-  public radioChange(item): void {
-    this.displayedColumns = this.userService.getColumns();
-    const colIndex = this.displayedColumns.findIndex(col => col === item);
-    if (colIndex != -1) {
-      this.displayedColumns.splice(colIndex, 1);
+
+  statusChanged(toggle:boolean): void {
+    if(toggle) {
+      this.displayedColumns = ['companyName','onboarding','bookKeepingStatus','vatStatus','accountsStatus1','accountsStatus2'];
+    } else {
+      this.displayedColumns = this.userService.getColumns();
     }
   }
 

@@ -2,17 +2,13 @@
   <div class="flex-auto p-6 sm:p-10">
     <div class="sm:col-span-6 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
       <div class="text-lg font-medium tracking-tight leading-6 truncate">
-        <button mat-icon-button [matMenuTriggerFor]="filterColmenu">
-          <mat-icon svgIcon="heroicons_outline:filter"></mat-icon>
-        </button>
-        <mat-menu #filterColmenu="matMenu">
-          <mat-radio-group class="flex flex-col p-4" color="primary" >
-              <mat-radio-button class="mb-3" *ngFor="let section of columSort" 
-                [value]="section.value" (change)="radioChange(section.value)">
-                  {{section.name}}
-              </mat-radio-button>
-          </mat-radio-group>
-        </mat-menu>
+        <div class="flex items-center">
+          <div class="mr-3">Statuses</div>
+          <label class="form-switch">
+            <input type="checkbox" [(ngModel)]="featureStatus" (ngModelChange)="statusChanged($event)">
+            <i></i>
+          </label>
+        </div>
       </div>
       <div class="flex flex-col flex-auto overflow-x-auto">
           <table class="min-w-240 overflow-y-visible"  mat-table  [dataSource]="userTableList">
