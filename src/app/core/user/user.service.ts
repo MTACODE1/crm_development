@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, map, Observable, ReplaySubject, tap } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { TableModel, User } from 'app/core/user/user.types';
+import { BehaviorSubject, map, Observable, ReplaySubject, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +9,7 @@ import { TableModel, User } from 'app/core/user/user.types';
 export class UserService {
   private _user: ReplaySubject<User> = new ReplaySubject<User>(1);
   private readonly usersSatus$: BehaviorSubject<any> = new BehaviorSubject(null);
+
 
   constructor(private _httpClient: HttpClient) { }
   /** Setter & getter for user
@@ -25,10 +26,12 @@ export class UserService {
   }
 
   /** Get the current logged in user data */
-  get(): Observable<User> {
-    return this._httpClient.get<User>('api/common/user').pipe(
+  get(): Observable<User[]> {
+    return this._httpClient.get<User[]>('api/common/user').pipe(
       tap((user) => {
-        this._user.next(user);
+       const email = localStorage.getItem('loginUser')
+        const loginUser = user.find(x => x.email == email);
+        this._user.next(loginUser);
       })
     );
   }
