@@ -3,7 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { UserService } from 'app/core/user/user.service';
-import { filter, Subject, takeUntil } from 'rxjs';
+import * as moment from "moment";
+import { Subject, takeUntil } from 'rxjs';
 import { SuccessModalComponent } from '../success-modal/success-modal.component';
 import { TableModel } from './../../../core/user/user.types';
 import { OnbordingFormComponent } from './onbording-form/onbording-form.component';
@@ -23,6 +24,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
 
   public userTableList: TableModel[];
   featureStatus: boolean;
+  today = moment(new Date());
 
   private readonly destroyer$: Subject<void> = new Subject();
 

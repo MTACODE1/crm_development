@@ -9,6 +9,7 @@ export interface User
 
 export interface TableModel {
   id: number;
+  isSuspended: boolean;
   companyName: string;
   customerName: string;
   package: string;

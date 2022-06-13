@@ -1,5 +1,9 @@
 <div class="flex flex-col flex-auto min-w-0">
   <div class="flex-auto p-6 sm:p-10">
+    <fuse-alert [type]="'warning'"  [appearance]="'outline'" class="mb-4 mx-3">
+      <span fuseAlertTitle>Client Suspended</span>
+      Bespoke Alpha Solutions Suspended {{today | date: 'EEEE, MMMM d, y'}}
+    </fuse-alert>
     <div class="sm:col-span-6 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
       <div class="text-lg font-medium tracking-tight leading-6 truncate">
         <div class="flex items-center">
@@ -325,7 +329,7 @@
     
     
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"  [ngClass]="{'suspended': row?.isSuspended}"></tr>
           </table>
       </div>
   </div>
