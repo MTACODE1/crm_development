@@ -3,7 +3,10 @@
   "data": [
     {
       "id": 1,
-      "companyName": "Bespoke Alpha Ltd",
+      "isSuspended": false,
+      "companyName": "Bespoke",
+      "companyName1": "Alpha",
+      "companyName2": "Ltd",
       "customerName": "Komey Tetteh",
       "package": "Unlimited",
       "accountant": "RizwanKhan",
@@ -25,9 +28,104 @@
         { "id":1, "text":"Bookkeeping Stage" },
         { "id":2,"status": "start", "text":"VAT Return Sent to Accountatnt" },
         { "id":3,"status": "start", "text":"VAT Reviewed by Accountatnt" },
-        { "id":4,"status": "in-progress", "text":"VAt Return sent to client" },
-        { "id":5,"status": "in-progress", "text":"VAt Return confimed by client" },
-        { "id":6,"status": "complete", "text":"VAt Return Filed" }
+        { "id":4,"status": "in-progress", "text":"VAT Return sent to client" },
+        { "id":5,"status": "in-progress", "text":"VAT Return confimed by client" },
+        { "id":6,"status": "complete", "text":"VAT Return Filed" }
+      ],
+      "bookKeepingStatus": [
+        {
+          "id":1,
+          "text":"Information Requested"
+        },
+        {
+          "id":2,"status": "start",
+          "text":"Information Request sent to Client"
+        },
+        {
+          "id":3,"status": "start",
+          "text":"Information Received from Client"
+        },
+        {
+          "id":4,"status": "start",
+          "text":"Queries Requested"
+        },
+        {
+          "id":5,"status": "in-progress",
+          "text":"Query Request sent to Client"
+        },
+        { "id":6,"status": "in-progress", "text":"Query Received by Client" },
+        { "id":7,"status": "in-progress", "text":"MR Reviewed by Accountant" },
+        { "id":8,"status": "in-progress", "text":"Level 1 MR Completed" },
+        { "id":9,"status": "in-progress", "text":"Level 2 MR Completed" },
+        { "id":10,"status": "in-progress", "text":"Level 3 MR Completed" },
+        { "id": 11,"status": "in-progress",  "text": "Review Completed" },
+        { "id": 12,"status": "complete",  "text": "Level 1 MR Sent to Client" },
+        { "id": 13, "status": "complete", "text": "Level 2 MR Sent to Client" },
+        { "id": 14, "status": "complete", "text": "Level 3 MR Sent to Client" }
+      ],
+      "nextbookKeepingStatus":"",
+      "nextVatStatus": "",
+      "vatQuarter": "1-4-7-10",
+      "lastVat": "5/3/2022",
+      "vat": "Standard",
+      "management": "1-4-7-10",
+      "lastManagement": "5/3/2022",
+      "lastType": "Type 2",
+      "accountsStatus1": [
+        { "id":1, "text":"Information Request sent to Client" },
+        { "id":2,"status": "start", "text":"Query Request sent to client" },
+        { "id":3,"status": "start", "text":"Work in progress" },
+        { "id":4,"status": "start", "text":"Accounts Reviews by Accountant" },
+        { "id":5,"status": "start", "text":"Review Complete" },
+        { "id":6,"status": "start", "text":"Accounts Sent to Client" },
+        { "id":7,"status": "complete", "text":"Accounts Filed" }
+      ],
+      "accountsStatus2": [
+        { "id":1, "text":"Information Request sent to Client" },
+        { "id":2,"status": "start", "text":"Query Request sent to client" },
+        { "id":3,"status": "start", "text":"Work in progress" },
+        { "id":4,"status": "start", "text":"Accounts Reviews by Accountant" },
+        { "id":5,"status": "start", "text":"Review Complete" },
+        { "id":6,"status": "start", "text":"Accounts Sent to Client" },
+        { "id":7,"status": "complete", "text":"Accounts Filed" }
+      ],
+      "chNextAccountsDate": "30/11/21",
+      "chConfirmatation": "7-May-22",
+      "number": 3,
+      "avgLast": "£30,000",
+      "avgLast1": "£250",
+      "clientBilling": "£149"
+    },
+    {
+      "id": 2,
+      "isSuspended": true,
+      "companyName": "Bespoke",
+      "companyName1": "Alpha",
+      "companyName2": "Ltd",
+      "customerName": "Komey Tetteh",
+      "package": "Unlimited",
+      "accountant": "RizwanKhan",
+      "bookKeeper": "Asad 1",
+      "accountsTeam": "AliEjaz",
+      "companyType": "Limited",
+      "lastDispo": "2020-05-12T16:13:28.682Z",
+      "lastEmail": "2020-05-12T16:13:28.682Z",
+      "lastSms": "2020-05-12T16:13:28.682Z",
+      "openOne": "2",
+      "openOff": "1",
+      "frequency": "1-4-7-10",
+      "bookkeepingWeek": "2020-05-07T16:13:28.682Z",
+      "last": "2022-02-01T16:13:28.682Z",
+      "unreconciled": 51,
+      "accountsWith": 2,
+      "vatRegistered": "no",
+      "vatStatus": [
+        { "id":1, "text":"Bookkeeping Stage" },
+        { "id":2,"status": "start", "text":"VAT Return Sent to Accountatnt" },
+        { "id":3,"status": "start", "text":"VAT Reviewed by Accountatnt" },
+        { "id":4,"status": "in-progress", "text":"VAT Return sent to client" },
+        { "id":5,"status": "in-progress", "text":"VAT Return confimed by client" },
+        { "id":6,"status": "complete", "text":"VAT Return Filed" }
       ],
       "bookKeepingStatus": [
         {
