@@ -147,16 +147,15 @@ export class ExampleComponent implements OnInit, OnDestroy {
     this.userService.getConfig().pipe(takeUntil(this.destroyer$))
     .subscribe(state => {
       this.pageState = state;
-      console.log(this.pageState)
-    })
+    });
   }
 
-  chosenMonthHandler(normalizedMonth) {
+  public chosenMonthHandler(normalizedMonth): void {
     this.userService.setConfig({ selectedDate: moment(normalizedMonth.value) });
   }
 
   public decrementDay(): void {
-    const count = 28;
+    const count = moment(this.pageState.selectedDate).subtract(1, 'month').daysInMonth();
      const params: ICalendarState = {
       selectedDate: moment(this.pageState.selectedDate).subtract(count, 'd')
     };
@@ -165,7 +164,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   }
 
   public incrementDay(): void {
-    const count = 28;
+    const count = moment(this.pageState.selectedDate).add(1, 'month').daysInMonth();
     const params: ICalendarState = {
       selectedDate: moment(this.pageState.selectedDate).add(count, 'd')
     };
