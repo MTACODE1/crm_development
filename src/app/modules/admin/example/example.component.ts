@@ -30,7 +30,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   searchTerm: null;
   date = new FormControl(moment());
   public pageState: ICalendarState;
-
+  allVisited:boolean;
   private readonly destroyer$: Subject<void> = new Subject();
 
   constructor(private userService: UserService, private _fuseConfirmationService: FuseConfirmationService,
@@ -61,6 +61,8 @@ export class ExampleComponent implements OnInit, OnDestroy {
   }
 
   public getNextStatus(data, i,statsuName): void {
+    statsuName[i].visited = true
+    this.allVisited = statsuName.every(item => item.visited);
     if (data === 'book' && statsuName[i].id === 7 ) {
       this.openStatusJumpDialogue('setFirst');
     } else if(data === 'book' && statsuName[i].id === 11) {
@@ -69,7 +71,6 @@ export class ExampleComponent implements OnInit, OnDestroy {
       data === 'book'?this.max = i + 1:data === 'vat'? this.vatMax = i + 1:data === 'acc'?this.accountMax = i+1:this.accountNewMax = i + 1;
       this.triggerStatusSnackBar(statsuName[i + 1], data);
     }
-   
   }
 
   private getPreviosStatus(key, i): void {
@@ -138,7 +139,6 @@ export class ExampleComponent implements OnInit, OnDestroy {
       data: set
     });
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(res => {
-      console.log(res)
       if(res) this.max = res.fetch.value;
     });
   }

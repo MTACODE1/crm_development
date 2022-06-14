@@ -25,43 +25,43 @@
       "accountsWith": 2,
       "vatRegistered": "no",
       "vatStatus": [
-        { "id":1, "text":"Bookkeeping Stage" },
-        { "id":2,"status": "start", "text":"VAT Return Sent to Accountatnt" },
-        { "id":3,"status": "start", "text":"VAT Reviewed by Accountatnt" },
-        { "id":4,"status": "in-progress", "text":"VAT Return sent to client" },
-        { "id":5,"status": "in-progress", "text":"VAT Return confimed by client" },
-        { "id":6,"status": "complete", "text":"VAT Return Filed" }
+        { "id":1, "text":"Bookkeeping Stage", "visited": false},
+        { "id":2,"status": "start", "text":"VAT Return Sent to Accountatnt", "visited": false },
+        { "id":3,"status": "start", "text":"VAT Reviewed by Accountatnt", "visited": false },
+        { "id":4,"status": "in-progress", "text":"VAT Return sent to client", "visited": false },
+        { "id":5,"status": "in-progress", "text":"VAT Return confimed by client", "visited": false },
+        { "id":6,"status": "complete", "text":"VAT Return Filed", "visited": true }
       ],
       "bookKeepingStatus": [
         {
           "id":1,
-          "text":"Information Requested"
+          "text":"Information Requested", "visited": false
         },
         {
           "id":2,"status": "start",
-          "text":"Information Request sent to Client"
+          "text":"Information Request sent to Client", "visited": false
         },
         {
           "id":3,"status": "start",
-          "text":"Information Received from Client"
+          "text":"Information Received from Client", "visited": false
         },
         {
           "id":4,"status": "start",
-          "text":"Queries Requested"
+          "text":"Queries Requested", "visited": false
         },
         {
           "id":5,"status": "in-progress",
-          "text":"Query Request sent to Client"
+          "text":"Query Request sent to Client", "visited": false
         },
-        { "id":6,"status": "in-progress", "text":"Query Received by Client" },
-        { "id":7,"status": "in-progress", "text":"MR Reviewed by Accountant" },
-        { "id":8,"status": "in-progress", "text":"Level 1 MR Completed" },
-        { "id":9,"status": "in-progress", "text":"Level 2 MR Completed" },
-        { "id":10,"status": "in-progress", "text":"Level 3 MR Completed" },
-        { "id": 11,"status": "in-progress",  "text": "Review Completed" },
-        { "id": 12,"status": "complete",  "text": "Level 1 MR Sent to Client" },
-        { "id": 13, "status": "complete", "text": "Level 2 MR Sent to Client" },
-        { "id": 14, "status": "complete", "text": "Level 3 MR Sent to Client" }
+        { "id":6,"status": "in-progress", "text":"Query Received by Client" , "visited": false},
+        { "id":7,"status": "in-progress", "text":"MR Reviewed by Accountant" , "visited": false},
+        { "id":8,"status": "in-progress", "text":"Level 1 MR Completed", "visited": false },
+        { "id":9,"status": "in-progress", "text":"Level 2 MR Completed", "visited": false },
+        { "id":10,"status": "in-progress", "text":"Level 3 MR Completed", "visited": false },
+        { "id": 11,"status": "in-progress",  "text": "Review Completed", "visited": false },
+        { "id": 12,"status": "complete",  "text": "Level 1 MR Sent to Client", "visited": false },
+        { "id": 13, "status": "complete", "text": "Level 2 MR Sent to Client", "visited": false },
+        { "id": 14, "status": "complete", "text": "Level 3 MR Sent to Client" , "visited": true}
       ],
       "nextbookKeepingStatus":"",
       "nextVatStatus": "",
@@ -72,22 +72,22 @@
       "lastManagement": "5/3/2022",
       "lastType": "Type 2",
       "accountsStatus1": [
-        { "id":1, "text":"Information Request sent to Client" },
-        { "id":2,"status": "start", "text":"Query Request sent to client" },
-        { "id":3,"status": "start", "text":"Work in progress" },
-        { "id":4,"status": "start", "text":"Accounts Reviews by Accountant" },
-        { "id":5,"status": "start", "text":"Review Complete" },
-        { "id":6,"status": "start", "text":"Accounts Sent to Client" },
-        { "id":7,"status": "complete", "text":"Accounts Filed" }
+        { "id":1, "text":"Information Request sent to Client" , "visited": false },
+        { "id":2,"status": "start", "text":"Query Request sent to client" , "visited": false },
+        { "id":3,"status": "start", "text":"Work in progress" , "visited": false },
+        { "id":4,"status": "start", "text":"Accounts Reviews by Accountant" , "visited": false },
+        { "id":5,"status": "start", "text":"Review Complete" , "visited": false },
+        { "id":6,"status": "start", "text":"Accounts Sent to Client" , "visited": false },
+        { "id":7,"status": "complete", "text":"Accounts Filed" , "visited": true }
       ],
       "accountsStatus2": [
-        { "id":1, "text":"Information Request sent to Client" },
-        { "id":2,"status": "start", "text":"Query Request sent to client" },
-        { "id":3,"status": "start", "text":"Work in progress" },
-        { "id":4,"status": "start", "text":"Accounts Reviews by Accountant" },
-        { "id":5,"status": "start", "text":"Review Complete" },
-        { "id":6,"status": "start", "text":"Accounts Sent to Client" },
-        { "id":7,"status": "complete", "text":"Accounts Filed" }
+        { "id":1, "text":"Information Request sent to Client" , "visited": false },
+        { "id":2,"status": "start", "text":"Query Request sent to client", "visited": false  },
+        { "id":3,"status": "start", "text":"Work in progress", "visited": false },
+        { "id":4,"status": "start", "text":"Accounts Reviews by Accountant", "visited": false  },
+        { "id":5,"status": "start", "text":"Review Complete", "visited": false  },
+        { "id":6,"status": "start", "text":"Accounts Sent to Client", "visited": false  },
+        { "id":7,"status": "complete", "text":"Accounts Filed", "visited": true  }
       ],
       "chNextAccountsDate": "30/11/21",
       "chConfirmatation": "7-May-22",
