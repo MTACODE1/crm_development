@@ -1,7 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TableModel, User } from 'app/core/user/user.types';
+import * as moment from 'moment';
 import { BehaviorSubject, map, Observable, ReplaySubject, tap } from 'rxjs';
+
+export interface ICalendarState {
+  selectedDate?: moment.Moment;
+}
+
+const initialState: ICalendarState = {
+  selectedDate: moment()
+}
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +18,7 @@ import { BehaviorSubject, map, Observable, ReplaySubject, tap } from 'rxjs';
 export class UserService {
   private _user: ReplaySubject<User> = new ReplaySubject<User>(1);
   private readonly usersSatus$: BehaviorSubject<any> = new BehaviorSubject(null);
-
+  private readonly config$: BehaviorSubject<ICalendarState> = new BehaviorSubject(initialState);
 
   constructor(private _httpClient: HttpClient) { }
   /** Setter & getter for user
@@ -62,5 +71,14 @@ export class UserService {
 
   public getUsersStatus(): Observable<any> {
     return this.usersSatus$.asObservable();
+  }
+
+
+  public getConfig(): Observable<ICalendarState> {
+    return this.config$.asObservable();
+  }
+
+  public setConfig(config: ICalendarState): void {
+    this.config$.next({ ...this.config$.getValue(), ...config });
   }
 }

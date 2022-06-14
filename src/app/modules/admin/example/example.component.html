@@ -15,6 +15,22 @@
             </label>
           </div>
 
+          <div class="flex items-center">
+            <div class="relative  cursor-pointer" style="bottom: -7px;" (click)="decrementDay()">
+              <mat-icon>chevron_left</mat-icon>
+            </div>
+  
+            <div class="date-togglers">
+              <input matInput [matDatepicker]="picker" [formControl]="date" (dateChange)="chosenMonthHandler($event)" style="width: 8rem;">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker startView="multi-year" [startAt]="pageState.selectedDate"
+                ></mat-datepicker>
+            </div>
+            <div class="relative cursor-pointer" style="bottom: -7px;" (click)="incrementDay()">
+              <mat-icon>chevron_right</mat-icon>
+            </div>
+          </div>
+
           <div class="search">
             <label for="search">
               <mat-icon>search</mat-icon>

@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { UserService } from 'app/core/user/user.service';
+import { ICalendarState, UserService } from 'app/core/user/user.service';
 import * as moment from "moment";
 import { Subject, takeUntil } from 'rxjs';
 import { SuccessModalComponent } from '../success-modal/success-modal.component';
@@ -27,6 +28,8 @@ export class ExampleComponent implements OnInit, OnDestroy {
   featureStatus: boolean;
   today = moment(new Date());
   searchTerm: null;
+  date = new FormControl(moment());
+  public pageState: ICalendarState;
 
   private readonly destroyer$: Subject<void> = new Subject();
 
@@ -37,6 +40,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
     this.displayedColumns = this.userService.getColumns();
     this.getTableDetails();
     this.getUsersStatusInfo();
+    this.getPageState();
   }
 
   ngOnDestroy(): void {
@@ -137,6 +141,36 @@ export class ExampleComponent implements OnInit, OnDestroy {
       console.log(res)
       if(res) this.max = res.fetch.value;
     });
+  }
+
+  private getPageState(): void {
+    this.userService.getConfig().pipe(takeUntil(this.destroyer$))
+    .subscribe(state => {
+      this.pageState = state;
+      console.log(this.pageState)
+    })
+  }
+
+  chosenMonthHandler(normalizedMonth) {
+    this.userService.setConfig({ selectedDate: moment(normalizedMonth.value) });
+  }
+
+  public decrementDay(): void {
+    const count = 28;
+     const params: ICalendarState = {
+      selectedDate: moment(this.pageState.selectedDate).subtract(count, 'd')
+    };
+    this.userService.setConfig(params);
+    this.date.setValue(this.pageState.selectedDate);
+  }
+
+  public incrementDay(): void {
+    const count = 28;
+    const params: ICalendarState = {
+      selectedDate: moment(this.pageState.selectedDate).add(count, 'd')
+    };
+    this.userService.setConfig(params);
+    this.date.setValue(this.pageState.selectedDate);
   }
  
 }
