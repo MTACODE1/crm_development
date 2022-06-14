@@ -42,3 +42,32 @@
     background-color: #e57808  !important;
   }
 }
+
+.search {
+  position: relative;
+
+  label[for="search"] {
+    position: absolute;
+    top: 10px;
+    left: 14px;
+    font-size: 1.2em;
+  }
+
+  input[id="search"] {
+    color: #848484;
+    padding: 13px 10px 13px 40px;
+    border: 1px solid #848484;
+    font-size: 15px;
+    border-radius: 50px;
+    width: 200px;
+    height: 40px;
+    outline: none !important;
+    background-color: transparent;
+  }
+
+  .mat-icon {
+    font-size: 1.2em;
+    color: #848484;
+    cursor: pointer;
+  }
+}

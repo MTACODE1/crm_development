@@ -25,6 +25,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   public userTableList: TableModel[];
   featureStatus: boolean;
   today = moment(new Date());
+  searchTerm: null;
 
   private readonly destroyer$: Subject<void> = new Subject();
 
