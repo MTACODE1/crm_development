@@ -7,6 +7,7 @@ import * as moment from "moment";
 import { Subject, takeUntil } from 'rxjs';
 import { SuccessModalComponent } from '../success-modal/success-modal.component';
 import { TableModel } from './../../../core/user/user.types';
+import { BookkeepingStatusComponent } from './bookkeeping-status/bookkeeping-status.component';
 import { OnbordingFormComponent } from './onbording-form/onbording-form.component';
 
 @Component({
@@ -56,8 +57,15 @@ export class ExampleComponent implements OnInit, OnDestroy {
   }
 
   public getNextStatus(data, i,statsuName): void {
-    data=== 'book'?this.max = i + 1:data === 'vat'? this.vatMax = i + 1:data === 'acc'?this.accountMax = i+1:this.accountNewMax = i + 1;
-    this.triggerStatusSnackBar(statsuName[i + 1], data);
+    if (data === 'book' && statsuName[i].id === 7 ) {
+      this.openStatusJumpDialogue('setFirst');
+    } else if(data === 'book' && statsuName[i].id === 11) {
+      this.openStatusJumpDialogue('setSecond');
+    } else {
+      data === 'book'?this.max = i + 1:data === 'vat'? this.vatMax = i + 1:data === 'acc'?this.accountMax = i+1:this.accountNewMax = i + 1;
+      this.triggerStatusSnackBar(statsuName[i + 1], data);
+    }
+   
   }
 
   private getPreviosStatus(key, i): void {
@@ -117,6 +125,17 @@ export class ExampleComponent implements OnInit, OnDestroy {
     this.userService.getUsersStatus().pipe(takeUntil(this.destroyer$))
     .subscribe(state => {
       if(state) this.vatMax = state.order -1;
+    });
+  }
+
+  private openStatusJumpDialogue(set) {
+    const dialogRef = this.dialog.open(BookkeepingStatusComponent, {
+      width: '30vw',
+      data: set
+    });
+    dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(res => {
+      console.log(res)
+      if(res) this.max = res.fetch.value;
     });
   }
  
