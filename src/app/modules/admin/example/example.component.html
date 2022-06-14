@@ -6,7 +6,7 @@
     </fuse-alert>
     <div class="sm:col-span-6 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
       <div class="text-lg font-medium tracking-tight leading-6 truncate mb-2">
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between flex-wrap">
           <div class="flex items-center">
             <div class="mr-3">Statuses</div>
             <label class="form-switch">
@@ -21,8 +21,8 @@
             </div>
   
             <div class="date-togglers">
-              <input matInput [matDatepicker]="picker" [formControl]="date" (dateChange)="chosenMonthHandler($event)" style="width: 8rem;">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <input matInput [matDatepicker]="picker" [formControl]="date" (dateChange)="chosenMonthHandler($event)" class="w-20">
+              <mat-datepicker-toggle matSuffix [for]="picker" class="relative" style="bottom: -4px;"></mat-datepicker-toggle>
               <mat-datepicker #picker startView="multi-year" [startAt]="pageState.selectedDate"
                 ></mat-datepicker>
             </div>
