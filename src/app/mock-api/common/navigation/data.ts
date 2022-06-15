@@ -4,7 +4,7 @@ import { FuseNavigationItem } from '@fuse/components/navigation';
 export const defaultNavigation: FuseNavigationItem[] = [
     {
         id   : 'example',
-        title: 'Client Health',
+        title: 'Client Workflow',
         type : 'basic',
         icon : 'heroicons_solid:heart',
         link : '/health'

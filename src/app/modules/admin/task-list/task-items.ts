@@ -108,19 +108,6 @@ export const ONBOARDING_TASK_ITEMS: TaskItem[] = [
       order     : 4
   },
   {
-      id        : '3d1c26c5-1e5e-4eb6-8006-ed6037ed9aca',
-      type      : 'task',
-      title     : 'VAt Return confimed by client',
-      notes     : 'Sunt mollit irure dolor aliquip sit veniam amet ut sunt dolore cillum sint pariatur qui irure proident velit non excepteur quis ut et quis velit aliqua ea sunt cillum sit.\n\nReprehenderit est culpa ut incididunt sit dolore mollit in occaecat velit culpa consequat reprehenderit ex lorem cupidatat proident reprehenderit ad eu sunt sit ut sit culpa ea reprehenderit aliquip est.',
-      completed : false,
-      dueDate   : '2018-09-29T19:30:45.325Z',
-      priority  : 1,
-      tags      : [ ],
-      assignedTo: '6617b0a3-0ccd-44ea-af78-c6633115d683',
-      subTasks  : [],
-      order     : 5
-  },
-  {
       id        : '11bd2b9a-85b4-41c9-832c-bd600dfa3a52',
       type      : 'task',
       title     : 'VAt Return Filed',
@@ -137,6 +124,6 @@ export const ONBOARDING_TASK_ITEMS: TaskItem[] = [
               completed: true
           }
       ],
-      order     : 6
+      order     : 5
   },
 ];

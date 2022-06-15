@@ -205,8 +205,10 @@
                   svgIcon="heroicons_outline:plus-sm">
                 </mat-icon>
                 <div *ngIf="showVatStatusBtn" class="flex">
-                  <button mat-icon-button *ngIf="vatMax > 0" [ngClass]="{'hidden':allVisited && vatMax == 1}">
-                    <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" (click)="openConfirmationDialog('vat', vatMax,element.vatStatus)"></mat-icon>
+                  <button mat-icon-button >
+                    <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
+                      (click)="vatMax > 0?openConfirmationDialog('vat', vatMax,element.vatStatus):startUpdates('end','vat')">
+                    </mat-icon>
                   </button>
                   <button mat-raised-button [disabled]="element.isSuspended" [class]="vatMax < element.vatStatus.length ?element.vatStatus[vatMax].status:''" 
                     (click)="vatMax < element.vatStatus.length-1 ?getNextStatus('vat',vatMax,element.vatStatus):$event.stopPropagation()"> 

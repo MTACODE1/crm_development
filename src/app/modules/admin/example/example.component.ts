@@ -67,25 +67,19 @@ export class ExampleComponent implements OnInit, OnDestroy {
   public getNextStatus(data, i,statsuName): void {
     statsuName[i].visited = true;
     this.allVisited = statsuName.every(item => item.visited);
-    if (data === 'book' && statsuName[i].id === 7 ) {
+    if (data === 'book' && statsuName[i].id === 8 ) {
       this.openStatusJumpDialogue('setFirst');
-    } else if(data === 'book' && statsuName[i].id === 11) {
-      this.openStatusJumpDialogue('setSecond');
-    } else if(data === 'book' && this.setskippedStatus && (statsuName[i].id === 8 ||statsuName[i].id === 9 || statsuName[i].id === 10)) {
-      this.max = 10;
-    } else if(data === 'book' && this.setskippedStatus && (statsuName[i].id === 12 ||statsuName[i].id === 13 || statsuName[i].id === 14)) {
-      this.max = 14;
-    } else {
+    } else if(data === 'book' && this.setskippedStatus && (statsuName[i].id === 9 ||statsuName[i].id === 10 || statsuName[i].id === 11)) {
+      this.max = 11;
+    }  else {
       data === 'book'?this.max = i + 1:data === 'vat'? this.vatMax = i + 1:data === 'acc'?this.accountMax = i+1:this.accountNewMax = i + 1;
       this.triggerStatusSnackBar(statsuName[i + 1], data);
     }
   }
 
   private getPreviosStatus(key, i,statsuName): void {
-    if (key === 'book' &&  this.setskippedStatus && (statsuName[i].id === 8 ||statsuName[i].id === 9 || statsuName[i].id === 10)) {
-      this.max = 6;
-    } else if(key === 'book' &&  this.setskippedStatus && (statsuName[i].id === 12 ||statsuName[i].id === 13 || statsuName[i].id === 14)) {
-      this.max = 10;
+    if (key === 'book' &&  this.setskippedStatus && (statsuName[i].id === 9 ||statsuName[i].id === 10 || statsuName[i].id === 11)) {
+      this.max = 7;
     } else {
       key === 'book'?this.max = i - 1:key === 'vat'? this.vatMax = i-1:key === 'acc'?this.accountMax = i-1:this.accountNewMax =i-1;
     }
