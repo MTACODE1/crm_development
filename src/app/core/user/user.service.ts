@@ -59,10 +59,10 @@ export class UserService {
   }
 
   getColumns() {
-    return ['companyName', 'customerName', 'package', 'accountant', 'bookkeeper', 'accountsTeam', 'companyType', 'lastDispo', 'lastEmail',
-      'lastSms', 'onboarding', 'openOne', 'openOff', 'frequency', 'bookkeepingWeek', 'bookKeepingStatus', 'nextbookKeepingStatus', 'unreconciled', 'last', 'accountsWith', 'vatRegistered', 'vatStatus',
-      'nextVatStatus', 'vatQuarter', 'lastVat', 'vat', 'payroll', 'management', 'lastManagement', 'lastType', 'accountsStatus1', 'accountsStatus2', 'chNextAccountsDate',
-      'chConfirmatation', 'number', 'self1', 'self2', 'avgLast', 'avgLast1', 'clientBilling']
+    return ['companyName', 'accountant', 'companyType', 'onboarding','saledate','package','quarters','frequency', 'bookkeeper', 'completionweek',
+      'bookKeepingStatus', 'vatRegistered','vatQuarter', 'vatscheme','vatStatus',
+      'eoy', 'oneoff', 'endDate', 'duedate', 'accountsStatus1', 'accountsStatus2',
+       'number', 'self1', 'self2']
   }
 
   public setUsersStatus(data): void {

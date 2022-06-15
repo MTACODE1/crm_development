@@ -65,23 +65,13 @@
               </td>
             </ng-container>
           
-            <ng-container matColumnDef="customerName">
-              <th mat-header-cell *matHeaderCellDef>Customer Name</th>
-              <td mat-cell *matCellDef="let element"> {{element.customerName}} </td>
-            </ng-container>
-      
-            <ng-container matColumnDef="package">
-              <th mat-header-cell *matHeaderCellDef>Package</th>
-              <td mat-cell *matCellDef="let element"> {{element.package}} </td>
-            </ng-container>
-          
             <ng-container matColumnDef="accountant">
               <th mat-header-cell *matHeaderCellDef>Accountant</th>
               <td mat-cell *matCellDef="let element"> {{element.accountant}} </td>
             </ng-container>
         
             <ng-container matColumnDef="bookkeeper">
-              <th mat-header-cell *matHeaderCellDef>Bookkeeper</th>
+              <th mat-header-cell *matHeaderCellDef>Management Account</th>
               <td mat-cell *matCellDef="let element"> {{element.bookKeeper}} </td>
             </ng-container>
         
@@ -95,20 +85,11 @@
               <td mat-cell *matCellDef="let element"> {{element.companyType}} </td>
             </ng-container>
       
-            <ng-container matColumnDef="lastDispo">
-              <th mat-header-cell *matHeaderCellDef>Last Dispo</th>
-              <td mat-cell *matCellDef="let element"> {{element.lastDispo | date:'d-MMMM'}} </td>
+            <ng-container matColumnDef="completionweek">
+              <th mat-header-cell *matHeaderCellDef>Target Completion Week</th>
+              <td mat-cell *matCellDef="let element"> {{element.completionweek}} </td>
             </ng-container>
       
-            <ng-container matColumnDef="lastEmail">
-              <th mat-header-cell *matHeaderCellDef>Last Email</th>
-              <td mat-cell *matCellDef="let element"> {{element.lastEmail | date:'d-MMMM'}} </td>
-            </ng-container>
-      
-            <ng-container matColumnDef="lastSms">
-              <th mat-header-cell *matHeaderCellDef>Last SMS </th>
-              <td mat-cell *matCellDef="let element"> {{element.lastSms | date:'d-MMMM'}} </td>
-            </ng-container>
       
             <ng-container matColumnDef="onboarding">
               <th mat-header-cell *matHeaderCellDef>Onboarding Status</th>
@@ -120,33 +101,29 @@
               </td>
             </ng-container>
       
-            <ng-container matColumnDef="openOne">
-              <th mat-header-cell *matHeaderCellDef>Open One Off Work</th>
-              <td mat-cell *matCellDef="let element"> {{element.openOne}} </td>
+            <ng-container matColumnDef="saledate">
+              <th mat-header-cell *matHeaderCellDef>Date Of Sale</th>
+              <td mat-cell *matCellDef="let element"> {{element.saledate | date:'M/d/yyyy'}} </td>
             </ng-container>
       
-            <ng-container matColumnDef="openOff">
-              <th mat-header-cell *matHeaderCellDef>One Off	Reviewd Queue</th>
-              <td mat-cell *matCellDef="let element"> {{element.openOff}} </td>
+            <ng-container matColumnDef="package">
+              <th mat-header-cell *matHeaderCellDef>Package</th>
+              <td mat-cell *matCellDef="let element"> {{element.package}} </td>
+            </ng-container>
+      
+            <ng-container matColumnDef="quarters">
+              <th mat-header-cell *matHeaderCellDef>Bookkeeping Quarters</th>
+              <td mat-cell *matCellDef="let element"> {{element.quarters}}</td>
             </ng-container>
       
             <ng-container matColumnDef="frequency">
               <th mat-header-cell *matHeaderCellDef>Bookkeeping Frequency</th>
-              <td mat-cell *matCellDef="let element"> {{element.frequency}} Monthly</td>
+              <td mat-cell *matCellDef="let element"> {{element.frequency}}</td>
             </ng-container>
       
-            <ng-container matColumnDef="bookkeepingWeek">
-              <th mat-header-cell *matHeaderCellDef>Bookkeeping Week</th>
-              <td mat-cell *matCellDef="let element">  
-                <div class="flex items-center justify-center">Week 1
-                <mat-icon class="text-green-600 cursor-pointer" svgIcon="heroicons_outline:arrow-sm-up" ></mat-icon>
-                {{element.bookkeepingWeek | date: 'dd/MM/yyyy'}} 
-                </div>
-              </td>
-            </ng-container>
     
             <ng-container matColumnDef="bookKeepingStatus">
-              <th mat-header-cell *matHeaderCellDef>May Bookkeeping Status</th>
+              <th mat-header-cell *matHeaderCellDef>June Bookkeeping Status</th>
               <td mat-cell *matCellDef="let element" class="text-center">
                 <mat-icon *ngIf="!showStatusBtn" class="cursor-pointer" (click)="startUpdates('start', 'bookkeep')"
                   svgIcon="heroicons_outline:plus-sm">
@@ -164,42 +141,23 @@
               </td>
             </ng-container>
             
-            <ng-container matColumnDef="nextbookKeepingStatus">
-              <th mat-header-cell *matHeaderCellDef>Next BookKeeping Status</th>
-              <td mat-cell *matCellDef="let element"> {{element.nextbookKeepingStatus}} </td>
-            </ng-container>
-            
-            <ng-container matColumnDef="unreconciled">
-              <th mat-header-cell *matHeaderCellDef>Unreconciled Transactions</th>
-              <td mat-cell *matCellDef="let element">
-                <div class="flex items-center justify-center">
-                  {{element.unreconciled}} <mat-icon class="ml-2" svgIcon="feather:corner-up-right"></mat-icon>
-                </div>
-              </td>
-            </ng-container>
-            
-            <ng-container matColumnDef="last">
-              <th mat-header-cell *matHeaderCellDef>Last Transaction Date</th>
-              <td mat-cell *matCellDef="let element"> {{element.last | date:'M/d/yyyy'}} </td>
-            </ng-container>
-            
-            <ng-container matColumnDef="accountsWith">
-              <th mat-header-cell *matHeaderCellDef>Accounts With	No Recent Transactions</th>
-              <td mat-cell *matCellDef="let element">
-                <div class="flex items-center justify-center">
-                  {{element.accountsWith}}  <mat-icon class="ml-2" svgIcon="feather:corner-up-right"></mat-icon>
-                </div>
-              </td>
-            </ng-container>
-            
             <ng-container matColumnDef="vatRegistered">
               <th mat-header-cell *matHeaderCellDef>Vat Registered</th>
-              <td mat-cell *matCellDef="let element"><mat-icon class="text-red-600" svgIcon="heroicons_outline:x"></mat-icon> </td>
+              <td mat-cell *matCellDef="let element"><mat-icon class="text-green-600" svgIcon="heroicons_outline:check"></mat-icon> </td>
             </ng-container>
           
+            <ng-container matColumnDef="vatQuarter">
+              <th mat-header-cell *matHeaderCellDef>VAT Quarter</th>
+              <td mat-cell *matCellDef="let element">{{element.vatQuarter}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="vatscheme">
+              <th mat-header-cell *matHeaderCellDef>VAT Scheme</th>
+              <td mat-cell *matCellDef="let element">{{element.vatscheme}} </td>
+            </ng-container>
     
             <ng-container matColumnDef="vatStatus">
-              <th mat-header-cell *matHeaderCellDef>May VAT Status</th>
+              <th mat-header-cell *matHeaderCellDef>June VAT Status</th>
               <td mat-cell *matCellDef="let element" class="text-center">
                 <mat-icon *ngIf="!showVatStatusBtn" class="cursor-pointer" (click)="startUpdates('start','vat')"
                   svgIcon="heroicons_outline:plus-sm">
@@ -217,58 +175,25 @@
                 </div>
               </td>
             </ng-container>
-    
-            <ng-container matColumnDef="nextVatStatus">
-              <th mat-header-cell *matHeaderCellDef>Next VAT Status</th>
-              <td mat-cell *matCellDef="let element">{{element.nextVatStatus}} </td>
-            </ng-container>
-    
-            <ng-container matColumnDef="vatQuarter">
-              <th mat-header-cell *matHeaderCellDef>VAT Quarter</th>
-              <td mat-cell *matCellDef="let element">{{element.vatQuarter}} </td>
+              
+            <ng-container matColumnDef="eoy">
+              <th mat-header-cell *matHeaderCellDef>EOY Accountant</th>
+              <td mat-cell *matCellDef="let element">{{element.eoy}} </td>
             </ng-container>
               
-            <ng-container matColumnDef="lastVat">
-              <th mat-header-cell *matHeaderCellDef>Last VAT Submitted Xero</th>
-              <td mat-cell *matCellDef="let element">
-                <div class="flex items-center justify-center">
-                  {{element.lastVat}} <mat-icon class="ml-2" svgIcon="feather:corner-up-right"></mat-icon>
-                </div>
-              </td>
+            <ng-container matColumnDef="oneoff">
+              <th mat-header-cell *matHeaderCellDef>One-off Work</th>
+              <td mat-cell *matCellDef="let element">{{element.oneoff}} </td>
             </ng-container>
               
-            <ng-container matColumnDef="vat">
-              <th mat-header-cell *matHeaderCellDef>VAT Scheme On Xero</th>
-              <td mat-cell *matCellDef="let element"> 
-                <div class="flex items-center justify-center">
-                  {{element.vat}}<mat-icon class="ml-2" svgIcon="feather:corner-up-right"></mat-icon>
-                </div>
-              </td>
+            <ng-container matColumnDef="endDate">
+              <th mat-header-cell *matHeaderCellDef>Year end Date</th>
+              <td mat-cell *matCellDef="let element">{{element.endDate | date:'dd - MMM' }} </td>
             </ng-container>
               
-            <ng-container matColumnDef="payroll">
-              <th mat-header-cell *matHeaderCellDef>Payroll Journalled</th>
-              <td mat-cell *matCellDef="let element">
-                <div class="flex justify-center">
-                  <mat-icon  svgIcon="feather:corner-up-right"></mat-icon>
-                  <mat-icon class="text-green-600" svgIcon="heroicons_outline:check"></mat-icon>
-                </div>
-              </td>
-            </ng-container>
-              
-            <ng-container matColumnDef="management">
-              <th mat-header-cell *matHeaderCellDef>Management Report Frequency</th>
-              <td mat-cell *matCellDef="let element">{{element.management}} </td>
-            </ng-container>
-              
-            <ng-container matColumnDef="lastManagement">
-              <th mat-header-cell *matHeaderCellDef>Last Management Report Sent</th>
-              <td mat-cell *matCellDef="let element">{{element.lastManagement}} </td>
-            </ng-container>
-              
-            <ng-container matColumnDef="lastType">
-              <th mat-header-cell *matHeaderCellDef>Last Type of Management Report</th>
-              <td mat-cell *matCellDef="let element">{{element.lastType}} </td>
+            <ng-container matColumnDef="duedate">
+              <th mat-header-cell *matHeaderCellDef>Due Date</th>
+              <td mat-cell *matCellDef="let element">{{element.duedate | date:'dd - MMM' }} </td>
             </ng-container>
               
             <ng-container matColumnDef="accountsStatus1">
@@ -304,32 +229,14 @@
               </td>
             </ng-container>
               
-            <ng-container matColumnDef="chNextAccountsDate">
-              <th mat-header-cell *matHeaderCellDef>CH Next Accounts Date</th>
-              <td mat-cell *matCellDef="let element">
-                <div class="flex items-center justify-center">
-                  {{element.chNextAccountsDate}}
-                  <mat-icon class="text-green-600" svgIcon="heroicons_outline:arrow-sm-up" ></mat-icon>
-                  <div class="flex items-center justify-center">
-                    <a class="cursor-pointer" href="https://login.xero.com/identity/user/login" target="_blank" ><mat-icon svgIcon="feather:corner-up-right"></mat-icon></a>
-                    23/06/2022
-                  </div>
-                </div>
-              </td>
-            </ng-container>
-              
-            <ng-container matColumnDef="chConfirmatation">
-              <th mat-header-cell *matHeaderCellDef>CH Confirmatation Statement Due	</th>
-              <td mat-cell *matCellDef="let element">{{element.chConfirmatation}} </td>
-            </ng-container>
               
             <ng-container matColumnDef="number">
-              <th mat-header-cell *matHeaderCellDef>Number Of Directors</th>
+              <th mat-header-cell *matHeaderCellDef>Number Of Active Directors</th>
               <td mat-cell *matCellDef="let element">{{element.number}} </td>
             </ng-container>
               
             <ng-container matColumnDef="self1">
-              <th mat-header-cell *matHeaderCellDef>2021 Self Assessment Completed</th>
+              <th mat-header-cell *matHeaderCellDef>2021 Self Assessment Status</th>
               <td mat-cell *matCellDef="let element">
                 <div class="flex justify-center">
                   <mat-icon class="text-green-600" svgIcon="heroicons_outline:check"></mat-icon>
@@ -339,7 +246,7 @@
             </ng-container>
               
             <ng-container matColumnDef="self2">
-              <th mat-header-cell *matHeaderCellDef>2022 Self Assessment Completed</th>
+              <th mat-header-cell *matHeaderCellDef>2022 Self Assessment Status</th>
               <td mat-cell *matCellDef="let element">
                 <div class="flex justify-center">
                   <mat-icon class="text-red-600" svgIcon="heroicons_outline:x"></mat-icon>
@@ -348,22 +255,41 @@
               </td>
             </ng-container>
               
-            <ng-container matColumnDef="avgLast">
-              <th mat-header-cell *matHeaderCellDef>Average Last 3 Months Turnover</th>
-              <td mat-cell *matCellDef="let element">{{element.avgLast}} </td>
+           
+    
+            <ng-container matColumnDef="header-first-group">
+              <th mat-header-cell *matHeaderCellDef  class="font-extrabold text-left border-r-2" [attr.colspan]="4"> 
+                Basci Info 
+              </th>
             </ng-container>
-              
-            <ng-container matColumnDef="avgLast1">
-              <th mat-header-cell *matHeaderCellDef>Average Last 3 Months Transactions</th>
-              <td mat-cell *matCellDef="let element">{{element.avgLast1}} </td>
+            <ng-container matColumnDef="header-second-group">
+              <th mat-header-cell *matHeaderCellDef  class="font-extrabold text-left border-r-2" [attr.colspan]="4"> 
+                Package
+              </th>
             </ng-container>
-              
-            <ng-container matColumnDef="clientBilling">
-              <th mat-header-cell *matHeaderCellDef>Client Billing</th>
-              <td mat-cell *matCellDef="let element">{{element.clientBilling}} </td>
+            <ng-container matColumnDef="header-third-group">
+              <th mat-header-cell *matHeaderCellDef  class="font-extrabold text-left border-r-2" [attr.colspan]="3"> 
+                Bookkeeping
+              </th>
+            </ng-container>
+            <ng-container matColumnDef="header-forth-group">
+              <th mat-header-cell *matHeaderCellDef  class="font-extrabold text-left border-r-2" [attr.colspan]="4"> 
+                VAT
+              </th>
+            </ng-container>
+            <ng-container matColumnDef="header-fifth-group">
+              <th mat-header-cell *matHeaderCellDef  class="font-extrabold text-left border-r-2" [attr.colspan]="6"> 
+               Annual Accounts
+              </th>
+            </ng-container>
+            <ng-container matColumnDef="header-six-group">
+              <th mat-header-cell *matHeaderCellDef  class="font-extrabold text-left border-r-2" [attr.colspan]="3"> 
+               Self Assessments
+              </th>
             </ng-container>
     
-    
+            <tr mat-header-row *matHeaderRowDef="['header-first-group', 'header-second-group','header-third-group',
+            'header-forth-group','header-fifth-group','header-six-group']"></tr>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"  [ngClass]="{'suspended': row?.isSuspended}"></tr>
           </table>
