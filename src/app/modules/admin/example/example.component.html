@@ -148,18 +148,18 @@
             <ng-container matColumnDef="bookKeepingStatus">
               <th mat-header-cell *matHeaderCellDef>May Bookkeeping Status</th>
               <td mat-cell *matCellDef="let element" class="text-center">
-                <mat-icon *ngIf="!showStatusBtn" class="cursor-pointer" (click)="startUpdates('start')"
+                <mat-icon *ngIf="!showStatusBtn" class="cursor-pointer" (click)="startUpdates('start', 'bookkeep')"
                   svgIcon="heroicons_outline:plus-sm">
                 </mat-icon>
                 <div *ngIf="showStatusBtn" class="flex"> 
-                <button mat-icon-button>
-                  <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
-                  (click)="max > 0?openConfirmationDialog('book', max,element.bookKeepingStatus):startUpdates('end')"></mat-icon>
-                </button>
-                <button mat-raised-button [disabled]="element.isSuspended" [class]="max < element.bookKeepingStatus.length ?element.bookKeepingStatus[max].status:''" 
-                  (click)="max < element.bookKeepingStatus.length -1 ?getNextStatus('book', max,element.bookKeepingStatus):$event.stopPropagation()"> 
-                  {{max < element.bookKeepingStatus.length ?element.bookKeepingStatus[max].text:element.bookKeepingStatus[0].text}} 
-                </button>
+                  <button mat-icon-button>
+                    <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
+                    (click)="max > 0?openConfirmationDialog('book', max,element.bookKeepingStatus):startUpdates('end','bookkeep')"></mat-icon>
+                  </button>
+                  <button mat-raised-button [disabled]="element.isSuspended" [class]="max < element.bookKeepingStatus.length ?element.bookKeepingStatus[max].status:''" 
+                    (click)="max < element.bookKeepingStatus.length -1 ?getNextStatus('book', max,element.bookKeepingStatus):$event.stopPropagation()"> 
+                    {{max < element.bookKeepingStatus.length ?element.bookKeepingStatus[max].text:element.bookKeepingStatus[0].text}} 
+                  </button>
                 </div>
               </td>
             </ng-container>
@@ -201,7 +201,10 @@
             <ng-container matColumnDef="vatStatus">
               <th mat-header-cell *matHeaderCellDef>May VAT Status</th>
               <td mat-cell *matCellDef="let element" class="text-center">
-                <div class="flex">
+                <mat-icon *ngIf="!showVatStatusBtn" class="cursor-pointer" (click)="startUpdates('start','vat')"
+                  svgIcon="heroicons_outline:plus-sm">
+                </mat-icon>
+                <div *ngIf="showVatStatusBtn" class="flex">
                   <button mat-icon-button *ngIf="vatMax > 0" [ngClass]="{'hidden':allVisited && vatMax == 1}">
                     <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" (click)="openConfirmationDialog('vat', vatMax,element.vatStatus)"></mat-icon>
                   </button>

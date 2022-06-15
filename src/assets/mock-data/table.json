@@ -29,8 +29,7 @@
         { "id":2,"status": "start", "text":"VAT Return Sent to Accountatnt", "visited": false },
         { "id":3,"status": "start", "text":"VAT Reviewed by Accountatnt", "visited": false },
         { "id":4,"status": "in-progress", "text":"VAT Return sent to client", "visited": false },
-        { "id":5,"status": "in-progress", "text":"VAT Return confimed by client", "visited": false },
-        { "id":6,"status": "complete", "text":"VAT Return Filed", "visited": true }
+        { "id":5,"status": "complete", "text":"VAT Return Filed", "visited": true }
       ],
       "bookKeepingStatus": [
         {
@@ -72,22 +71,28 @@
       "lastManagement": "5/3/2022",
       "lastType": "Type 2",
       "accountsStatus1": [
-        { "id":1, "text":"Information Request sent to Client" , "visited": false },
-        { "id":2,"status": "start", "text":"Query Request sent to client" , "visited": false },
-        { "id":3,"status": "start", "text":"Work in progress" , "visited": false },
-        { "id":4,"status": "start", "text":"Accounts Reviews by Accountant" , "visited": false },
-        { "id":5,"status": "start", "text":"Review Complete" , "visited": false },
-        { "id":6,"status": "start", "text":"Accounts Sent to Client" , "visited": false },
-        { "id":7,"status": "complete", "text":"Accounts Filed" , "visited": true }
+        { "id":1, "text":"Annual Accounts Process Started" , "visited": false },
+        { "id":2, "text":"Information Requested" , "visited": false },
+        { "id":3, "status": "start", "text":"Information Request sent to Client" , "visited": false },
+        { "id":4,"status": "start", "text":"WIP - Accounts" , "visited": false },
+        { "id":5,"status": "start", "text":"Queries Requested" , "visited": false },
+        { "id":6,"status": "start", "text":"Query Request sent to client" , "visited": false },
+        { "id":7,"status": "in-progress", "text":"WIP - Accounts Completion" , "visited": false },
+        { "id":8,"status": "in-progress", "text":"Accounts Review by Accountant" , "visited": false },
+        { "id":9,"status": "in-progress", "text":"Accounts Sent to Client" , "visited": false },
+        { "id":10,"status": "complete", "text":"Accounts Filed" , "visited": true }
       ],
       "accountsStatus2": [
-        { "id":1, "text":"Information Request sent to Client" , "visited": false },
-        { "id":2,"status": "start", "text":"Query Request sent to client", "visited": false  },
-        { "id":3,"status": "start", "text":"Work in progress", "visited": false },
-        { "id":4,"status": "start", "text":"Accounts Reviews by Accountant", "visited": false  },
-        { "id":5,"status": "start", "text":"Review Complete", "visited": false  },
-        { "id":6,"status": "start", "text":"Accounts Sent to Client", "visited": false  },
-        { "id":7,"status": "complete", "text":"Accounts Filed", "visited": true  }
+        { "id":1, "text":"Annual Accounts Process Started" , "visited": false },
+        { "id":2, "text":"Information Requested" , "visited": false },
+        { "id":3, "status": "start", "text":"Information Request sent to Client" , "visited": false },
+        { "id":4,"status": "start", "text":"WIP - Accounts" , "visited": false },
+        { "id":5,"status": "start", "text":"Queries Requested" , "visited": false },
+        { "id":6,"status": "start", "text":"Query Request sent to client" , "visited": false },
+        { "id":7,"status": "in-progress", "text":"WIP - Accounts Completion" , "visited": false },
+        { "id":8,"status": "in-progress", "text":"Accounts Review by Accountant" , "visited": false },
+        { "id":9,"status": "in-progress", "text":"Accounts Sent to Client" , "visited": false },
+        { "id":10,"status": "complete", "text":"Accounts Filed" , "visited": true }
       ],
       "chNextAccountsDate": "30/11/21",
       "chConfirmatation": "7-May-22",
@@ -124,8 +129,7 @@
         { "id":2,"status": "start", "text":"VAT Return Sent to Accountatnt" },
         { "id":3,"status": "start", "text":"VAT Reviewed by Accountatnt" },
         { "id":4,"status": "in-progress", "text":"VAT Return sent to client" },
-        { "id":5,"status": "in-progress", "text":"VAT Return confimed by client" },
-        { "id":6,"status": "complete", "text":"VAT Return Filed" }
+        { "id":5,"status": "complete", "text":"VAT Return Filed" }
       ],
       "bookKeepingStatus": [
         {
@@ -167,22 +171,28 @@
       "lastManagement": "5/3/2022",
       "lastType": "Type 2",
       "accountsStatus1": [
-        { "id":1, "text":"Information Request sent to Client" },
-        { "id":2,"status": "start", "text":"Query Request sent to client" },
-        { "id":3,"status": "start", "text":"Work in progress" },
-        { "id":4,"status": "start", "text":"Accounts Reviews by Accountant" },
-        { "id":5,"status": "start", "text":"Review Complete" },
-        { "id":6,"status": "start", "text":"Accounts Sent to Client" },
-        { "id":7,"status": "complete", "text":"Accounts Filed" }
+        { "id":1, "text":"Annual Accounts Process Started" , "visited": false },
+        { "id":2, "text":"Information Requested" , "visited": false },
+        { "id":3, "status": "start", "text":"Information Request sent to Client" , "visited": false },
+        { "id":4,"status": "start", "text":"WIP - Accounts" , "visited": false },
+        { "id":5,"status": "start", "text":"Queries Requested" , "visited": false },
+        { "id":6,"status": "start", "text":"Query Request sent to client" , "visited": false },
+        { "id":7,"status": "in-progress", "text":"WIP - Accounts Completion" , "visited": false },
+        { "id":8,"status": "in-progress", "text":"Accounts Review by Accountant" , "visited": false },
+        { "id":9,"status": "in-progress", "text":"Accounts Sent to Client" , "visited": false },
+        { "id":10,"status": "complete", "text":"Accounts Filed" , "visited": true }
       ],
       "accountsStatus2": [
-        { "id":1, "text":"Information Request sent to Client" },
-        { "id":2,"status": "start", "text":"Query Request sent to client" },
-        { "id":3,"status": "start", "text":"Work in progress" },
-        { "id":4,"status": "start", "text":"Accounts Reviews by Accountant" },
-        { "id":5,"status": "start", "text":"Review Complete" },
-        { "id":6,"status": "start", "text":"Accounts Sent to Client" },
-        { "id":7,"status": "complete", "text":"Accounts Filed" }
+        { "id":1, "text":"Annual Accounts Process Started" , "visited": false },
+        { "id":2, "text":"Information Requested" , "visited": false },
+        { "id":3, "status": "start", "text":"Information Request sent to Client" , "visited": false },
+        { "id":4,"status": "start", "text":"WIP - Accounts" , "visited": false },
+        { "id":5,"status": "start", "text":"Queries Requested" , "visited": false },
+        { "id":6,"status": "start", "text":"Query Request sent to client" , "visited": false },
+        { "id":7,"status": "in-progress", "text":"WIP - Accounts Completion" , "visited": false },
+        { "id":8,"status": "in-progress", "text":"Accounts Review by Accountant" , "visited": false },
+        { "id":9,"status": "in-progress", "text":"Accounts Sent to Client" , "visited": false },
+        { "id":10,"status": "complete", "text":"Accounts Filed" , "visited": true }
       ],
       "chNextAccountsDate": "30/11/21",
       "chConfirmatation": "7-May-22",

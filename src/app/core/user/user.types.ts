@@ -28,27 +28,16 @@ export interface TableModel {
   unreconciled: number;
   accountsWith: number;
   vatRegistered: string;
-  bookKeepingStatus: [
-    {
-      id:number,
-      text:string,
-      status?:string,
-    }
-  ];
-  vATStatus: [
-    {
-      id:number,
-      text:string,
-      status?:string,
-    }
-  ];
-  accountsStatus1:[
-    {
-      id:number,
-      text:string,
-      status?:string,
-    }
-  ]
+  bookKeepingStatus: [stateStatusModel];
+  vATStatus: [stateStatusModel];
+  accountsStatus1:[stateStatusModel]
+}
+
+export interface stateStatusModel {
+  id:number,
+  text:string,
+  status?:string,
+  visited?:boolean,
 }
 
 export enum statusType {

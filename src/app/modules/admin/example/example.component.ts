@@ -32,6 +32,8 @@ export class ExampleComponent implements OnInit, OnDestroy {
   public pageState: ICalendarState;
   allVisited:boolean;
   showStatusBtn: boolean = false;
+  showVatStatusBtn: boolean = false;
+  setskippedStatus: boolean;
 
   private readonly destroyer$: Subject<void> = new Subject();
 
@@ -69,33 +71,42 @@ export class ExampleComponent implements OnInit, OnDestroy {
       this.openStatusJumpDialogue('setFirst');
     } else if(data === 'book' && statsuName[i].id === 11) {
       this.openStatusJumpDialogue('setSecond');
+    } else if(data === 'book' && this.setskippedStatus && (statsuName[i].id === 8 ||statsuName[i].id === 9 || statsuName[i].id === 10)) {
+      this.max = 10;
+    } else if(data === 'book' && this.setskippedStatus && (statsuName[i].id === 12 ||statsuName[i].id === 13 || statsuName[i].id === 14)) {
+      this.max = 14;
     } else {
       data === 'book'?this.max = i + 1:data === 'vat'? this.vatMax = i + 1:data === 'acc'?this.accountMax = i+1:this.accountNewMax = i + 1;
       this.triggerStatusSnackBar(statsuName[i + 1], data);
     }
   }
 
-  private getPreviosStatus(key, i): void {
-    key === 'book'?this.max = i - 1:key === 'vat'? this.vatMax = i-1:key === 'acc'?this.accountMax = i-1:this.accountNewMax =i-1;
+  private getPreviosStatus(key, i,statsuName): void {
+    if (key === 'book' &&  this.setskippedStatus && (statsuName[i].id === 8 ||statsuName[i].id === 9 || statsuName[i].id === 10)) {
+      this.max = 6;
+    } else if(key === 'book' &&  this.setskippedStatus && (statsuName[i].id === 12 ||statsuName[i].id === 13 || statsuName[i].id === 14)) {
+      this.max = 10;
+    } else {
+      key === 'book'?this.max = i - 1:key === 'vat'? this.vatMax = i-1:key === 'acc'?this.accountMax = i-1:this.accountNewMax =i-1;
+    }
   }
 
   public openConfirmationDialog(key, value, statsuName): void {
-    const dialogRef = this._fuseConfirmationService.open(
-      {
-        title : 'Are you sure?',
-        message : `This will revert to the previous task: ${statsuName[value - 1].text}`,
-        dismissible: true,
-        actions:{
-          confirm :{
-            show : true,
-            label: 'Yes',
-            color: 'warn'
-          }
+    const dialogRef = this._fuseConfirmationService.open({
+      title : 'Are you sure?',
+      message : `This will revert to the previous task: ${statsuName[value - 1].text}`,
+      dismissible: true,
+      actions:{
+        confirm :{
+          show : true,
+          label: 'Yes',
+          color: 'warn'
         }
-      });
+      }
+    });
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(result => {
       if(result === 'confirmed') {
-        this.getPreviosStatus(key, value);
+        this.getPreviosStatus(key, value, statsuName);
       }
     });
   }
@@ -131,7 +142,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   private getUsersStatusInfo(): void {
     this.userService.getUsersStatus().pipe(takeUntil(this.destroyer$))
     .subscribe(state => {
-      if(state) this.vatMax = state.order -1;
+      if(state) this.showVatStatusBtn = true, this.vatMax = state.order -1;
     });
   }
 
@@ -141,14 +152,19 @@ export class ExampleComponent implements OnInit, OnDestroy {
       data: set
     });
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(res => {
-      if(res) this.max = res.fetch.value;
+      if(res) {
+        this.max = res.fetch.value; 
+        this.setskippedStatus = true;
+      }
     });
   }
 
-  public startUpdates(key): void {
+  public startUpdates(key, status): void {
+    const messgae = key === 'start'?'Start Bookkeeping Process for Bespoke Alpha Solutions for May':'Cancel Bookkeeping Status for Bespoke Alpha Solutions for May';
+    const vatMessgae = key === 'start'?'Start VAT Process for Bespoke Alpha Solutions for May':'Cancel VAT Status for Bespoke Alpha Solutions for May';
     const dialogRef = this._fuseConfirmationService.open({
       title : 'Are you sure?',
-      message : key === 'start'?'Start Bookkeeping Process for Bespoke Alpha Solutions for May':'Cancel Bookkeeping Status for Bespoke Alpha Solutions for May',
+      message : status === 'bookkeep'?messgae:vatMessgae,
       dismissible: true,
       actions:{
         confirm :{
@@ -160,7 +176,16 @@ export class ExampleComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(result => {
       if(result === 'confirmed') {
-        key === 'start'?this.showStatusBtn = true: this.showStatusBtn = false;
+        if(status === 'bookkeep') {
+          key === 'start'?this.showStatusBtn = true: this.showStatusBtn = false;
+        } else {
+          if(key === 'start') {
+            this.showVatStatusBtn = true;
+            this.showStatusBtn = true;
+          } else {
+            this.showVatStatusBtn = false;
+          }
+        }
       }
     });
   }
