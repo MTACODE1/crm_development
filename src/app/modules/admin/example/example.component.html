@@ -41,7 +41,8 @@
         </div>
       </div>
       <div class="flex flex-col flex-auto overflow-x-auto">
-          <table class="min-w-240 overflow-y-visible"  mat-table  [dataSource]="userTableList| search: searchTerm">
+        <ng-container *ngIf="(userTableList | search : searchTerm) as clientResult">
+          <table class="min-w-240 overflow-y-visible"  mat-table  [dataSource]="clientResult">
             <ng-container matColumnDef="companyName" sticky>
               <th mat-header-cell *matHeaderCellDef class="pl-0"> Company Name </th>
               <td mat-cell *matCellDef="let element">
@@ -137,25 +138,29 @@
             <ng-container matColumnDef="bookkeepingWeek">
               <th mat-header-cell *matHeaderCellDef>Bookkeeping Week</th>
               <td mat-cell *matCellDef="let element">  
-               <div class="flex items-center justify-center">Week 1
+                <div class="flex items-center justify-center">Week 1
                 <mat-icon class="text-green-600 cursor-pointer" svgIcon="heroicons_outline:arrow-sm-up" ></mat-icon>
                 {{element.bookkeepingWeek | date: 'dd/MM/yyyy'}} 
-               </div>
+                </div>
               </td>
             </ng-container>
     
             <ng-container matColumnDef="bookKeepingStatus">
               <th mat-header-cell *matHeaderCellDef>May Bookkeeping Status</th>
               <td mat-cell *matCellDef="let element" class="text-center">
-               <div class="flex"> 
-                <button mat-icon-button *ngIf="max > 0 && max !== element.bookKeepingStatus.length -1" >
-                  <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" (click)="openConfirmationDialog('book', max,element.bookKeepingStatus)"></mat-icon>
+                <mat-icon *ngIf="!showStatusBtn" class="cursor-pointer" (click)="startUpdates('start')"
+                  svgIcon="heroicons_outline:plus-sm">
+                </mat-icon>
+                <div *ngIf="showStatusBtn" class="flex"> 
+                <button mat-icon-button>
+                  <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
+                  (click)="max > 0?openConfirmationDialog('book', max,element.bookKeepingStatus):startUpdates('end')"></mat-icon>
                 </button>
                 <button mat-raised-button [disabled]="element.isSuspended" [class]="max < element.bookKeepingStatus.length ?element.bookKeepingStatus[max].status:''" 
                   (click)="max < element.bookKeepingStatus.length -1 ?getNextStatus('book', max,element.bookKeepingStatus):$event.stopPropagation()"> 
                   {{max < element.bookKeepingStatus.length ?element.bookKeepingStatus[max].text:element.bookKeepingStatus[0].text}} 
                 </button>
-               </div>
+                </div>
               </td>
             </ng-container>
             
@@ -357,6 +362,10 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"  [ngClass]="{'suspended': row?.isSuspended}"></tr>
           </table>
+          <p *ngIf="!clientResult.length" class="p-4 text-center font-semibold ">
+            Searched Result Not Found !!!
+          </p>  
+        </ng-container>
       </div>
   </div>
   </div>

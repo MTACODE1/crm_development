@@ -31,6 +31,8 @@ export class ExampleComponent implements OnInit, OnDestroy {
   date = new FormControl(moment());
   public pageState: ICalendarState;
   allVisited:boolean;
+  showStatusBtn: boolean = false;
+
   private readonly destroyer$: Subject<void> = new Subject();
 
   constructor(private userService: UserService, private _fuseConfirmationService: FuseConfirmationService,
@@ -61,7 +63,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   }
 
   public getNextStatus(data, i,statsuName): void {
-    statsuName[i].visited = true
+    statsuName[i].visited = true;
     this.allVisited = statsuName.every(item => item.visited);
     if (data === 'book' && statsuName[i].id === 7 ) {
       this.openStatusJumpDialogue('setFirst');
@@ -140,6 +142,26 @@ export class ExampleComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(res => {
       if(res) this.max = res.fetch.value;
+    });
+  }
+
+  public startUpdates(key): void {
+    const dialogRef = this._fuseConfirmationService.open({
+      title : 'Are you sure?',
+      message : key === 'start'?'Start Bookkeeping Process for Bespoke Alpha Solutions for May':'Cancel Bookkeeping Status for Bespoke Alpha Solutions for May',
+      dismissible: true,
+      actions:{
+        confirm :{
+          show : true,
+          label:  key === 'start'?'Start':'Yes',
+          color: 'warn'
+        }
+      },
+    });
+    dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(result => {
+      if(result === 'confirmed') {
+        key === 'start'?this.showStatusBtn = true: this.showStatusBtn = false;
+      }
     });
   }
 
