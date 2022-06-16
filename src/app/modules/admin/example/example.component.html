@@ -130,7 +130,7 @@
                     (click)="max < element.bookKeepingStatus.length -1 ?getNextStatus('book', max,element.bookKeepingStatus):$event.stopPropagation()"> 
                     {{max < element.bookKeepingStatus.length ?element.bookKeepingStatus[max].text:element.bookKeepingStatus[0].text}} 
                   </button>
-                  <mat-icon svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                  <mat-icon appClassChange svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
                 </div>
               </td>
             </ng-container>
@@ -280,12 +280,17 @@
                     <i></i>
                   </label>
                 </div>
-               
               </th>
             </ng-container>
             <ng-container matColumnDef="header-fifth-group">
               <th mat-header-cell *matHeaderCellDef  class="font-extrabold text-left border-r border-t" [attr.colspan]="6"> 
-               Annual Accounts
+               <div class="flex items-center">
+                <p class="mr-2"> Annual Accounts </p>
+                <label class="form-switch">
+                  <input type="checkbox" [(ngModel)]="statusSettings.annual_status" (ngModelChange)="subColHide($event, 'annual')">
+                  <i></i>
+                </label>
+              </div>
               </th>
             </ng-container>
             <ng-container matColumnDef="header-six-group">

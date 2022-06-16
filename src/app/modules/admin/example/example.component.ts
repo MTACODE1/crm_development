@@ -132,6 +132,9 @@ export class ExampleComponent implements OnInit, OnDestroy {
       } else if(name === 'vat') {
         const bookColumns = ['vatRegistered','vatQuarter','vatscheme','vatStatus'];
         this.displayedColumns = this.displayedColumns.filter(item => !bookColumns.includes(item));
+      } else if(name === 'annual') {
+        const bookColumns = ['eoy','oneoff','endDate','duedate','accountsStatus1','accountsStatus2'];
+        this.displayedColumns = this.displayedColumns.filter(item => !bookColumns.includes(item));
       }
     }
   }
