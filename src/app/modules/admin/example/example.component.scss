@@ -3,6 +3,25 @@
     .mat-header-cell {
       font-size: 14px;
       padding: 0 8px 4px;
+      
+      &.info-col {
+        background: #efefef;
+      }
+      &.package-col {
+        background: #01950114;
+      }
+      &.book-col {
+        background: #f9e92a17;
+      }
+      &.vat-col {
+        background: #f9820714;
+      }
+      &.account-col {
+        background: #ff4aa412;
+      }
+      &.assessment-col {
+        background: #c2f57424;
+      }
     }
     .mat-cell{
       font-size: 13px;
@@ -69,5 +88,13 @@
     font-size: 1.2em;
     color: #848484;
     cursor: pointer;
+  }
+}
+.blink {
+  animation: blinker 2s linear infinite;
+}
+@keyframes blinker {
+  50% {
+    opacity: 0;
   }
 }

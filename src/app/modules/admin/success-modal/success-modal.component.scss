@@ -22,9 +22,21 @@
   }
 }
 
-::ng-deep .default-snack-bar {
-  // background: #15dfffb8 !important;
-  background: #00a1b19e !important;
-  padding: 10px;
-  border-radius: 8px;
+::ng-deep {
+  .mat-snack-bar-container {
+     // background: #00a1b19e !important;
+    padding: 10px;
+    border-radius: 8px;
+    &.book-snack-bar {
+      background: #dbcb0c !important;
+      // background: #bfb214fa !important;
+    }
+    &.vat-snack-bar {
+      background: #f37d04b3  !important;
+    }
+    &.acc-snack-bar {
+      background: #bb2f74a6 !important;
+    }
+  }
+
 }

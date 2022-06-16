@@ -10,6 +10,7 @@ import { SuccessModalComponent } from '../success-modal/success-modal.component'
 import { TableModel } from './../../../core/user/user.types';
 import { BookkeepingStatusComponent } from './bookkeeping-status/bookkeeping-status.component';
 import { OnbordingFormComponent } from './onbording-form/onbording-form.component';
+import { StatusNotifications } from './statuses.model';
 
 @Component({
   selector : 'example',
@@ -34,6 +35,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   showStatusBtn: boolean = false;
   showVatStatusBtn: boolean = false;
   setskippedStatus: boolean;
+  statusSettings: StatusNotifications;
 
   private readonly destroyer$: Subject<void> = new Subject();
 
@@ -42,6 +44,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.displayedColumns = this.userService.getColumns();
+    this.statusSettings = new StatusNotifications();
     this.getTableDetails();
     this.getUsersStatusInfo();
     this.getPageState();
@@ -71,6 +74,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
       this.openStatusJumpDialogue('setFirst');
     } else if(data === 'book' && this.setskippedStatus && (statsuName[i].id === 9 ||statsuName[i].id === 10 || statsuName[i].id === 11)) {
       this.max = 11;
+      this.triggerStatusSnackBar(statsuName[11], data);
     }  else {
       data === 'book'?this.max = i + 1:data === 'vat'? this.vatMax = i + 1:data === 'acc'?this.accountMax = i+1:this.accountNewMax = i + 1;
       this.triggerStatusSnackBar(statsuName[i + 1], data);
@@ -78,7 +82,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   }
 
   private getPreviosStatus(key, i,statsuName): void {
-    if (key === 'book' &&  this.setskippedStatus && (statsuName[i].id === 9 ||statsuName[i].id === 10 || statsuName[i].id === 11)) {
+    if (key === 'book' && this.setskippedStatus && statsuName[i].id === 12) {
       this.max = 7;
     } else {
       key === 'book'?this.max = i - 1:key === 'vat'? this.vatMax = i-1:key === 'acc'?this.accountMax = i-1:this.accountNewMax =i-1;
@@ -86,9 +90,13 @@ export class ExampleComponent implements OnInit, OnDestroy {
   }
 
   public openConfirmationDialog(key, value, statsuName): void {
+    let previous;
+    if(key === 'book' && this.setskippedStatus && statsuName[value].id === 12) {
+      previous = 7;
+    }
     const dialogRef = this._fuseConfirmationService.open({
       title : 'Are you sure?',
-      message : `This will revert to the previous task: ${statsuName[value - 1].text}`,
+      message : `This will revert to the previous task: ${previous=== undefined?statsuName[value - 1].text:statsuName[previous].text}`,
       dismissible: true,
       actions:{
         confirm :{
@@ -106,11 +114,25 @@ export class ExampleComponent implements OnInit, OnDestroy {
   }
 
 
-  statusChanged(toggle:boolean): void {
+  public statusChanged(toggle:boolean): void {
     if(toggle) {
       this.displayedColumns = ['companyName','onboarding','bookKeepingStatus','vatStatus','accountsStatus1','accountsStatus2'];
     } else {
       this.displayedColumns = this.userService.getColumns();
+    }
+  }
+
+  public subColHide(toggle:boolean, name): void {
+    if(toggle) {
+      this.displayedColumns = this.userService.getColumns();
+    } else {
+      if(name === 'book') {
+        const bookColumns = ['bookkeeper','completionweek','bookKeepingStatus'];
+        this.displayedColumns = this.displayedColumns.filter(item => !bookColumns.includes(item));
+      } else if(name === 'vat') {
+        const bookColumns = ['vatRegistered','vatQuarter','vatscheme','vatStatus'];
+        this.displayedColumns = this.displayedColumns.filter(item => !bookColumns.includes(item));
+      }
     }
   }
 
@@ -127,7 +149,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
     const snackBarParams: MatSnackBarConfig = {
       horizontalPosition: 'right',
       verticalPosition: 'bottom',
-      panelClass: 'default-snack-bar',
+      panelClass: plan == 'book'?'book-snack-bar':plan == 'vat'?'vat-snack-bar':plan == 'acc' || plan == 'accNew'?'acc-snack-bar':'default-snack-bar',
       data: { item: data, plan: plan }
     };
     this.snackBar.openFromComponent(SuccessModalComponent, snackBarParams);
@@ -149,6 +171,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
       if(res) {
         this.max = res.fetch.value; 
         this.setskippedStatus = true;
+        this.triggerStatusSnackBar(res.fetch, 'book');
       }
     });
   }

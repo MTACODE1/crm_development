@@ -6,7 +6,7 @@
   <mat-radio-group color="primary" class="flex flex-col">
     <mat-radio-button class="mb-3 mr-3" *ngFor="let section of optionOne" 
       [value]="section.value" (change)="radioChange(section)">
-      {{section.name}}
+      {{section.text}}
     </mat-radio-button>
   </mat-radio-group>
 </mat-dialog-content>

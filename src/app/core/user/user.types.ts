@@ -38,8 +38,8 @@ export interface stateStatusModel {
 }
 
 export enum statusType {
-  'book' = 'BookKeeping Status',
-  'vat' = 'VAT Return Status',
-  'acc' = '2021 Accounts Status',
-  'accNew' ='2022 Accounts Status',
+  book = 'Bookkeeping Status',
+  vat = 'VAT Return Status',
+  acc = '2021 Accounts Status',
+  accNew ='2022 Accounts Status',
 }
