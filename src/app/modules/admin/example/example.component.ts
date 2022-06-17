@@ -256,7 +256,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
 
   public editAssessment() {
     const dialogRef = this.dialog.open(AssessmentStatusComponent, {
-      width: '40vw',
+      width: '50vw',
       // data: set
     });
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(result => {
