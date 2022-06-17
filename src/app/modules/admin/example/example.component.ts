@@ -8,6 +8,7 @@ import * as moment from "moment";
 import { Subject, takeUntil } from 'rxjs';
 import { SuccessModalComponent } from '../success-modal/success-modal.component';
 import { TableModel } from './../../../core/user/user.types';
+import { AssessmentStatusComponent } from './assessment-status/assessment-status.component';
 import { BookkeepingStatusComponent } from './bookkeeping-status/bookkeeping-status.component';
 import { OnbordingFormComponent } from './onbording-form/onbording-form.component';
 import { StatusNotifications } from './statuses.model';
@@ -116,7 +117,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
 
   public statusChanged(toggle:boolean): void {
     if(toggle) {
-      this.displayedColumns = ['companyName','onboarding','bookKeepingStatus','vatStatus','accountsStatus1','accountsStatus2'];
+      this.displayedColumns = ['companyName','onboarding','bookKeepingStatus','vatStatus','accountsStatus1','accountsStatus2','self1','self2'];
     } else {
       this.displayedColumns = this.userService.getColumns();
     }
@@ -237,6 +238,16 @@ export class ExampleComponent implements OnInit, OnDestroy {
     };
     this.userService.setConfig(params);
     this.date.setValue(this.pageState.selectedDate);
+  }
+
+  public editAssessment() {
+    const dialogRef = this.dialog.open(AssessmentStatusComponent, {
+      width: '40vw',
+      // data: set
+    });
+    dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(result => {
+     console.log(result);
+    });
   }
  
 }

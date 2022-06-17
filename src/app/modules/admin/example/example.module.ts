@@ -14,6 +14,8 @@ import { OnbordingFormComponent } from './onbording-form/onbording-form.componen
 import { MomentDateAdapter} from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { ClassChangeDirective } from './class-change.directive';
+import { AssessmentStatusComponent } from './assessment-status/assessment-status.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -44,6 +46,8 @@ const exampleRoutes: Route[] = [
     ExampleComponent,
     OnbordingFormComponent,
     BookkeepingStatusComponent,
+    ClassChangeDirective,
+    AssessmentStatusComponent,
   ],
   imports: [
     SharedModule,

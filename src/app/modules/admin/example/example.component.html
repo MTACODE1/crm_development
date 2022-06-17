@@ -233,7 +233,7 @@
               <td mat-cell *matCellDef="let element">
                 <div class="flex justify-center">
                   <mat-icon class="text-green-600" svgIcon="heroicons_outline:check"></mat-icon>
-                  <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon> 
+                  <mat-icon class="cursor-pointer" svgIcon="heroicons_outline:pencil" (click)="editAssessment()"></mat-icon> 
                 </div>
               </td>
             </ng-container>
@@ -243,7 +243,7 @@
               <td mat-cell *matCellDef="let element">
                 <div class="flex justify-center">
                   <mat-icon class="text-red-600" svgIcon="heroicons_outline:x"></mat-icon>
-                  <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon> 
+                  <mat-icon class="cursor-pointer" svgIcon="heroicons_outline:pencil" (click)="editAssessment()"></mat-icon> 
                 </div>
               </td>
             </ng-container>
