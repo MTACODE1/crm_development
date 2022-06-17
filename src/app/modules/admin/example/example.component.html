@@ -130,7 +130,7 @@
                     (click)="max < element.bookKeepingStatus.length -1 ?getNextStatus('book', max,element.bookKeepingStatus):$event.stopPropagation()"> 
                     {{max < element.bookKeepingStatus.length ?element.bookKeepingStatus[max].text:element.bookKeepingStatus[0].text}} 
                   </button>
-                  <mat-icon appClassChange svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                  <mat-icon [ngClass]="{'badge':!element.bookKeepingStatus[max]?.visited}" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
                 </div>
               </td>
             </ng-container>
@@ -156,8 +156,8 @@
                 <mat-icon *ngIf="!showVatStatusBtn" class="cursor-pointer" (click)="startUpdates('start','vat')"
                   svgIcon="heroicons_outline:plus-sm">
                 </mat-icon>
-                <div *ngIf="showVatStatusBtn" class="flex">
-                  <button mat-icon-button >
+                <div *ngIf="showVatStatusBtn" class="flex items-center">
+                  <button mat-icon-button > 
                     <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
                       (click)="vatMax > 0?openConfirmationDialog('vat', vatMax,element.vatStatus):startUpdates('end','vat')">
                     </mat-icon>
@@ -166,6 +166,7 @@
                     (click)="vatMax < element.vatStatus.length-1 ?getNextStatus('vat',vatMax,element.vatStatus):$event.stopPropagation()"> 
                     {{vatMax < element.vatStatus.length ?element.vatStatus[vatMax].text:element.vatStatus[0].text}} 
                   </button>
+                  <mat-icon [ngClass]="{'badge':!element.vatStatus[vatMax]?.visited}" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
                 </div>
               </td>
             </ng-container>
@@ -196,7 +197,7 @@
                 <mat-icon *ngIf="!showAccStatusBtn" class="cursor-pointer" (click)="startUpdates('start','acc')"
                 svgIcon="heroicons_outline:plus-sm">
               </mat-icon>
-                <div *ngIf="showAccStatusBtn" class="flex">
+                <div *ngIf="showAccStatusBtn" class="flex items-center">
                   <button mat-icon-button *ngIf="accountMax > 0" [ngClass]="{'hidden':allVisited && accountMax == 1}">
                     <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
                     (click)="openConfirmationDialog('acc', accountMax,element.accountsStatus1)"></mat-icon>
@@ -205,6 +206,7 @@
                   (click)="accountMax < element.accountsStatus1.length-1 ?getNextStatus('acc',accountMax,element.accountsStatus1):$event.stopPropagation()"> 
                   {{accountMax < element.accountsStatus1.length ?element.accountsStatus1[accountMax].text:element.accountsStatus1[0].text}} 
                 </button>
+                <mat-icon [ngClass]="{'badge':!element.accountsStatus1[accountMax]?.visited}" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
                 </div>
               </td>
             </ng-container>
@@ -215,7 +217,7 @@
                 <mat-icon *ngIf="!showAcc2StatusBtn" class="cursor-pointer" (click)="startUpdates('start','accNew')"
                 svgIcon="heroicons_outline:plus-sm">
                </mat-icon>
-                <div *ngIf="showAcc2StatusBtn" class="flex">
+                <div *ngIf="showAcc2StatusBtn" class="flex items-center">
                   <button mat-icon-button *ngIf="accountNewMax > 0" [ngClass]="{'hidden':allVisited && accountNewMax == 1}">
                     <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
                     (click)="openConfirmationDialog('accNew', accountNewMax,element.accountsStatus2)"></mat-icon>
@@ -224,6 +226,7 @@
                   (click)="accountNewMax < element.accountsStatus2.length-1 ?getNextStatus('accNew',accountNewMax,element.accountsStatus2):$event.stopPropagation()"> 
                   {{accountNewMax < element.accountsStatus2.length ?element.accountsStatus2[accountNewMax].text:element.accountsStatus2[0].text}} 
                 </button>
+                <mat-icon [ngClass]="{'badge':!element.accountsStatus2[accountNewMax]?.visited}" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
                 </div>
               </td>
             </ng-container>
