@@ -1,8 +1,8 @@
+import { InlineSVGModule } from 'ng-inline-svg';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { TaskListRoutingModule } from './task-list-routing.module';
 import { TaskListComponent } from './task-list.component';
 
@@ -11,8 +11,8 @@ import { TaskListComponent } from './task-list.component';
   declarations:[TaskListComponent],
   imports: [
     CommonModule,
-    MatSidenavModule,
     MatIconModule,
+    InlineSVGModule,
     MatButtonModule,
     TaskListRoutingModule
   ]

@@ -52,14 +52,4 @@ export class TaskListComponent implements OnInit {
     return item.id || index;
   }
 
-  public createTask(type: 'task' | 'section') {
-
-  }
-
-  dropped(event: CdkDragDrop<Task[]>): void {
-      // Move the item in the array
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-
-  }
-
 }
