@@ -193,7 +193,10 @@
             <ng-container matColumnDef="accountsStatus1">
               <th mat-header-cell *matHeaderCellDef class="account-col">2021 Accounts Status</th>
               <td mat-cell *matCellDef="let element">
-                <div class="flex">
+                <mat-icon *ngIf="!showAccStatusBtn" class="cursor-pointer" (click)="startUpdates('start','acc')"
+                svgIcon="heroicons_outline:plus-sm">
+              </mat-icon>
+                <div *ngIf="showAccStatusBtn" class="flex">
                   <button mat-icon-button *ngIf="accountMax > 0" [ngClass]="{'hidden':allVisited && accountMax == 1}">
                     <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
                     (click)="openConfirmationDialog('acc', accountMax,element.accountsStatus1)"></mat-icon>
@@ -208,8 +211,11 @@
               
             <ng-container matColumnDef="accountsStatus2">
               <th mat-header-cell *matHeaderCellDef class="account-col">2022 Accounts Status</th>
-              <td mat-cell *matCellDef="let element">
-                <div class="flex">
+              <td mat-cell *matCellDef="let element"> 
+                <mat-icon *ngIf="!showAcc2StatusBtn" class="cursor-pointer" (click)="startUpdates('start','accNew')"
+                svgIcon="heroicons_outline:plus-sm">
+               </mat-icon>
+                <div *ngIf="showAcc2StatusBtn" class="flex">
                   <button mat-icon-button *ngIf="accountNewMax > 0" [ngClass]="{'hidden':allVisited && accountNewMax == 1}">
                     <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
                     (click)="openConfirmationDialog('accNew', accountNewMax,element.accountsStatus2)"></mat-icon>

@@ -35,6 +35,8 @@ export class ExampleComponent implements OnInit, OnDestroy {
   allVisited:boolean;
   showStatusBtn: boolean = false;
   showVatStatusBtn: boolean = false;
+  showAccStatusBtn: boolean = false;
+  showAcc2StatusBtn: boolean = false;
   setskippedStatus: boolean;
   statusSettings: StatusNotifications;
 
@@ -183,9 +185,10 @@ export class ExampleComponent implements OnInit, OnDestroy {
   public startUpdates(key, status): void {
     const messgae = key === 'start'?'Start Bookkeeping Process for Bespoke Alpha Solutions for May':'Cancel Bookkeeping Status for Bespoke Alpha Solutions for May';
     const vatMessgae = key === 'start'?'Start VAT Process for Bespoke Alpha Solutions for May':'Cancel VAT Status for Bespoke Alpha Solutions for May';
+    const accMessgae = key === 'start'?'Start Accounts Process for Bespoke Alpha Solutions for May':'';
     const dialogRef = this._fuseConfirmationService.open({
       title : 'Are you sure?',
-      message : status === 'bookkeep'?messgae:vatMessgae,
+      message : status === 'bookkeep'?messgae:status === 'vat'?vatMessgae:accMessgae,
       dismissible: true,
       actions:{
         confirm :{
@@ -199,13 +202,17 @@ export class ExampleComponent implements OnInit, OnDestroy {
       if(result === 'confirmed') {
         if(status === 'bookkeep') {
           key === 'start'?this.showStatusBtn = true: this.showStatusBtn = false;
-        } else {
+        } else if(status === 'vat') {
           if(key === 'start') {
             this.showVatStatusBtn = true;
             this.showStatusBtn = true;
           } else {
             this.showVatStatusBtn = false;
           }
+        } else if(status === 'acc') {
+          this.showAccStatusBtn = true;
+        } else {
+          this.showAcc2StatusBtn = true;
         }
       }
     });
