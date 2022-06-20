@@ -11,7 +11,6 @@ import { TableModel } from './../../../core/user/user.types';
 import { AssessmentStatusComponent } from './assessment-status/assessment-status.component';
 import { BookkeepingStatusComponent } from './bookkeeping-status/bookkeeping-status.component';
 import { OnbordingFormComponent } from './onbording-form/onbording-form.component';
-import * as $ from 'jquery';
 
 @Component({
   selector : 'example',
@@ -38,6 +37,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   showAccStatusBtn: boolean = false;
   showAcc2StatusBtn: boolean = false;
   setskippedStatus: boolean;
+  classApplied: boolean = false;
 
   private readonly destroyer$: Subject<void> = new Subject();
 
@@ -70,10 +70,6 @@ export class ExampleComponent implements OnInit, OnDestroy {
 
   public getNextStatus(data, i,statsuName): void {
     statsuName[i].visited = true;
-    $('.badge').addClass('blink').delay(200).queue(function(next){
-      $(this).removeClass('blink')
-      next();
-    })
     this.allVisited = statsuName.every(item => item.visited);
     if (data === 'book' && statsuName[i].id === 8 ) {
       this.openStatusJumpDialogue('setFirst');
@@ -84,8 +80,10 @@ export class ExampleComponent implements OnInit, OnDestroy {
       data === 'book'?this.max = i + 1:data === 'vat'? this.vatMax = i + 1:data === 'acc'?this.accountMax = i+1:this.accountNewMax = i + 1;
       this.triggerStatusSnackBar(statsuName[i + 1], data);
     }
+  }
 
-   
+  public toggleClass(): void {
+    this.classApplied = !this.classApplied;
   }
 
   private getPreviosStatus(key, i,statsuName): void {

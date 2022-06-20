@@ -130,7 +130,7 @@
                     (click)="max < element.bookKeepingStatus.length -1 ?getNextStatus('book', max,element.bookKeepingStatus):$event.stopPropagation()"> 
                     {{max < element.bookKeepingStatus.length ?element.bookKeepingStatus[max].text:element.bookKeepingStatus[0].text}} 
                   </button>
-                  <mat-icon [ngClass]="{'badge':!element.bookKeepingStatus[max]?.visited}" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                  <mat-icon [class.blink]="classApplied" (click)="toggleClass()" class="cursor-pointer" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
                 </div>
               </td>
             </ng-container>
@@ -166,7 +166,7 @@
                     (click)="vatMax < element.vatStatus.length-1 ?getNextStatus('vat',vatMax,element.vatStatus):$event.stopPropagation()"> 
                     {{vatMax < element.vatStatus.length ?element.vatStatus[vatMax].text:element.vatStatus[0].text}} 
                   </button>
-                  <mat-icon [ngClass]="{'badge':!element.vatStatus[vatMax]?.visited}" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                  <mat-icon [class.blink]="classApplied" (click)="toggleClass()" class="cursor-pointer" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
                 </div>
               </td>
             </ng-container>
@@ -210,7 +210,7 @@
                   (click)="accountMax < element.accountsStatus1.length-1 ?getNextStatus('acc',accountMax,element.accountsStatus1):$event.stopPropagation()"> 
                   {{accountMax < element.accountsStatus1.length ?element.accountsStatus1[accountMax].text:element.accountsStatus1[0].text}} 
                 </button>
-                <mat-icon [ngClass]="{'badge':!element.accountsStatus1[accountMax]?.visited}" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                <mat-icon [class.blink]="classApplied" (click)="toggleClass()" class="cursor-pointer" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
                 </div>
               </td>
             </ng-container>
@@ -230,7 +230,7 @@
                   (click)="accountNewMax < element.accountsStatus2.length-1 ?getNextStatus('accNew',accountNewMax,element.accountsStatus2):$event.stopPropagation()"> 
                   {{accountNewMax < element.accountsStatus2.length ?element.accountsStatus2[accountNewMax].text:element.accountsStatus2[0].text}} 
                 </button>
-                <mat-icon [ngClass]="{'badge':!element.accountsStatus2[accountNewMax]?.visited}" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                <mat-icon [class.blink]="classApplied" (click)="toggleClass()" class="cursor-pointer" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
                 </div>
               </td>
             </ng-container>
