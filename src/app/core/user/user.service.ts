@@ -60,9 +60,8 @@ export class UserService {
 
   getColumns() {
     return ['companyName', 'accountant', 'companyType', 'onboarding','saledate','package','quarters','frequency', 'bookkeeper', 'completionweek',
-      'bookKeepingStatus', 'vatRegistered','vatQuarter', 'vatscheme','vatStatus',
-      'eoy', 'oneoff', 'endDate', 'duedate', 'accountsStatus1', 'accountsStatus2',
-       'number', 'self1', 'self2']
+      'bookKeepingStatus', 'vatRegistered','vatQuarter', 'vatscheme','vatStatus','eoy', 'oneoff', 'endDate', 'duedate', 
+      'accountsStatus1', 'accountsStatus2', 'number', 'self1', 'self2'];
   }
 
   public setUsersStatus(data): void {

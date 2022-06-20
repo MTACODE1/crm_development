@@ -134,17 +134,26 @@ export class ExampleComponent implements OnInit, OnDestroy {
 
   public subColHide(toggle:boolean, name): void {
     if(toggle) {
-      this.displayedColumns = this.userService.getColumns();
+      if(name === 'book') {
+        const bookColumns = ['bookkeeper','completionweek','bookKeepingStatus'];
+        this.displayedColumns = this.displayedColumns.slice(0, 8).concat(bookColumns, this.displayedColumns.slice(8, this.displayedColumns.length));
+      } else if(name === 'vat') {
+        const vatColumns = ['vatRegistered','vatQuarter','vatscheme','vatStatus'];
+        this.displayedColumns = this.displayedColumns.slice(0, 11).concat(vatColumns, this.displayedColumns.slice(11, this.displayedColumns.length));
+      } else if(name === 'annual') {
+        const annualColumns = ['eoy','oneoff','endDate','duedate','accountsStatus1','accountsStatus2'];
+        this.displayedColumns = this.displayedColumns.slice(0, 15).concat(annualColumns, this.displayedColumns.slice(15, this.displayedColumns.length));
+      }
     } else {
       if(name === 'book') {
         const bookColumns = ['bookkeeper','completionweek','bookKeepingStatus'];
         this.displayedColumns = this.displayedColumns.filter(item => !bookColumns.includes(item));
       } else if(name === 'vat') {
-        const bookColumns = ['vatRegistered','vatQuarter','vatscheme','vatStatus'];
-        this.displayedColumns = this.displayedColumns.filter(item => !bookColumns.includes(item));
+        const vatColumns = ['vatRegistered','vatQuarter','vatscheme','vatStatus'];
+        this.displayedColumns = this.displayedColumns.filter(item => !vatColumns.includes(item));
       } else if(name === 'annual') {
-        const bookColumns = ['eoy','oneoff','endDate','duedate','accountsStatus1','accountsStatus2'];
-        this.displayedColumns = this.displayedColumns.filter(item => !bookColumns.includes(item));
+        const annualColumns = ['eoy','oneoff','endDate','duedate','accountsStatus1','accountsStatus2'];
+        this.displayedColumns = this.displayedColumns.filter(item => !annualColumns.includes(item));
       }
     }
   }
