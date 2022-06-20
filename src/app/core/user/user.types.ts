@@ -42,4 +42,5 @@ export enum statusType {
   vat = 'VAT Return Status',
   acc = '2021 Accounts Status',
   accNew ='2022 Accounts Status',
+  self ='Self Assessment Status',
 }

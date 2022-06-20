@@ -12,18 +12,38 @@
       <td>Mr James Duffy</td>
       <td>12/5/2017</td>
       <td>
-        <mat-icon class="cursor-pointer"
+        <mat-icon *ngIf="!showStatusBtn" class="cursor-pointer" (click)="startUpdates('start')"
         svgIcon="heroicons_outline:plus-sm">
       </mat-icon>
+      <div *ngIf="showStatusBtn" class="flex justify-center"> 
+        <button mat-icon-button>
+          <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
+          (click)="max > 0?openConfirmationDialog(max,tasks[0].bookKeepingStatus):startUpdates('end')"></mat-icon>
+        </button>
+        <button  mat-raised-button  [class]="max < tasks[0].bookKeepingStatus.length ?tasks[0].bookKeepingStatus[max].status:''" 
+          (click)="max < tasks[0].bookKeepingStatus.length -1 ?getNextStatus('self', max,tasks[0].bookKeepingStatus):$event.stopPropagation()"> 
+          {{max < tasks[0].bookKeepingStatus.length ?tasks[0].bookKeepingStatus[max].text:tasks[0].bookKeepingStatus[0].text}} 
+        </button>
+      </div>
       </td>
     </tr>
     <tr class="text-center">
       <td>Mr Daniel Rose</td>
       <td>12/5/2017</td>
       <td>
-        <button mat-raised-button color ="warn"> 
-          Self Assesment Process Started
-      </button>
+        <mat-icon *ngIf="!showStatusBtn" class="cursor-pointer" (click)="startUpdates('start')"
+                  svgIcon="heroicons_outline:plus-sm">
+        </mat-icon>
+        <div *ngIf="showStatusBtn" class="flex justify-center"> 
+          <button mat-icon-button>
+            <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
+            (click)="max > 0?openConfirmationDialog(max,tasks[0].bookKeepingStatus):startUpdates('end')"></mat-icon>
+          </button>
+          <button  mat-raised-button [class]="max < tasks[0].bookKeepingStatus.length ?tasks[0].bookKeepingStatus[max].status:''" 
+            (click)="max < tasks[0].bookKeepingStatus.length -1 ?getNextStatus('self', max,tasks[0].bookKeepingStatus):$event.stopPropagation()"> 
+            {{max < tasks[0].bookKeepingStatus.length ?tasks[0].bookKeepingStatus[max].text:tasks[0].bookKeepingStatus[0].text}} 
+          </button>
+        </div>
       </td>
     </tr>
   </table>
