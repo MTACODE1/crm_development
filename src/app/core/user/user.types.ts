@@ -26,8 +26,9 @@ export interface TableModel {
   duedate: string;
   oneoff: string;
   bookKeepingStatus: [stateStatusModel];
-  vATStatus: [stateStatusModel];
+  vatStatus: [stateStatusModel];
   accountsStatus1:[stateStatusModel]
+  accountsStatus2:[stateStatusModel]
 }
 
 export interface stateStatusModel {

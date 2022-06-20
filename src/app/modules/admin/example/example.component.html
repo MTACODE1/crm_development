@@ -198,9 +198,13 @@
                 svgIcon="heroicons_outline:plus-sm">
               </mat-icon>
                 <div *ngIf="showAccStatusBtn" class="flex items-center">
-                  <button mat-icon-button *ngIf="accountMax > 0" [ngClass]="{'hidden':allVisited && accountMax == 1}">
+                  <!-- <button mat-icon-button *ngIf="accountMax > 0" [ngClass]="{'hidden':allVisited && accountMax == 1}">
                     <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
                     (click)="openConfirmationDialog('acc', accountMax,element.accountsStatus1)"></mat-icon>
+                  </button> -->
+                  <button mat-icon-button>
+                    <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
+                    (click)="accountMax > 0?openConfirmationDialog('acc', accountMax,element.accountsStatus1):startUpdates('end','acc')"></mat-icon>
                   </button>
                   <button mat-raised-button [disabled]="element.isSuspended" [class]="accountMax < element.accountsStatus1.length ?element.accountsStatus1[accountMax].status:''"
                   (click)="accountMax < element.accountsStatus1.length-1 ?getNextStatus('acc',accountMax,element.accountsStatus1):$event.stopPropagation()"> 
@@ -218,9 +222,9 @@
                 svgIcon="heroicons_outline:plus-sm">
                </mat-icon>
                 <div *ngIf="showAcc2StatusBtn" class="flex items-center">
-                  <button mat-icon-button *ngIf="accountNewMax > 0" [ngClass]="{'hidden':allVisited && accountNewMax == 1}">
+                  <button mat-icon-button>
                     <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
-                    (click)="openConfirmationDialog('accNew', accountNewMax,element.accountsStatus2)"></mat-icon>
+                    (click)="accountNewMax > 0?openConfirmationDialog('accNew', accountNewMax,element.accountsStatus1):startUpdates('end','accNew')"></mat-icon>
                   </button>
                   <button mat-raised-button [disabled]="element.isSuspended" [class]="accountNewMax < element.accountsStatus2.length ?element.accountsStatus2[accountNewMax].status:''"
                   (click)="accountNewMax < element.accountsStatus2.length-1 ?getNextStatus('accNew',accountNewMax,element.accountsStatus2):$event.stopPropagation()"> 

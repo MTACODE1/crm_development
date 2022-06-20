@@ -170,9 +170,9 @@ export class ExampleComponent implements OnInit, OnDestroy {
   }
 
   public startUpdates(key, status): void {
-    const messgae = key === 'start'?'Start Bookkeeping Process for Bespoke Alpha Solutions for May':'Cancel Bookkeeping Status for Bespoke Alpha Solutions for May';
-    const vatMessgae = key === 'start'?'Start VAT Process for Bespoke Alpha Solutions for May':'Cancel VAT Status for Bespoke Alpha Solutions for May';
-    const accMessgae = key === 'start'?'Start Accounts Process for Bespoke Alpha Solutions for May':'';
+    const messgae = key === 'start'?'Start Bookkeeping Process for Bespoke Alpha Solutions for May?':'Cancel Bookkeeping Status for Bespoke Alpha Solutions for May?';
+    const vatMessgae = key === 'start'?'Start VAT Process for Bespoke Alpha Solutions for May?':'Cancel VAT Status for Bespoke Alpha Solutions for May?';
+    const accMessgae = key === 'start'?'Start Accounts Process for Bespoke Alpha Solutions for May?':'Cancel Accounts Process for Bespoke Alpha Solutions?';
     const dialogRef = this._fuseConfirmationService.open({
       title : 'Are you sure?',
       message : status === 'bookkeep'?messgae:status === 'vat'?vatMessgae:accMessgae,
@@ -188,18 +188,34 @@ export class ExampleComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(result => {
       if(result === 'confirmed') {
         if(status === 'bookkeep') {
-          key === 'start'?this.showStatusBtn = true: this.showStatusBtn = false;
+          if(key === 'start') {
+            this.showStatusBtn = true;
+            this.triggerStatusSnackBar(this.userTableList[0].vatStatus[0], 'book')
+          }else {
+            this.showStatusBtn = false;
+          } 
         } else if(status === 'vat') {
           if(key === 'start') {
             this.showVatStatusBtn = true;
             this.showStatusBtn = true;
+            this.triggerStatusSnackBar(this.userTableList[0].vatStatus[0], status)
           } else {
             this.showVatStatusBtn = false;
           }
         } else if(status === 'acc') {
-          this.showAccStatusBtn = true;
+          if(key === 'start') {
+            this.showAccStatusBtn = true;
+            this.triggerStatusSnackBar(this.userTableList[0].accountsStatus1[0], status)
+          } else {
+            this.showAccStatusBtn = false;
+          }
         } else {
-          this.showAcc2StatusBtn = true;
+          if(key === 'start') {
+            this.showAcc2StatusBtn = true;
+            this.triggerStatusSnackBar(this.userTableList[0].accountsStatus2[0], status)
+          } else {
+            this.showAcc2StatusBtn = false;
+          }
         }
       }
     });
