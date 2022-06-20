@@ -11,7 +11,6 @@ import { TableModel } from './../../../core/user/user.types';
 import { AssessmentStatusComponent } from './assessment-status/assessment-status.component';
 import { BookkeepingStatusComponent } from './bookkeeping-status/bookkeeping-status.component';
 import { OnbordingFormComponent } from './onbording-form/onbording-form.component';
-import { StatusNotifications } from './statuses.model';
 import * as $ from 'jquery';
 
 @Component({
@@ -39,7 +38,6 @@ export class ExampleComponent implements OnInit, OnDestroy {
   showAccStatusBtn: boolean = false;
   showAcc2StatusBtn: boolean = false;
   setskippedStatus: boolean;
-  statusSettings: StatusNotifications;
 
   private readonly destroyer$: Subject<void> = new Subject();
 
@@ -48,7 +46,6 @@ export class ExampleComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.displayedColumns = this.userService.getColumns();
-    this.statusSettings = new StatusNotifications();
     this.getTableDetails();
     this.getUsersStatusInfo();
     this.getPageState();
@@ -129,32 +126,6 @@ export class ExampleComponent implements OnInit, OnDestroy {
       this.displayedColumns = ['companyName','onboarding','bookKeepingStatus','vatStatus','accountsStatus1','accountsStatus2','self1','self2'];
     } else {
       this.displayedColumns = this.userService.getColumns();
-    }
-  }
-
-  public subColHide(toggle:boolean, name): void {
-    if(toggle) {
-      if(name === 'book') {
-        const bookColumns = ['bookkeeper','completionweek','bookKeepingStatus'];
-        this.displayedColumns = this.displayedColumns.slice(0, 8).concat(bookColumns, this.displayedColumns.slice(8, this.displayedColumns.length));
-      } else if(name === 'vat') {
-        const vatColumns = ['vatRegistered','vatQuarter','vatscheme','vatStatus'];
-        this.displayedColumns = this.displayedColumns.slice(0, 11).concat(vatColumns, this.displayedColumns.slice(11, this.displayedColumns.length));
-      } else if(name === 'annual') {
-        const annualColumns = ['eoy','oneoff','endDate','duedate','accountsStatus1','accountsStatus2'];
-        this.displayedColumns = this.displayedColumns.slice(0, 15).concat(annualColumns, this.displayedColumns.slice(15, this.displayedColumns.length));
-      }
-    } else {
-      if(name === 'book') {
-        const bookColumns = ['bookkeeper','completionweek','bookKeepingStatus'];
-        this.displayedColumns = this.displayedColumns.filter(item => !bookColumns.includes(item));
-      } else if(name === 'vat') {
-        const vatColumns = ['vatRegistered','vatQuarter','vatscheme','vatStatus'];
-        this.displayedColumns = this.displayedColumns.filter(item => !vatColumns.includes(item));
-      } else if(name === 'annual') {
-        const annualColumns = ['eoy','oneoff','endDate','duedate','accountsStatus1','accountsStatus2'];
-        this.displayedColumns = this.displayedColumns.filter(item => !annualColumns.includes(item));
-      }
     }
   }
 

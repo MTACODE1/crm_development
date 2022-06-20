@@ -271,35 +271,17 @@
             </ng-container>
             <ng-container matColumnDef="header-third-group">
               <th mat-header-cell *matHeaderCellDef  class="font-extrabold text-left border-r border-t" [attr.colspan]="3"> 
-                <div class="flex items-center">
-                  <p class="mr-2"> Bookkeeping </p>
-                  <label class="form-switch">
-                    <input type="checkbox" [(ngModel)]="statusSettings.book_status" (ngModelChange)="subColHide($event, 'book')">
-                    <i></i>
-                  </label>
-                </div>
+               Bookkeeping
               </th>
             </ng-container>
             <ng-container matColumnDef="header-forth-group">
               <th mat-header-cell *matHeaderCellDef  class="font-extrabold text-left border-r border-t" [attr.colspan]="4"> 
-                <div class="flex items-center">
-                  <p class="mr-2"> VAT </p>
-                  <label class="form-switch">
-                    <input type="checkbox" [(ngModel)]="statusSettings.vat_status" (ngModelChange)="subColHide($event, 'vat')">
-                    <i></i>
-                  </label>
-                </div>
+                VAT
               </th>
             </ng-container>
             <ng-container matColumnDef="header-fifth-group">
               <th mat-header-cell *matHeaderCellDef  class="font-extrabold text-left border-r border-t" [attr.colspan]="6"> 
-               <div class="flex items-center">
-                <p class="mr-2"> Annual Accounts </p>
-                <label class="form-switch">
-                  <input type="checkbox" [(ngModel)]="statusSettings.annual_status" (ngModelChange)="subColHide($event, 'annual')">
-                  <i></i>
-                </label>
-              </div>
+                Annual Accounts
               </th>
             </ng-container>
             <ng-container matColumnDef="header-six-group">
