@@ -1,22 +1,24 @@
+@import "src/styles/variables";
+
 table {
   th,td {
     padding: 10px 0;
   }
   .mat-raised-button {
-    background-color: #f44336 !important;
-    color: white !important;
+    background-color: $red !important;
+    color: $white !important;
     width: 210px;
     font-size: 12px;
     font-weight: normal;
     box-shadow: none !important;
     &.complete {
-      background-color: #198754 !important;
+      background-color: $green300 !important;
     }
     &.in-progress {
-      background-color: #ffc107 !important;
+      background-color: $yellow400 !important;
     }
     &.start {
-      background-color: #e57808  !important;
+      background-color: $orange300  !important;
     }
   }
 }

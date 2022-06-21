@@ -1,3 +1,5 @@
+@import "src/styles/variables";
+
 :host ::ng-deep {
   table {
     .mat-header-cell {
@@ -5,22 +7,22 @@
       padding: 0 8px 4px;
       
       &.info-col {
-        background: #efefef;
+        background: $gray100;
       }
       &.package-col {
         background: #01950114;
       }
       &.book-col {
-        background: #f9e92a17;
+        background: $yellow200;
       }
       &.vat-col {
-        background: #f9820714;
+        background: $orange100;
       }
       &.account-col {
         background: #ff4aa412;
       }
       &.assessment-col {
-        background: #c2f57424;
+        background: $green100;
       }
     }
     .mat-cell{
@@ -35,7 +37,7 @@
       }
     }
     .suspended {
-      background-color: #fdf8eb;
+      background-color: $yellow100;
     }
   }
   svg {
@@ -45,20 +47,20 @@
 }
 
 .mat-raised-button {
-  background-color: #f44336 !important;
-  color: white !important;
+  background-color: $red !important;
+  color: $white !important;
   width: 230px;
   font-size: 12px;
   font-weight: normal;
   box-shadow: none !important;
   &.complete {
-    background-color: #198754 !important;
+    background-color: $green300 !important;
   }
   &.in-progress {
-    background-color: #ffc107 !important;
+    background-color: $yellow400 !important;
   }
   &.start {
-    background-color: #e57808  !important;
+    background-color: $orange300  !important;
   }
 }
 
@@ -73,9 +75,9 @@
   }
 
   input[id="search"] {
-    color: #848484;
+    color: $gray200;
     padding: 13px 10px 13px 40px;
-    border: 1px solid #848484;
+    border: 1px solid $gray200;
     font-size: 15px;
     border-radius: 50px;
     width: 200px;
@@ -86,13 +88,13 @@
 
   .mat-icon {
     font-size: 1.2em;
-    color: #848484;
+    color: $gray200;
     cursor: pointer;
   }
 }
 .blink {
   // animation: blinker 2s linear infinite;
-  color: #ffb100;
+  color: $yellow500;
 }
 @keyframes blinker {
   50% {

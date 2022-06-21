@@ -1,3 +1,5 @@
+@import "src/styles/variables";
+
 :host {
   display: flex;
 }
@@ -6,7 +8,7 @@
   flex-basis: 10%;
   justify-content: flex-end;
   mat-icon {
-    color: white;
+    color: $white;
     width: 35px;
     height: 35px;
   }
@@ -15,7 +17,7 @@
 .content {
   flex-basis: 80%;
   font-size:13px;
-  color: white;
+  color: $white;
   margin: 0 8px;
   p {
     font-size: 16px;
@@ -28,17 +30,17 @@
     padding: 10px;
     border-radius: 8px;
     &.book-snack-bar {
-      background: #dbcb0c !important;
+      background: $yellow600 !important;
       // background: #bfb214fa !important;
     }
     &.vat-snack-bar {
-      background: #f37d04b3  !important;
+      background: $orange200  !important;
     }
     &.acc-snack-bar {
       background: #bb2f74a6 !important;
     }
     &.self-snack-bar {
-      background: rgb(173 255 48 / 44%) !important;
+      background: $green200 !important;
     }
   }
 
