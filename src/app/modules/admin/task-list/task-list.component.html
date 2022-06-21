@@ -13,8 +13,11 @@
       <div class="flex flex-col border-b overflow-hidden priority_{{item.color}}_{{data.priority}} cursor-pointer" (click)="markCompleted(data.id, i)">
         <div class="flex flex-auto flex-col px-4 py-3">
           <div class="flex">
-            <span *ngIf="!data.completed" class="mt-1" inlineSVG="assets/icons/ic_sent.svg"></span>
-            <span *ngIf="data.completed" class="mt-1 completed" inlineSVG="assets/icons/ic_sent.svg"></span>
+            <button  mat-icon-button>
+              <mat-icon [class]="!data.completed?'text-hint':'text-primary'" [svgIcon]="'heroicons_outline:check-circle'"></mat-icon>
+            </button>
+            <!-- <span *ngIf="!data.completed" class="mt-1" inlineSVG="assets/icons/ic_sent.svg"></span>
+            <span *ngIf="data.completed" class="mt-1 completed" inlineSVG="assets/icons/ic_sent.svg"></span> -->
             <div class="ml-2">
               <p>{{data.text}}</p>
               <span *ngIf="data.date" class="text-sm">{{data.date}}</span>
