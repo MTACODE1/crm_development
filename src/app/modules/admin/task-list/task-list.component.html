@@ -1,6 +1,34 @@
 
 <div class="flex w-full p-6 sm:p-10 flex-wrap task-lists">
-  <div class="flex-1 mx-2 bg-white rounded-md">
+  <div class="flex-1 mx-2 bg-white rounded-md" *ngFor="let item of medicalAreaArr; let i = index" >
+    <div class="relative overflow-hidden">
+      <h1 class="mb-4 text-xl font-bold py-3 px-4 text-center">{{item.name}}</h1>
+      <div class="absolute bottom-0 right-0 w-18 h-18 -m-6">
+        <mat-icon class="icon-size-18 opacity-25 text-{{item.color}}-800 dark:text-{{item.color}}-800"
+        [svgIcon]="'heroicons_outline:check-circle'">
+      </mat-icon>
+    </div>
+  </div>
+    <ng-container *ngFor="let data of item.text">
+      <div class="flex flex-col border-b overflow-hidden priority_{{item.color}}_{{data.priority}} cursor-pointer" (click)="markCompleted(data.id, i)">
+        <div class="flex flex-auto flex-col px-4 py-3">
+          <div class="flex">
+            <span *ngIf="!data.completed" class="mt-1" inlineSVG="assets/icons/ic_sent.svg"></span>
+            <span *ngIf="data.completed" class="mt-1 completed" inlineSVG="assets/icons/ic_sent.svg"></span>
+            <div class="ml-2">
+              <p>{{data.text}}</p>
+              <span *ngIf="data.date" class="text-sm">{{data.date}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+
+<!-- <div class="flex w-full p-6 sm:p-10 flex-wrap task-lists">
+  <div class="flex-1 mx-2 bg-white rounded-md cursor-pointer">
     <div class="relative overflow-hidden">
       <h1 class="mb-4 text-xl font-bold py-3 px-4 text-center">Setup & Compliance</h1>
       <div class="absolute bottom-0 right-0 w-18 h-18 -m-6">
@@ -169,5 +197,4 @@
       </div>
     </div>
   </div>
-
-</div>
+</div> -->

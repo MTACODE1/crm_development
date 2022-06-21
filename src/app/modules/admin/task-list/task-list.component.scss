@@ -10,7 +10,37 @@
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 3%), 0 4px 6px -2px rgb(0 0 0 / 5%);
   }
   .completed{
-    background: #fdf8eb;
+    color: blue;
+    // transition: all 15s ease;
   }
-  
+  .priority_gray_low {
+    background: #80808026;
+  }
+  .priority_gray_high {
+    background: #8080805c;
+  }
+  .priority_yellow_high {
+    background: #E0D2C2;
+  }
+  .priority_yellow_low {
+    background: #e0d2c252;
+  }
+  .priority_orange_high {
+    background: #e5ccc3bf;
+  }
+  .priority_orange_low {
+    background: #e5ccc34a;
+  }
+  .priority_pink_high {
+    background: #e6c5d2c2;
+  }
+  .priority_pink_low {
+    background: #e6c5d257;
+  }
+  .priority_green_high {
+    background: #c4d8cc9c;
+  }
+  .priority_green_low {
+    background: #c4d8cc47;
+  }
 }
