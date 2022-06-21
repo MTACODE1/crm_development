@@ -59,7 +59,7 @@ export class TaskListComponent implements OnInit {
     });
     this.medicalAreaArr[ind].text.forEach(element => {
       if(element.id === id) {
-        element.completed = true;
+        element.completed = !element.completed;
         // element.priority = 'low';
       }
     });
