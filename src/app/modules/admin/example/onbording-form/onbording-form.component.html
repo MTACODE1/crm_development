@@ -16,10 +16,10 @@
       <ng-container *ngIf="item.type === 'profession'" >
         <td >{{item.text}}</td>
         <td>
-          <mat-icon *ngIf="item.active" svgIcon="heroicons_outline:minus-sm" class="cursor-pointer" (click)="toggleClass(item)"></mat-icon>
-          <mat-icon *ngIf="!item.active" svgIcon="heroicons_outline:plus-sm" class="cursor-pointer" (click)="toggleClass(item)"></mat-icon>
+          <mat-icon *ngIf="item.active" svgIcon="heroicons_outline:minus-sm" class="cursor-pointer" (click)="toggleData(item, false)"></mat-icon>
+          <mat-icon *ngIf="!item.active" svgIcon="heroicons_outline:plus-sm" class="cursor-pointer" (click)="toggleData(item, true)"></mat-icon>
           <label class="form-switch" *ngIf="item.active">
-            <input type="checkbox" [ngModel]="[item?.id]" (ngModelChange)="statusChanged($event)">
+            <input type="checkbox" (ngModelChange)="statusChanged($event)">
             <i></i>
           </label>
         </td>
@@ -131,10 +131,10 @@
       <ng-container *ngIf="item.type === 'vat'" >
         <td >{{item.text}}</td>
         <td>
-          <mat-icon *ngIf="item.active" svgIcon="heroicons_outline:minus-sm" class="cursor-pointer" (click)="toggleClass(item)"></mat-icon>
-          <mat-icon *ngIf="!item.active" svgIcon="heroicons_outline:plus-sm" class="cursor-pointer" (click)="toggleClass(item)"></mat-icon>
+          <mat-icon *ngIf="item.active" svgIcon="heroicons_outline:minus-sm" class="cursor-pointer" (click)="toggleData(item, false)"></mat-icon>
+          <mat-icon *ngIf="!item.active" svgIcon="heroicons_outline:plus-sm" class="cursor-pointer" (click)="toggleData(item, true)"></mat-icon>
           <label class="form-switch" *ngIf="item.active">
-            <input type="checkbox" [ngModel]="[item?.id]" (ngModelChange)="statusChanged($event)">
+            <input type="checkbox"  (ngModelChange)="statusChanged($event)">
             <i></i>
           </label>
         </td>
@@ -184,10 +184,10 @@
       <ng-container *ngIf="item.type === 'software'">
         <td >{{item.text}}</td>
         <td>
-          <mat-icon *ngIf="item.active" svgIcon="heroicons_outline:minus-sm" class="cursor-pointer" (click)="toggleClass(item)"></mat-icon>
-          <mat-icon *ngIf="!item.active" svgIcon="heroicons_outline:plus-sm" class="cursor-pointer" (click)="toggleClass(item)"></mat-icon>
+          <mat-icon *ngIf="item.active" svgIcon="heroicons_outline:minus-sm" class="cursor-pointer" (click)="toggleData(item, false)"></mat-icon>
+          <mat-icon *ngIf="!item.active" svgIcon="heroicons_outline:plus-sm" class="cursor-pointer" (click)="toggleData(item, false)"></mat-icon>
           <label class="form-switch" *ngIf="item.active">
-            <input type="checkbox" [ngModel]="[item?.id]" (ngModelChange)="statusChanged($event)">
+            <input type="checkbox" (ngModelChange)="statusChanged($event)">
             <i></i>
           </label>
         </td>
