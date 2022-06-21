@@ -15,7 +15,7 @@
         <mat-icon *ngIf="!showStatusBtn" class="cursor-pointer" (click)="startUpdates('start')"
         svgIcon="heroicons_outline:plus-sm">
       </mat-icon>
-      <div *ngIf="showStatusBtn" class="flex justify-center"> 
+      <div *ngIf="showStatusBtn" class="flex justify-center items-center"> 
         <button mat-icon-button>
           <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
           (click)="max > 0?openConfirmationDialog(max,tasks[0].bookKeepingStatus):startUpdates('end')"></mat-icon>
@@ -24,6 +24,7 @@
           (click)="max < tasks[0].bookKeepingStatus.length -1 ?getNextStatus('self', max,tasks[0].bookKeepingStatus):$event.stopPropagation()"> 
           {{max < tasks[0].bookKeepingStatus.length ?tasks[0].bookKeepingStatus[max].text:tasks[0].bookKeepingStatus[0].text}} 
         </button>
+        <mat-icon [class.blink]="classApplied" (click)="toggleClass()" class="cursor-pointer ml-2" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
       </div>
       </td>
     </tr>
@@ -34,7 +35,7 @@
         <mat-icon *ngIf="!showStatusBtn" class="cursor-pointer" (click)="startUpdates('start')"
                   svgIcon="heroicons_outline:plus-sm">
         </mat-icon>
-        <div *ngIf="showStatusBtn" class="flex justify-center"> 
+        <div *ngIf="showStatusBtn" class="flex justify-center items-center"> 
           <button mat-icon-button>
             <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
             (click)="max > 0?openConfirmationDialog(max,tasks[0].bookKeepingStatus):startUpdates('end')"></mat-icon>
@@ -43,6 +44,7 @@
             (click)="max < tasks[0].bookKeepingStatus.length -1 ?getNextStatus('self', max,tasks[0].bookKeepingStatus):$event.stopPropagation()"> 
             {{max < tasks[0].bookKeepingStatus.length ?tasks[0].bookKeepingStatus[max].text:tasks[0].bookKeepingStatus[0].text}} 
           </button>
+          <mat-icon [class.blink]="classApplied" (click)="toggleClass()" class="cursor-pointer ml-2" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
         </div>
       </td>
     </tr>

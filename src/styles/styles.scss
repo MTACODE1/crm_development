@@ -72,3 +72,13 @@
     }
   }
 }
+
+.blink {
+  // animation: blinker 2s linear infinite;
+  color: $yellow500;
+}
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}

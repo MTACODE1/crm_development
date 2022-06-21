@@ -17,6 +17,7 @@ export class AssessmentStatusComponent implements OnInit, OnDestroy {
   tasks: TaskItem[];
   max = 0;
   showStatusBtn: boolean = false;
+  classApplied: boolean = false;
 
   private readonly destroyer$: Subject<void> = new Subject();
 
@@ -103,5 +104,9 @@ export class AssessmentStatusComponent implements OnInit, OnDestroy {
         }
       }
     });
+  }
+
+  public toggleClass(): void {
+    this.classApplied = !this.classApplied;
   }
 }
