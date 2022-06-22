@@ -9,15 +9,17 @@
       </mat-icon>
     </div>
   </div>
-    <ng-container *ngFor="let data of item.text">
-      <div class="flex flex-col border-b overflow-hidden priority_{{item.color}}_{{data.priority}} cursor-pointer" (click)="markCompleted(data.id, i)">
-        <div class="flex flex-auto flex-col px-4 py-3">
+
+    <ng-container *ngFor="let data of item.text; let index= index">
+      <div class="flex flex-col border-b overflow-hidden priority_{{item.color}}_{{data.priority}} cursor-pointer list-item" 
+      [@myTrigger]='state' (click)="markCompleted(data.id, i, data.completed)" >
+      <!-- [style.transform]="transform(index)" (click)="shuffle(data, i, index)"> -->
+     
+        <div class="flex flex-auto flex-col px-4 py-3 mb-4">
           <div class="flex">
             <button  mat-icon-button>
               <mat-icon [class]="!data.completed?'text-hint':'text-primary'" [svgIcon]="'heroicons_outline:check-circle'"></mat-icon>
             </button>
-            <!-- <span *ngIf="!data.completed" class="mt-1" inlineSVG="assets/icons/ic_sent.svg"></span>
-            <span *ngIf="data.completed" class="mt-1 completed" inlineSVG="assets/icons/ic_sent.svg"></span> -->
             <div class="ml-2">
               <p>{{data.text}}</p>
               <span *ngIf="data.date" class="text-sm">{{data.date}}</span>

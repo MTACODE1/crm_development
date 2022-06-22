@@ -1,11 +1,27 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { statusDataType, TaskListItems, TASK_ITEMS } from './task-items';
-
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
-  styleUrls: ['./task-list.component.scss']
+  styleUrls: ['./task-list.component.scss'],
+  animations: [
+    trigger("myTrigger", [
+      state(
+        "fadeInFlash",
+        style({
+          opacity: "1"
+        })
+      ),
+      transition("void => *", [
+        style({ opacity: "0", transform: "translateY(20px)" }),
+        animate("500ms")
+      ])
+    ])
+  ]
 })
+
 export class TaskListComponent implements OnInit {
   public medicalAreaArr: TaskListItems[] = [
     {
@@ -35,7 +51,7 @@ export class TaskListComponent implements OnInit {
     },
   ];
   
-  constructor() { }
+  constructor(private _fuseConfirmationService:FuseConfirmationService) { }
 
   ngOnInit() {
     this.getTaskList();
@@ -52,18 +68,67 @@ export class TaskListComponent implements OnInit {
     });
   }
 
-  public markCompleted(id:number,ind) {
-    let data;
-   this.medicalAreaArr.map(item => {
-    data =  item.text.find((ele) =>ele.id == id)
+  shuffle(obj, i, ind) {
+    this.medicalAreaArr[i].text.splice(ind, 1)
+    this.medicalAreaArr[i].text.push(obj)
+  }
+
+  transform(index: number) {
+    return `translateY(${(index + 1) * 100}%)`;
+  }
+
+  public markCompleted(id:number,ind, completed: boolean) {
+    const dialogRef = this._fuseConfirmationService.open({
+      title : 'Are you sure?',
+      message : !completed?'Do you want to make this task completed ?': 'Do you want to move this task from completed to uncompleted?',
+      dismissible: true,
+      actions:{
+        cancel:{
+          label:'No'
+        },
+        confirm :{
+          label: 'Yes',
+          color: 'warn'
+        }
+      }
     });
-    this.medicalAreaArr[ind].text.forEach(element => {
-      if(element.id === id) {
-        element.completed = !element.completed;
-        // element.priority = 'low';
+    dialogRef.afterClosed().subscribe(result => {
+      if(result === 'confirmed') {
+        this.medicalAreaArr[ind].text.forEach(element => {
+          if(element.id === id) {
+            if(!completed) {
+              this.moveCompleted(id, ind, element);
+            } else {
+              element.completed = false;
+              element.priority = 'high';
+              let index = this.medicalAreaArr[ind].text.findIndex((item) =>item.id == id);
+              this.medicalAreaArr[ind].text.splice(index, 1)
+            }
+          }
+        });
       }
     });
   }
+
+
+  private moveCompleted(id, ind,element) {
+        element.completed = true;
+        let index = this.medicalAreaArr[ind].text.findIndex((item) =>item.id == id);
+        this.medicalAreaArr[ind].text.push(element)
+  }
+
+  // private moveCompleted(id, ind,element) {
+  //   // this.medicalAreaArr[ind].text.forEach(element => {
+  //   //   if(element.id === id) {
+  //       element.completed = true;
+  //       // element.priority = 'low';
+  //       let index = this.medicalAreaArr[ind].text.findIndex((item) =>item.id == id);
+  //       // this.medicalAreaArr[ind].text.splice(index, 1)
+  //       this.medicalAreaArr[ind].text.push(element)
+  //   //   }
+  //   // });
+  // }
+  
 
 
   // toggleCompleted(task:TaskItem): void {
