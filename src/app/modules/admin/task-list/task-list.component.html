@@ -10,11 +10,11 @@
     </div>
   </div>
 
+  <!-- <div class="relative"> -->
     <ng-container *ngFor="let data of item.text; let index= index">
       <div class="flex flex-col border-b overflow-hidden priority_{{item.color}}_{{data.priority}} cursor-pointer list-item" 
-      [@myTrigger]='state' (click)="markCompleted(data.id, i, data.completed)" >
+      [@myTrigger]='state' (click)="markCompleted(data, i, index)" >
       <!-- [style.transform]="transform(index)" (click)="shuffle(data, i, index)"> -->
-     
         <div class="flex flex-auto flex-col px-4 py-3 mb-4">
           <div class="flex">
             <button  mat-icon-button>
@@ -26,8 +26,15 @@
             </div>
           </div>
         </div>
+        <div class="items-center justify-end icon-list">
+            <img class="h-11 w-11 rounded-full" src="assets/images/logo/bespoke.png" alt="bespoke">
+            <img class="h-11 w-11" src="assets/images/logo/dext.png" alt="dext">
+            <img class="h-11 w-11" src="assets/images/logo/ltd.png" alt="ltd">
+        </div>
       </div>
     </ng-container>
+  <!-- </div> -->
+    
   </div>
 </div>
 

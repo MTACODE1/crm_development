@@ -77,10 +77,10 @@ export class TaskListComponent implements OnInit {
     return `translateY(${(index + 1) * 100}%)`;
   }
 
-  public markCompleted(id:number,ind, completed: boolean) {
+  public markCompleted(item, ind, itemIndex) {
     const dialogRef = this._fuseConfirmationService.open({
       title : 'Are you sure?',
-      message : !completed?'Do you want to make this task completed ?': 'Do you want to move this task from completed to uncompleted?',
+      message : !item.completed?'Do you want to make this task completed ?': 'Do you want to move this task from completed to uncompleted?',
       dismissible: true,
       actions:{
         cancel:{
@@ -94,27 +94,23 @@ export class TaskListComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result === 'confirmed') {
-        this.medicalAreaArr[ind].text.forEach(element => {
-          if(element.id === id) {
-            if(!completed) {
-              this.moveCompleted(id, ind, element);
-            } else {
-              element.completed = false;
-              element.priority = 'high';
-              let index = this.medicalAreaArr[ind].text.findIndex((item) =>item.id == id);
-              this.medicalAreaArr[ind].text.splice(index, 1)
-            }
-          }
-        });
+        if(!item.completed) {
+          this.moveCompleted(item, ind,itemIndex);
+        } else {
+          item.completed = false;
+          // item.priority = 'high';
+          this.medicalAreaArr[ind].text.splice(itemIndex, 1)
+        }
       }
     });
   }
 
 
-  private moveCompleted(id, ind,element) {
-        element.completed = true;
-        let index = this.medicalAreaArr[ind].text.findIndex((item) =>item.id == id);
-        this.medicalAreaArr[ind].text.push(element)
+  private moveCompleted(item, ind,itemIndex) {
+    item.completed = true;
+    // item.priority = 'low';
+    // this.medicalAreaArr[ind].text = this.medicalAreaArr[ind].text.concat(this.medicalAreaArr[ind].text.splice(itemIndex, 1));
+    this.medicalAreaArr[ind].text.push(item)
   }
 
   // private moveCompleted(id, ind,element) {
@@ -139,6 +135,5 @@ export class TaskListComponent implements OnInit {
   //     this.userService.setUsersStatus(task);
   //   }
   // }
-
 
 }

@@ -37,4 +37,12 @@
 .list-item {
   // position: absolute;
   // transition: all 1s;
+  &:hover {
+    .icon-list {
+      display: flex !important;
+    }
+  }
+}
+.icon-list {
+  display: none;
 }

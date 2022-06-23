@@ -87,7 +87,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   }
 
   private getPreviosStatus(key, i,statsuName): void {
-    if (key === 'book' && this.setskippedStatus && statsuName[i].id === 12) {
+    if (key === 'book' && this.setskippedStatus && (statsuName[i].id === 12 || (statsuName[i].id === 11 ||statsuName[i].id === 10 || statsuName[i].id === 9))) {
       this.max = 7;
     } else {
       key === 'book'?this.max = i - 1:key === 'vat'? this.vatMax = i-1:key === 'acc'?this.accountMax = i-1:this.accountNewMax =i-1;
@@ -96,7 +96,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
 
   public openConfirmationDialog(key, value, statsuName): void {
     let previous;
-    if(key === 'book' && this.setskippedStatus && statsuName[value].id === 12) {
+    if(key === 'book' && this.setskippedStatus && (statsuName[value].id === 12|| (statsuName[value].id === 11 ||statsuName[value].id === 10 || statsuName[value].id === 9))) {
       previous = 7;
     }
     const dialogRef = this._fuseConfirmationService.open({
