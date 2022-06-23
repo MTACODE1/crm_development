@@ -185,7 +185,7 @@ export class DshboardComponent implements OnInit {
         }
     },
     colors     : ['#fbbf24', '#fde68a'],
-    labels     : ['Male', 'Female'],
+    labels     : ['Bookkeeping Pending', 'Bookkeeping Completed'],
     plotOptions: {
         pie: {
             customScale  : 0.9,
@@ -238,8 +238,7 @@ this.chartVat = {
       }
   },
   colors     : ['#fb923c', '#fdba74'],
-  // colors     : ['#e7c1b3', '#e5ccc3b3'],
-  labels     :  ['Under 30', 'Over 30'],
+  labels     :  ['VAT Completed', 'VAT Pending'],
   plotOptions: {
       pie: {
           customScale  : 0.9,
@@ -266,10 +265,7 @@ this.chartVat = {
       enabled        : true,
       fillSeriesColor: false,
       theme          : 'dark',
-      custom         : ({
-                            seriesIndex,
-                            w
-                        }): string => `<div class="flex items-center h-8 min-h-8 max-h-8 px-3">
+      custom         : ({ seriesIndex, w}): string => `<div class="flex items-center h-8 min-h-8 max-h-8 px-3">
       <div class="w-3 h-3 rounded-full" style="background-color: ${w.config.colors[seriesIndex]};"></div>
       <div class="ml-2 text-md leading-none">${w.config.labels[seriesIndex]}:</div>
       <div class="ml-2 text-md font-bold leading-none">${w.config.series[seriesIndex]}%</div>
@@ -296,7 +292,7 @@ this.chartAccount = {
       }
   },
   colors     : ['#f9a8d4', '#f472b6'],
-  labels     : ['English', 'Other'],
+  labels     : ['Accounts Completed', 'Accounts Pending'],
   plotOptions: {
       pie: {
           customScale  : 0.9,
@@ -351,7 +347,7 @@ this.chartAssessment = {
       }
   },
   colors     : ['#22c55e', '#86efac'],
-  labels     :  ['Under 30', 'Over 30'],
+  labels     :  ['Assessment Completed', 'Assessment Pending'],
   plotOptions: {
       pie: {
           customScale  : 0.9,
