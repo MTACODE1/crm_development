@@ -1,0 +1,302 @@
+
+
+<div class="p-6">
+  <div class="sm:col-span-2 md:col-span-4 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
+    <div class="flex flex-col sm:flex-row items-start justify-between">
+        <div class="text-lg font-medium tracking-tight leading-6 truncate">VAT Return Summary June</div>
+        <div class="mt-3 sm:mt-0 sm:ml-2">
+            <mat-button-toggle-group
+                value="this-week"
+                #githubIssuesWeekSelector="matButtonToggleGroup">
+                <mat-button-toggle value="last-week">Last Week</mat-button-toggle>
+                <mat-button-toggle value="this-week">This Week</mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 grid-flow-row gap-6 w-full mt-8 sm:mt-4">
+        <div class="flex flex-col flex-auto">
+            <div class="font-medium text-secondary">Completed vs Outstanding</div>
+            <div class="flex flex-col flex-auto">
+              <apx-chart
+              class="flex-auto w-full h-80"
+              [chart]="chartGithubIssues.chart"
+              [colors]="chartGithubIssues.colors"
+              [dataLabels]="chartGithubIssues.dataLabels"
+              [grid]="chartGithubIssues.grid"
+              [labels]="chartGithubIssues.labels"
+              [legend]="chartGithubIssues.legend"
+              [plotOptions]="chartGithubIssues.plotOptions"
+              [series]="chartGithubIssues.series"
+              [states]="chartGithubIssues.states"
+              [stroke]="chartGithubIssues.stroke"
+              [tooltip]="chartGithubIssues.tooltip"
+              [xaxis]="chartGithubIssues.xaxis"
+              [yaxis]="chartGithubIssues.yaxis"></apx-chart>
+            </div>
+        </div>
+        <div class="flex flex-col">
+            <div class="font-medium text-secondary">Overview</div>
+            <div class="flex-auto grid grid-cols-4 gap-4 mt-6">
+                <div class="col-span-2 flex flex-col items-center justify-center py-8 px-1 rounded-2xl bg-indigo-50 text-indigo-800 dark:bg-white dark:bg-opacity-5 dark:text-indigo-400">
+                    <div class="text-5xl sm:text-7xl font-semibold leading-none tracking-tight">
+                        54
+                    </div>
+                    <div class="mt-1 text-sm sm:text-lg font-medium">Outstanding VAT Returns</div>
+                </div>
+                <div class="col-span-2 flex flex-col items-center justify-center py-8 px-1 rounded-2xl bg-green-50 text-green-800 dark:bg-white dark:bg-opacity-5 dark:text-green-500">
+                    <div class="text-5xl sm:text-7xl font-semibold leading-none tracking-tight">
+                        45
+                    </div>
+                    <div class="mt-1 text-sm sm:text-lg font-medium">VAT Returns Completed</div>
+                </div>
+                <div class="col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-8 px-1 rounded-2xl bg-red-100 text-red-800 dark:bg-white dark:bg-opacity-5">
+                    <div class="text-5xl font-semibold leading-none tracking-tight">
+                        78
+                    </div>
+                    <div class="mt-1 text-sm font-medium text-center">Bookkeeping Stage</div>
+                </div>
+                <div class="col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-8 px-1 rounded-2xl bg-orange-100 text-amber-800 dark:bg-white dark:bg-opacity-5">
+                    <div class="text-5xl font-semibold leading-none tracking-tight">
+                        78
+                    </div>
+                    <div class="mt-1 text-sm font-medium text-center">VAT Return Sent to Accountant</div>
+                </div>
+                <div class="col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-8 px-1 rounded-2xl bg-orange-100 text-amber-800 dark:bg-white dark:bg-opacity-5">
+                    <div class="text-5xl font-semibold leading-none tracking-tight">
+                       78
+                    </div>
+                    <div class="mt-1 text-sm font-medium text-center">VAT Return Review by Accountant</div>
+                </div>
+                <div class="col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-8 px-1 rounded-2xl bg-yellow-100 text-yellow-800 dark:bg-white dark:bg-opacity-5">
+                    <div class="text-5xl font-semibold leading-none tracking-tight">
+                        78
+                    </div>
+                    <div class="mt-1 text-sm font-medium text-center">VAT Return Sent to Client</div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full mt-6 md:mt-8">
+    <!-- New vs. Returning -->
+    <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden p-6">
+        <div class="flex items-start justify-between">
+            <div class="text-lg font-medium tracking-tight leading-6 truncate">Setup & Compliance</div>
+            <!-- <div class="ml-2">
+                <button
+                    class="h-6 min-h-6 px-2 rounded-full bg-hover"
+                    mat-button
+                    [matMenuTriggerFor]="conversionMenu">
+                    <span class="font-medium text-sm text-secondary">30 days</span>
+                </button>
+                <mat-menu #conversionMenu="matMenu">
+                    <button mat-menu-item>30 days</button>
+                    <button mat-menu-item>3 months</button>
+                    <button mat-menu-item>9 months</button>
+                </mat-menu>
+            </div> -->
+        </div>
+        <div class="flex flex-col flex-auto mt-6 h-44">
+            <apx-chart
+                class="flex flex-auto items-center justify-center w-full h-full"
+                [chart]="chartNewVsReturning.chart"
+                [colors]="chartNewVsReturning.colors"
+                [labels]="chartNewVsReturning.labels"
+                [plotOptions]="chartNewVsReturning.plotOptions"
+                [series]="chartNewVsReturning.series"
+                [states]="chartNewVsReturning.states"
+                [tooltip]="chartNewVsReturning.tooltip"></apx-chart>
+        </div>
+        <div class="mt-8">
+          <div class="-my-3 divide-y">
+              <ng-container *ngFor="let dataset of setups; let i = index">
+                  <div class="grid grid-cols-3 py-3">
+                      <div class="flex items-center">
+                          <div
+                              class="flex-0 w-2 h-2 rounded-full"
+                              [style.backgroundColor]="chartNewVsReturning.colors[i]"></div>
+                          <!-- <div class="ml-3 truncate">{{dataset[i]}}</div> -->
+                          <div class="ml-3 truncate">user name</div>
+                      </div>
+                      <div class="font-medium text-right">{{46085 * dataset / 100 | number:'1.0-0'}}</div>
+                      <div class="text-right text-secondary">{{dataset}}%</div>
+                  </div>
+              </ng-container>
+          </div>
+      </div>
+    </div>
+    <!-- Gender -->
+    <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden p-6">
+        <div class="flex items-start justify-between">
+            <div class="text-lg font-medium tracking-tight leading-6 truncate">Bookkeeping</div>
+            <!-- <div class="ml-2">
+                <button
+                    class="h-6 min-h-6 px-2 rounded-full bg-hover"
+                    mat-button
+                    [matMenuTriggerFor]="conversionMenu">
+                    <span class="font-medium text-sm text-secondary">30 days</span>
+                </button>
+                <mat-menu #conversionMenu="matMenu">
+                    <button mat-menu-item>30 days</button>
+                    <button mat-menu-item>3 months</button>
+                    <button mat-menu-item>9 months</button>
+                </mat-menu>
+            </div> -->
+        </div>
+        <div class="flex flex-col flex-auto mt-6 h-44">
+            <apx-chart
+                class="flex flex-auto items-center justify-center w-full h-full"
+                [chart]="chartBookKeep.chart"
+                [colors]="chartBookKeep.colors"
+                [labels]="chartBookKeep.labels"
+                [plotOptions]="chartBookKeep.plotOptions"
+                [series]="chartBookKeep.series"
+                [states]="chartBookKeep.states"
+                [tooltip]="chartBookKeep.tooltip"></apx-chart>
+        </div>
+        <div class="mt-8">
+            <div class="-my-3 divide-y">
+                <ng-container *ngFor="let dataset of setups; let i = index">
+                    <div class="grid grid-cols-3 py-3">
+                        <div class="flex items-center">
+                            <div
+                                class="flex-0 w-2 h-2 rounded-full"
+                                [style.backgroundColor]="chartBookKeep.colors[i]"></div>
+                            <div class="ml-3 truncate">Bookkeep</div>
+                        </div>
+                        <div class="font-medium text-right">{{46085 * dataset / 100 | number:'1.0-0'}}</div>
+                        <div class="text-right text-secondary">{{dataset}}%</div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <!-- Age -->
+    <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden p-6">
+        <div class="flex items-start justify-between">
+            <div class="text-lg font-medium tracking-tight leading-6 truncate">VAT</div>
+            <!-- <div class="ml-2">
+                <button
+                    class="h-6 min-h-6 px-2 rounded-full bg-hover"
+                    mat-button
+                    [matMenuTriggerFor]="conversionMenu">
+                    <span class="font-medium text-sm text-secondary">30 days</span>
+                </button>
+                <mat-menu #conversionMenu="matMenu">
+                    <button mat-menu-item>30 days</button>
+                    <button mat-menu-item>3 months</button>
+                    <button mat-menu-item>9 months</button>
+                </mat-menu>
+            </div> -->
+        </div>
+        <div class="flex flex-col flex-auto mt-6 h-44">
+            <apx-chart
+                class="flex flex-auto items-center justify-center w-full h-full"
+                [chart]="chartVat.chart"
+                [colors]="chartVat.colors"
+                [labels]="chartVat.labels"
+                [plotOptions]="chartVat.plotOptions"
+                [series]="chartVat.series"
+                [states]="chartVat.states"
+                [tooltip]="chartVat.tooltip"></apx-chart>
+        </div>
+        <div class="mt-8">
+            <div class="-my-3 divide-y">
+                <ng-container *ngFor="let dataset of setups; let i = index">
+                    <div class="grid grid-cols-3 py-3">
+                        <div class="flex items-center">
+                            <div
+                                class="flex-0 w-2 h-2 rounded-full"
+                                [style.backgroundColor]="chartVat.colors[i]"></div>
+                            <div class="ml-3 truncate">VAT</div>
+                        </div>
+                        <div class="font-medium text-right">{{46085 * dataset / 100 | number:'1.0-0'}}</div>
+                        <div class="text-right text-secondary">{{dataset}}%</div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <!-- Language -->
+    <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden p-6">
+        <div class="flex items-start justify-between">
+            <div class="text-lg font-medium tracking-tight leading-6 truncate">Annual Accounts</div>
+            <!-- <div class="ml-2">
+                <button
+                    class="h-6 min-h-6 px-2 rounded-full bg-hover"
+                    mat-button
+                    [matMenuTriggerFor]="conversionMenu">
+                    <span class="font-medium text-sm text-secondary">30 days</span>
+                </button>
+                <mat-menu #conversionMenu="matMenu">
+                    <button mat-menu-item>30 days</button>
+                    <button mat-menu-item>3 months</button>
+                    <button mat-menu-item>9 months</button>
+                </mat-menu>
+            </div> -->
+        </div>
+        <div class="flex flex-col flex-auto mt-6 h-44">
+            <apx-chart
+                class="flex flex-auto items-center justify-center w-full h-full"
+                [chart]="chartAccount.chart"
+                [colors]="chartAccount.colors"
+                [labels]="chartAccount.labels"
+                [plotOptions]="chartAccount.plotOptions"
+                [series]="chartAccount.series"
+                [states]="chartAccount.states"
+                [tooltip]="chartAccount.tooltip"></apx-chart>
+        </div>
+        <div class="mt-8">
+            <div class="-my-3 divide-y">
+                <ng-container *ngFor="let dataset of setups; let i = index">
+                    <div class="grid grid-cols-3 py-3">
+                        <div class="flex items-center">
+                            <div
+                                class="flex-0 w-2 h-2 rounded-full"
+                                [style.backgroundColor]="chartAccount.colors[i]"></div>
+                            <div class="ml-3 truncate">user name</div>
+                        </div>
+                        <div class="font-medium text-right">{{46085 * dataset / 100 | number:'1.0-0'}}</div>
+                        <div class="text-right text-secondary">{{dataset}}%</div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden p-6">
+      <div class="flex items-start justify-between">
+          <div class="text-lg font-medium tracking-tight leading-6 truncate">Self Assessments</div>
+      </div>
+      <div class="flex flex-col flex-auto mt-6 h-44">
+          <apx-chart
+              class="flex flex-auto items-center justify-center w-full h-full"
+              [chart]="chartAssessment.chart"
+              [colors]="chartAssessment.colors"
+              [labels]="chartAssessment.labels"
+              [plotOptions]="chartAssessment.plotOptions"
+              [series]="chartAssessment.series"
+              [states]="chartAssessment.states"
+              [tooltip]="chartAssessment.tooltip"></apx-chart>
+      </div>
+      <div class="mt-8">
+          <div class="-my-3 divide-y">
+              <ng-container *ngFor="let dataset of setups; let i = index">
+                  <div class="grid grid-cols-3 py-3">
+                      <div class="flex items-center">
+                          <div
+                              class="flex-0 w-2 h-2 rounded-full"
+                              [style.backgroundColor]="chartAssessment.colors[i]"></div>
+                          <div class="ml-3 truncate">Self Assessments user</div>
+                      </div>
+                      <div class="font-medium text-right">{{46085 * dataset / 100 | number:'1.0-0'}}</div>
+                      <div class="text-right text-secondary">{{dataset}}%</div>
+                  </div>
+              </ng-container>
+          </div>
+      </div>
+  </div>
+</div>
+</div>

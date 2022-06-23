@@ -3,6 +3,13 @@ import { FuseNavigationItem } from '@fuse/components/navigation';
 
 export const defaultNavigation: FuseNavigationItem[] = [
     {
+        id   : 'dashboard',
+        title: 'Dashboard',
+        type : 'basic',
+        icon : 'heroicons_outline:clipboard-check',
+        link : '/dashboard'
+    },
+    {
         id   : 'example',
         title: 'Client Workflow',
         type : 'basic',
@@ -23,7 +30,7 @@ export const compactNavigation: FuseNavigationItem[] = [
         title: 'Example',
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
-        link : '/example'
+        link : '/health'
     }
 ];
 export const futuristicNavigation: FuseNavigationItem[] = [
@@ -32,7 +39,7 @@ export const futuristicNavigation: FuseNavigationItem[] = [
         title: 'Example',
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
-        link : '/example'
+        link : '/health'
     }
 ];
 export const horizontalNavigation: FuseNavigationItem[] = [
@@ -41,6 +48,6 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         title: 'Example',
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
-        link : '/example'
+        link : '/health'
     }
 ];

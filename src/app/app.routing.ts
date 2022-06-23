@@ -76,6 +76,7 @@ export const appRoutes: Route[] = [
       children : [
         {path: 'health', loadChildren: () => import('app/modules/admin/example/example.module').then(m => m.ExampleModule)},
         {path: 'tasks', loadChildren: () => import('app/modules/admin/task-list/task-list.module').then(m => m.TaskListModule)},
+        {path: 'dashboard', loadChildren: () => import('app/modules/admin/dshboard/dshboard.module').then(m => m.DshboardModule)},
       ]
     },
     {path: '404-not-found', pathMatch: 'full', loadChildren: () => import('app/modules/not-found/not-found.module').then(m => m.NotFoundModule)},
