@@ -24,7 +24,7 @@
         { "id":5,"status": "complete", "text":"VAT Return Filed", "visited": true }
       ],
       "bookKeepingStatus": [
-        {"id":1, "text":"Information Process Started" , "visited": false},
+        {"id":1, "text":"Bookkeeping Process Started" , "visited": false},
         {"id":2, "text":"Information Requested", "visited": false},
         {"id":3,"status": "start","text":"Information Request sent to Client", "visited": false},
         {"id":4,"status": "start", "text":"WIP - Bookkeeping", "visited": false},
