@@ -54,7 +54,7 @@ export class AuthService
       }
 
 
-      return this._httpClient.post(`${environment.baseUrl}/salesflow/wfapi/user`, credentials).pipe(
+      return this._httpClient.post(`${environment.baseUrl}/user`, credentials).pipe(
         switchMap((response: any) => {
           // Store the access token in the local storage
           this.accessToken = response.token;

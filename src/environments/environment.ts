@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    baseUrl: "https://morethanaccountants.co.uk",
+    baseUrl: "https://morethanaccountants.co.uk/salesflow/wfapi",
 };
 
 /*
