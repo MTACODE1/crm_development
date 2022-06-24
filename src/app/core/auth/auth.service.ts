@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
+import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
+import { environment } from './../../../environments/environment';
 
 @Injectable()
 export class AuthService
@@ -46,22 +47,31 @@ export class AuthService
      *
      * @param credentials
      */
-    signIn(credentials: { email: string; password: string }): Observable<any> {
+    signIn(credentials: { username: string; password: string }): Observable<any> {
       // Throw error, if the user is already logged in
       if (this._authenticated) {
         return throwError('User is already logged in.');
       }
 
-      return this._httpClient.post('api/auth/sign-in', credentials).pipe(
+
+      return this._httpClient.post(`${environment.baseUrl}/salesflow/wfapi/user`, credentials).pipe(
         switchMap((response: any) => {
           // Store the access token in the local storage
-          this.accessToken = response.accessToken;
-
+          this.accessToken = response.token;
+          let user = {
+            first_name: response.first_name,
+            last_name: response.last_name,
+            email: response.email,
+            avatar: response.picture,
+            username: response.username
+          }
+          sessionStorage.setItem('loginUser', JSON.stringify(user));
+          this._userService
           // Set the authenticated flag to true
           this._authenticated = true;
 
           // Store the user on the user service
-          this._userService.user = response.user;
+          this._userService.user(user);
 
           // Return a new observable with the response
           return of(response);
@@ -112,7 +122,7 @@ export class AuthService
     signOut(): Observable<any> {
       // Remove the access token from the local storage
       localStorage.removeItem('accessToken');
-      localStorage.clear();
+      sessionStorage.clear();
       // Set the authenticated flag to false
       this._authenticated = false;
       // Return the observable
@@ -152,10 +162,15 @@ export class AuthService
       }
 
       // Check the access token expire date
-      if ( AuthUtils.isTokenExpired(this.accessToken) ) {
-        return of(false);
-      }
+      // if ( AuthUtils.isTokenExpired(this.accessToken) ) {
+      //   return of(false);
+      // }
         // If the access token exists and it didn't expire, sign in using it
-      return this.signInUsingToken();
+      // return this.signInUsingToken();
+      return of(true);
+    }
+
+    getToken() {
+      return !!localStorage.getItem('accessToken');
     }
 }

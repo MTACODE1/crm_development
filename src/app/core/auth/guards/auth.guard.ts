@@ -10,15 +10,21 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad
 {
   constructor(private _authService: AuthService, private _router: Router )  { }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
       const redirectUrl = state.url === '/sign-out' ? '/' : state.url;
-      return this._check(redirectUrl);
+      if (!this._authService.getToken()) {
+        this._router.navigate(['sign-in'], {queryParams: {redirectUrl}});
+      }
+      return this._authService.getToken();
     }
 
     canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
     {
       const redirectUrl = state.url === '/sign-out' ? '/' : state.url;
-      return this._check(redirectUrl);
+      if (!this._authService.getToken()) {
+        this._router.navigate(['sign-in'], {queryParams: {redirectUrl}});
+      }
+      return this._authService.getToken();
     }
 
 
