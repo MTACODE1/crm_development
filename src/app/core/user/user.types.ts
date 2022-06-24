@@ -1,10 +1,13 @@
 export interface User
 {
-  id: string;
-  name: string;
-  email: string;
+  id?: string;
+  name?: string;
+  email?: string;
   avatar?: string;
   status?: string;
+  first_name?:string;
+  last_name?:string;
+  username?:string
 }
 
 export interface TableModel {

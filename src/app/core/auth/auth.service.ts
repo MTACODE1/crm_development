@@ -66,7 +66,6 @@ export class AuthService
             username: response.username
           }
           sessionStorage.setItem('loginUser', JSON.stringify(user));
-          this._userService
           // Set the authenticated flag to true
           this._authenticated = true;
 

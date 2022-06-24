@@ -4,14 +4,14 @@ import HmacSHA256 from 'crypto-js/hmac-sha256';
 import Utf8 from 'crypto-js/enc-utf8';
 import { cloneDeep } from 'lodash-es';
 import { FuseMockApiService } from '@fuse/lib/mock-api';
-import { user as userData } from 'app/mock-api/common/user/data';
+// import { user as userData } from 'app/mock-api/common/user/data';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthMockApi {
   private readonly _secret: any;
-  private _user: any = userData;
+  // private _user: any = userData;
 
   users = [
     { id: 'cfaad35d-07a3-4447-a6c3-d8c3d54fd5df', name: 'Rizwan Khan', password: 'admin', email: 'hughes.brian@company.com',  },
@@ -47,60 +47,61 @@ export class AuthMockApi {
         // -----------------------------------------------------------------------------------------------------
         // @ Sign in - POST
         // -----------------------------------------------------------------------------------------------------
-        this._fuseMockApiService
-            .onPost('api/auth/sign-in', 1500)
-            .reply(({request}) => {
-              const user = this.users.find(x => x.email === request.body.email && x.password === request.body.password);
-                // Sign in successful
-                // if ( request.body.email === 'hughes.brian@company.com' && request.body.password === 'admin' )
-                if (user) {
-                  localStorage.setItem('loginUser', `${request.body.email}`);
-                  return [
-                    200,
-                    {
-                      // user       : cloneDeep(this._user),
-                      user       : cloneDeep(this.users),
-                      accessToken: this._generateJWTToken(),
-                      tokenType  : 'bearer'
-                    }
-                  ];
-                }
+        // this._fuseMockApiService
+        //     .onPost('api/auth/sign-in', 1500)
+        //     .reply(({request}) => {
+        //       debugger;
+        //       const user = this.users.find(x => x.email === request.body.email && x.password === request.body.password);
+        //         // Sign in successful
+        //         // if ( request.body.email === 'hughes.brian@company.com' && request.body.password === 'admin' )
+        //         if (user) {
+        //           localStorage.setItem('loginUser', `${request.body.email}`);
+        //           return [
+        //             200,
+        //             {
+        //               // user       : cloneDeep(this._user),
+        //               user       : cloneDeep(this.users),
+        //               accessToken: this._generateJWTToken(),
+        //               tokenType  : 'bearer'
+        //             }
+        //           ];
+        //         }
 
-                // Invalid credentials
-              return [  404, false ];
-            });
+        //         // Invalid credentials
+        //       return [  404, false ];
+        //     });
 
         // -----------------------------------------------------------------------------------------------------
         // @ Sign in using the access token - POST
         // -----------------------------------------------------------------------------------------------------
-        this._fuseMockApiService
-            .onPost('api/auth/sign-in-with-token')
-            .reply(({request}) => {
+        // this._fuseMockApiService
+        //     .onPost('api/auth/sign-in-with-token')
+        //     .reply(({request}) => {
 
-                // Get the access token
-                const accessToken = request.body.accessToken;
+        //         // Get the access token
+        //         const accessToken = request.body.accessToken;
 
-                // Verify the token
-                if ( this._verifyJWTToken(accessToken) )
-                {
-                    return [
-                        200,
-                        {
-                          user       : cloneDeep(this._user),
-                          accessToken: this._generateJWTToken(),
-                          tokenType  : 'bearer'
-                        }
-                    ];
-                }
+        //         // Verify the token
+        //         if ( this._verifyJWTToken(accessToken) )
+        //         {
+        //             return [
+        //                 200,
+        //                 {
+        //                   user       : cloneDeep(this._user),
+        //                   accessToken: this._generateJWTToken(),
+        //                   tokenType  : 'bearer'
+        //                 }
+        //             ];
+        //         }
 
-                // Invalid token
-                return [
-                    401,
-                    {
-                      error: 'Invalid token'
-                    }
-                ];
-            });
+        //         // Invalid token
+        //         return [
+        //             401,
+        //             {
+        //               error: 'Invalid token'
+        //             }
+        //         ];
+        //     });
 
         // -----------------------------------------------------------------------------------------------------
         // @ Sign up - POST
@@ -115,26 +116,26 @@ export class AuthMockApi {
         // -----------------------------------------------------------------------------------------------------
         // @ Unlock session - POST
         // -----------------------------------------------------------------------------------------------------
-        this._fuseMockApiService
-            .onPost('api/auth/unlock-session', 1500)
-            .reply(({request}) => {
+        // this._fuseMockApiService
+        //     .onPost('api/auth/unlock-session', 1500)
+        //     .reply(({request}) => {
 
-                // Sign in successful
-                if ( request.body.email === 'hughes.brian@company.com' && request.body.password === 'admin' )
-                {
-                    return [
-                        200,
-                        {
-                          user       : cloneDeep(this._user),
-                          accessToken: this._generateJWTToken(),
-                          tokenType  : 'bearer'
-                        }
-                    ];
-                }
+        //         // Sign in successful
+        //         if ( request.body.email === 'hughes.brian@company.com' && request.body.password === 'admin' )
+        //         {
+        //             return [
+        //                 200,
+        //                 {
+        //                   user       : cloneDeep(this._user),
+        //                   accessToken: this._generateJWTToken(),
+        //                   tokenType  : 'bearer'
+        //                 }
+        //             ];
+        //         }
 
-                // Invalid credentials
-                return [404,false];
-            });
+        //         // Invalid credentials
+        //         return [404,false];
+        //     });
     }
 
     // -----------------------------------------------------------------------------------------------------

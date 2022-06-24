@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TableModel, User } from 'app/core/user/user.types';
 import * as moment from 'moment';
-import { BehaviorSubject, map, Observable, ReplaySubject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 
 export interface ICalendarState {
   selectedDate?: moment.Moment;
@@ -25,34 +25,35 @@ export class UserService {
    * @param value
    */
 
-  set user(value: User) {
+  public user(value: User) {
     // Store the value
     this._user.next(value);
   }
 
-  get user$(): Observable<User> {
+  public user$(): Observable<User> {
     return this._user.asObservable();
   }
 
-  /** Get the current logged in user data */
-  get(): Observable<User[]> {
-    return this._httpClient.get<User[]>('api/common/user').pipe(
-      tap((user) => {
-       const email = localStorage.getItem('loginUser')
-        const loginUser = user.find(x => x.email == email);
-        this._user.next(loginUser);
-      })
-    );
-  }
 
-  /** Update the user * @param user */
-  update(user: User): Observable<any> {
-    return this._httpClient.patch<User>('api/common/user', { user }).pipe(
-      map((response) => {
-        this._user.next(response);
-      })
-    );
-  }
+  /** Get the current logged in user data */
+  // get(): Observable<User[]> {
+  //   return this._httpClient.get<User[]>('api/common/user').pipe(
+  //     tap((user) => {
+  //      const email = localStorage.getItem('loginUser')
+  //       const loginUser = user.find(x => x.email == email);
+  //       this._user.next(loginUser);
+  //     })
+  //   );
+  // }
+
+  // /** Update the user * @param user */
+  // update(user: User): Observable<any> {
+  //   return this._httpClient.patch<User>('api/common/user', { user }).pipe(
+  //     map((response) => {
+  //       this._user.next(response);
+  //     })
+  //   );
+  // }
 
   getUserTable() {
     return this._httpClient.get<TableModel[]>(`assets/mock-data/table.json`)
