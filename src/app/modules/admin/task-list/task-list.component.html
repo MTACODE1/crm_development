@@ -1,43 +1,56 @@
 
-<div class="flex w-full p-6 sm:p-6 flex-wrap task-lists">
-  <div class="flex-1 mx-2 bg-white rounded-md" *ngFor="let item of medicalAreaArr; let i = index" >
-    <div class="relative overflow-hidden">
-      <h1 class="mb-4 text-xl font-bold py-3 px-4 text-center">{{item.name}}</h1>
-      <div class="absolute bottom-0 right-0 w-18 h-18 -m-6">
-        <mat-icon class="icon-size-18 opacity-25 text-{{item.color}}-800 dark:text-{{item.color}}-800"
-        [svgIcon]="'heroicons_outline:check-circle'">
-      </mat-icon>
-    </div>
+<div>
+  <div class="flex flex-col px-6 pt-6">
+    <label for="status" class="text-xl">Select User</label>
+    <mat-form-field appearance="none" id="status" class="w-36">
+      <mat-select [formControl]="username" class="text-lg text-gray-500">
+        <mat-option *ngFor="let item of users" [value]="item.value">
+         {{item.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
-
-  <!-- <div class="relative"> -->
-    <ng-container *ngFor="let data of item.text; let index= index">
-      <div class="flex flex-col border-b overflow-hidden priority_{{item.color}}_{{data.priority}} cursor-pointer list-item" 
-      [@myTrigger]='state' (click)="markCompleted(data, i, index)" >
-      <!-- [style.transform]="transform(index)" (click)="shuffle(data, i, index)"> -->
-        <div class="flex flex-auto flex-col px-4 py-3 mb-4">
-          <div class="flex">
-            <button  mat-icon-button>
-              <mat-icon [class]="!data.completed?'text-hint':'text-primary'" [svgIcon]="'heroicons_outline:check-circle'"></mat-icon>
-            </button>
-            <div class="ml-2">
-              <p>{{data.text}}</p>
-              <span *ngIf="data.date" class="text-sm">{{data.date}}</span>
+  <div class="flex w-full p-6 sm:p-6 flex-wrap task-lists">
+    <div class="flex-1 mx-2 bg-white rounded-md" *ngFor="let item of medicalAreaArr; let i = index" >
+      <div class="relative overflow-hidden">
+        <h1 class="mb-4 text-xl font-bold py-3 px-4 text-center">{{item.name}}</h1>
+        <div class="absolute bottom-0 right-0 w-18 h-18 -m-6">
+          <mat-icon class="icon-size-18 opacity-25 text-{{item.color}}-800 dark:text-{{item.color}}-800"
+          [svgIcon]="'heroicons_outline:check-circle'">
+        </mat-icon>
+      </div>
+    </div>
+  
+    <!-- <div class="relative"> -->
+      <ng-container *ngFor="let data of item.text; let index= index">
+        <div class="flex flex-col border-b overflow-hidden priority_{{item.color}}_{{data.priority}} cursor-pointer list-item" 
+        [@myTrigger]='state' (click)="markCompleted(data, i, index)" >
+        <!-- [style.transform]="transform(index)" (click)="shuffle(data, i, index)"> -->
+          <div class="flex flex-auto flex-col px-4 py-3 mb-4">
+            <div class="flex">
+              <button  mat-icon-button>
+                <mat-icon [class]="!data.completed?'text-hint':'text-primary'" [svgIcon]="'heroicons_outline:check-circle'"></mat-icon>
+              </button>
+              <div class="ml-2">
+                <p>{{data.text}}</p>
+                <span *ngIf="data.date" class="text-sm">{{data.date}}</span>
+              </div>
             </div>
           </div>
+          <div class="items-center justify-end flex-wrap icon-list mb-2 px-3">
+              <img class="h-auto w-12" src="assets/images/logo/logo.png" alt="logo">
+              <img class="h-auto w-8 mx-1" src="assets/images/logo/bespoke.png" alt="bespoke">
+              <img class="h-auto w-9 mr-1" src="assets/images/logo/dext.png" alt="dext">
+              <img class="h-auto w-8" src="assets/images/logo/ltd.png" alt="ltd">
+          </div>
         </div>
-        <div class="items-center justify-end icon-list">
-            <img class="h-9 w-9" src="assets/images/logo/logo.png" alt="logo">
-            <img class="h-10 w-10 rounded-full" src="assets/images/logo/bespoke.png" alt="bespoke">
-            <img class="h-9 w-9" src="assets/images/logo/dext.png" alt="dext">
-            <img class="h-10 w-10" src="assets/images/logo/ltd.png" alt="ltd">
-        </div>
-      </div>
-    </ng-container>
-  <!-- </div> -->
-    
+      </ng-container>
+    <!-- </div> -->
+      
+    </div>
   </div>
 </div>
+
 
 
 <!-- <div class="flex w-full p-6 sm:p-10 flex-wrap task-lists">

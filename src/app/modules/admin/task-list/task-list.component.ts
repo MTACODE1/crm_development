@@ -1,5 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { statusDataType, TaskListItems, TASK_ITEMS } from './task-items';
 @Component({
@@ -23,6 +24,14 @@ import { statusDataType, TaskListItems, TASK_ITEMS } from './task-items';
 })
 
 export class TaskListComponent implements OnInit {
+  username = new FormControl();
+  public users = [
+    {value: '1', viewValue: 'All Users'},
+    {value: '2', viewValue: 'user 1'},
+    {value: '3', viewValue: 'user 2'},
+    {value: '4', viewValue: 'user 3'},
+  ];
+
   public medicalAreaArr: TaskListItems[] = [
     {
       color: 'gray',
@@ -55,6 +64,7 @@ export class TaskListComponent implements OnInit {
 
   ngOnInit() {
     this.getTaskList();
+    this.username.setValue(this.users[0].value)
   }
 
   private getTaskList(): void {
