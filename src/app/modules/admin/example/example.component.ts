@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
@@ -230,26 +231,41 @@ export class ExampleComponent implements OnInit, OnDestroy {
     });
   }
 
-  public chosenMonthHandler(normalizedMonth): void {
-    this.userService.setConfig({ selectedDate: moment(normalizedMonth.value) });
+  // public chosenMonthHandler(normalizedMonth): void {
+  //   this.userService.setConfig({ selectedDate: moment(normalizedMonth.value) });
+  // }
+
+  // public decrementDay(): void {
+  //   const count = moment(this.pageState.selectedDate).subtract(1, 'month').daysInMonth();
+  //    const params: ICalendarState = {
+  //     selectedDate: moment(this.pageState.selectedDate).subtract(count, 'd')
+  //   };
+  //   this.userService.setConfig(params);
+  //   this.date.setValue(this.pageState.selectedDate);
+  // }
+
+  // public incrementDay(): void {
+  //   const count = moment(this.pageState.selectedDate).add(1, 'month').daysInMonth();
+  //   const params: ICalendarState = {
+  //     selectedDate: moment(this.pageState.selectedDate).add(count, 'd')
+  //   };
+  //   this.userService.setConfig(params);
+  //   this.date.setValue(this.pageState.selectedDate);
+  // }
+
+
+  chosenMonthHandler(normalizedMonthAndYear: moment.Moment, datepicker: MatDatepicker<moment.Moment>) {
+    const ctrlValue = this.date.value!;
+    ctrlValue.month(normalizedMonthAndYear.month());
+    ctrlValue.year(normalizedMonthAndYear.year());
+    this.date.setValue(ctrlValue);
+    datepicker.close();
+    console.log(this.date.value)
   }
 
-  public decrementDay(): void {
-    const count = moment(this.pageState.selectedDate).subtract(1, 'month').daysInMonth();
-     const params: ICalendarState = {
-      selectedDate: moment(this.pageState.selectedDate).subtract(count, 'd')
-    };
-    this.userService.setConfig(params);
-    this.date.setValue(this.pageState.selectedDate);
-  }
-
-  public incrementDay(): void {
-    const count = moment(this.pageState.selectedDate).add(1, 'month').daysInMonth();
-    const params: ICalendarState = {
-      selectedDate: moment(this.pageState.selectedDate).add(count, 'd')
-    };
-    this.userService.setConfig(params);
-    this.date.setValue(this.pageState.selectedDate);
+  calculateMonth(value) {
+    value === 'decrement'?this.date.setValue(this.date.value.subtract(1, 'month')):this.date.setValue(this.date.value.add(1, 'month'));
+    console.log(this.date.value.toISOString())
   }
 
   public editAssessment() {

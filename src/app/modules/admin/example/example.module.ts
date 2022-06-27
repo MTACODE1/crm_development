@@ -27,11 +27,7 @@ export const MY_FORMATS = {
     monthYearA11yLabel: 'MMMM YYYY',
   },
 };
-export class CustomDateAdapter extends MomentDateAdapter {
-  getDayOfWeekNames(style: 'long' | 'short' | 'narrow') {
-    return ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  }
-}
+
 
 const exampleRoutes: Route[] = [
   {
@@ -60,8 +56,8 @@ const exampleRoutes: Route[] = [
     RouterModule.forChild(exampleRoutes)
   ],
   providers: [
-    {provide: DateAdapter, useClass: CustomDateAdapter, deps: [MAT_DATE_LOCALE]},
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
-  ]
+  ],
 })
 export class ExampleModule { }
