@@ -27,6 +27,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
 
   public userTableList: TableModel[];
   featureStatus: boolean;
+  myclientSelected: boolean;
   today = moment(new Date());
   searchTerm: null;
   date = new FormControl(moment());
@@ -57,6 +58,9 @@ export class ExampleComponent implements OnInit, OnDestroy {
   }
 
   private getTableDetails() {
+    let Params = {
+      client_status: 1
+    }
     this.userService.getUserTable().pipe(takeUntil(this.destroyer$))
     .subscribe(res => {
       this.userTableList = res['data'];

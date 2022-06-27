@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MatDatepicker } from '@angular/material/datepicker';
+import * as moment from 'moment';
 import { ApexOptions } from 'ng-apexcharts';
 
 @Component({
@@ -18,12 +21,27 @@ export class DshboardComponent implements OnInit {
   chartVat: ApexOptions;
   chartAccount: ApexOptions;
   chartAssessment: ApexOptions;
+  date = new FormControl(moment());
 
   constructor() { }
 
   ngOnInit(): void {
     this.prepareChartData();
     this.setupChartData();
+  }
+
+  setMonthAndYear(normalizedMonthAndYear: moment.Moment, datepicker: MatDatepicker<moment.Moment>) {
+    const ctrlValue = this.date.value!;
+    ctrlValue.month(normalizedMonthAndYear.month());
+    ctrlValue.year(normalizedMonthAndYear.year());
+    this.date.setValue(ctrlValue);
+    datepicker.close();
+    console.log(this.date.value)
+  }
+
+  calculateMonth(value) {
+    value === 'decrement'?this.date.setValue(this.date.value.subtract(1, 'month')):this.date.setValue(this.date.value.add(1, 'month'));
+    console.log(this.date.value.toISOString())
   }
 
 
