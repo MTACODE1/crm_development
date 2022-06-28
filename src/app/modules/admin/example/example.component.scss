@@ -45,7 +45,9 @@
     height: 20px;
   }
 }
-
+.table-container {
+  max-height: calc(100vh - 370px);
+}
 .mat-raised-button {
   background-color: $red !important;
   color: $white !important;

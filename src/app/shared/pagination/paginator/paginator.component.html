@@ -1,0 +1,12 @@
+<div class="paginator-container inline-flex items-center flex-wrap">
+  <mat-select *ngIf="showCountChoose" placeholder="Show All" [(value)]="perPage" (valueChange)="pageChanged()" class="w-40 text-left">
+    <mat-option [value]="perPageItem" *ngFor="let perPageItem of pageSizes">{{perPageItem}} per page</mat-option>
+    <mat-option [value]="'all'">Show All</mat-option>
+  </mat-select>
+  <app-pagination class="ml-10"
+    [page]="page"
+    (pageChange)="pageChanged($event)"
+    [collectionSize]="count"
+    [pageSize]="perPage">
+  </app-pagination>
+</div>

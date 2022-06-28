@@ -41,6 +41,11 @@ export class ExampleComponent implements OnInit, OnDestroy {
   setskippedStatus: boolean;
   classApplied: boolean = false;
 
+  public paginationConfig = {
+    limit: 10,
+    offset: 0,
+    total: 20
+  }
   private readonly destroyer$: Subject<void> = new Subject();
 
   constructor(private userService: UserService, private _fuseConfirmationService: FuseConfirmationService,
@@ -50,7 +55,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
     this.displayedColumns = this.userService.getColumns();
     this.getTableDetails();
     this.getUsersStatusInfo();
-    this.getPageState();
+    // this.getPageState();
   }
 
   ngOnDestroy(): void {
@@ -59,13 +64,22 @@ export class ExampleComponent implements OnInit, OnDestroy {
   }
 
   private getTableDetails() {
-    let Params = {
-      client_status: 1
+    const Params = {
+      client_status: 1,
+      month: this.date.value.format('MMM-yy'),
+      limit: this.paginationConfig.limit,
+      offset: this.paginationConfig.offset
     }
-    this.userService.getUserTable().pipe(takeUntil(this.destroyer$))
+    this.userService.getUserTable(Params).pipe(takeUntil(this.destroyer$))
     .subscribe(res => {
-      this.userTableList = res['data'];
+      this.userTableList = res['rows'];
+      this.paginationConfig.total = res['total_count'];
     });
+  }
+
+  onPageChange(event) {
+    this.paginationConfig = { ...this.paginationConfig, ...event };
+    this.getTableDetails();
   }
 
    getWeekNumOfMonthOfDate(d) {
@@ -85,6 +99,21 @@ export class ExampleComponent implements OnInit, OnDestroy {
       data === 'book'?this.max = i + 1:data === 'vat'? this.vatMax = i + 1:data === 'acc'?this.accountMax = i+1:this.accountNewMax = i + 1;
       this.triggerStatusSnackBar(statsuName[i + 1], data);
     }
+    // this.updateStatus(statsuName[i])
+  }
+
+  private updateStatus(data) {
+    const task = {
+      id: data.id,
+      t_status:data.t_status,
+    }
+    console.log(task, '%%%')
+    this.userService.updateTaskStatus(task).subscribe(res => {
+      console.log(res)
+      if(res['err_msg']) {
+        alert(res['err_msg']);
+      }
+    })
   }
 
   public toggleClass(): void {
@@ -224,12 +253,12 @@ export class ExampleComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getPageState(): void {
-    this.userService.getConfig().pipe(takeUntil(this.destroyer$))
-    .subscribe(state => {
-      this.pageState = state;
-    });
-  }
+  // private getPageState(): void {
+  //   this.userService.getConfig().pipe(takeUntil(this.destroyer$))
+  //   .subscribe(state => {
+  //     this.pageState = state;
+  //   });
+  // }
 
   // public chosenMonthHandler(normalizedMonth): void {
   //   this.userService.setConfig({ selectedDate: moment(normalizedMonth.value) });
@@ -260,12 +289,13 @@ export class ExampleComponent implements OnInit, OnDestroy {
     ctrlValue.year(normalizedMonthAndYear.year());
     this.date.setValue(ctrlValue);
     datepicker.close();
-    console.log(this.date.value)
+    // console.log(this.date.value)
   }
 
   calculateMonth(value) {
     value === 'decrement'?this.date.setValue(this.date.value.subtract(1, 'month')):this.date.setValue(this.date.value.add(1, 'month'));
-    console.log(this.date.value.toISOString())
+    // console.log(this.date.value.toISOString())
+    this.getTableDetails();
   }
 
   public editAssessment() {

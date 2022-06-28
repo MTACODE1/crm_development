@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TableModel, User } from 'app/core/user/user.types';
+import { environment } from 'environments/environment';
 import * as moment from 'moment';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 
@@ -55,14 +56,19 @@ export class UserService {
   //   );
   // }
 
-  getUserTable() {
-    return this._httpClient.get<TableModel[]>(`assets/mock-data/table.json`)
+  getUserTable(params) {
+    // return this._httpClient.get<TableModel[]>(`assets/mock-data/table.json`)
+    return this._httpClient.post<TableModel[]>(`${environment.baseUrl}/client`, params)
   }
 
   getColumns() {
     return ['companyName', 'accountant', 'companyType', 'onboarding','saledate','package','quarters','frequency', 'bookkeeper', 'completionweek',
       'bookKeepingStatus', 'vatRegistered','vatQuarter', 'vatscheme','vatStatus','eoy', 'oneoff', 'endDate', 'duedate', 
       'accountsStatus1', 'accountsStatus2', 'number', 'self1', 'self2'];
+  }
+
+  updateTaskStatus(taskParam) {
+    return this._httpClient.post(`${environment.baseUrl}/task_status`, taskParam)
   }
 
   public setUsersStatus(data): void {
