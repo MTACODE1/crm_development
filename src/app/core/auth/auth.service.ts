@@ -65,7 +65,7 @@ export class AuthService
             avatar: response.picture,
             username: response.username
           }
-          sessionStorage.setItem('loginUser', JSON.stringify(user));
+          localStorage.setItem('loginUser', JSON.stringify(user));
           // Set the authenticated flag to true
           this._authenticated = true;
 
@@ -121,7 +121,7 @@ export class AuthService
     signOut(): Observable<any> {
       // Remove the access token from the local storage
       localStorage.removeItem('accessToken');
-      sessionStorage.clear();
+      localStorage.clear();
       // Set the authenticated flag to false
       this._authenticated = false;
       // Return the observable
@@ -161,9 +161,9 @@ export class AuthService
       }
 
       // Check the access token expire date
-      // if ( AuthUtils.isTokenExpired(this.accessToken) ) {
-      //   return of(false);
-      // }
+      if ( AuthUtils.isTokenExpired(this.accessToken) ) {
+        return of(false);
+      }
         // If the access token exists and it didn't expire, sign in using it
       // return this.signInUsingToken();
       return of(true);

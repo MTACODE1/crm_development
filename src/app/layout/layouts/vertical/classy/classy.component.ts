@@ -38,7 +38,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
     });
 
     // Subscribe to the user service
-    this.user = JSON.parse(sessionStorage.getItem('loginUser'));
+    this.user = JSON.parse(localStorage.getItem('loginUser'));
     // this._userService.user$()
     //     .pipe((takeUntil(this._unsubscribeAll)))
     //     .subscribe((user: User) => {

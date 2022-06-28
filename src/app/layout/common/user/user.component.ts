@@ -27,7 +27,7 @@ export class UserComponent implements OnInit, OnDestroy {
     
     ngOnInit(): void {
       // Subscribe to user changes
-      const loginUser = sessionStorage.getItem('loginUser');
+      const loginUser = localStorage.getItem('loginUser');
       this.user = JSON.parse(loginUser)
       // this._userService.user$
       //     .pipe(takeUntil(this._unsubscribeAll))
