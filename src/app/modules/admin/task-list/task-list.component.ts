@@ -12,12 +12,7 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrls: ['./task-list.component.scss'],
   animations: [
     trigger("myTrigger", [
-      state(
-        "fadeInFlash",
-        style({
-          opacity: "1"
-        })
-      ),
+      state("fadeInFlash",style({ opacity: "1"})),
       transition("void => *", [
         style({ opacity: "0", transform: "translateY(20px)" }),
         animate("500ms")
