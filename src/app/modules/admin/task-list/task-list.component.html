@@ -11,17 +11,15 @@
     </mat-form-field>
   </div>
   <div class="flex w-full p-6 sm:p-6 flex-wrap task-lists">
-    <div class="flex-1 mx-2 bg-white rounded-md" *ngFor="let item of medicalAreaArr; let i = index" >
+    <div class="flex-1 mx-2 bg-white rounded-md" *ngFor="let item of taskListArr; let i = index" >
       <div class="relative overflow-hidden">
         <h1 class="mb-4 text-xl font-bold py-3 px-4 text-center">{{item.name}}</h1>
         <div class="absolute bottom-0 right-0 w-18 h-18 -m-6">
           <mat-icon class="icon-size-18 opacity-25 text-{{item.color}}-800 dark:text-{{item.color}}-800"
-          [svgIcon]="'heroicons_outline:check-circle'">
-        </mat-icon>
+            svgIcon="heroicons_outline:check-circle">
+          </mat-icon>
+        </div>
       </div>
-    </div>
-  
-    <!-- <div class="relative"> -->
       <ng-container *ngFor="let data of item.text; let index= index">
         <div class="flex flex-col border-b overflow-hidden priority_{{item.color}}_{{data.priority}} cursor-pointer list-item" 
         [@myTrigger]='state' (click)="markCompleted(data, i, index)" >
@@ -45,182 +43,9 @@
           </div>
         </div>
       </ng-container>
-    <!-- </div> -->
-      
+      <ng-container *ngIf="!item.text">
+        <p class="text-center mt-4 text-{{item.color}}-500 text-lg font-bold opacity-75">No task Found !!!</p>
+      </ng-container>
     </div>
   </div>
 </div>
-
-
-
-<!-- <div class="flex w-full p-6 sm:p-10 flex-wrap task-lists">
-  <div class="flex-1 mx-2 bg-white rounded-md cursor-pointer">
-    <div class="relative overflow-hidden">
-      <h1 class="mb-4 text-xl font-bold py-3 px-4 text-center">Setup & Compliance</h1>
-      <div class="absolute bottom-0 right-0 w-18 h-18 -m-6">
-        <mat-icon  class="icon-size-18 opacity-25 text-gray-800 dark:text-gray-800"
-        [svgIcon]="'heroicons_outline:check-circle'">
-      </mat-icon>
-    </div>
-  </div>
-    
-    <div class="flex flex-col border-b overflow-hidden completed">
-      <div class="flex flex-auto flex-col px-4 py-3">
-        <div class="flex">
-          <span class="mt-1" inlineSVG="assets/icons/ic_sent.svg"></span>
-          <div class="ml-2">
-            <p>Complete onboarding for Bespoke Alpha Limited </p>
-            <span class="text-sm">12/06/2022 </span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="flex flex-col overflow-hidden">
-      <div class="flex flex-auto flex-col px-4 py-3">
-        <div class="flex">
-          <span class="mt-1" inlineSVG="assets/icons/ic_sent.svg"></span>
-          <div class="ml-2">
-            <p>Complete onboarding for Bespoke Alpha Limited </p>
-            <span class="text-sm">12/06/2022 </span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="flex-1 mx-2 bg-white rounded-md">
-    <div class="relative overflow-hidden">
-      <h1 class="mb-4 text-xl font-bold py-3 px-4 text-center">Bookkeeping</h1>
-      <div class="absolute bottom-0 right-0 w-18 h-18 -m-6">
-        <mat-icon  class="icon-size-18 opacity-50 text-yellow-800 dark:text-yellow-800"
-          [svgIcon]="'heroicons_outline:check-circle'">
-        </mat-icon>
-      </div>
-    </div>
-    <div class="flex flex-col border-b overflow-hidden completed">
-      <div class="flex flex-auto flex-col px-4 py-3">
-        <div class="flex">
-          <span class="mt-1" inlineSVG="assets/icons/ic_sent.svg"></span>
-          <div class="ml-2">
-            <p>Receive bookkeeping information request from Aplha solution and send to bookkeeper management accountant</p>
-            <span class="text-sm">12/06/2022 </span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="flex flex-col border-b overflow-hidden">
-      <div class="flex flex-auto flex-col px-4 py-3">
-        <div class="flex">
-          <span class="mt-1" inlineSVG="assets/icons/ic_sent.svg"></span>
-          <div class="ml-2">
-            <p>Review then request bookkeeping information request for Aplha solution from accountant</p>
-            <span class="text-sm">12/06/2022 </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="flex-1 mx-2 bg-white rounded-md">
-    <div class="relative overflow-hidden">
-      <h1 class="mb-4 text-xl font-bold py-3 px-4 text-center">VAT</h1>
-      <div class="absolute bottom-0 right-0 w-18 h-18 -m-6">
-        <mat-icon  class="icon-size-18 opacity-50 text-orange-800 dark:text-orange-800"
-          [svgIcon]="'heroicons_outline:check-circle'">
-        </mat-icon>
-      </div>
-    </div>
-    <div class="flex flex-col border-b overflow-hidden completed">
-      <div class="flex flex-auto flex-col px-4 py-3">
-        <div class="flex">
-          <span class="mt-1" inlineSVG="assets/icons/ic_sent.svg"></span>
-          <div class="ml-2">
-            <p>Complete bookkeeping for the client bespoke limited .</p>
-            <span class="text-sm">12/06/2021</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="flex flex-col overflow-hidden">
-      <div class="flex flex-auto flex-col px-4 py-3">
-        <div class="flex">
-          <span class="mt-1" inlineSVG="assets/icons/ic_sent.svg"></span>
-          <div class="ml-2">
-            <p>Send VAT  return for cleint Alpha solution to accountant review</p>
-            <span class="text-sm">12/06/2022 </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="flex-1 mx-2 bg-white rounded-md">
-    <div class="relative overflow-hidden">
-      <h1 class="mb-4 text-xl font-bold py-3 px-4 text-center">Annual Accounts</h1>
-      <div class="absolute bottom-0 right-0 w-18 h-18 -m-6">
-        <mat-icon  class="icon-size-18 opacity-50 text-pink-800 dark:text-pink-800"
-          [svgIcon]="'heroicons_outline:check-circle'">
-        </mat-icon>
-      </div>
-    </div>
-    <div class="flex flex-col border-b  overflow-hidden completed">
-      <div class="flex flex-auto flex-col px-4 py-3">
-        <div class="flex">
-          <span class="mt-1" inlineSVG="assets/icons/ic_sent.svg"></span>
-          <div class="ml-2">
-            <p>Review then request accounts information for the company from accountant</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="flex flex-col overflow-hidden">
-      <div class="flex flex-auto flex-col px-4 py-3">
-        <div class="flex">
-          <span class="mt-1" inlineSVG="assets/icons/ic_sent.svg"></span>
-          <div class="ml-2">
-            <p>Receive accounts information request from company and send to EOY accountant</p>
-            <span class="text-sm">12/06/2022 </span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="flex-1 mx-2 bg-white rounded-md">
-    <div class="relative overflow-hidden">
-      <h1 class="mb-4 text-xl font-bold py-3 px-4 text-center">Self Assessment</h1>
-      <div class="absolute bottom-0 right-0 w-18 h-18 -m-6">
-        <mat-icon  class="icon-size-18 opacity-50 text-green-800 dark:text-green-800"
-          [svgIcon]="'heroicons_outline:check-circle'">
-        </mat-icon>
-      </div>
-    </div>
-    <div class="flex flex-col border-b overflow-hidden completed">
-      <div class="flex flex-auto flex-col px-4 py-3">
-        <div class="flex">
-          <span class="mt-1" inlineSVG="assets/icons/ic_sent.svg"></span>
-          <div class="ml-2">
-            <p>Chase Self Assessment checklist or company name here</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="flex flex-col overflow-hidden">
-      <div class="flex flex-auto flex-col px-4 py-3">
-        <div class="flex">
-          <span class="mt-1" inlineSVG="assets/icons/ic_sent.svg"></span>
-          <div class="ml-2">
-            <p>Chase Self Assessment checklist or company name here</p>
-            <span class="text-sm">12/06/2022 </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->

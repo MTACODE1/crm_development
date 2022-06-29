@@ -13,8 +13,8 @@
     .page-link{
       z-index: 3;
       color: $white;
-      background-color: #42a3ed;
-      border-color: #42a3ed;
+      background-color: $blue;
+      border-color: $blue;
     }
   }
 }
@@ -29,12 +29,12 @@
   text-decoration: none;
   border: 1px solid #dee2e6;
   margin-left: -1px;
-  color: #42a3ed;
-  background-color: #ffffff;
+  color: $blue;
+  background-color: $white;
 }
 .disabled {
   > a > span {
-    color: $gray200;
+    color: #c9c0c0;
   }
 }
 

@@ -1,8 +1,11 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { statusDataType, TaskListItems, TASK_ITEMS } from './task-items';
+import { TasksMockApi } from 'app/mock-api/apps/tasks/api';
+import { statusDataType, TaskListItems } from 'app/mock-api/apps/tasks/data';
+import { Subject, takeUntil } from 'rxjs';
+
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
@@ -23,7 +26,7 @@ import { statusDataType, TaskListItems, TASK_ITEMS } from './task-items';
   ]
 })
 
-export class TaskListComponent implements OnInit {
+export class TaskListComponent implements OnInit, OnDestroy {
   username = new FormControl();
   public users = [
     {value: '1', viewValue: 'All Users'},
@@ -32,7 +35,7 @@ export class TaskListComponent implements OnInit {
     {value: '4', viewValue: 'user 3'},
   ];
 
-  public medicalAreaArr: TaskListItems[] = [
+  public taskListArr: TaskListItems[] = [
     {
       color: 'gray',
       name: 'Setup & Compliance',
@@ -60,27 +63,38 @@ export class TaskListComponent implements OnInit {
     },
   ];
   
-  constructor(private _fuseConfirmationService:FuseConfirmationService) { }
+  private readonly destroyer$: Subject<void> = new Subject();
+
+  constructor(private _fuseConfirmationService:FuseConfirmationService, private taskService:TasksMockApi) { }
 
   ngOnInit() {
     this.getTaskList();
     this.username.setValue(this.users[0].value)
   }
 
+  ngOnDestroy(): void {
+    this.destroyer$.next();
+    this.destroyer$.complete();
+  }
+
   private getTaskList(): void {
-    let tasksList = TASK_ITEMS;
-    Object.keys(tasksList).forEach(element => {
-      this.medicalAreaArr.map((data, index) => {
-        if(data.dataType === element) {
-          this.medicalAreaArr[index].text = tasksList[element].length?tasksList[element].sort((a,b) =>  (a.priority > b.priority ? 1 : -1)):null
-        }
+    // let tasksList = TASK_ITEMS;
+    this.taskService.getTaskList({}).pipe(takeUntil(this.destroyer$))
+    .subscribe(taskResponse => {
+      const tasksList = taskResponse;
+      Object.keys(tasksList).forEach(element => {
+        this.taskListArr.map((data, index) => {
+          if(data.dataType === element) {
+            this.taskListArr[index].text = tasksList[element].length?tasksList[element].sort((a,b) =>  (a.priority > b.priority ? 1 : -1)):null
+          }
+        });
       });
     });
   }
 
   shuffle(obj, i, ind) {
-    this.medicalAreaArr[i].text.splice(ind, 1)
-    this.medicalAreaArr[i].text.push(obj)
+    this.taskListArr[i].text.splice(ind, 1)
+    this.taskListArr[i].text.push(obj)
   }
 
   transform(index: number) {
@@ -90,7 +104,7 @@ export class TaskListComponent implements OnInit {
   public markCompleted(item, ind, itemIndex) {
     const dialogRef = this._fuseConfirmationService.open({
       title : 'Are you sure?',
-      message : !item.completed?'Do you want to make this task completed ?': 'Do you want to move this task from completed to uncompleted?',
+      message : !item.completed?`Mark <b>${item.text}</b> as completed ?`: `Mark <b>${item.text}</b> as uncompleted?`,
       dismissible: true,
       actions:{
         cancel:{
@@ -102,14 +116,15 @@ export class TaskListComponent implements OnInit {
         }
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().pipe(takeUntil(this.destroyer$))
+    .subscribe(result => {
       if(result === 'confirmed') {
         if(!item.completed) {
           this.moveCompleted(item, ind,itemIndex);
         } else {
           item.completed = false;
           // item.priority = 'high';
-          this.medicalAreaArr[ind].text.splice(itemIndex, 1)
+          this.taskListArr[ind].text.splice(itemIndex, 1)
         }
       }
     });
@@ -119,18 +134,18 @@ export class TaskListComponent implements OnInit {
   private moveCompleted(item, ind,itemIndex) {
     item.completed = true;
     // item.priority = 'low';
-    // this.medicalAreaArr[ind].text = this.medicalAreaArr[ind].text.concat(this.medicalAreaArr[ind].text.splice(itemIndex, 1));
-    this.medicalAreaArr[ind].text.push(item)
+    // this.taskListArr[ind].text = this.taskListArr[ind].text.concat(this.taskListArr[ind].text.splice(itemIndex, 1));
+    this.taskListArr[ind].text.push(item)
   }
 
   // private moveCompleted(id, ind,element) {
-  //   // this.medicalAreaArr[ind].text.forEach(element => {
+  //   // this.taskListArr[ind].text.forEach(element => {
   //   //   if(element.id === id) {
   //       element.completed = true;
   //       // element.priority = 'low';
-  //       let index = this.medicalAreaArr[ind].text.findIndex((item) =>item.id == id);
-  //       // this.medicalAreaArr[ind].text.splice(index, 1)
-  //       this.medicalAreaArr[ind].text.push(element)
+  //       let index = this.taskListArr[ind].text.findIndex((item) =>item.id == id);
+  //       // this.taskListArr[ind].text.splice(index, 1)
+  //       this.taskListArr[ind].text.push(element)
   //   //   }
   //   // });
   // }
