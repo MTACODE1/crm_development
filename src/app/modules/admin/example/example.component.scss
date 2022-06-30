@@ -4,7 +4,7 @@
   table {
     .mat-header-cell {
       font-size: 14px;
-      padding: 0 8px 4px;
+      padding: 0 8px 0;
       
       &.info-col {
         background: $gray100;
@@ -33,7 +33,7 @@
       text-align: center;
       min-width: 140px;
       &:first-child {
-        min-width: 170px;
+        min-width: 180px;
       }
     }
     .suspended {
@@ -44,9 +44,15 @@
     width: 20px;
     height: 20px;
   }
+  .fuse-alert-content{
+    flex-direction: row !important;
+    .fuse-alert-message{
+      margin-top: 0 !important;
+    }
+  }
 }
 .table-container {
-  max-height: calc(100vh - 370px);
+  max-height: calc(100vh - 340px);
 }
 .mat-raised-button {
   background-color: $red !important;
