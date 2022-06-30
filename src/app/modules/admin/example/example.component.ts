@@ -4,7 +4,7 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { ICalendarState, UserService } from 'app/core/user/user.service';
+import { UserService } from 'app/core/user/user.service';
 import * as moment from "moment";
 import { Subject, takeUntil } from 'rxjs';
 import { SuccessModalComponent } from '../success-modal/success-modal.component';
@@ -20,24 +20,13 @@ import { OnbordingFormComponent } from './onbording-form/onbording-form.componen
 })
 
 export class ExampleComponent implements OnInit, OnDestroy {
-  max = 0;
-  vatMax = 0;
-  accountMax = 0;
-  accountNewMax = 0;
   displayedColumns: string[] = [];
-
-  public userTableList: TableModel[];
+  userTableList: TableModel[] = [];
   featureStatus: boolean;
   myclientSelected: boolean;
   today = moment(new Date());
   searchTerm: null;
   date = new FormControl(moment());
-  public pageState: ICalendarState;
-  showStatusBtn: boolean = false;
-  showVatStatusBtn: boolean = false;
-  showAccStatusBtn: boolean = false;
-  showAcc2StatusBtn: boolean = false;
-  classApplied: boolean = false;
 
   public paginationConfig = {
     limit: 10,
@@ -52,8 +41,6 @@ export class ExampleComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.displayedColumns = this.userService.getColumns();
     this.getTableDetails();
-    this.getUsersStatusInfo();
-    // this.getPageState();
   }
 
   ngOnDestroy(): void {
@@ -75,22 +62,18 @@ export class ExampleComponent implements OnInit, OnDestroy {
     });
   }
 
+
   public onPageChange(event): void {
     this.paginationConfig = { ...this.paginationConfig, ...event };
     this.getTableDetails();
   }
 
   public getNextStatus(data, i,statsuName, id): void {
-    console.log(statsuName, 'statsusName')
     if (data === 'bookkeeping' && statsuName[i].static_id === 7 ) {
       this.openStatusJumpDialogue('setFirst', id);
     } else if(data === 'bookkeeping' && (statsuName[i].static_id === 8 ||statsuName[i].static_id === 9 || statsuName[i].static_id === 10)) {
-      // this.max = 11;
       this.updateStatus(statsuName[11], id, data, true);
-      // this.triggerStatusSnackBar(statsuName[11], data);
     }  else {
-      // data === 'bookkeeping'?this.max = i + 1:data === 'vat'? this.vatMax = i + 1:data === 'acc'?this.accountMax = i+1:this.accountNewMax = i + 1;
-      // this.triggerStatusSnackBar(statsuName[i + 1], data);
       this.updateStatus(statsuName[i +1], id, data, true);
     }
    
@@ -103,7 +86,6 @@ export class ExampleComponent implements OnInit, OnDestroy {
       month:this.date.value.format('MMM-yy'),
       p_status: item.static_id
     }
-    console.log(task, '%%%')
     this.userService.updateTaskStatus(task).subscribe(result => {
       if(result['err_msg']) {
         alert(result['err_msg']);
@@ -114,19 +96,12 @@ export class ExampleComponent implements OnInit, OnDestroy {
     })
   }
 
-  public toggleClass(): void {
-    this.classApplied = !this.classApplied;
-  }
-
   private getPreviosStatus(key, i,statsuName, id): void {
     if (key === 'bookkeeping' && (statsuName[i].static_id === 11 || (statsuName[i].static_id === 10 ||statsuName[i].static_id === 9 || statsuName[i].static_id === 8))) {
-      // this.max = 7;
       this.updateStatus(statsuName[7], id, key, false);
     } else {
-      // key === 'bookkeeping'?this.max = i - 1:key === 'vat'? this.vatMax = i-1:key === 'acc'?this.accountMax = i-1:this.accountNewMax =i-1;
       this.updateStatus(statsuName[i -1], id, key, false);
     }
-  
   }
 
   public openConfirmationDialog(key, value, statsuName, id): void {
@@ -153,7 +128,6 @@ export class ExampleComponent implements OnInit, OnDestroy {
     });
   }
 
-
   public statusChanged(toggle:boolean): void {
     if(toggle) {
       this.displayedColumns = ['companyName','onboarding','bookKeepingStatus','vatStatus','accountsStatus1','accountsStatus2','self1','self2'];
@@ -175,17 +149,10 @@ export class ExampleComponent implements OnInit, OnDestroy {
     const snackBarParams: MatSnackBarConfig = {
       horizontalPosition: 'right',
       verticalPosition: 'bottom',
-      panelClass: plan == 'bookkeeping'?'book-snack-bar':plan == 'vat'?'vat-snack-bar':plan == 'acc' || plan == 'accNew'?'acc-snack-bar':'default-snack-bar',
+      panelClass: plan == 'bookkeeping'?'book-snack-bar':plan == 'vat'?'vat-snack-bar':plan == 'annual_accounts' || plan == 'accNew'?'acc-snack-bar':'default-snack-bar',
       data: { item: data, plan: plan }
     };
     this.snackBar.openFromComponent(SuccessModalComponent, snackBarParams);
-  }
-
-  private getUsersStatusInfo(): void {
-    this.userService.getUsersStatus().pipe(takeUntil(this.destroyer$))
-    .subscribe(state => {
-      if(state) this.showVatStatusBtn = true, this.vatMax = state.order -1;
-    });
   }
 
   private openStatusJumpDialogue(set, ClientId) {
@@ -195,10 +162,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(res => {
       if(res) {
-        console.log(res)
-        // this.max = res.fetch.value; 
-        // this.triggerStatusSnackBar(res.fetch, 'book');
-        this.updateStatus(res.fetch, ClientId, 'bookkeeping', true);
+      this.updateStatus(res.fetch, ClientId, 'bookkeeping', true);
       }
     });
   }
@@ -223,38 +187,27 @@ export class ExampleComponent implements OnInit, OnDestroy {
       if(result === 'confirmed') {
         if(status === 'bookkeep') {
           if(key === 'start') {
-            // this.showStatusBtn = true;
-            // this.triggerStatusSnackBar(statusItem[0], 'book')
             this.updateStatus(statusItem[0], ClientId, 'bookkeeping', true);
           } else {
             this.removeStatus(ClientId, 'bookkeeping');
           } 
         } else if(status === 'vat') {
           if(key === 'start') {
-            // this.showVatStatusBtn = true;
-            // this.showStatusBtn = true;
-            // this.triggerStatusSnackBar(this.userTableList[0].vatStatus[0], status)
             this.updateStatus(statusItem[0], ClientId, 'vat', true);
           } else {
-            // this.showVatStatusBtn = false;
             this.removeStatus(ClientId, 'vat');
           }
-        } else if(status === 'acc') {
+        } else if(status === 'annual_accounts') {
           if(key === 'start') {
-            this.showAccStatusBtn = true;
-            // this.triggerStatusSnackBar(this.userTableList[0].accountsStatus1[0], status)
-            this.updateStatus(statusItem[0], ClientId, 'acc', true);
+            this.updateStatus(statusItem[0], ClientId, 'annual_accounts', true);
           } else {
-            // this.showAccStatusBtn = false;
-            this.removeStatus(ClientId, 'acc');
+            this.removeStatus(ClientId, 'annual_accounts');
           }
         } else {
           if(key === 'start') {
-            // this.showAcc2StatusBtn = true;
-            // this.triggerStatusSnackBar(this.userTableList[0].accountsStatus2[0], status)
             this.updateStatus(statusItem[0], ClientId, 'acc', true);
           } else {
-            this.showAcc2StatusBtn = false;
+            // this.showAcc2StatusBtn = false;
           }
         }
       }
@@ -267,44 +220,13 @@ export class ExampleComponent implements OnInit, OnDestroy {
       month:this.date.value.format('MMM-yy'),
       process:process
     }
-    console.log(statusParam)
-    // this.userService.cancelStatus(statusParam).pipe(takeUntil(this.destroyer$))
-    // .subscribe(cancelledData =>{
-    //   console.log(cancelledData);
-    // });
+    this.userService.cancelStatus(statusParam).pipe(takeUntil(this.destroyer$))
+    .subscribe(_ => {
+      this.getTableDetails();
+    });
   }
 
-  // private getPageState(): void {
-  //   this.userService.getConfig().pipe(takeUntil(this.destroyer$))
-  //   .subscribe(state => {
-  //     this.pageState = state;
-  //   });
-  // }
-
-  // public chosenMonthHandler(normalizedMonth): void {
-  //   this.userService.setConfig({ selectedDate: moment(normalizedMonth.value) });
-  // }
-
-  // public decrementDay(): void {
-  //   const count = moment(this.pageState.selectedDate).subtract(1, 'month').daysInMonth();
-  //    const params: ICalendarState = {
-  //     selectedDate: moment(this.pageState.selectedDate).subtract(count, 'd')
-  //   };
-  //   this.userService.setConfig(params);
-  //   this.date.setValue(this.pageState.selectedDate);
-  // }
-
-  // public incrementDay(): void {
-  //   const count = moment(this.pageState.selectedDate).add(1, 'month').daysInMonth();
-  //   const params: ICalendarState = {
-  //     selectedDate: moment(this.pageState.selectedDate).add(count, 'd')
-  //   };
-  //   this.userService.setConfig(params);
-  //   this.date.setValue(this.pageState.selectedDate);
-  // }
-
-
-  chosenMonthHandler(normalizedMonthAndYear: moment.Moment, datepicker: MatDatepicker<moment.Moment>) {
+  public chosenMonthHandler(normalizedMonthAndYear: moment.Moment, datepicker: MatDatepicker<moment.Moment>): void {
     const ctrlValue = this.date.value!;
     ctrlValue.month(normalizedMonthAndYear.month());
     ctrlValue.year(normalizedMonthAndYear.year());
@@ -312,12 +234,12 @@ export class ExampleComponent implements OnInit, OnDestroy {
     datepicker.close();
   }
 
-  calculateMonth(value) {
+  public calculateMonth(value): void {
     value === 'decrement'?this.date.setValue(this.date.value.subtract(1, 'month')):this.date.setValue(this.date.value.add(1, 'month'));
     this.getTableDetails();
   }
 
-  public editAssessment() {
+  public editAssessment(): void {
     const dialogRef = this.dialog.open(AssessmentStatusComponent, {
       width: '50vw',
       // data: set
