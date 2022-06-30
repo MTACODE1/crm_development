@@ -17,15 +17,15 @@ export class BookkeepingStatusComponent implements OnInit {
   ngOnInit(): void {
     if(this.data === 'setFirst') {
       this.optionOne = [ 
-        {text:'Level 1 MR Completed', value:8},//value is index
-        {text:'Level 2 MR Completed', value:9},
-        {text:'Level 3 MR Completed', value:10},
+        {task:'Level 1 MR Completed', static_id:8},//static_id is index
+        {task:'Level 2 MR Completed', static_id:9},
+        {task:'Level 3 MR Completed', static_id:10},
       ]
     } else {
       this.optionOne = [
-        {text:'Level 1 MR Sent to Client', value:11},//value is index
-        {text:'Level 2 MR Sent to Client', value:12},
-        {text:'Level 3 MR Sent to Client', value:13},
+        {task:'Level 1 MR Sent to Client', static_id:11},//static_id is index
+        {task:'Level 2 MR Sent to Client', static_id:12},
+        {task:'Level 3 MR Sent to Client', static_id:13},
       ]
     }
   }

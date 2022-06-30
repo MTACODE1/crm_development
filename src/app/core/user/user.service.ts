@@ -68,7 +68,11 @@ export class UserService {
   }
 
   updateTaskStatus(taskParam) {
-    return this._httpClient.post(`${environment.baseUrl}/task_status`, taskParam)
+    return this._httpClient.post(`${environment.baseUrl}/process_status`, taskParam)
+  }
+
+  cancelStatus(status) {
+    return this._httpClient.post(`${environment.baseUrl}/cancel_client_status`, status)
   }
 
   public setUsersStatus(data): void {

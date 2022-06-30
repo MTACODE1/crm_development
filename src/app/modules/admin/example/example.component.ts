@@ -33,12 +33,10 @@ export class ExampleComponent implements OnInit, OnDestroy {
   searchTerm: null;
   date = new FormControl(moment());
   public pageState: ICalendarState;
-  allVisited:boolean;
   showStatusBtn: boolean = false;
   showVatStatusBtn: boolean = false;
   showAccStatusBtn: boolean = false;
   showAcc2StatusBtn: boolean = false;
-  setskippedStatus: boolean;
   classApplied: boolean = false;
 
   public paginationConfig = {
@@ -63,7 +61,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
     this.destroyer$.complete();
   }
 
-  private getTableDetails() {
+  private getTableDetails(): void {
     const Params = {
       client_status: 1,
       month: this.date.value.format('MMM-yy'),
@@ -77,41 +75,41 @@ export class ExampleComponent implements OnInit, OnDestroy {
     });
   }
 
-  onPageChange(event) {
+  public onPageChange(event): void {
     this.paginationConfig = { ...this.paginationConfig, ...event };
     this.getTableDetails();
   }
 
-   getWeekNumOfMonthOfDate(d) {
-    const firstDay = new Date(d.getFullYear(), d.getMonth(), 1).getDay();
-    return Math.ceil((d.getDate() + (firstDay - 1)) / 7);
-  }
-
-  public getNextStatus(data, i,statsuName): void {
-    statsuName[i].visited = true;
-    this.allVisited = statsuName.every(item => item.visited);
-    if (data === 'book' && statsuName[i].id === 8 ) {
-      this.openStatusJumpDialogue('setFirst');
-    } else if(data === 'book' && this.setskippedStatus && (statsuName[i].id === 9 ||statsuName[i].id === 10 || statsuName[i].id === 11)) {
-      this.max = 11;
-      this.triggerStatusSnackBar(statsuName[11], data);
+  public getNextStatus(data, i,statsuName, id): void {
+    console.log(statsuName, 'statsusName')
+    if (data === 'bookkeeping' && statsuName[i].static_id === 7 ) {
+      this.openStatusJumpDialogue('setFirst', id);
+    } else if(data === 'bookkeeping' && (statsuName[i].static_id === 8 ||statsuName[i].static_id === 9 || statsuName[i].static_id === 10)) {
+      // this.max = 11;
+      this.updateStatus(statsuName[11], id, data, true);
+      // this.triggerStatusSnackBar(statsuName[11], data);
     }  else {
-      data === 'book'?this.max = i + 1:data === 'vat'? this.vatMax = i + 1:data === 'acc'?this.accountMax = i+1:this.accountNewMax = i + 1;
-      this.triggerStatusSnackBar(statsuName[i + 1], data);
+      // data === 'bookkeeping'?this.max = i + 1:data === 'vat'? this.vatMax = i + 1:data === 'acc'?this.accountMax = i+1:this.accountNewMax = i + 1;
+      // this.triggerStatusSnackBar(statsuName[i + 1], data);
+      this.updateStatus(statsuName[i +1], id, data, true);
     }
-    // this.updateStatus(statsuName[i])
+   
   }
 
-  private updateStatus(data) {
+  private updateStatus(item, clientId, key, showSnackBar:boolean) {
     const task = {
-      id: data.id,
-      t_status:data.t_status,
+      uid: clientId,
+      process: key,
+      month:this.date.value.format('MMM-yy'),
+      p_status: item.static_id
     }
     console.log(task, '%%%')
-    this.userService.updateTaskStatus(task).subscribe(res => {
-      console.log(res)
-      if(res['err_msg']) {
-        alert(res['err_msg']);
+    this.userService.updateTaskStatus(task).subscribe(result => {
+      if(result['err_msg']) {
+        alert(result['err_msg']);
+      } else {
+        this.getTableDetails();
+        if(showSnackBar) this.triggerStatusSnackBar(item, key);
       }
     })
   }
@@ -120,22 +118,25 @@ export class ExampleComponent implements OnInit, OnDestroy {
     this.classApplied = !this.classApplied;
   }
 
-  private getPreviosStatus(key, i,statsuName): void {
-    if (key === 'book' && this.setskippedStatus && (statsuName[i].id === 12 || (statsuName[i].id === 11 ||statsuName[i].id === 10 || statsuName[i].id === 9))) {
-      this.max = 7;
+  private getPreviosStatus(key, i,statsuName, id): void {
+    if (key === 'bookkeeping' && (statsuName[i].static_id === 11 || (statsuName[i].static_id === 10 ||statsuName[i].static_id === 9 || statsuName[i].static_id === 8))) {
+      // this.max = 7;
+      this.updateStatus(statsuName[7], id, key, false);
     } else {
-      key === 'book'?this.max = i - 1:key === 'vat'? this.vatMax = i-1:key === 'acc'?this.accountMax = i-1:this.accountNewMax =i-1;
+      // key === 'bookkeeping'?this.max = i - 1:key === 'vat'? this.vatMax = i-1:key === 'acc'?this.accountMax = i-1:this.accountNewMax =i-1;
+      this.updateStatus(statsuName[i -1], id, key, false);
     }
+  
   }
 
-  public openConfirmationDialog(key, value, statsuName): void {
+  public openConfirmationDialog(key, value, statsuName, id): void {
     let previous;
-    if(key === 'book' && this.setskippedStatus && (statsuName[value].id === 12|| (statsuName[value].id === 11 ||statsuName[value].id === 10 || statsuName[value].id === 9))) {
+    if(key === 'bookkeeping' &&  (statsuName[value].static_id === 11|| (statsuName[value].static_id === 10 ||statsuName[value].static_id === 9 || statsuName[value].static_id === 8))) {
       previous = 7;
     }
     const dialogRef = this._fuseConfirmationService.open({
       title : 'Are you sure?',
-      message : `This will revert to the previous task: ${previous=== undefined?statsuName[value - 1].text:statsuName[previous].text}`,
+      message : `This will revert to the previous task: ${previous=== undefined?statsuName[value - 1].task:statsuName[previous].task}`,
       dismissible: true,
       actions:{
         confirm :{
@@ -147,7 +148,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(result => {
       if(result === 'confirmed') {
-        this.getPreviosStatus(key, value, statsuName);
+        this.getPreviosStatus(key, value, statsuName, id);
       }
     });
   }
@@ -174,7 +175,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
     const snackBarParams: MatSnackBarConfig = {
       horizontalPosition: 'right',
       verticalPosition: 'bottom',
-      panelClass: plan == 'book'?'book-snack-bar':plan == 'vat'?'vat-snack-bar':plan == 'acc' || plan == 'accNew'?'acc-snack-bar':'default-snack-bar',
+      panelClass: plan == 'bookkeeping'?'book-snack-bar':plan == 'vat'?'vat-snack-bar':plan == 'acc' || plan == 'accNew'?'acc-snack-bar':'default-snack-bar',
       data: { item: data, plan: plan }
     };
     this.snackBar.openFromComponent(SuccessModalComponent, snackBarParams);
@@ -187,21 +188,22 @@ export class ExampleComponent implements OnInit, OnDestroy {
     });
   }
 
-  private openStatusJumpDialogue(set) {
+  private openStatusJumpDialogue(set, ClientId) {
     const dialogRef = this.dialog.open(BookkeepingStatusComponent, {
       width: '30vw',
       data: set
     });
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(res => {
       if(res) {
-        this.max = res.fetch.value; 
-        this.setskippedStatus = true;
-        this.triggerStatusSnackBar(res.fetch, 'book');
+        console.log(res)
+        // this.max = res.fetch.value; 
+        // this.triggerStatusSnackBar(res.fetch, 'book');
+        this.updateStatus(res.fetch, ClientId, 'bookkeeping', true);
       }
     });
   }
 
-  public startUpdates(key, status): void {
+  public startUpdates(key, status, statusItem, ClientId): void {
     const messgae = key === 'start'?'Start Bookkeeping Process for Bespoke Alpha Solutions for May?':'Cancel Bookkeeping Status for Bespoke Alpha Solutions for May?';
     const vatMessgae = key === 'start'?'Start VAT Process for Bespoke Alpha Solutions for May?':'Cancel VAT Status for Bespoke Alpha Solutions for May?';
     const accMessgae = key === 'start'?'Start Accounts Process for Bespoke Alpha Solutions for May?':'Cancel Accounts Process for Bespoke Alpha Solutions?';
@@ -221,36 +223,55 @@ export class ExampleComponent implements OnInit, OnDestroy {
       if(result === 'confirmed') {
         if(status === 'bookkeep') {
           if(key === 'start') {
-            this.showStatusBtn = true;
-            this.triggerStatusSnackBar(this.userTableList[0].vatStatus[0], 'book')
-          }else {
-            this.showStatusBtn = false;
+            // this.showStatusBtn = true;
+            // this.triggerStatusSnackBar(statusItem[0], 'book')
+            this.updateStatus(statusItem[0], ClientId, 'bookkeeping', true);
+          } else {
+            this.removeStatus(ClientId, 'bookkeeping');
           } 
         } else if(status === 'vat') {
           if(key === 'start') {
-            this.showVatStatusBtn = true;
-            this.showStatusBtn = true;
-            this.triggerStatusSnackBar(this.userTableList[0].vatStatus[0], status)
+            // this.showVatStatusBtn = true;
+            // this.showStatusBtn = true;
+            // this.triggerStatusSnackBar(this.userTableList[0].vatStatus[0], status)
+            this.updateStatus(statusItem[0], ClientId, 'vat', true);
           } else {
-            this.showVatStatusBtn = false;
+            // this.showVatStatusBtn = false;
+            this.removeStatus(ClientId, 'vat');
           }
         } else if(status === 'acc') {
           if(key === 'start') {
             this.showAccStatusBtn = true;
-            this.triggerStatusSnackBar(this.userTableList[0].accountsStatus1[0], status)
+            // this.triggerStatusSnackBar(this.userTableList[0].accountsStatus1[0], status)
+            this.updateStatus(statusItem[0], ClientId, 'acc', true);
           } else {
-            this.showAccStatusBtn = false;
+            // this.showAccStatusBtn = false;
+            this.removeStatus(ClientId, 'acc');
           }
         } else {
           if(key === 'start') {
-            this.showAcc2StatusBtn = true;
-            this.triggerStatusSnackBar(this.userTableList[0].accountsStatus2[0], status)
+            // this.showAcc2StatusBtn = true;
+            // this.triggerStatusSnackBar(this.userTableList[0].accountsStatus2[0], status)
+            this.updateStatus(statusItem[0], ClientId, 'acc', true);
           } else {
             this.showAcc2StatusBtn = false;
           }
         }
       }
     });
+  }
+
+  private removeStatus(ClientId, process) {
+    const statusParam = {
+      uid:ClientId,
+      month:this.date.value.format('MMM-yy'),
+      process:process
+    }
+    console.log(statusParam)
+    // this.userService.cancelStatus(statusParam).pipe(takeUntil(this.destroyer$))
+    // .subscribe(cancelledData =>{
+    //   console.log(cancelledData);
+    // });
   }
 
   // private getPageState(): void {
@@ -289,12 +310,10 @@ export class ExampleComponent implements OnInit, OnDestroy {
     ctrlValue.year(normalizedMonthAndYear.year());
     this.date.setValue(ctrlValue);
     datepicker.close();
-    // console.log(this.date.value)
   }
 
   calculateMonth(value) {
     value === 'decrement'?this.date.setValue(this.date.value.subtract(1, 'month')):this.date.setValue(this.date.value.add(1, 'month'));
-    // console.log(this.date.value.toISOString())
     this.getTableDetails();
   }
 

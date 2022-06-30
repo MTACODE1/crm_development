@@ -71,7 +71,7 @@
               <th mat-header-cell *matHeaderCellDef class="pl-0 info-col"> Company Name </th>
               <td mat-cell *matCellDef="let element">
                 <div>
-                  <a href="https://www.morethanaccountants.co.uk/salesflow/admin/v_lead.html?id=78216" target="_blank">{{element.companyName}}</a>
+                  <a href="https://www.morethanaccountants.co.uk/salesflow/admin/v_lead.html?id=78216" target="_blank">{{element.limited_company}}</a>
                   <a href="https://www.morethanaccountants.co.uk/salesflow/admin/v_lead.html?id=78216" target="_blank"> {{element.companyName1}}</a>
                   <a href="https://www.morethanaccountants.co.uk/salesflow/admin/v_lead.html?id=78216" target="_blank"> {{element.companyName2}}</a>
                   <div class="logo-container flex items-center justify-between mt-1">
@@ -161,20 +161,24 @@
 
             <ng-container matColumnDef="bookKeepingStatus">
               <th mat-header-cell *matHeaderCellDef class="book-col">June Bookkeeping Status</th>
-              <td mat-cell *matCellDef="let element" class="text-center">
-                <mat-icon *ngIf="!showStatusBtn" class="cursor-pointer" (click)="startUpdates('start', 'bookkeep')"
+              <td mat-cell *matCellDef="let element" class="text-center"> 
+                <mat-icon *ngIf="!element.bookkeeping_status_saved" class="cursor-pointer" (click)="startUpdates('start', 'bookkeep', element.bookkeeping_status, element.id)"
                   svgIcon="heroicons_outline:plus-sm">
-                </mat-icon>
-                <div *ngIf="showStatusBtn" class="flex items-center"> 
-                  <button mat-icon-button>
-                    <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
-                    (click)="max > 0?openConfirmationDialog('book', max,element.bookkeeping_status):startUpdates('end','bookkeep')"></mat-icon>
-                  </button>
-                  <button  mat-raised-button [disabled]="element.isSuspended" [class]="max < element.bookkeeping_status.length ?element.bookkeeping_status[max].status:''" 
-                    (click)="max < element.bookkeeping_status.length -1 ?getNextStatus('book', max,element.bookkeeping_status):$event.stopPropagation()"> 
-                    {{max < element.bookkeeping_status.length ?element.bookkeeping_status[max]?.task:element.bookkeeping_status[0]?.task}} 
-                  </button>
-                  <mat-icon [class.blink]="classApplied" (click)="toggleClass()" class="cursor-pointer" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                </mat-icon> 
+                <div *ngIf="element.bookkeeping_status_saved" class="flex items-center"> 
+                  <ng-container *ngFor="let statusItem of element.bookkeeping_status; let ind = index" >
+                    <ng-container *ngIf="statusItem.static_id == element.bookkeeping_status_saved" >
+                      <button mat-icon-button>
+                        <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
+                        (click)="ind > 0?openConfirmationDialog('bookkeeping', ind,element.bookkeeping_status, element.id):startUpdates('end','bookkeep',element.bookkeeping_status, element.id)"></mat-icon>
+                      </button>
+                      <button  mat-raised-button [ngClass]="{'start': statusItem.static_id >= 2 && statusItem.static_id <= 4, 'in-progress': statusItem.static_id >= 5 && statusItem.static_id <= 10,'complete':statusItem.static_id >= 11 && statusItem.static_id <= 13 }"
+                        (click)="ind < element.bookkeeping_status.length -1 ?getNextStatus('bookkeeping', ind,element.bookkeeping_status, element.id):$event.stopPropagation()"> 
+                        {{ statusItem.task }} 
+                      </button>
+                      <mat-icon [ngClass]="{'blink': element.bookkeeping_status[ind]?.escalated === '0'}"  class="cursor-pointer" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                    </ng-container>
+                  </ng-container>
                 </div>
               </td>
             </ng-container>
@@ -196,10 +200,10 @@
             <ng-container matColumnDef="vatStatus">
               <th mat-header-cell *matHeaderCellDef class="vat-col">June VAT Status</th>
               <td mat-cell *matCellDef="let element" class="text-center">
-                <mat-icon *ngIf="!showVatStatusBtn" class="cursor-pointer" (click)="startUpdates('start','vat')"
+                <mat-icon *ngIf="!element.vat_status_saved" class="cursor-pointer" (click)="startUpdates('start','vat',element.vat_status, element.id)"
                   svgIcon="heroicons_outline:plus-sm">
                 </mat-icon>
-                <div *ngIf="showVatStatusBtn" class="flex items-center">
+                <!-- <div *ngIf="showVatStatusBtn" class="flex items-center">
                   <button mat-icon-button > 
                     <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
                       (click)="vatMax > 0?openConfirmationDialog('vat', vatMax,element.vatStatus):startUpdates('end','vat')">
@@ -210,6 +214,21 @@
                     {{vatMax < element.vatStatus.length ?element.vatStatus[vatMax].text:element.vatStatus[0].text}} 
                   </button>
                   <mat-icon [class.blink]="classApplied" (click)="toggleClass()" class="cursor-pointer" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                </div> -->
+                <div *ngIf="element.vat_status_saved" class="flex items-center"> 
+                  <ng-container *ngFor="let vatItem of element.vat_status; let ind = index" >
+                    <ng-container *ngIf="vatItem.static_id == element.vat_status_saved" >
+                      <button mat-icon-button>
+                        <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
+                        (click)="ind > 0?openConfirmationDialog('vat', ind,element.vat_status, element.id):startUpdates('end','vat',element.vat_status, element.id)"></mat-icon>
+                      </button>
+                      <button  mat-raised-button [ngClass]="{'start': vatItem.static_id == 1 && vatItem.static_id == 2, 'in-progress': vatItem.static_id == 3,'complete':vatItem.static_id == 4 }"
+                        (click)="ind < element.vat_status.length -1 ?getNextStatus('vat', ind,element.vat_status, element.id):$event.stopPropagation()"> 
+                        {{ vatItem.task }} 
+                      </button>
+                      <mat-icon [ngClass]="{'blink': element.vat_status[ind]?.escalated === '0'}"  class="cursor-pointer" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                    </ng-container>
+                  </ng-container>
                 </div>
               </td>
             </ng-container>
@@ -237,14 +256,10 @@
             <ng-container matColumnDef="accountsStatus1">
               <th mat-header-cell *matHeaderCellDef class="account-col">2021 Accounts Status</th>
               <td mat-cell *matCellDef="let element">
-                <mat-icon *ngIf="!showAccStatusBtn" class="cursor-pointer" (click)="startUpdates('start','acc')"
+                <mat-icon *ngIf="!element.annual_accounts_saved" class="cursor-pointer" (click)="startUpdates('start','acc',element.annual_accounts_status, element.id)"
                 svgIcon="heroicons_outline:plus-sm">
               </mat-icon>
-                <div *ngIf="showAccStatusBtn" class="flex items-center">
-                  <!-- <button mat-icon-button *ngIf="accountMax > 0" [ngClass]="{'hidden':allVisited && accountMax == 1}">
-                    <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
-                    (click)="openConfirmationDialog('acc', accountMax,element.accountsStatus1)"></mat-icon>
-                  </button> -->
+                <!-- <div *ngIf="showAccStatusBtn" class="flex items-center">
                   <button mat-icon-button>
                     <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
                     (click)="accountMax > 0?openConfirmationDialog('acc', accountMax,element.accountsStatus1):startUpdates('end','acc')"></mat-icon>
@@ -254,6 +269,22 @@
                   {{accountMax < element.accountsStatus1.length ?element.accountsStatus1[accountMax].text:element.accountsStatus1[0].text}} 
                 </button>
                 <mat-icon [class.blink]="classApplied" (click)="toggleClass()" class="cursor-pointer" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                </div> -->
+
+                <div *ngIf="element.annual_accounts_saved" class="flex items-center"> 
+                  <ng-container *ngFor="let accItem of element.annual_accounts_status; let ind = index" >
+                    <ng-container *ngIf="accItem.static_id == element.annual_accounts_saved" >
+                      <button mat-icon-button>
+                        <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
+                        (click)="ind > 0?openConfirmationDialog('acc', ind,element.annual_accounts_status, element.id):startUpdates('end','acc',element.annual_accounts_status, element.id)"></mat-icon>
+                      </button>
+                      <button  mat-raised-button [ngClass]="{'start': accItem.static_id >= 2 && accItem.static_id <= 5, 'in-progress': accItem.static_id >= 6 &&ccItem.static_id <= 8,'complete':accItem.static_id == 9 }"
+                        (click)="ind < element.annual_accounts_status.length -1 ?getNextStatus('acc', ind,element.annual_accounts_status, element.id):$event.stopPropagation()"> 
+                        {{ accItem.task }} 
+                      </button>
+                      <mat-icon [ngClass]="{'blink': element.annual_accounts_status[ind]?.escalated === '0'}"  class="cursor-pointer" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                    </ng-container>
+                  </ng-container>
                 </div>
               </td>
             </ng-container>

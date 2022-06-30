@@ -5,8 +5,8 @@
   <h1 class="font-bold text-lg mb-3">What level of Management Report has been sent ?</h1>
   <mat-radio-group color="primary" class="flex flex-col">
     <mat-radio-button class="mb-3 mr-3" *ngFor="let section of optionOne" 
-      [value]="section.value" (change)="radioChange(section)">
-      {{section.text}}
+      [value]="section.static_id" (change)="radioChange(section)">
+      {{section.task}}
     </mat-radio-button>
   </mat-radio-group>
 </mat-dialog-content>
