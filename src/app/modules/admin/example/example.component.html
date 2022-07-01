@@ -129,7 +129,7 @@
             <ng-container matColumnDef="bookKeepingStatus">
               <th mat-header-cell *matHeaderCellDef class="book-col">June Bookkeeping Status</th>
               <td mat-cell *matCellDef="let element" class="text-center"> 
-                <mat-icon *ngIf="!element.bookkeeping_status_saved" class="cursor-pointer" (click)="startUpdates('start', 'bookkeep', element.bookkeeping_status, element.id)"
+                <mat-icon *ngIf="!element.bookkeeping_status_saved" class="cursor-pointer" (click)="startUpdates('start', 'bookkeep', element.bookkeeping_status, element)"
                   svgIcon="heroicons_outline:plus-sm">
                 </mat-icon> 
                 <div *ngIf="element.bookkeeping_status_saved" class="flex items-center"> 
@@ -137,10 +137,10 @@
                     <ng-container *ngIf="statusItem.static_id == element.bookkeeping_status_saved" >
                       <button mat-icon-button>
                         <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
-                        (click)="ind > 0?openConfirmationDialog('bookkeeping', ind,element.bookkeeping_status, element.id):startUpdates('end','bookkeep',element.bookkeeping_status, element.id)"></mat-icon>
+                        (click)="ind > 0?openConfirmationDialog('bookkeeping', ind,element.bookkeeping_status, element):startUpdates('end','bookkeep',element.bookkeeping_status, element)"></mat-icon>
                       </button>
                       <button  mat-raised-button [ngClass]="{'start': statusItem.static_id >= 2 && statusItem.static_id <= 4, 'in-progress': statusItem.static_id >= 5 && statusItem.static_id <= 10,'complete':statusItem.static_id >= 11 && statusItem.static_id <= 13 }"
-                        (click)="ind < element.bookkeeping_status.length -1 ?getNextStatus('bookkeeping', ind,element.bookkeeping_status, element.id):$event.stopPropagation()"> 
+                        (click)="ind < element.bookkeeping_status.length -1 ?getNextStatus('bookkeeping', ind,element.bookkeeping_status, element):$event.stopPropagation()"> 
                         {{ statusItem.task }} 
                       </button>
                       <mat-icon [ngClass]="{'blink': element.bookkeeping_status[ind]?.escalated === '0'}"  class="cursor-pointer" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
@@ -167,7 +167,7 @@
             <ng-container matColumnDef="vatStatus">
               <th mat-header-cell *matHeaderCellDef class="vat-col">June VAT Status</th>
               <td mat-cell *matCellDef="let element" class="text-center">
-                <mat-icon *ngIf="!element.vat_status_saved" class="cursor-pointer" (click)="startUpdates('start','vat',element.vat_status, element.id)"
+                <mat-icon *ngIf="!element.vat_status_saved" class="cursor-pointer" (click)="startUpdates('start','vat',element.vat_status, element)"
                   svgIcon="heroicons_outline:plus-sm">
                 </mat-icon>
                 <div *ngIf="element.vat_status_saved" class="flex items-center"> 
@@ -175,10 +175,10 @@
                     <ng-container *ngIf="vatItem.static_id == element.vat_status_saved" >
                       <button mat-icon-button>
                         <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
-                        (click)="ind > 0?openConfirmationDialog('vat', ind,element.vat_status, element.id):startUpdates('end','vat',element.vat_status, element.id)"></mat-icon>
+                        (click)="ind > 0?openConfirmationDialog('vat', ind,element.vat_status, element):startUpdates('end','vat',element.vat_status, element)"></mat-icon>
                       </button>
                       <button  mat-raised-button [ngClass]="{'start': vatItem.static_id == 1 && vatItem.static_id == 2, 'in-progress': vatItem.static_id == 3,'complete':vatItem.static_id == 4 }"
-                        (click)="ind < element.vat_status.length -1 ?getNextStatus('vat', ind,element.vat_status, element.id):$event.stopPropagation()"> 
+                        (click)="ind < element.vat_status.length -1 ?getNextStatus('vat', ind,element.vat_status, element):$event.stopPropagation()"> 
                         {{ vatItem.task }} 
                       </button>
                       <mat-icon [ngClass]="{'blink': element.vat_status[ind]?.escalated === '0'}"  class="cursor-pointer" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
@@ -211,21 +211,21 @@
             <ng-container matColumnDef="accountsStatus1">
               <th mat-header-cell *matHeaderCellDef class="account-col">2021 Accounts Status</th>
               <td mat-cell *matCellDef="let element">
-                <mat-icon *ngIf="!element.annual_accounts_saved" class="cursor-pointer" (click)="startUpdates('start','annual_accounts',element.annual_accounts_status, element.id)"
+                <mat-icon *ngIf="!element.annual_accounts_saved" class="cursor-pointer" (click)="startUpdates('start','annual_accounts',element.annual_accounts_status_1, element)"
                 svgIcon="heroicons_outline:plus-sm">
               </mat-icon>
                 <div *ngIf="element.annual_accounts_saved" class="flex items-center"> 
-                  <ng-container *ngFor="let accItem of element.annual_accounts_status; let ind = index" >
+                  <ng-container *ngFor="let accItem of element.annual_accounts_status_1; let ind = index" >
                     <ng-container *ngIf="accItem.static_id == element.annual_accounts_saved" >
                       <button mat-icon-button>
                         <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
-                        (click)="ind > 0?openConfirmationDialog('annual_accounts', ind,element.annual_accounts_status, element.id):startUpdates('end','annual_accounts',element.annual_accounts_status, element.id)"></mat-icon>
+                        (click)="ind > 0?openConfirmationDialog('annual_accounts', ind,element.annual_accounts_status_1, element):startUpdates('end','annual_accounts',element.annual_accounts_status_1, element)"></mat-icon>
                       </button>
                       <button  mat-raised-button [ngClass]="{'start': accItem.static_id >= 2 && accItem.static_id <= 5, 'in-progress': accItem.static_id >= 6 && accItem.static_id <= 8,'complete':accItem.static_id == 9 }"
-                        (click)="ind < element.annual_accounts_status.length -1 ?getNextStatus('annual_accounts', ind,element.annual_accounts_status, element.id):$event.stopPropagation()"> 
+                        (click)="ind < element.annual_accounts_status_1.length -1 ?getNextStatus('annual_accounts', ind,element.annual_accounts_status_1, element):$event.stopPropagation()"> 
                         {{ accItem.task }} 
                       </button>
-                      <mat-icon [ngClass]="{'blink': element.annual_accounts_status[ind]?.escalated === '0'}"  class="cursor-pointer" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                      <mat-icon [ngClass]="{'blink': element.annual_accounts_status_1[ind]?.escalated === '0'}"  class="cursor-pointer" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
                     </ng-container>
                   </ng-container>
                 </div>
@@ -235,21 +235,21 @@
             <ng-container matColumnDef="accountsStatus2">
               <th mat-header-cell *matHeaderCellDef class="account-col">2022 Accounts Status</th>
               <td mat-cell *matCellDef="let element"> 
-                <mat-icon *ngIf="!element.annual_accounts_saved" class="cursor-pointer" (click)="startUpdates('start','accNew',element.annual_accounts_status, element.id)"
+                <mat-icon *ngIf="!element.annual_accounts_saved" class="cursor-pointer" (click)="startUpdates('start','accNew',element.annual_accounts_status_2, element)"
                 svgIcon="heroicons_outline:plus-sm">
                </mat-icon>
                 <div *ngIf="element.annual_accounts_saved" class="flex items-center"> 
-                  <ng-container *ngFor="let accItem of element.annual_accounts_status; let ind = index" >
+                  <ng-container *ngFor="let accItem of element.annual_accounts_status_2; let ind = index" >
                     <ng-container *ngIf="accItem.static_id == element.annual_accounts_saved" >
                       <button mat-icon-button>
                         <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
-                        (click)="ind > 0?openConfirmationDialog('accNew', ind,element.annual_accounts_status, element.id):startUpdates('end','accNew',element.annual_accounts_status, element.id)"></mat-icon>
+                        (click)="ind > 0?openConfirmationDialog('accNew', ind,element.annual_accounts_status_2, element):startUpdates('end','accNew',element.annual_accounts_status_2, element)"></mat-icon>
                       </button>
                       <button  mat-raised-button [ngClass]="{'start': accItem.static_id >= 2 && accItem.static_id <= 5, 'in-progress': accItem.static_id >= 6 && accItem.static_id <= 8,'complete':accItem.static_id == 9 }"
-                        (click)="ind < element.annual_accounts_status.length -1 ?getNextStatus('accNew', ind,element.annual_accounts_status, element.id):$event.stopPropagation()"> 
+                        (click)="ind < element.annual_accounts_status_2.length -1 ?getNextStatus('accNew', ind,element.annual_accounts_status_2, element):$event.stopPropagation()"> 
                         {{ accItem.task }} 
                       </button>
-                      <mat-icon [ngClass]="{'blink': element.annual_accounts_status[ind]?.escalated === '0'}"  class="cursor-pointer" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                      <mat-icon [ngClass]="{'blink': element.annual_accounts_status_2[ind]?.escalated === '0'}"  class="cursor-pointer" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
                     </ng-container>
                   </ng-container>
                 </div>
