@@ -98,12 +98,12 @@
       
             <ng-container matColumnDef="saledate">
               <th mat-header-cell *matHeaderCellDef class="package-col">Date Of Sale</th>
-              <td mat-cell *matCellDef="let element"> {{element.saledate | date:'M/d/yyyy'}} </td>
+              <td mat-cell *matCellDef="let element"> {{element.date_of_sale}} </td>
             </ng-container>
       
             <ng-container matColumnDef="package">
               <th mat-header-cell *matHeaderCellDef class="package-col">Package</th>
-              <td mat-cell *matCellDef="let element"> {{element.package}} </td>
+              <td mat-cell *matCellDef="let element"> {{element.package_sold}} </td>
             </ng-container>
       
             <ng-container matColumnDef="quarters">
@@ -118,7 +118,7 @@
       
             <ng-container matColumnDef="bookkeeper">
               <th mat-header-cell *matHeaderCellDef class="book-col">Management Account</th>
-              <td mat-cell *matCellDef="let element"> {{element.bookKeeper}} </td>
+              <td mat-cell *matCellDef="let element"> {{element.management_accountant}} </td>
             </ng-container>
       
             <ng-container matColumnDef="completionweek">
@@ -156,7 +156,7 @@
           
             <ng-container matColumnDef="vatQuarter">
               <th mat-header-cell *matHeaderCellDef class="vat-col">VAT Quarter</th>
-              <td mat-cell *matCellDef="let element">{{element.vatQuarter}} </td>
+              <td mat-cell *matCellDef="let element">{{element.vat_quarter}} </td>
             </ng-container>
           
             <ng-container matColumnDef="vatscheme">
@@ -190,7 +190,7 @@
               
             <ng-container matColumnDef="eoy">
               <th mat-header-cell *matHeaderCellDef class="account-col">EOY Accountant</th>
-              <td mat-cell *matCellDef="let element">{{element.eoy}} </td>
+              <td mat-cell *matCellDef="let element">{{element.eoy_accountant}} </td>
             </ng-container>
               
             <ng-container matColumnDef="oneoff">
@@ -211,12 +211,12 @@
             <ng-container matColumnDef="accountsStatus1">
               <th mat-header-cell *matHeaderCellDef class="account-col">{{date.value.format('YYYY')-1}} Accounts Status</th>
               <td mat-cell *matCellDef="let element">
-                <mat-icon *ngIf="!element.annual_accounts_saved" class="cursor-pointer" (click)="startUpdates('start','annual_accounts',element.annual_accounts_status_1, element)"
+                <mat-icon *ngIf="!element.annual_accounts_saved_1" class="cursor-pointer" (click)="startUpdates('start','annual_accounts',element.annual_accounts_status_1, element)"
                 svgIcon="heroicons_outline:plus-sm">
               </mat-icon>
-                <div *ngIf="element.annual_accounts_saved" class="flex items-center"> 
+                <div *ngIf="element.annual_accounts_saved_1" class="flex items-center"> 
                   <ng-container *ngFor="let accItem of element.annual_accounts_status_1; let ind = index" >
-                    <ng-container *ngIf="accItem.static_id == element.annual_accounts_saved" >
+                    <ng-container *ngIf="accItem.static_id == element.annual_accounts_saved_1" >
                       <button mat-icon-button>
                         <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
                         (click)="ind > 0?openConfirmationDialog('annual_accounts', ind,element.annual_accounts_status_1, element):startUpdates('end','annual_accounts',element.annual_accounts_status_1, element)"></mat-icon>
@@ -235,12 +235,12 @@
             <ng-container matColumnDef="accountsStatus2">
               <th mat-header-cell *matHeaderCellDef class="account-col">{{date.value.format('YYYY')}} Accounts Status</th>
               <td mat-cell *matCellDef="let element"> 
-                <mat-icon *ngIf="!element.annual_accounts_saved" class="cursor-pointer" (click)="startUpdates('start','accNew',element.annual_accounts_status_2, element)"
+                <mat-icon *ngIf="!element.annual_accounts_saved_2" class="cursor-pointer" (click)="startUpdates('start','accNew',element.annual_accounts_status_2, element)"
                 svgIcon="heroicons_outline:plus-sm">
                </mat-icon>
-                <div *ngIf="element.annual_accounts_saved" class="flex items-center"> 
+                <div *ngIf="element.annual_accounts_saved_2" class="flex items-center"> 
                   <ng-container *ngFor="let accItem of element.annual_accounts_status_2; let ind = index" >
-                    <ng-container *ngIf="accItem.static_id == element.annual_accounts_saved" >
+                    <ng-container *ngIf="accItem.static_id == element.annual_accounts_saved_2" >
                       <button mat-icon-button>
                         <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
                         (click)="ind > 0?openConfirmationDialog('accNew', ind,element.annual_accounts_status_2, element):startUpdates('end','accNew',element.annual_accounts_status_2, element)"></mat-icon>
@@ -267,7 +267,7 @@
               <td mat-cell *matCellDef="let element">
                 <div class="flex justify-center">
                   <mat-icon class="text-green-600" svgIcon="heroicons_outline:check"></mat-icon>
-                  <mat-icon class="cursor-pointer" svgIcon="heroicons_outline:pencil" (click)="editAssessment()"></mat-icon> 
+                  <mat-icon class="cursor-pointer" svgIcon="heroicons_outline:pencil" (click)="editAssessment(element)"></mat-icon> 
                 </div>
               </td>
             </ng-container>
@@ -277,7 +277,7 @@
               <td mat-cell *matCellDef="let element">
                 <div class="flex justify-center">
                   <mat-icon class="text-red-600" svgIcon="heroicons_outline:x"></mat-icon>
-                  <mat-icon class="cursor-pointer" svgIcon="heroicons_outline:pencil" (click)="editAssessment()"></mat-icon> 
+                  <mat-icon class="cursor-pointer" svgIcon="heroicons_outline:pencil" (click)="editAssessment(element)"></mat-icon> 
                 </div>
               </td>
             </ng-container>
@@ -321,7 +321,7 @@
             </ng-container>
            
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"  [ngClass]="{'suspended': row?.isSuspended}"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"  [ngClass]="{'suspended': row?.client_status === '3'}"></tr>
           </table>
           <p *ngIf="!clientResult.length" class="p-4 text-center font-semibold ">
             Searched Result Not Found !!!

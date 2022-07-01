@@ -50,7 +50,6 @@ export class ExampleComponent implements OnInit, OnDestroy {
 
   private getTableDetails(): void {
     const Params = {
-      client_status: 1,
       month: this.date.value.format('MMM-yy'),
       limit: this.paginationConfig.limit,
       offset: this.paginationConfig.offset
@@ -83,8 +82,8 @@ export class ExampleComponent implements OnInit, OnDestroy {
     let lastYear = this.today.year() -1;
     const task = {
       uid: element.id,
-      process: key,
-      month:key === 'annual_accounts'?element.annual_accounts_month + '-' + lastYear :this.date.value.format('MMM-yy'),
+      process: key === 'annual_accounts'|| key === 'accNew'?'annual_accounts':key,
+      month:key === 'annual_accounts'?element.annual_accounts_month + '-' + lastYear:key === 'accNew'?element.annual_accounts_month + '-' + this.today.year():this.date.value.format('MMM-yy'),
       p_status: item.static_id
     }
     this.userService.updateTaskStatus(task).subscribe(result => {
@@ -206,9 +205,9 @@ export class ExampleComponent implements OnInit, OnDestroy {
           }
         } else {
           if(key === 'start') {
-            this.updateStatus(statusItem[0], item, 'acc', true);
+            this.updateStatus(statusItem[0], item, 'accNew', true);
           } else {
-            // this.showAcc2StatusBtn = false;
+            this.removeStatus(item, 'accNew');
           }
         }
       }
@@ -219,8 +218,8 @@ export class ExampleComponent implements OnInit, OnDestroy {
     let lastYear = this.today.year() -1;
     const statusParam = {
       uid:item.id,
-      month:process === 'annual_accounts'?item.annual_accounts_month + '-' + lastYear :this.date.value.format('MMM-yy'),
-      process:process
+      month:process === 'annual_accounts'?item.annual_accounts_month + '-' + lastYear:process === 'accNew'?item.annual_accounts_month + '-' + this.today.year():this.date.value.format('MMM-yy'),
+      process: process === 'annual_accounts'|| process === 'accNew'?'annual_accounts':process,
     }
     this.userService.cancelStatus(statusParam).pipe(takeUntil(this.destroyer$))
     .subscribe(_ => {
@@ -241,10 +240,10 @@ export class ExampleComponent implements OnInit, OnDestroy {
     this.getTableDetails();
   }
 
-  public editAssessment(): void {
+  public editAssessment(dataItem): void {
     const dialogRef = this.dialog.open(AssessmentStatusComponent, {
       width: '50vw',
-      // data: set
+      data: dataItem
     });
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(result => {
      console.log(result);
