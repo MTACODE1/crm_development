@@ -131,7 +131,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
 
   public statusChanged(toggle:boolean): void {
     if(toggle) {
-      this.displayedColumns = ['companyName','onboarding','bookKeepingStatus','vatStatus','accountsStatus1','accountsStatus2','self1','self2'];
+      this.displayedColumns = ['companyName','logo','onboarding','bookKeepingStatus','vatStatus','accountsStatus1','accountsStatus2','self1','self2'];
     } else {
       this.displayedColumns = this.userService.getColumns();
     }
