@@ -1,8 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Sort } from '@angular/material/sort';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatTable } from '@angular/material/table';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { UserService } from 'app/core/user/user.service';
 import * as moment from "moment";
@@ -20,6 +22,7 @@ import { OnbordingFormComponent } from './onbording-form/onbording-form.componen
 })
 
 export class ExampleComponent implements OnInit, OnDestroy {
+  @ViewChild('myTable') table: MatTable<Object>;
   displayedColumns: string[] = [];
   userTableList: TableModel[] = [];
   featureStatus: boolean;
@@ -56,11 +59,32 @@ export class ExampleComponent implements OnInit, OnDestroy {
     }
     this.userService.getUserTable(Params).pipe(takeUntil(this.destroyer$))
     .subscribe(res => {
-      this.userTableList = res['rows'];
+      this.userTableList = res['rows'].slice();
       this.paginationConfig.total = res['total_count'];
     });
   }
 
+  public sortData(sort: Sort): void {
+    const data = this.userTableList.slice();
+    if (!sort.active || sort.direction === '') {
+      this.userTableList = data;
+      return;
+    }
+    this.userTableList = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'bookKeepingStatus': return ExampleComponent.compare(a['bookkeeping_status_saved'], b['bookkeeping_status_saved'], isAsc);
+        case 'vatStatus': return ExampleComponent.compare(a['vat_status_saved'], b['vat_status_saved'], isAsc);
+        case 'accountsStatus1': return ExampleComponent.compare(a['annual_accounts_saved_1'], b['annual_accounts_saved_1'], isAsc);
+        case 'accountsStatus2': return ExampleComponent.compare(a['annual_accounts_saved_2'], b['annual_accounts_saved_2'], isAsc);
+        default: return 0;
+      }
+    });
+  }
+
+  private static compare(a: number | string, b: number | string, isAsc: boolean): number {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
 
   public onPageChange(event): void {
     this.paginationConfig = { ...this.paginationConfig, ...event };
@@ -78,7 +102,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
    
   }
 
-  private updateStatus(item, element, key, showSnackBar:boolean) {
+  private updateStatus(item, element, key, showSnackBar:boolean): void {
     let lastYear = this.today.year() -1;
     const task = {
       uid: element.id,
@@ -214,7 +238,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
     });
   }
 
-  private removeStatus(item, process) {
+  private removeStatus(item, process): void {
     let lastYear = this.today.year() -1;
     const statusParam = {
       uid:item.id,
