@@ -22,7 +22,6 @@ import { OnbordingFormComponent } from './onbording-form/onbording-form.componen
 })
 
 export class ExampleComponent implements OnInit, OnDestroy {
-  @ViewChild('myTable') table: MatTable<Object>;
   displayedColumns: string[] = [];
   userTableList: TableModel[] = [];
   featureStatus: boolean;
