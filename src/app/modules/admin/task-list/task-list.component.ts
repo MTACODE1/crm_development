@@ -57,6 +57,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
       dataType: statusDataType.SELF,
     },
   ];
+  isLoading:Boolean = true;
   
   private readonly destroyer$: Subject<void> = new Subject();
 
@@ -80,7 +81,8 @@ export class TaskListComponent implements OnInit, OnDestroy {
       Object.keys(tasksList).forEach(element => {
         this.taskListArr.map((data, index) => {
           if(data.dataType === element) {
-            this.taskListArr[index].text = tasksList[element].length?tasksList[element].sort((a,b) =>  (a.priority > b.priority ? 1 : -1)):null
+            this.taskListArr[index].text = tasksList[element].length?tasksList[element].sort((a,b) =>  (a.priority > b.priority ? 1 : -1)):null;
+            this.isLoading = false;
           }
         });
       });

@@ -43,7 +43,7 @@
           </div>
         </div>
       </ng-container>
-      <ng-container *ngIf="!item.text">
+      <ng-container *ngIf="!item.text && !isLoading">
         <p class="text-center mt-4 text-{{item.color}}-800 text-lg font-bold opacity-50">No task Found !!!</p>
       </ng-container>
     </div>
