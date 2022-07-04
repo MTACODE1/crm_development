@@ -28,6 +28,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   today = moment(new Date());
   searchTerm: null;
   date = new FormControl(moment());
+  isLoading:Boolean = true;
 
   public paginationConfig = {
     limit: 10,
@@ -59,6 +60,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
     .subscribe(res => {
       this.userTableList = res['rows'].slice();
       this.paginationConfig.total = res['total_count'];
+      this.isLoading = false;
     });
   }
 

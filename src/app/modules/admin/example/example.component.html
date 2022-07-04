@@ -323,7 +323,7 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"  [ngClass]="{'suspended': row?.client_status === '3'}"></tr>
           </table>
-          <p *ngIf="!clientResult.length" class="p-4 text-center font-semibold ">
+          <p *ngIf="!clientResult.length && !isLoading" class="p-4 text-center font-semibold ">
             Searched Result Not Found !!!
           </p>  
         </ng-container>
