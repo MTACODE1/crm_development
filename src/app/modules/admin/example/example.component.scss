@@ -39,6 +39,9 @@
     .suspended {
       background-color: $yellow100;
     }
+    .mat-sort-header-container{
+      justify-content: center;
+    }
   }
   svg {
     width: 16px;
