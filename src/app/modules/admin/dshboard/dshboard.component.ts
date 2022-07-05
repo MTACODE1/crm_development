@@ -9,14 +9,12 @@ import { ApexOptions } from 'ng-apexcharts';
   templateUrl: './dshboard.component.html',
   styleUrls: ['./dshboard.component.scss']
 })
+
 export class DshboardComponent implements OnInit {
-
-
-  public chartGithubIssues:ApexOptions = {};
+  public chartGithubIssues: ApexOptions = {};
   chartNewVsReturning: ApexOptions;
-  
-  setups:number[] = [80, 20];
 
+  setups: number[] = [80, 20];
   chartBookKeep: ApexOptions;
   chartVat: ApexOptions;
   chartAccount: ApexOptions;
@@ -30,7 +28,7 @@ export class DshboardComponent implements OnInit {
     this.setupChartData();
   }
 
-  setMonthAndYear(normalizedMonthAndYear: moment.Moment, datepicker: MatDatepicker<moment.Moment>) {
+  public setMonthAndYear(normalizedMonthAndYear: moment.Moment, datepicker: MatDatepicker<moment.Moment>): void {
     const ctrlValue = this.date.value!;
     ctrlValue.month(normalizedMonthAndYear.month());
     ctrlValue.year(normalizedMonthAndYear.year());
@@ -39,90 +37,90 @@ export class DshboardComponent implements OnInit {
     console.log(this.date.value)
   }
 
-  calculateMonth(value) {
-    value === 'decrement'?this.date.setValue(this.date.value.subtract(1, 'month')):this.date.setValue(this.date.value.add(1, 'month'));
+  public calculateMonth(value): void {
+    value === 'decrement' ? this.date.setValue(this.date.value.subtract(1, 'month')) : this.date.setValue(this.date.value.add(1, 'month'));
     console.log(this.date.value.toISOString())
   }
 
 
   private prepareChartData(): void {
     this.chartGithubIssues = {
-      chart      : {
+      chart: {
         fontFamily: 'inherit',
-        foreColor : 'inherit',
-        height    : '100%',
-        type      : 'line',
-        toolbar   : {
+        foreColor: 'inherit',
+        height: '100%',
+        type: 'line',
+        toolbar: {
           show: false
         },
-        zoom      : {
+        zoom: {
           enabled: false
         }
       },
-      colors     : ['#64748B', '#94A3B8'],
-      dataLabels : {
-        enabled        : true,
+      colors: ['#64748B', '#94A3B8'],
+      dataLabels: {
+        enabled: true,
         enabledOnSeries: [0],
-        background     : {
+        background: {
           borderWidth: 0
         }
       },
-      grid       : {
+      grid: {
         borderColor: 'var(--fuse-border)'
       },
-      labels     : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-      legend     : {  show: false },
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      legend: { show: false },
       plotOptions: {
         bar: {
           columnWidth: '50%'
         }
       },
-      series     : [
+      series: [
         {
           type: "line",
-          name:'Completed',
+          name: 'Completed',
           data: [42, 28, 43, 34, 20, 25, 22]
         },
         {
-        type: "column",
-        name:'Outstanding',
-        data: [11, 10, 8, 11, 8, 10, 17]
-      }
+          type: "column",
+          name: 'Outstanding',
+          data: [11, 10, 8, 11, 8, 10, 17]
+        }
 
       ],
-      states     : {
+      states: {
         hover: {
           filter: {
-            type : 'darken',
+            type: 'darken',
             value: 0.75
           }
         }
       },
-      stroke     : { width: [3, 0]},
-      tooltip    : {
+      stroke: { width: [3, 0] },
+      tooltip: {
         followCursor: true,
-        theme       : 'dark'
+        theme: 'dark'
       },
-      xaxis      : {
+      xaxis: {
         axisBorder: {
           show: false
         },
-        axisTicks : {
+        axisTicks: {
           color: 'var(--fuse-border)'
         },
-        labels    : {
+        labels: {
           style: {
             colors: 'var(--fuse-text-secondary)'
           }
         },
-        tooltip   : {
+        tooltip: {
           enabled: false
         }
       },
-      yaxis      : {
+      yaxis: {
         labels: {
           offsetX: -16,
-          style  : {
+          style: {
             colors: 'var(--fuse-text-secondary)'
           }
         }
@@ -132,275 +130,270 @@ export class DshboardComponent implements OnInit {
 
   private setupChartData(): void {
     this.chartNewVsReturning = {
-      chart      : {
-          animations: {
-              speed           : 400,
-              animateGradually: {
-                  enabled: false
-              }
-          },
-          fontFamily: 'inherit',
-          foreColor : 'inherit',
-          height    : '100%',
-          type      : 'donut',
-          sparkline : {
-              enabled: true
+      chart: {
+        animations: {
+          speed: 400,
+          animateGradually: {
+            enabled: false
           }
+        },
+        fontFamily: 'inherit',
+        foreColor: 'inherit',
+        height: '100%',
+        type: 'donut',
+        sparkline: {
+          enabled: true
+        }
       },
-      colors     : ['#9ca3af', '#d1d5db'],
-      labels     : ['Completed', 'Pending'],
+      colors: ['#9ca3af', '#d1d5db'],
+      labels: ['Completed', 'Pending'],
       plotOptions: {
-          pie: {
-              customScale  : 0.9,
-              expandOnClick: false,
-              donut        : {
-                  size: '70%'
-              }
+        pie: {
+          customScale: 0.9,
+          expandOnClick: false,
+          donut: {
+            size: '70%'
           }
+        }
       },
-      series     : [80, 20],
-      states     : {
-          hover : {
-              filter: {
-                  type: 'none'
-              }
-          },
-          active: {
-              filter: {
-                  type: 'none'
-              }
+      series: [80, 20],
+      states: {
+        hover: {
+          filter: {
+            type: 'none'
           }
+        },
+        active: {
+          filter: {
+            type: 'none'
+          }
+        }
       },
-      tooltip    : {
-          enabled        : true,
-          fillSeriesColor: false,
-          theme          : 'dark',
-          custom         : ({ seriesIndex, w
+      tooltip: {
+        enabled: true,
+        fillSeriesColor: false,
+        theme: 'dark',
+        custom: ({ seriesIndex, w
         }): string => `<div class="flex items-center h-8 min-h-8 max-h-8 px-3">
                 <div class="w-3 h-3 rounded-full" style="background-color: ${w.config.colors[seriesIndex]};"></div>
                 <div class="ml-2 text-md leading-none">${w.config.labels[seriesIndex]}:</div>
                 <div class="ml-2 text-md font-bold leading-none">${w.config.series[seriesIndex]}%</div>
             </div>`
       }
-  };
+    };
 
-  //bookeep
+    //bookeep
 
-  this.chartBookKeep = {
-    chart      : {
+    this.chartBookKeep = {
+      chart: {
         animations: {
-            speed           : 400,
-            animateGradually: {
-                enabled: false
-            }
+          speed: 400,
+          animateGradually: {
+            enabled: false
+          }
         },
         fontFamily: 'inherit',
-        foreColor : 'inherit',
-        height    : '100%',
-        type      : 'donut',
-        sparkline : {
-            enabled: true
+        foreColor: 'inherit',
+        height: '100%',
+        type: 'donut',
+        sparkline: {
+          enabled: true
         }
-    },
-    colors     : ['#fbbf24', '#fde68a'],
-    labels     : ['Bookkeeping Pending', 'Bookkeeping Completed'],
-    plotOptions: {
+      },
+      colors: ['#fbbf24', '#fde68a'],
+      labels: ['Bookkeeping Pending', 'Bookkeeping Completed'],
+      plotOptions: {
         pie: {
-            customScale  : 0.9,
-            expandOnClick: false,
-            donut        : {
-                size: '70%'
-            }
+          customScale: 0.9,
+          expandOnClick: false,
+          donut: {
+            size: '70%'
+          }
         }
-    },
-    series     : [55, 45],
-    states     : {
-        hover : {
-            filter: {
-                type: 'none'
-            }
+      },
+      series: [55, 45],
+      states: {
+        hover: {
+          filter: {
+            type: 'none'
+          }
         },
         active: {
-            filter: {
-                type: 'none'
-            }
+          filter: {
+            type: 'none'
+          }
         }
-    },
-    tooltip    : {
-        enabled        : true,
+      },
+      tooltip: {
+        enabled: true,
         fillSeriesColor: false,
-        theme          : 'dark',
-        custom         : ({ seriesIndex,  w }): string => `<div class="flex items-center h-8 min-h-8 max-h-8 px-3">
+        theme: 'dark',
+        custom: ({ seriesIndex, w }): string => `<div class="flex items-center h-8 min-h-8 max-h-8 px-3">
+          <div class="w-3 h-3 rounded-full" style="background-color: ${w.config.colors[seriesIndex]};"></div>
+          <div class="ml-2 text-md leading-none">${w.config.labels[seriesIndex]}:</div>
+          <div class="ml-2 text-md font-bold leading-none">${w.config.series[seriesIndex]}%</div>
+        </div>`
+      }
+    };
+
+    //vat
+    this.chartVat = {
+      chart: {
+        animations: {
+          speed: 400,
+          animateGradually: {
+            enabled: false
+          }
+        },
+        fontFamily: 'inherit',
+        foreColor: 'inherit',
+        height: '100%',
+        type: 'donut',
+        sparkline: {
+          enabled: true
+        }
+      },
+      colors: ['#fb923c', '#fdba74'],
+      labels: ['VAT Completed', 'VAT Pending'],
+      plotOptions: {
+        pie: {
+          customScale: 0.9,
+          expandOnClick: false,
+          donut: {
+            size: '70%'
+          }
+        }
+      },
+      series: [35, 65],
+      states: {
+        hover: {
+          filter: {
+            type: 'none'
+          }
+        },
+        active: {
+          filter: {
+            type: 'none'
+          }
+        }
+      },
+      tooltip: {
+        enabled: true,
+        fillSeriesColor: false,
+        theme: 'dark',
+        custom: ({ seriesIndex, w }): string => `<div class="flex items-center h-8 min-h-8 max-h-8 px-3">
+        <div class="w-3 h-3 rounded-full" style="background-color: ${w.config.colors[seriesIndex]};"></div>
+        <div class="ml-2 text-md leading-none">${w.config.labels[seriesIndex]}:</div>
+        <div class="ml-2 text-md font-bold leading-none">${w.config.series[seriesIndex]}%</div>
+      </div>`
+      }
+    };
+
+    //annual accounts
+    this.chartAccount = {
+      chart: {
+        animations: {
+          speed: 400,
+          animateGradually: {
+            enabled: false
+          }
+        },
+        fontFamily: 'inherit',
+        foreColor: 'inherit',
+        height: '100%',
+        type: 'donut',
+        sparkline: {
+          enabled: true
+        }
+      },
+      colors: ['#f9a8d4', '#f472b6'],
+      labels: ['Accounts Completed', 'Accounts Pending'],
+      plotOptions: {
+        pie: {
+          customScale: 0.9,
+          expandOnClick: false,
+          donut: {
+            size: '70%'
+          }
+        }
+      },
+      series: [25, 75],
+      states: {
+        hover: {
+          filter: {
+            type: 'none'
+          }
+        },
+        active: {
+          filter: {
+            type: 'none'
+          }
+        }
+      },
+      tooltip: {
+        enabled: true,
+        fillSeriesColor: false,
+        theme: 'dark',
+        custom: ({ seriesIndex, w }): string => `<div class="flex items-center h-8 min-h-8 max-h-8 px-3">
         <div class="w-3 h-3 rounded-full" style="background-color: ${w.config.colors[seriesIndex]};"></div>
         <div class="ml-2 text-md leading-none">${w.config.labels[seriesIndex]}:</div>
         <div class="ml-2 text-md font-bold leading-none">${w.config.series[seriesIndex]}%</div>
     </div>`
-    }
-  };
+      }
+    };
 
-//vat
-this.chartVat = {
-  chart      : {
-      animations: {
-          speed           : 400,
+    //assessment
+    this.chartAssessment = {
+      chart: {
+        animations: {
+          speed: 400,
           animateGradually: {
-              enabled: false
+            enabled: false
           }
-      },
-      fontFamily: 'inherit',
-      foreColor : 'inherit',
-      height    : '100%',
-      type      : 'donut',
-      sparkline : {
+        },
+        fontFamily: 'inherit',
+        foreColor: 'inherit',
+        height: '100%',
+        type: 'donut',
+        sparkline: {
           enabled: true
-      }
-  },
-  colors     : ['#fb923c', '#fdba74'],
-  labels     :  ['VAT Completed', 'VAT Pending'],
-  plotOptions: {
-      pie: {
-          customScale  : 0.9,
+        }
+      },
+      colors: ['#22c55e', '#86efac'],
+      labels: ['Assessment Completed', 'Assessment Pending'],
+      plotOptions: {
+        pie: {
+          customScale: 0.9,
           expandOnClick: false,
-          donut        : {
-              size: '70%'
+          donut: {
+            size: '70%'
           }
-      }
-  },
-  series     : [35, 65],
-  states     : {
-      hover : {
-          filter: {
-              type: 'none'
-          }
+        }
       },
-      active: {
+      series: [35, 65],
+      states: {
+        hover: {
           filter: {
-              type: 'none'
+            type: 'none'
           }
-      }
-  },
-  tooltip    : {
-      enabled        : true,
-      fillSeriesColor: false,
-      theme          : 'dark',
-      custom         : ({ seriesIndex, w}): string => `<div class="flex items-center h-8 min-h-8 max-h-8 px-3">
-      <div class="w-3 h-3 rounded-full" style="background-color: ${w.config.colors[seriesIndex]};"></div>
-      <div class="ml-2 text-md leading-none">${w.config.labels[seriesIndex]}:</div>
-      <div class="ml-2 text-md font-bold leading-none">${w.config.series[seriesIndex]}%</div>
-  </div>`
-  }
-};
-
-
-//annual accounts
-this.chartAccount = {
-  chart      : {
-      animations: {
-          speed           : 400,
-          animateGradually: {
-              enabled: false
+        },
+        active: {
+          filter: {
+            type: 'none'
           }
+        }
       },
-      fontFamily: 'inherit',
-      foreColor : 'inherit',
-      height    : '100%',
-      type      : 'donut',
-      sparkline : {
-          enabled: true
-      }
-  },
-  colors     : ['#f9a8d4', '#f472b6'],
-  labels     : ['Accounts Completed', 'Accounts Pending'],
-  plotOptions: {
-      pie: {
-          customScale  : 0.9,
-          expandOnClick: false,
-          donut        : {
-              size: '70%'
-          }
-      }
-  },
-  series     : [25, 75],
-  states     : {
-      hover : {
-          filter: {
-              type: 'none'
-          }
-      },
-      active: {
-          filter: {
-              type: 'none'
-          }
-      }
-  },
-  tooltip    : {
-      enabled        : true,
-      fillSeriesColor: false,
-      theme          : 'dark',
-      custom         : ({ seriesIndex, w }): string => `<div class="flex items-center h-8 min-h-8 max-h-8 px-3">
-        <div class="w-3 h-3 rounded-full" style="background-color: ${w.config.colors[seriesIndex]};"></div>
-        <div class="ml-2 text-md leading-none">${w.config.labels[seriesIndex]}:</div>
-        <div class="ml-2 text-md font-bold leading-none">${w.config.series[seriesIndex]}%</div>
-    </div>`
-  }
-};
-
-
-//assessment
-
-this.chartAssessment = {
-  chart      : {
-      animations: {
-          speed           : 400,
-          animateGradually: {
-              enabled: false
-          }
-      },
-      fontFamily: 'inherit',
-      foreColor : 'inherit',
-      height    : '100%',
-      type      : 'donut',
-      sparkline : {
-          enabled: true
-      }
-  },
-  colors     : ['#22c55e', '#86efac'],
-  labels     :  ['Assessment Completed', 'Assessment Pending'],
-  plotOptions: {
-      pie: {
-          customScale  : 0.9,
-          expandOnClick: false,
-          donut        : {
-              size: '70%'
-          }
-      }
-  },
-  series     : [35, 65],
-  states     : {
-      hover : {
-          filter: {
-              type: 'none'
-          }
-      },
-      active: {
-          filter: {
-              type: 'none'
-          }
-      }
-  },
-  tooltip    : {
-      enabled        : true,
-      fillSeriesColor: false,
-      theme          : 'dark',
-      custom         : ({seriesIndex,   w }): string => `<div class="flex items-center h-8 min-h-8 max-h-8 px-3">
+      tooltip: {
+        enabled: true,
+        fillSeriesColor: false,
+        theme: 'dark',
+        custom: ({ seriesIndex, w }): string => `<div class="flex items-center h-8 min-h-8 max-h-8 px-3">
       <div class="w-3 h-3 rounded-full" style="background-color: ${w.config.colors[seriesIndex]};"></div>
       <div class="ml-2 text-md leading-none">${w.config.labels[seriesIndex]}:</div>
       <div class="ml-2 text-md font-bold leading-none">${w.config.series[seriesIndex]}%</div>
     </div>`
-  }
-  };
+      }
+    };
 
   }
-
-  
 }
