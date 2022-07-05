@@ -7,35 +7,32 @@ import { User } from 'app/core/user/user.types';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-    selector     : 'classy-layout',
-    templateUrl  : './classy.component.html',
-    encapsulation: ViewEncapsulation.None
+  selector: 'classy-layout',
+  templateUrl: './classy.component.html',
+  encapsulation: ViewEncapsulation.None
 })
+
 export class ClassyLayoutComponent implements OnInit, OnDestroy {
   isScreenSmall: boolean;
   navigation: Navigation;
   user: User;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  constructor( private _navigationService: NavigationService,private _fuseMediaWatcherService: FuseMediaWatcherService,
-      private _fuseNavigationService: FuseNavigationService)
-  { }
+  constructor(private _navigationService: NavigationService, private _fuseMediaWatcherService: FuseMediaWatcherService,
+    private _fuseNavigationService: FuseNavigationService) { }
 
 
-    /**
-     * Getter for current year
-     */
-  get currentYear(): number  {
+  get currentYear(): number {
     return new Date().getFullYear();
   }
 
   ngOnInit(): void {
-      // Subscribe to navigation data
+    // Subscribe to navigation data
     this._navigationService.navigation$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((navigation: Navigation) => {
         this.navigation = navigation;
-    });
+      });
 
     // Subscribe to the user service
     this.user = JSON.parse(localStorage.getItem('loginUser'));
@@ -49,36 +46,23 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
     // Subscribe to media changes
     this._fuseMediaWatcherService.onMediaChange$
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(({matchingAliases}) => {
-          // Check if the screen is small
+      .subscribe(({ matchingAliases }) => {
+        // Check if the screen is small
         this.isScreenSmall = !matchingAliases.includes('md');
-    });
+      });
   }
 
-  /**
-   * On destroy
-   */
-  ngOnDestroy(): void   {
-      // Unsubscribe from all subscriptions
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
     this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
   }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Toggle navigation
-     *
-     * @param name
-     */
   toggleNavigation(name: string): void {
-      // Get the navigation
+    // Get the navigation
     const navigation = this._fuseNavigationService.getComponent<FuseVerticalNavigationComponent>(name);
 
-    if ( navigation ) {
-      // Toggle the opened status
+    if (navigation) {
       navigation.toggle();
     }
   }
