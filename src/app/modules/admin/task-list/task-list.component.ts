@@ -2,6 +2,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { UserService } from 'app/core/user/user.service';
 import { TasksMockApi } from 'app/mock-api/apps/tasks/api';
 import { statusDataType, TaskListItems } from 'app/mock-api/apps/tasks/data';
 import { Subject, takeUntil } from 'rxjs';
@@ -24,10 +25,10 @@ import { Subject, takeUntil } from 'rxjs';
 export class TaskListComponent implements OnInit, OnDestroy {
   username = new FormControl();
   public users = [
-    {value: '1', viewValue: 'All Users'},
-    {value: '2', viewValue: 'user 1'},
-    {value: '3', viewValue: 'user 2'},
-    {value: '4', viewValue: 'user 3'},
+    {name: 'All Users', id: '0'},
+    // {value: '2', viewValue: 'user 1'},
+    // {value: '3', viewValue: 'user 2'},
+    // {value: '4', viewValue: 'user 3'},
   ];
 
   public taskListArr: TaskListItems[] = [
@@ -61,11 +62,13 @@ export class TaskListComponent implements OnInit, OnDestroy {
   
   private readonly destroyer$: Subject<void> = new Subject();
 
-  constructor(private _fuseConfirmationService:FuseConfirmationService, private taskService:TasksMockApi) { }
+  constructor(private _fuseConfirmationService:FuseConfirmationService, private taskService:TasksMockApi,
+    private userService:UserService) { }
 
   ngOnInit() {
     this.getTaskList();
-    this.username.setValue(this.users[0].value)
+    this.getUserList();
+    // this.username.setValue(this.users[0].value)
   }
 
   ngOnDestroy(): void {
@@ -86,6 +89,18 @@ export class TaskListComponent implements OnInit, OnDestroy {
           }
         });
       });
+    });
+  }
+
+  private getUserList(): void {
+    const Params = {
+      client_status: 1
+    }
+    this.userService.getUserTable(Params).pipe(takeUntil(this.destroyer$))
+    .subscribe(response => {
+     this.users = response['rows'];
+     this.users.unshift({name:'All user', id:'0'});
+     this.username.setValue(this.users[0].id);
     });
   }
 
