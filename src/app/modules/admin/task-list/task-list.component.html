@@ -3,7 +3,7 @@
   <div class="flex flex-col px-6 pt-6">
     <label for="status" class="text-xl">Select User</label>
     <mat-form-field appearance="none" id="status" class="w-36">
-      <mat-select [formControl]="username" class="text-lg text-gray-500">
+      <mat-select [formControl]="username" class="text-lg text-gray-500" disableOptionCentering>
         <mat-option *ngFor="let item of users" [value]="item.id">
          {{item?.name}}  {{item?.surname}}
         </mat-option>
