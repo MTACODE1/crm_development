@@ -264,13 +264,14 @@ export class ExampleComponent implements OnInit, OnDestroy {
     this.getTableDetails();
   }
 
-  public editAssessment(dataItem): void {
+  public editAssessment(dataItem, type): void {
     const dialogRef = this.dialog.open(AssessmentStatusComponent, {
       width: '50vw',
-      data: dataItem
+      data: {data: dataItem, type: type}
     });
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(result => {
      console.log(result);
+     if(result) this.getTableDetails();
     });
   }
  

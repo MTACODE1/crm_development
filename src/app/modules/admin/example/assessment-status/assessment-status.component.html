@@ -8,44 +8,103 @@
       <th>Date Added as Director</th>
       <th>Status</th>
     </tr>
-    <tr class="text-center">
-      <td>Mr James Duffy</td>
-      <td>12/5/2017</td>
+    <tr class="text-center" *ngFor="let item of directors; let i = index">
+      <td>{{item.name}}</td>
+      <td>{{item.appointed_on}}</td>
       <td>
-        <mat-icon *ngIf="!showStatusBtn" class="cursor-pointer" (click)="startUpdates('start')"
-        svgIcon="heroicons_outline:plus-sm">
-      </mat-icon>
-      <div *ngIf="showStatusBtn" class="flex justify-center items-center"> 
-        <button mat-icon-button>
-          <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
-          (click)="max > 0?openConfirmationDialog(max,tasks[0].bookKeepingStatus):startUpdates('end')"></mat-icon>
-        </button>
-        <button  mat-raised-button  [class]="max < tasks[0].bookKeepingStatus.length ?tasks[0].bookKeepingStatus[max].status:''" 
-          (click)="max < tasks[0].bookKeepingStatus.length -1 ?getNextStatus('self', max,tasks[0].bookKeepingStatus):$event.stopPropagation()"> 
-          {{max < tasks[0].bookKeepingStatus.length ?tasks[0].bookKeepingStatus[max].text:tasks[0].bookKeepingStatus[0].text}} 
-        </button>
-        <mat-icon [class.blink]="classApplied" (click)="toggleClass()" class="cursor-pointer ml-2" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
-      </div>
-      </td>
-    </tr>
-    <tr class="text-center">
-      <td>Mr Daniel Rose</td>
-      <td>12/5/2017</td>
-      <td>
-        <mat-icon *ngIf="!showStatusBtn" class="cursor-pointer" (click)="startUpdates('start')"
-                  svgIcon="heroicons_outline:plus-sm">
-        </mat-icon>
-        <div *ngIf="showStatusBtn" class="flex justify-center items-center"> 
-          <button mat-icon-button>
-            <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left" 
-            (click)="max > 0?openConfirmationDialog(max,tasks[0].bookKeepingStatus):startUpdates('end')"></mat-icon>
-          </button>
-          <button  mat-raised-button [class]="max < tasks[0].bookKeepingStatus.length ?tasks[0].bookKeepingStatus[max].status:''" 
-            (click)="max < tasks[0].bookKeepingStatus.length -1 ?getNextStatus('self', max,tasks[0].bookKeepingStatus):$event.stopPropagation()"> 
-            {{max < tasks[0].bookKeepingStatus.length ?tasks[0].bookKeepingStatus[max].text:tasks[0].bookKeepingStatus[0].text}} 
-          </button>
-          <mat-icon [class.blink]="classApplied" (click)="toggleClass()" class="cursor-pointer ml-2" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
-        </div>
+        <ng-container *ngIf="this.data.type === 'self_assessment_1'; else status2">
+          <mat-icon *ngIf="i === 0?!data.data.self_assessment_saved_1_dir_1:!data.data.self_assessment_saved_1_dir_2"
+            class="cursor-pointer" (click)="startUpdates('start','self_assessment_status_1',statusSaved, i)"
+            svgIcon="heroicons_outline:plus-sm">
+          </mat-icon>
+
+          <div *ngIf="i==0?data.data.self_assessment_saved_1_dir_1:data.data.self_assessment_saved_1_dir_2"
+            class="flex justify-center items-center">
+            <ng-container *ngFor="let accItem of statusSaved; let ind = index">
+              <ng-container *ngIf="i == 0">
+                <ng-conatiner *ngIf="accItem.static_id == data.data.self_assessment_saved_1_dir_1">
+                  <button mat-icon-button>
+                    <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left"
+                      (click)="ind > 0?openConfirmationDialog('self_assessment_status_1',ind, statusSaved,i):startUpdates('end','self_assessment_status_1',statusSaved, i)">
+                    </mat-icon>
+                  </button>
+                  <button mat-raised-button
+                    [ngClass]="{'start': accItem.static_id == 2, 'in-progress': accItem.static_id == 3 || accItem.static_id == 4,'complete':accItem.static_id == 5 }"
+                    (click)="ind < statusSaved.length -1 ?getNextStatus('self_assessment_status_1', ind, statusSaved, i):$event.stopPropagation()">
+                    {{accItem.task}}
+                  </button>
+                  <mat-icon [ngClass]="{'blink': accItem?.escalated === '0'}" class="cursor-pointer ml-2"
+                    svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                </ng-conatiner>
+              </ng-container>
+
+              <ng-container *ngIf="i == 1">
+                <ng-conatiner *ngIf="accItem.static_id == data.data.self_assessment_saved_1_dir_2">
+                  <button mat-icon-button>
+                    <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left"
+                      (click)="ind > 0?openConfirmationDialog('self_assessment_status_1',ind, statusSaved,i):startUpdates('end','self_assessment_status_1',statusSaved, i)">
+                    </mat-icon>
+                  </button>
+                  <button mat-raised-button
+                    [ngClass]="{'start': accItem.static_id == 2, 'in-progress': accItem.static_id == 3 || accItem.static_id == 4,'complete':accItem.static_id == 5 }"
+                    (click)="ind < statusSaved.length -1 ?getNextStatus('self_assessment_status_1', ind, statusSaved, i):$event.stopPropagation()">
+                    {{accItem.task}}
+                  </button>
+                  <mat-icon [ngClass]="{'blink': accItem?.escalated === '0'}" class="cursor-pointer ml-2"
+                    svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                </ng-conatiner>
+              </ng-container>
+            </ng-container>
+          </div>
+
+        </ng-container>
+
+        <ng-template #status2>
+          <mat-icon *ngIf="i === 0?!data.data.self_assessment_saved_2_dir_1:!data.data.self_assessment_saved_2_dir_2"
+            class="cursor-pointer" (click)="startUpdates('start','self_assessment_status_2',statusSaved, i)"
+            svgIcon="heroicons_outline:plus-sm">
+          </mat-icon>
+          <div *ngIf="i === 0?data.data.self_assessment_saved_2_dir_1:data.data.self_assessment_saved_2_dir_2"
+            class="flex justify-center items-center">
+            <ng-container *ngFor="let accItem of statusSaved; let ind = index">
+
+              <ng-container *ngIf="i ==0">
+                <ng-conatiner *ngIf="accItem.static_id ==  data.data.self_assessment_saved_2_dir_1">
+                  <button mat-icon-button>
+                    <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left"
+                      (click)="ind > 0?openConfirmationDialog('self_assessment_status_2',ind, statusSaved,i):startUpdates('end','self_assessment_status_2',statusSaved, i)">
+                    </mat-icon>
+                  </button>
+                  <button mat-raised-button
+                    [ngClass]="{'start': accItem.static_id == 2, 'in-progress': accItem.static_id == 3 || accItem.static_id == 4,'complete':accItem.static_id == 5 }"
+                    (click)="ind < statusSaved.length -1 ?getNextStatus('self_assessment_status_2', ind, statusSaved, i):$event.stopPropagation()">
+                    {{accItem.task}}
+                  </button>
+                  <mat-icon [ngClass]="{'blink': accItem?.escalated === '0'}" class="cursor-pointer ml-2"
+                    svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                </ng-conatiner>
+              </ng-container>
+
+              <ng-container *ngIf="i ==1">
+                <ng-conatiner *ngIf="accItem.static_id ==  data.data.self_assessment_saved_2_dir_2">
+                  <button mat-icon-button>
+                    <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left"
+                      (click)="ind > 0?openConfirmationDialog('self_assessment_status_2',ind, statusSaved,i):startUpdates('end','self_assessment_status_2',statusSaved, i)">
+                    </mat-icon>
+                  </button>
+                  <button mat-raised-button
+                    [ngClass]="{'start': accItem.static_id == 2, 'in-progress': accItem.static_id == 3 || accItem.static_id == 4,'complete':accItem.static_id == 5 }"
+                    (click)="ind < statusSaved.length -1 ?getNextStatus('self_assessment_status_2', ind, statusSaved, i):$event.stopPropagation()">
+                    {{accItem.task}}
+                  </button>
+                  <mat-icon [ngClass]="{'blink': accItem?.escalated === '0'}" class="cursor-pointer ml-2"
+                    svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                </ng-conatiner>
+              </ng-container>
+            </ng-container>
+          </div>
+        </ng-template>
+
       </td>
     </tr>
   </table>
