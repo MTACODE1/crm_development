@@ -36,9 +36,6 @@
         min-width: 180px;
       }
     }
-    .suspended {
-      background-color: $yellow100;
-    }
     .mat-sort-header-container{
       justify-content: center;
     }
@@ -80,30 +77,15 @@
 }
 
 .search {
-  position: relative;
-
-  label[for="search"] {
-    position: absolute;
-    top: 10px;
-    left: 14px;
-    font-size: 1.2em;
-  }
-
   input[id="search"] {
     color: $gray200;
     padding: 13px 10px 13px 40px;
     border: 1px solid $gray200;
-    font-size: 15px;
-    border-radius: 50px;
     width: 200px;
-    height: 40px;
-    outline: none !important;
-    background-color: transparent;
   }
 
   .mat-icon {
     font-size: 1.2em;
     color: $gray200;
-    cursor: pointer;
   }
 }

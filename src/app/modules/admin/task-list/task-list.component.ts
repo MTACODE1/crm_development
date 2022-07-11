@@ -77,7 +77,6 @@ export class TaskListComponent implements OnInit, OnDestroy {
   }
 
   private getTaskList(): void {
-    // let tasksList = TASK_ITEMS;
     this.taskService.getTaskList({}).pipe(takeUntil(this.destroyer$))
     .subscribe(taskResponse => {
       const tasksList = taskResponse;

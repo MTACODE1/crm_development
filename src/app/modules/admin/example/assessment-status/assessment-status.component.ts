@@ -64,11 +64,11 @@ export class AssessmentStatusComponent implements OnInit, OnDestroy {
       if(result['err_msg']) {
         alert(result['err_msg']);
       } else {
-        if(showSnackBar) this.triggerStatusSnackBar(item, key);
         this.userService.getUserTable({...this.data.parameter}).pipe(takeUntil(this.destroyer$))
         .subscribe(response => {
          this.data.data = response['rows'].find(item => item.id === this.data.data.id);
           this.loadOnboardingStatus();
+          if(showSnackBar) this.triggerStatusSnackBar(item, key);
         });
       }
     });

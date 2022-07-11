@@ -1,16 +1,16 @@
 
-<div class="close-icon items-center">
-  <mat-icon svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+<div class="close-icon flex justify-end items-center">
+  <mat-icon svgIcon="heroicons_outline:exclamation-circle" class="text-white w-8 h-8"></mat-icon>
 </div>
 
-<div class="content">
-	<p class="font-bold">Client Status Updated	</p>
-  <span >
+<div class="text-white mx-2 basis-4/5">
+	<p class="font-bold text-xl">Client Status Updated	</p>
+  <span class="text-base">
     {{data.username}} has updated {{PlanTypeEnum[data.plan]}} for <b>Bespoke Alpha Limited</b> to <b>{{data.item.task}}</b>
   </span>
 </div>
 
-<div class="close-icon cursor-pointer" (click)="close()">
-  <mat-icon svgIcon="heroicons_outline:x"></mat-icon>
+<div class="close-icon flex justify-end cursor-pointer" (click)="close()">
+  <mat-icon svgIcon="heroicons_outline:x" class="text-white w-8 h-8"></mat-icon>
 </div>
 

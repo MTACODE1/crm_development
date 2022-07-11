@@ -39,11 +39,11 @@
             </div>
           </div>
 
-          <div class="search">
-            <label for="search">
+          <div class="search relative">
+            <label for="search" class="absolute top-2.5 left-3.5 text-xl">
               <mat-icon>search</mat-icon>
             </label>
-            <input id="search" type="text" placeholder="Search" [(ngModel)]="searchTerm">
+            <input id="search" type="text" class="rounded-full text-lg h-10" placeholder="Search" [(ngModel)]="searchTerm">
           </div>
 
         </div>
@@ -331,7 +331,7 @@
             </ng-container>
            
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"  [ngClass]="{'suspended': row?.client_status === '3'}"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"  [ngClass]="{'bg-yellow-50': row?.client_status === '3'}"></tr>
           </table>
           <p *ngIf="!clientResult.length && !isLoading" class="p-4 text-center font-semibold ">
             Searched Result Not Found !!!

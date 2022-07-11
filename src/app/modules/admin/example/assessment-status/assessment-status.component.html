@@ -17,7 +17,6 @@
             class="cursor-pointer" (click)="startUpdates('start','self_assessment_status_1',statusSaved, i)"
             svgIcon="heroicons_outline:plus-sm">
           </mat-icon>
-
           <ng-container *ngIf="i==0?data.data.self_assessment_saved_1_dir_1:data.data.self_assessment_saved_1_dir_2">
             <ng-container *ngFor="let accItem of statusSaved; let ind = index">
               <ng-container *ngIf="i == 0">
@@ -115,5 +114,4 @@
 
 <mat-dialog-actions align="end">
   <button mat-raised-button mat-dialog-close color="warn">Close</button>
-  <button mat-raised-button color="primary" mat-dialog-close>Save</button>
 </mat-dialog-actions>

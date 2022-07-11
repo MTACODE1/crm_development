@@ -4,34 +4,14 @@
   display: flex;
 }
 .close-icon {
-  display: flex;
   flex-basis: 10%;
-  justify-content: flex-end;
-  mat-icon {
-    color: $white;
-    width: 35px;
-    height: 35px;
-  }
 }
-
-.content {
-  flex-basis: 80%;
-  font-size:13px;
-  color: $white;
-  margin: 0 8px;
-  p {
-    font-size: 16px;
-  }
-}
-
 ::ng-deep {
   .mat-snack-bar-container {
-     // background: #00a1b19e !important;
     padding: 10px;
     border-radius: 8px;
     &.book-snack-bar {
       background: $yellow600 !important;
-      // background: #bfb214fa !important;
     }
     &.vat-snack-bar {
       background: $orange200  !important;
@@ -43,5 +23,4 @@
       background: $green200 !important;
     }
   }
-
 }
