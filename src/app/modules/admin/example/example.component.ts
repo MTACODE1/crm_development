@@ -179,15 +179,13 @@ export class ExampleComponent implements OnInit, OnDestroy {
     this.snackBar.openFromComponent(SuccessModalComponent, snackBarParams);
   }
 
-  private openStatusJumpDialogue(set, item) {
+  private openStatusJumpDialogue(set, item): void {
     const dialogRef = this.dialog.open(BookkeepingStatusComponent, {
       width: '30vw',
       data: set
     });
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(res => {
-      if(res) {
-      this.updateStatus(res.fetch, item, 'bookkeeping', true);
-      }
+      if(res) this.updateStatus(res.fetch, item, 'bookkeeping', true);
     });
   }
 
@@ -265,12 +263,16 @@ export class ExampleComponent implements OnInit, OnDestroy {
   }
 
   public editAssessment(dataItem, type): void {
+    const Params = {
+      month: this.date.value.format('MMM-yy'),
+      limit: this.paginationConfig.limit,
+      offset: this.paginationConfig.offset
+    }
     const dialogRef = this.dialog.open(AssessmentStatusComponent, {
       width: '50vw',
-      data: {data: dataItem, type: type}
+      data: {data: dataItem, type: type, parameter: Params}
     });
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(result => {
-     console.log(result);
      if(result) this.getTableDetails();
     });
   }

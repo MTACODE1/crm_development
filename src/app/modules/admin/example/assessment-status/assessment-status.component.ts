@@ -65,7 +65,11 @@ export class AssessmentStatusComponent implements OnInit, OnDestroy {
         alert(result['err_msg']);
       } else {
         if(showSnackBar) this.triggerStatusSnackBar(item, key);
-        this.dialogRef.close(true);
+        this.userService.getUserTable({...this.data.parameter}).pipe(takeUntil(this.destroyer$))
+        .subscribe(response => {
+         this.data.data = response['rows'].find(item => item.id === this.data.data.id);
+          this.loadOnboardingStatus();
+        });
       }
     });
   }
@@ -135,7 +139,6 @@ export class AssessmentStatusComponent implements OnInit, OnDestroy {
       horizontalPosition: 'right',
       verticalPosition: 'bottom',
       panelClass:'self-snack-bar',
-      // data: { item: data, plan: plan }
       data: { item: data, plan: plan, username:this.data.data.name + this.data.data.surname }
     };
     this.snackBar.openFromComponent(SuccessModalComponent, snackBarParams);
