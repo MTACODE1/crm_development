@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { UserService } from 'app/core/user/user.service';
+import { TableModel } from 'app/core/user/user.types';
 import { TasksMockApi } from 'app/mock-api/apps/tasks/api';
 import { statusDataType, TaskListItems } from 'app/mock-api/apps/tasks/data';
 import * as moment from "moment";
@@ -26,6 +27,7 @@ import { Subject, takeUntil } from 'rxjs';
 export class TaskListComponent implements OnInit, OnDestroy {
   username = new FormControl();
   public users = [];
+  selectedClient: TableModel;
   public taskListArr: TaskListItems[] = [
     {
       color: 'gray',
@@ -75,18 +77,17 @@ export class TaskListComponent implements OnInit, OnDestroy {
     if (additionalParams) {
       param = { ...additionalParams }
     }
-    this.taskService.getTaskList(param).pipe(takeUntil(this.destroyer$))
-      .subscribe(taskResponse => {
-        const tasksList = taskResponse;
-        Object.keys(tasksList).forEach(element => {
-          this.taskListArr.map((data, index) => {
-            if (data.dataType === element) {
-              this.taskListArr[index].text = tasksList[element].length ? tasksList[element].sort((a, b) => (a.t_status - b.t_status)) : null;
-              this.isLoading = false;
-            }
-          });
+    this.taskService.getTaskList(param).pipe(takeUntil(this.destroyer$)).subscribe(taskResponse => {
+      const tasksList = taskResponse;
+      Object.keys(tasksList).forEach(element => {
+        this.taskListArr.map((data, index) => {
+          if (data.dataType === element) {
+            this.taskListArr[index].text = tasksList[element].length ? tasksList[element].sort((a, b) => (a.t_status - b.t_status)) : null;
+            this.isLoading = false;
+          }
         });
       });
+    });
   }
 
   public onClientChange(e): void {
@@ -96,13 +97,14 @@ export class TaskListComponent implements OnInit, OnDestroy {
     };
     this.username.setValue(e.value);
     this.getTaskList(params);
+    this.getUserList();
   }
 
   private getUserList(): void {
-    this.userService.getUserTable({ client_status: 1 }).pipe(takeUntil(this.destroyer$))
-      .subscribe(response => {
-        this.users = response['rows'];
-      });
+    this.userService.getUserTable({ client_status: 1 }).pipe(takeUntil(this.destroyer$)).subscribe(response => {
+      this.users = response['rows'];
+      this.selectedClient = this.users.find(item => item.id === this.username.value);
+    });
   }
 
 

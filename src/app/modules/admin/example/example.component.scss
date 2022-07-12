@@ -57,6 +57,11 @@
 }
 .table-container {
   max-height: calc(100vh - 340px);
+  .logo-container {
+    :nth-child(2) {
+      margin: 0 8px;
+    }
+  }
 }
 .mat-raised-button {
   background-color: $red !important;

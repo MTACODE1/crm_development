@@ -21,6 +21,7 @@ export interface TableModel {
   management_accountant: string;
   name: string;
   surname: string;
+  registered_for_VAT: boolean;
   bookkeeping_status: [stateStatusModel];
   vat_status: [stateStatusModel];
   annual_accounts_status_1: [stateStatusModel]

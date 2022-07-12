@@ -1,17 +1,17 @@
-
-<div>
+<div class="w-full">
   <div class="flex flex-col px-6 pt-6">
     <label for="status" class="text-xl">Select User</label>
     <mat-form-field appearance="none" id="status" class="w-36">
-      <mat-select [formControl]="username" class="text-lg text-gray-500" placeholder="Select Client" disableOptionCentering (selectionChange)="onClientChange($event)">
+      <mat-select [formControl]="username" class="text-lg text-gray-500" placeholder="Select Client"
+        disableOptionCentering (selectionChange)="onClientChange($event)">
         <mat-option *ngFor="let item of users" [value]="item.id">
-         {{item?.name}}  {{item?.surname}}
+          {{item?.name}} {{item?.surname}}
         </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
   <div class="flex w-full p-6 sm:p-6 flex-wrap task-lists">
-    <div class="flex-1 mx-2 bg-white rounded-md" *ngFor="let item of taskListArr; let i = index" >
+    <div class="flex-1 mx-2 bg-white rounded-md" *ngFor="let item of taskListArr; let i = index">
       <div class="relative overflow-hidden">
         <h1 class="mb-4 text-xl font-bold py-3 px-4 text-center">{{item.name}}</h1>
         <div class="absolute bottom-0 right-0 w-18 h-18 -m-6">
@@ -21,11 +21,11 @@
         </div>
       </div>
       <ng-container *ngFor="let data of item.text; let index= index">
-        <div class="flex flex-col border-b overflow-hidden priority_{{item.color}}_{{data.priority}} cursor-pointer list-item" 
-        [@myTrigger]='state' (click)="markCompleted(data)" >
+        <div class="flex flex-col border-b overflow-hidden priority_{{item.color}}_{{data.priority}} cursor-pointer list-item"
+          [@myTrigger]='state' (click)="markCompleted(data)">
           <div class="flex flex-auto flex-col px-4 py-3 mb-4">
             <div class="flex">
-              <button  mat-icon-button>
+              <button mat-icon-button>
                 <mat-icon [class]="data.t_status !== '2'?'text-hint':'text-primary'" [svgIcon]="'heroicons_outline:check-circle'"></mat-icon>
               </button>
               <div class="ml-2">
@@ -34,11 +34,23 @@
               </div>
             </div>
           </div>
-          <div class="items-center justify-end flex-wrap icon-list mb-2 px-3">
+          <div class="items-center justify-end flex-wrap icon-list mb-2 px-3" (click)="$event.stopImmediatePropagation()">
+            <a href="https://www.morethanaccountants.co.uk/salesflow/admin/v_lead.html?id={{selectedClient?.id}}"
+              target="_blank">
               <img class="h-auto w-12" src="assets/images/logo/logo.png" alt="logo">
-              <img class="h-auto w-8 mx-1" src="assets/images/logo/bespoke.png" alt="bespoke">
-              <img class="h-auto w-9 mr-1" src="assets/images/logo/dext.png" alt="dext">
+            </a>
+            <a *ngIf="selectedClient?.xero" href="https://go.xero.com/organisationlogin/default.aspx?shortcode={{selectedClient?.xero}}"
+              target="_blank">
+              <img class="h-auto w-8" src="assets/images/logo/bespoke.png" alt="bespoke">
+            </a>
+            <a *ngIf="selectedClient?.dext" href="https://app.dext.com/clients/{{selectedClient?.dext}}/gamma/costs/inbox"
+              target="_blank">
+              <img class="h-auto w-9" src="assets/images/logo/dext.png" alt="dext">
+            </a>
+            <a *ngIf="selectedClient?.crn"
+              href="https://find-and-update.company-information.service.gov.uk/company/{{selectedClient?.crn}}" target="_blank">
               <img class="h-auto w-8" src="assets/images/logo/ltd.png" alt="ltd">
+            </a>
           </div>
         </div>
       </ng-container>
