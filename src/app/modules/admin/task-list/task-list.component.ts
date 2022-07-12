@@ -14,7 +14,7 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrls: ['./task-list.component.scss'],
   animations: [
     trigger("myTrigger", [
-      state("fadeInFlash",style({ opacity: "1"})),
+      state("fadeInFlash", style({ opacity: "1" })),
       transition("void => *", [
         style({ opacity: "0", transform: "translateY(20px)" }),
         animate("500ms")
@@ -53,12 +53,12 @@ export class TaskListComponent implements OnInit, OnDestroy {
       dataType: statusDataType.SELF,
     },
   ];
-  isLoading:Boolean = true;
-  
+  isLoading: Boolean = true;
+
   private readonly destroyer$: Subject<void> = new Subject();
 
-  constructor(private _fuseConfirmationService:FuseConfirmationService, private taskService:TasksMockApi,
-    private userService:UserService) { }
+  constructor(private _fuseConfirmationService: FuseConfirmationService, private taskService: TasksMockApi,
+    private userService: UserService) { }
 
   ngOnInit() {
     this.getTaskList({});
@@ -72,21 +72,21 @@ export class TaskListComponent implements OnInit, OnDestroy {
 
   private getTaskList(additionalParams): void {
     let param = {}
-    if(additionalParams) {
-      param = {...additionalParams}
+    if (additionalParams) {
+      param = { ...additionalParams }
     }
     this.taskService.getTaskList(param).pipe(takeUntil(this.destroyer$))
-    .subscribe(taskResponse => {
-      const tasksList = taskResponse;
-      Object.keys(tasksList).forEach(element => {
-        this.taskListArr.map((data, index) => {
-          if(data.dataType === element) {
-            this.taskListArr[index].text = tasksList[element].length?tasksList[element].sort((a,b) =>  (a.priority > b.priority ? 1 : -1)):null;
-            this.isLoading = false;
-          }
+      .subscribe(taskResponse => {
+        const tasksList = taskResponse;
+        Object.keys(tasksList).forEach(element => {
+          this.taskListArr.map((data, index) => {
+            if (data.dataType === element) {
+              this.taskListArr[index].text = tasksList[element].length ? tasksList[element].sort((a, b) => (a.t_status - b.t_status)) : null;
+              this.isLoading = false;
+            }
+          });
         });
       });
-    });
   }
 
   public onClientChange(e): void {
@@ -99,45 +99,45 @@ export class TaskListComponent implements OnInit, OnDestroy {
   }
 
   private getUserList(): void {
-    this.userService.getUserTable({client_status: 1}).pipe(takeUntil(this.destroyer$))
-    .subscribe(response => {
-     this.users = response['rows'];
-    });
+    this.userService.getUserTable({ client_status: 1 }).pipe(takeUntil(this.destroyer$))
+      .subscribe(response => {
+        this.users = response['rows'];
+      });
   }
 
 
-  public markCompleted(item): void {
+  public markCompleted(item: TaskListItems): void {
     const dialogRef = this._fuseConfirmationService.open({
-      title : 'Are you sure?',
-      message : item.t_status !== '2'?`Mark <b>${item.text}</b> as completed ?`: `Mark <b>${item.text}</b> as uncompleted?`,
+      title: 'Are you sure?',
+      message: item.t_status !== '2' ? `Mark <b>${item.text}</b> as completed ?` : `Mark <b>${item.text}</b> as uncompleted?`,
       dismissible: true,
-      actions:{
-        cancel: { label:'No' },
-        confirm : { label: 'Yes', color: 'warn' }
+      actions: {
+        cancel: { label: 'No' },
+        confirm: { label: 'Yes', color: 'warn' }
       }
     });
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$))
-    .subscribe(result => {
-      if(result === 'confirmed') {
-        if(item.t_status !== '2') {
-          this.moveCompleted(item, true);
-        } else {
-          this.moveCompleted(item, false);
+      .subscribe(result => {
+        if (result === 'confirmed') {
+          if (item.t_status !== '2') {
+            this.moveCompleted(item, true);
+          } else {
+            this.moveCompleted(item, false);
+          }
         }
-      }
-    });
+      });
   }
 
 
-  private moveCompleted(item, completed): void {
+  private moveCompleted(item: TaskListItems, completed: boolean): void {
     const task = {
-      id:item.task_id,
-      t_status:completed?2:1
+      id: item.task_id,
+      t_status: completed ? 2 : 1
     }
     this.taskService.updateTaskStatus(task).pipe(takeUntil(this.destroyer$))
-    .subscribe(_ => {
-      this.getTaskList({uid: this.username.value,month: moment(new Date()).format('MMM-yyyy')});
-    });
+      .subscribe(_ => {
+        this.getTaskList({ uid: this.username.value, month: moment(new Date()).format('MMM-yyyy') });
+      });
   }
-  
+
 }

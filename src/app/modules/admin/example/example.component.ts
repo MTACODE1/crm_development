@@ -15,8 +15,8 @@ import { BookkeepingStatusComponent } from './bookkeeping-status/bookkeeping-sta
 import { OnbordingFormComponent } from './onbording-form/onbording-form.component';
 
 @Component({
-  selector : 'example',
-  templateUrl : './example.component.html',
+  selector: 'example',
+  templateUrl: './example.component.html',
   styleUrls: ['./example.component.scss'],
 })
 
@@ -28,7 +28,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   today = moment(new Date());
   searchTerm: null;
   date = new FormControl(moment());
-  isLoading:Boolean = true;
+  isLoading: Boolean = true;
 
   public paginationConfig = {
     limit: 10,
@@ -57,11 +57,11 @@ export class ExampleComponent implements OnInit, OnDestroy {
       offset: this.paginationConfig.offset
     }
     this.userService.getUserTable(Params).pipe(takeUntil(this.destroyer$))
-    .subscribe(res => {
-      this.userTableList = res['rows'].slice();
-      this.paginationConfig.total = res['total_count'];
-      this.isLoading = false;
-    });
+      .subscribe(res => {
+        this.userTableList = res['rows'].slice();
+        this.paginationConfig.total = res['total_count'];
+        this.isLoading = false;
+      });
   }
 
   public sortData(sort: Sort): void {
@@ -91,70 +91,69 @@ export class ExampleComponent implements OnInit, OnDestroy {
     this.getTableDetails();
   }
 
-  public getNextStatus(data, i,statsuName, item): void {
-    if (data === 'bookkeeping' && statsuName[i].static_id === 7 ) {
+  public getNextStatus(data, i, statsuName, item): void {
+    if (data === 'bookkeeping' && statsuName[i].static_id === 7) {
       this.openStatusJumpDialogue('setFirst', item);
-    } else if(data === 'bookkeeping' && (statsuName[i].static_id === 8 ||statsuName[i].static_id === 9 || statsuName[i].static_id === 10)) {
+    } else if (data === 'bookkeeping' && (statsuName[i].static_id === 8 || statsuName[i].static_id === 9 || statsuName[i].static_id === 10)) {
       this.updateStatus(statsuName[11], item, data, true);
-    }  else {
-      this.updateStatus(statsuName[i +1], item, data, true);
+    } else {
+      this.updateStatus(statsuName[i + 1], item, data, true);
     }
-   
   }
 
-  private updateStatus(item, element, key, showSnackBar:boolean): void {
-    let lastYear = this.today.year() -1;
+  private updateStatus(item, element, key, showSnackBar: boolean): void {
+    let lastYear = this.today.year() - 1;
     const task = {
       uid: element.id,
-      process: key === 'annual_accounts'|| key === 'accNew'?'annual_accounts':key,
-      month:key === 'annual_accounts'?element.annual_accounts_month + '-' + lastYear:key === 'accNew'?element.annual_accounts_month + '-' + this.today.year():this.date.value.format('MMM-yy'),
+      process: key === 'annual_accounts' || key === 'accNew' ? 'annual_accounts' : key,
+      month: key === 'annual_accounts' ? element.annual_accounts_month + '-' + lastYear : key === 'accNew' ? element.annual_accounts_month + '-' + this.today.year() : this.date.value.format('MMM-yy'),
       p_status: item.static_id
     }
     this.userService.updateTaskStatus(task).subscribe(result => {
-      if(result['err_msg']) {
+      if (result['err_msg']) {
         alert(result['err_msg']);
       } else {
         this.getTableDetails();
-        if(showSnackBar) this.triggerStatusSnackBar(item, key, element);
+        if (showSnackBar) this.triggerStatusSnackBar(item, key, element);
       }
-    })
+    });
   }
 
-  private getPreviosStatus(key, i,statsuName, item): void {
-    if (key === 'bookkeeping' && (statsuName[i].static_id === 11 || (statsuName[i].static_id === 10 ||statsuName[i].static_id === 9 || statsuName[i].static_id === 8))) {
+  private getPreviosStatus(key, i, statsuName, item): void {
+    if (key === 'bookkeeping' && (statsuName[i].static_id === 11 || (statsuName[i].static_id === 10 || statsuName[i].static_id === 9 || statsuName[i].static_id === 8))) {
       this.updateStatus(statsuName[7], item, key, false);
     } else {
-      this.updateStatus(statsuName[i -1], item, key, false);
+      this.updateStatus(statsuName[i - 1], item, key, false);
     }
   }
 
   public openConfirmationDialog(key, value, statsuName, item): void {
     let previous;
-    if(key === 'bookkeeping' &&  (statsuName[value].static_id === 11|| (statsuName[value].static_id === 10 ||statsuName[value].static_id === 9 || statsuName[value].static_id === 8))) {
+    if (key === 'bookkeeping' && (statsuName[value].static_id === 11 || (statsuName[value].static_id === 10 || statsuName[value].static_id === 9 || statsuName[value].static_id === 8))) {
       previous = 7;
     }
     const dialogRef = this._fuseConfirmationService.open({
-      title : 'Are you sure?',
-      message : `This will revert to the previous task: ${previous=== undefined?statsuName[value - 1].task:statsuName[previous].task}`,
+      title: 'Are you sure?',
+      message: `This will revert to the previous task: ${previous === undefined ? statsuName[value - 1].task : statsuName[previous].task}`,
       dismissible: true,
-      actions:{
-        confirm :{
-          show : true,
+      actions: {
+        confirm: {
+          show: true,
           label: 'Yes',
           color: 'warn'
         }
       }
     });
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(result => {
-      if(result === 'confirmed') {
+      if (result === 'confirmed') {
         this.getPreviosStatus(key, value, statsuName, item);
       }
     });
   }
 
-  public statusChanged(toggle:boolean): void {
-    if(toggle) {
-      this.displayedColumns = ['companyName','logo','onboarding','bookKeepingStatus','vatStatus','accountsStatus1','accountsStatus2','self1','self2'];
+  public statusChanged(toggle: boolean): void {
+    if (toggle) {
+      this.displayedColumns = ['companyName', 'logo', 'onboarding', 'bookKeepingStatus', 'vatStatus', 'accountsStatus1', 'accountsStatus2', 'self1', 'self2'];
     } else {
       this.displayedColumns = this.userService.getColumns();
     }
@@ -173,8 +172,8 @@ export class ExampleComponent implements OnInit, OnDestroy {
     const snackBarParams: MatSnackBarConfig = {
       horizontalPosition: 'right',
       verticalPosition: 'bottom',
-      panelClass: plan == 'bookkeeping'?'book-snack-bar':plan == 'vat'?'vat-snack-bar':plan == 'annual_accounts' || plan == 'accNew'?'acc-snack-bar':'default-snack-bar',
-      data: { item: data, plan: plan, username:element.name + element.surname }
+      panelClass: plan == 'bookkeeping' ? 'book-snack-bar' : plan == 'vat' ? 'vat-snack-bar' : plan == 'annual_accounts' || plan == 'accNew' ? 'acc-snack-bar' : 'default-snack-bar',
+      data: { item: data, plan: plan, username: element.name + element.surname }
     };
     this.snackBar.openFromComponent(SuccessModalComponent, snackBarParams);
   }
@@ -185,48 +184,48 @@ export class ExampleComponent implements OnInit, OnDestroy {
       data: set
     });
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(res => {
-      if(res) this.updateStatus(res.fetch, item, 'bookkeeping', true);
+      if (res) this.updateStatus(res.fetch, item, 'bookkeeping', true);
     });
   }
 
   public startUpdates(key, status, statusItem, item): void {
-    const messgae = key === 'start'?'Start Bookkeeping Process for Bespoke Alpha Solutions for May?':'Cancel Bookkeeping Status for Bespoke Alpha Solutions for May?';
-    const vatMessgae = key === 'start'?'Start VAT Process for Bespoke Alpha Solutions for May?':'Cancel VAT Status for Bespoke Alpha Solutions for May?';
-    const accMessgae = key === 'start'?'Start Accounts Process for Bespoke Alpha Solutions for May?':'Cancel Accounts Process for Bespoke Alpha Solutions?';
+    const messgae = key === 'start' ? 'Start Bookkeeping Process for Bespoke Alpha Solutions for May?' : 'Cancel Bookkeeping Status for Bespoke Alpha Solutions for May?';
+    const vatMessgae = key === 'start' ? 'Start VAT Process for Bespoke Alpha Solutions for May?' : 'Cancel VAT Status for Bespoke Alpha Solutions for May?';
+    const accMessgae = key === 'start' ? 'Start Accounts Process for Bespoke Alpha Solutions for May?' : 'Cancel Accounts Process for Bespoke Alpha Solutions?';
     const dialogRef = this._fuseConfirmationService.open({
-      title : 'Are you sure?',
-      message : status === 'bookkeep'?messgae:status === 'vat'?vatMessgae:accMessgae,
+      title: 'Are you sure?',
+      message: status === 'bookkeep' ? messgae : status === 'vat' ? vatMessgae : accMessgae,
       dismissible: true,
-      actions:{
-        confirm :{
-          show : true,
-          label:  key === 'start'?'Start':'Yes',
+      actions: {
+        confirm: {
+          show: true,
+          label: key === 'start' ? 'Start' : 'Yes',
           color: 'warn'
         }
       },
     });
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(result => {
-      if(result === 'confirmed') {
-        if(status === 'bookkeep') {
-          if(key === 'start') {
+      if (result === 'confirmed') {
+        if (status === 'bookkeep') {
+          if (key === 'start') {
             this.updateStatus(statusItem[0], item, 'bookkeeping', true);
           } else {
             this.removeStatus(item, 'bookkeeping');
-          } 
-        } else if(status === 'vat') {
-          if(key === 'start') {
+          }
+        } else if (status === 'vat') {
+          if (key === 'start') {
             this.updateStatus(statusItem[0], item, 'vat', true);
           } else {
             this.removeStatus(item, 'vat');
           }
-        } else if(status === 'annual_accounts') {
-          if(key === 'start') {
+        } else if (status === 'annual_accounts') {
+          if (key === 'start') {
             this.updateStatus(statusItem[0], item, 'annual_accounts', true);
           } else {
             this.removeStatus(item, 'annual_accounts');
           }
         } else {
-          if(key === 'start') {
+          if (key === 'start') {
             this.updateStatus(statusItem[0], item, 'accNew', true);
           } else {
             this.removeStatus(item, 'accNew');
@@ -237,14 +236,13 @@ export class ExampleComponent implements OnInit, OnDestroy {
   }
 
   private removeStatus(item, process): void {
-    let lastYear = this.today.year() -1;
+    let lastYear = this.today.year() - 1;
     const statusParam = {
-      uid:item.id,
-      month:process === 'annual_accounts'?item.annual_accounts_month + '-' + lastYear:process === 'accNew'?item.annual_accounts_month + '-' + this.today.year():this.date.value.format('MMM-yy'),
-      process: process === 'annual_accounts'|| process === 'accNew'?'annual_accounts':process,
+      uid: item.id,
+      month: process === 'annual_accounts' ? item.annual_accounts_month + '-' + lastYear : process === 'accNew' ? item.annual_accounts_month + '-' + this.today.year() : this.date.value.format('MMM-yy'),
+      process: process === 'annual_accounts' || process === 'accNew' ? 'annual_accounts' : process,
     }
-    this.userService.cancelStatus(statusParam).pipe(takeUntil(this.destroyer$))
-    .subscribe(_ => {
+    this.userService.cancelStatus(statusParam).pipe(takeUntil(this.destroyer$)).subscribe(_ => {
       this.getTableDetails();
     });
   }
@@ -258,7 +256,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   }
 
   public calculateMonth(value): void {
-    value === 'decrement'?this.date.setValue(this.date.value.subtract(1, 'month')):this.date.setValue(this.date.value.add(1, 'month'));
+    value === 'decrement' ? this.date.setValue(this.date.value.subtract(1, 'month')) : this.date.setValue(this.date.value.add(1, 'month'));
     this.getTableDetails();
   }
 
@@ -270,11 +268,11 @@ export class ExampleComponent implements OnInit, OnDestroy {
     }
     const dialogRef = this.dialog.open(AssessmentStatusComponent, {
       width: '50vw',
-      data: {data: dataItem, type: type, parameter: Params}
+      data: { data: dataItem, type: type, parameter: Params }
     });
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(result => {
-     if(result) this.getTableDetails();
+      if (result) this.getTableDetails();
     });
   }
- 
+
 }

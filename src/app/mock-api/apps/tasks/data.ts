@@ -1,13 +1,13 @@
 export interface TaskListItems {
-  id?:number;
-  text?:any;
-  name?:string;
-  date?:string;
-  color?:string;
-  dataType?:string;
-  t_status?:string;
+  id?: number;
+  text?: any;
+  name: string;
+  date?: string;
+  color: string;
+  dataType?: string;
+  t_status?: string;
+  task_id?: string;
 }
-
 
 export enum statusDataType {
   SETUP = 'setup',
@@ -16,4 +16,3 @@ export enum statusDataType {
   ANNUAL = 'annual_accounts',
   SELF = 'self_assessment',
 }
-
