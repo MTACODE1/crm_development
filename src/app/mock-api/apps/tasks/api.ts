@@ -14,4 +14,8 @@ export class TasksMockApi {
   getTaskList(params) {
     return this.api.post<TaskListItems[]>(`${environment.baseUrl}/tasks_definitions`, params);
   }
+
+  updateTaskStatus(taskParam) {
+    return this.api.post<TaskListItems>(`${environment.baseUrl}/task_status`, taskParam);
+  }
 }

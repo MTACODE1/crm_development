@@ -3,7 +3,7 @@
   <div class="flex flex-col px-6 pt-6">
     <label for="status" class="text-xl">Select User</label>
     <mat-form-field appearance="none" id="status" class="w-36">
-      <mat-select [formControl]="username" class="text-lg text-gray-500" disableOptionCentering>
+      <mat-select [formControl]="username" class="text-lg text-gray-500" placeholder="Select Client" disableOptionCentering (selectionChange)="onClientChange($event)">
         <mat-option *ngFor="let item of users" [value]="item.id">
          {{item?.name}}  {{item?.surname}}
         </mat-option>
@@ -22,12 +22,11 @@
       </div>
       <ng-container *ngFor="let data of item.text; let index= index">
         <div class="flex flex-col border-b overflow-hidden priority_{{item.color}}_{{data.priority}} cursor-pointer list-item" 
-        [@myTrigger]='state' (click)="markCompleted(data, i, index)" >
-        <!-- [style.transform]="transform(index)" (click)="shuffle(data, i, index)"> -->
+        [@myTrigger]='state' (click)="markCompleted(data)" >
           <div class="flex flex-auto flex-col px-4 py-3 mb-4">
             <div class="flex">
               <button  mat-icon-button>
-                <mat-icon [class]="!data.completed?'text-hint':'text-primary'" [svgIcon]="'heroicons_outline:check-circle'"></mat-icon>
+                <mat-icon [class]="data.t_status !== '2'?'text-hint':'text-primary'" [svgIcon]="'heroicons_outline:check-circle'"></mat-icon>
               </button>
               <div class="ml-2">
                 <p>{{data.text}}</p>

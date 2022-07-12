@@ -5,7 +5,7 @@ export interface TaskListItems {
   date?:string;
   color?:string;
   dataType?:string;
-  completed?:boolean;
+  t_status?:string;
 }
 
 

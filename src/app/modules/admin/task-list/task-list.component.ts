@@ -1,10 +1,11 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { UserService } from 'app/core/user/user.service';
 import { TasksMockApi } from 'app/mock-api/apps/tasks/api';
 import { statusDataType, TaskListItems } from 'app/mock-api/apps/tasks/data';
+import * as moment from "moment";
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -17,20 +18,14 @@ import { Subject, takeUntil } from 'rxjs';
       transition("void => *", [
         style({ opacity: "0", transform: "translateY(20px)" }),
         animate("500ms")
-      ])
-    ])
+      ]),
+    ]),
   ]
 })
 
 export class TaskListComponent implements OnInit, OnDestroy {
   username = new FormControl();
-  public users = [
-    {name: 'All Users', id: '0'},
-    // {value: '2', viewValue: 'user 1'},
-    // {value: '3', viewValue: 'user 2'},
-    // {value: '4', viewValue: 'user 3'},
-  ];
-
+  public users = [];
   public taskListArr: TaskListItems[] = [
     {
       color: 'gray',
@@ -66,9 +61,8 @@ export class TaskListComponent implements OnInit, OnDestroy {
     private userService:UserService) { }
 
   ngOnInit() {
-    this.getTaskList();
+    this.getTaskList({});
     this.getUserList();
-    // this.username.setValue(this.users[0].value)
   }
 
   ngOnDestroy(): void {
@@ -76,8 +70,12 @@ export class TaskListComponent implements OnInit, OnDestroy {
     this.destroyer$.complete();
   }
 
-  private getTaskList(): void {
-    this.taskService.getTaskList({}).pipe(takeUntil(this.destroyer$))
+  private getTaskList(additionalParams): void {
+    let param = {}
+    if(additionalParams) {
+      param = {...additionalParams}
+    }
+    this.taskService.getTaskList(param).pipe(takeUntil(this.destroyer$))
     .subscribe(taskResponse => {
       const tasksList = taskResponse;
       Object.keys(tasksList).forEach(element => {
@@ -91,85 +89,55 @@ export class TaskListComponent implements OnInit, OnDestroy {
     });
   }
 
+  public onClientChange(e): void {
+    const params = {
+      uid: e.value,
+      month: moment(new Date()).format('MMM-yyyy')
+    };
+    this.username.setValue(e.value);
+    this.getTaskList(params);
+  }
+
   private getUserList(): void {
-    const Params = {
-      client_status: 1
-    }
-    this.userService.getUserTable(Params).pipe(takeUntil(this.destroyer$))
+    this.userService.getUserTable({client_status: 1}).pipe(takeUntil(this.destroyer$))
     .subscribe(response => {
      this.users = response['rows'];
-     this.users.unshift({name:'All user', id:'0'});
-     this.username.setValue(this.users[0].id);
     });
   }
 
-  shuffle(obj, i, ind) {
-    this.taskListArr[i].text.splice(ind, 1)
-    this.taskListArr[i].text.push(obj)
-  }
 
-  transform(index: number) {
-    return `translateY(${(index + 1) * 100}%)`;
-  }
-
-  public markCompleted(item, ind, itemIndex) {
+  public markCompleted(item): void {
     const dialogRef = this._fuseConfirmationService.open({
       title : 'Are you sure?',
-      message : !item.completed?`Mark <b>${item.text}</b> as completed ?`: `Mark <b>${item.text}</b> as uncompleted?`,
+      message : item.t_status !== '2'?`Mark <b>${item.text}</b> as completed ?`: `Mark <b>${item.text}</b> as uncompleted?`,
       dismissible: true,
       actions:{
-        cancel:{
-          label:'No'
-        },
-        confirm :{
-          label: 'Yes',
-          color: 'warn'
-        }
+        cancel: { label:'No' },
+        confirm : { label: 'Yes', color: 'warn' }
       }
     });
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$))
     .subscribe(result => {
       if(result === 'confirmed') {
-        if(!item.completed) {
-          this.moveCompleted(item, ind,itemIndex);
+        if(item.t_status !== '2') {
+          this.moveCompleted(item, true);
         } else {
-          item.completed = false;
-          // item.priority = 'high';
-          this.taskListArr[ind].text.splice(itemIndex, 1)
+          this.moveCompleted(item, false);
         }
       }
     });
   }
 
 
-  private moveCompleted(item, ind,itemIndex) {
-    item.completed = true;
-    // item.priority = 'low';
-    // this.taskListArr[ind].text = this.taskListArr[ind].text.concat(this.taskListArr[ind].text.splice(itemIndex, 1));
-    this.taskListArr[ind].text.push(item)
+  private moveCompleted(item, completed): void {
+    const task = {
+      id:item.task_id,
+      t_status:completed?2:1
+    }
+    this.taskService.updateTaskStatus(task).pipe(takeUntil(this.destroyer$))
+    .subscribe(_ => {
+      this.getTaskList({uid: this.username.value,month: moment(new Date()).format('MMM-yyyy')});
+    });
   }
-
-  // private moveCompleted(id, ind,element) {
-  //   // this.taskListArr[ind].text.forEach(element => {
-  //   //   if(element.id === id) {
-  //       element.completed = true;
-  //       // element.priority = 'low';
-  //       let index = this.taskListArr[ind].text.findIndex((item) =>item.id == id);
-  //       // this.taskListArr[ind].text.splice(index, 1)
-  //       this.taskListArr[ind].text.push(element)
-  //   //   }
-  //   // });
-  // }
   
-
-
-  // toggleCompleted(task:TaskItem): void {
-  //   // task.completed = !task.completed;
-  //   if(!task.completed) {
-  //     task.completed = true;
-  //     this.max = this.max+1;
-  //     this.userService.setUsersStatus(task);
-  //   }
-  // }
-
 }
