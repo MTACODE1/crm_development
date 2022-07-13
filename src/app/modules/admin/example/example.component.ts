@@ -199,7 +199,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
     });
   }
 
-  public startUpdates(key, status, statusItem, item): void {
+  public startUpdates(key, status, item): void {
     const messgae = key === 'start' ? 'Start Bookkeeping Process for Bespoke Alpha Solutions for May?' : 'Cancel Bookkeeping Status for Bespoke Alpha Solutions for May?';
     const vatMessgae = key === 'start' ? 'Start VAT Process for Bespoke Alpha Solutions for May?' : 'Cancel VAT Status for Bespoke Alpha Solutions for May?';
     const accMessgae = key === 'start' ? 'Start Accounts Process for Bespoke Alpha Solutions for May?' : 'Cancel Accounts Process for Bespoke Alpha Solutions?';
@@ -219,25 +219,28 @@ export class ExampleComponent implements OnInit, OnDestroy {
       if (result === 'confirmed') {
         if (status === 'bookkeep') {
           if (key === 'start') {
-            this.updateStatus(statusItem[0], item, 'bookkeeping', true);
+            this.updateStatus(item.bookkeeping_status[0], item, 'bookkeeping', true);
           } else {
             this.removeStatus(item, 'bookkeeping');
           }
         } else if (status === 'vat') {
           if (key === 'start') {
-            this.updateStatus(statusItem[0], item, 'vat', true);
+            this.updateStatus(item.vat_status[0], item, 'vat', true);
+            if(!item.bookkeeping_status_saved) {
+              this.updateStatus(item.bookkeeping_status[0], item, 'bookkeeping', true);
+            }
           } else {
             this.removeStatus(item, 'vat');
           }
         } else if (status === 'annual_accounts') {
           if (key === 'start') {
-            this.updateStatus(statusItem[0], item, 'annual_accounts', true);
+            this.updateStatus(item.annual_accounts_status_1[0], item, 'annual_accounts', true);
           } else {
             this.removeStatus(item, 'annual_accounts');
           }
         } else {
           if (key === 'start') {
-            this.updateStatus(statusItem[0], item, 'accNew', true);
+            this.updateStatus(item.annual_accounts_status_2[0], item, 'accNew', true);
           } else {
             this.removeStatus(item, 'accNew');
           }
