@@ -63,7 +63,8 @@ export class AuthService
             last_name: response.last_name,
             email: response.email,
             avatar: response.picture,
-            username: response.username
+            username: response.username,
+            user_id: response.user_id
           }
           localStorage.setItem('loginUser', JSON.stringify(user));
           // Set the authenticated flag to true

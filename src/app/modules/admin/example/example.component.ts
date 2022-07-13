@@ -23,8 +23,8 @@ import { OnbordingFormComponent } from './onbording-form/onbording-form.componen
 export class ExampleComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [];
   userTableList: TableModel[] = [];
-  featureStatus: boolean;
-  myclientSelected: boolean;
+  featureStatus: boolean = false;
+  myclientSelected: boolean = false;
   today = moment(new Date());
   searchTerm: null;
   date = new FormControl(moment());
@@ -42,7 +42,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.displayedColumns = this.userService.getColumns();
-    this.getTableDetails();
+    this.getTableDetails({});
   }
 
   ngOnDestroy(): void {
@@ -50,18 +50,20 @@ export class ExampleComponent implements OnInit, OnDestroy {
     this.destroyer$.complete();
   }
 
-  private getTableDetails(): void {
-    const Params = {
+  private getTableDetails(additionalParams): void {
+    const params = {
       month: this.date.value.format('MMM-yy'),
       limit: this.paginationConfig.limit,
-      offset: this.paginationConfig.offset
+      offset: this.paginationConfig.offset,
     }
-    this.userService.getUserTable(Params).pipe(takeUntil(this.destroyer$))
-      .subscribe(res => {
-        this.userTableList = res['rows'].slice();
-        this.paginationConfig.total = res['total_count'];
-        this.isLoading = false;
-      });
+    if (additionalParams && additionalParams.user) {
+      params['user'] = additionalParams.user;
+    }
+    this.userService.getUserTable(params).pipe(takeUntil(this.destroyer$)).subscribe(res => {
+      this.userTableList = res['rows'].slice();
+      this.paginationConfig.total = res['total_count'];
+      this.isLoading = false;
+    });
   }
 
   public sortData(sort: Sort): void {
@@ -88,7 +90,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
 
   public onPageChange(event): void {
     this.paginationConfig = { ...this.paginationConfig, ...event };
-    this.getTableDetails();
+    this.getTableDetails({});
   }
 
   public getNextStatus(data, i, statsuName, item): void {
@@ -113,7 +115,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
       if (result['err_msg']) {
         alert(result['err_msg']);
       } else {
-        this.getTableDetails();
+        this.getTableDetails({});
         if (showSnackBar) this.triggerStatusSnackBar(item, key, element);
       }
     });
@@ -156,6 +158,15 @@ export class ExampleComponent implements OnInit, OnDestroy {
       this.displayedColumns = ['companyName', 'logo', 'onboarding', 'bookKeepingStatus', 'vatStatus', 'accountsStatus1', 'accountsStatus2', 'self1', 'self2'];
     } else {
       this.displayedColumns = this.userService.getColumns();
+    }
+  }
+
+  public slectMyClient(event: boolean): void {
+    if(event) {
+      const user = JSON.parse(localStorage.getItem('loginUser'));
+      this.getTableDetails({user: user.user_id});
+    } else {
+      this.getTableDetails({});
     }
   }
 
@@ -243,7 +254,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
       process: process === 'annual_accounts' || process === 'accNew' ? 'annual_accounts' : process,
     }
     this.userService.cancelStatus(statusParam).pipe(takeUntil(this.destroyer$)).subscribe(_ => {
-      this.getTableDetails();
+      this.getTableDetails({});
     });
   }
 
@@ -257,7 +268,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
 
   public calculateMonth(value): void {
     value === 'decrement' ? this.date.setValue(this.date.value.subtract(1, 'month')) : this.date.setValue(this.date.value.add(1, 'month'));
-    this.getTableDetails();
+    this.getTableDetails({});
   }
 
   public editAssessment(dataItem, type): void {
@@ -271,7 +282,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
       data: { data: dataItem, type: type, parameter: Params }
     });
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(result => {
-      if (result) this.getTableDetails();
+      if (result) this.getTableDetails({});
     });
   }
 
