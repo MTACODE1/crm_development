@@ -200,9 +200,9 @@ export class ExampleComponent implements OnInit, OnDestroy {
   }
 
   public startUpdates(key, status, item): void {
-    const messgae = key === 'start' ? 'Start Bookkeeping Process for Bespoke Alpha Solutions for May?' : 'Cancel Bookkeeping Status for Bespoke Alpha Solutions for May?';
-    const vatMessgae = key === 'start' ? 'Start VAT Process for Bespoke Alpha Solutions for May?' : 'Cancel VAT Status for Bespoke Alpha Solutions for May?';
-    const accMessgae = key === 'start' ? 'Start Accounts Process for Bespoke Alpha Solutions for May?' : 'Cancel Accounts Process for Bespoke Alpha Solutions?';
+    const messgae = key === 'start' ? `Start Bookkeeping Process for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?` : `Cancel Bookkeeping Status for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?`;
+    const vatMessgae = key === 'start' ? `Start VAT Process for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?` : `Cancel VAT Status for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?`;
+    const accMessgae = key === 'start' ? 'Start Accounts Process for Bespoke Alpha Solutions ?' : 'Cancel Accounts Process for Bespoke Alpha Solutions?';
     const dialogRef = this._fuseConfirmationService.open({
       title: 'Are you sure?',
       message: status === 'bookkeep' ? messgae : status === 'vat' ? vatMessgae : accMessgae,
