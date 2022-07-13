@@ -33,7 +33,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   public paginationConfig = {
     limit: 10,
     offset: 0,
-    total: 20
+    total: 10
   }
   private readonly destroyer$: Subject<void> = new Subject();
 

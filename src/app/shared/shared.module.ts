@@ -6,8 +6,9 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { PaginatorComponent } from './pagination/paginator/paginator.component';
 import { SearchPipe } from './pipe/search.pipe';
 
-const pipes = [
-  SearchPipe
+const common = [
+  SearchPipe,
+  PaginatorComponent
 ]
 
 @NgModule({
@@ -20,14 +21,13 @@ const pipes = [
   exports: [
     CommonModule,
     FormsModule,
-    ...pipes,
+    MatSelectModule,
     ReactiveFormsModule,
-    PaginatorComponent,
+    ...common,
   ],
   declarations: [
-    ...pipes,
+    ...common,
     PaginationComponent,
-    PaginatorComponent
   ]
 })
 export class SharedModule { }

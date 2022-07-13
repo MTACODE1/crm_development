@@ -118,16 +118,15 @@ export class TaskListComponent implements OnInit, OnDestroy {
         confirm: { label: 'Yes', color: 'warn' }
       }
     });
-    dialogRef.afterClosed().pipe(takeUntil(this.destroyer$))
-      .subscribe(result => {
-        if (result === 'confirmed') {
-          if (item.t_status !== '2') {
-            this.moveCompleted(item, true);
-          } else {
-            this.moveCompleted(item, false);
-          }
+    dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(result => {
+      if (result === 'confirmed') {
+        if (item.t_status !== '2') {
+          this.moveCompleted(item, true);
+        } else {
+          this.moveCompleted(item, false);
         }
-      });
+      }
+    });
   }
 
 
@@ -136,10 +135,9 @@ export class TaskListComponent implements OnInit, OnDestroy {
       id: item.task_id,
       t_status: completed ? 2 : 1
     }
-    this.taskService.updateTaskStatus(task).pipe(takeUntil(this.destroyer$))
-      .subscribe(_ => {
-        this.getTaskList({ uid: this.username.value, month: moment(new Date()).format('MMM-yyyy') });
-      });
+    this.taskService.updateTaskStatus(task).pipe(takeUntil(this.destroyer$)).subscribe(_ => {
+      this.getTaskList({ uid: this.username.value, month: moment(new Date()).format('MMM-yyyy') });
+    });
   }
 
 }

@@ -2,29 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TableModel, User } from 'app/core/user/user.types';
 import { environment } from 'environments/environment';
-import * as moment from 'moment';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
-
-export interface ICalendarState {
-  selectedDate?: moment.Moment;
-}
-
-const initialState: ICalendarState = {
-  selectedDate: moment()
-}
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class UserService {
   private _user: ReplaySubject<User> = new ReplaySubject<User>(1);
   private readonly usersSatus$: BehaviorSubject<any> = new BehaviorSubject(null);
-  private readonly config$: BehaviorSubject<ICalendarState> = new BehaviorSubject(initialState);
 
   constructor(private _httpClient: HttpClient) { }
-  /** Setter & getter for user
-   * @param value
-   */
 
   public user(value: User) {
     // Store the value
@@ -62,8 +50,8 @@ export class UserService {
   }
 
   getColumns() {
-    return ['companyName', 'logo', 'accountant', 'companyType', 'onboarding','saledate','package','quarters','frequency', 'bookkeeper', 'completionweek',
-      'bookKeepingStatus', 'vatRegistered','vatQuarter', 'vatscheme','vatStatus','eoy', 'oneoff', 'endDate', 'duedate', 
+    return ['companyName', 'logo', 'accountant', 'companyType', 'onboarding', 'saledate', 'package', 'quarters', 'frequency', 'bookkeeper', 'completionweek',
+      'bookKeepingStatus', 'vatRegistered', 'vatQuarter', 'vatscheme', 'vatStatus', 'eoy', 'oneoff', 'endDate', 'duedate',
       'accountsStatus1', 'accountsStatus2', 'number', 'self1', 'self2'];
   }
 
@@ -83,12 +71,4 @@ export class UserService {
     return this.usersSatus$.asObservable();
   }
 
-
-  public getConfig(): Observable<ICalendarState> {
-    return this.config$.asObservable();
-  }
-
-  public setConfig(config: ICalendarState): void {
-    this.config$.next({ ...this.config$.getValue(), ...config });
-  }
 }
