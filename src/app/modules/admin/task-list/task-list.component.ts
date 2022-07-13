@@ -55,7 +55,6 @@ export class TaskListComponent implements OnInit, OnDestroy {
       dataType: statusDataType.SELF,
     },
   ];
-  isLoading: Boolean = true;
 
   private readonly destroyer$: Subject<void> = new Subject();
 
@@ -83,7 +82,6 @@ export class TaskListComponent implements OnInit, OnDestroy {
         this.taskListArr.map((data, index) => {
           if (data.dataType === element) {
             this.taskListArr[index].text = tasksList[element].length ? tasksList[element].sort((a, b) => (a.t_status - b.t_status)) : null;
-            this.isLoading = false;
           }
         });
       });
@@ -97,7 +95,6 @@ export class TaskListComponent implements OnInit, OnDestroy {
     };
     this.username.setValue(e.value);
     this.getTaskList(params);
-    this.getUserList();
   }
 
   private getUserList(): void {

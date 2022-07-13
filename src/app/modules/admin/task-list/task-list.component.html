@@ -21,7 +21,7 @@
         </div>
       </div>
       <ng-container *ngFor="let data of item.text; let index= index">
-        <div class="flex flex-col border-b overflow-hidden priority_{{item.color}}_{{data.priority}} cursor-pointer list-item"
+        <div *ngIf="data.description" class="flex flex-col border-b overflow-hidden priority_{{item.color}}_{{data.priority}} cursor-pointer list-item"
           [@myTrigger]='state' (click)="markCompleted(data)">
           <div class="flex flex-auto flex-col px-4 py-3 mb-4">
             <div class="flex">
@@ -29,7 +29,7 @@
                 <mat-icon [class]="data.t_status !== '2'?'text-hint':'text-primary'" [svgIcon]="'heroicons_outline:check-circle'"></mat-icon>
               </button>
               <div class="ml-2">
-                <p>{{data.text}}</p>
+                <p>{{data.description}}</p>
                 <span *ngIf="data.date" class="text-sm">{{data.date}}</span>
               </div>
             </div>
@@ -53,9 +53,6 @@
             </a>
           </div>
         </div>
-      </ng-container>
-      <ng-container *ngIf="!item.text && !isLoading">
-        <p class="text-center my-4 text-{{item.color}}-800 text-lg font-bold opacity-50">No task Found !!!</p>
       </ng-container>
     </div>
   </div>
