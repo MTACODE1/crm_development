@@ -26,7 +26,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   featureStatus: boolean = false;
   myclientSelected: boolean = false;
   today = moment(new Date());
-  searchTerm: null;
+  searchTerm: string;
   date = new FormControl(moment());
   isLoading: Boolean = true;
 
@@ -59,11 +59,20 @@ export class ExampleComponent implements OnInit, OnDestroy {
     if (additionalParams && additionalParams.user) {
       params['user'] = additionalParams.user;
     }
+    if (additionalParams && additionalParams.search) {
+      params['search'] = additionalParams.search;
+    }
     this.userService.getUserTable(params).pipe(takeUntil(this.destroyer$)).subscribe(res => {
       this.userTableList = res['rows'].slice();
       this.paginationConfig.total = res['total_count'];
       this.isLoading = false;
     });
+  }
+
+  
+  public searchChange(value): void {
+    const params = {search: value};
+    this.getTableDetails(params);
   }
 
   public sortData(sort: Sort): void {
@@ -90,7 +99,8 @@ export class ExampleComponent implements OnInit, OnDestroy {
 
   public onPageChange(event): void {
     this.paginationConfig = { ...this.paginationConfig, ...event };
-    this.getTableDetails({});
+    const params = {search: this.searchTerm};
+    this.getTableDetails(params);
   }
 
   public getNextStatus(data, i, statsuName, item): void {
@@ -286,6 +296,18 @@ export class ExampleComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(result => {
       if (result) this.getTableDetails({});
+    });
+  }
+
+  public toggleClass(statusData, key, item): void {
+    const param = {
+      uid: item.id,
+      process: key === 'annual_accounts' || key === 'accNew' ? 'annual_accounts' : key,
+      month: key === 'annual_accounts' ? this.date.value.subtract(1, 'year').format('MMM-yy') : this.date.value.format('MMM-yy'),
+      escalate: !statusData.escalated
+    }
+    this.userService.escalateStatusTask(param).pipe(takeUntil(this.destroyer$)).subscribe(_ => {
+      this.getTableDetails({});
     });
   }
 

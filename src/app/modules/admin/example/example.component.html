@@ -43,15 +43,15 @@
             <label for="search" class="absolute top-2.5 left-3.5 text-xl">
               <mat-icon>search</mat-icon>
             </label>
-            <input id="search" type="text" class="rounded-full text-lg h-10" placeholder="Search"
-              [(ngModel)]="searchTerm">
+            <input id="search" type="text" class="rounded-full text-lg h-10" placeholder="Search" 
+              [(ngModel)]="searchTerm" (ngModelChange)="searchChange($event)">
           </div>
 
         </div>
       </div>
       <div class="flex flex-col flex-auto overflow-auto table-container">
-        <ng-container *ngIf="(userTableList | search : searchTerm) as clientResult">
-          <table class="min-w-240 overflow-y-visible" mat-table [dataSource]="clientResult" matSort
+        <!-- <ng-container *ngIf="(userTableList | search : searchTerm) as clientResult"> -->
+          <table class="min-w-240 overflow-y-visible" mat-table [dataSource]="userTableList" matSort
             (matSortChange)="sortData($event)">
             <ng-container matColumnDef="companyName" sticky>
               <th mat-header-cell *matHeaderCellDef class="pl-0 info-col"> Company Name </th>
@@ -156,8 +156,8 @@
                         (click)="ind < element.bookkeeping_status.length -1 ?getNextStatus('bookkeeping', ind,element.bookkeeping_status, element):$event.stopPropagation()">
                         {{ statusItem.task }}
                       </button>
-                      <mat-icon [ngClass]="{'blink': element.bookkeeping_status[ind]?.escalated === '0'}"
-                        class="cursor-pointer" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                      <mat-icon  class="cursor-pointer" (click)="toggleClass(element.bookkeeping_status[ind], 'bookkeeping', element)" [class.blink]="element.bookkeeping_status[ind]?.escalated"
+                       svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
                     </ng-container>
                   </ng-container>
                 </div>
@@ -202,7 +202,7 @@
                         (click)="ind < element.vat_status.length -1 ?getNextStatus('vat', ind,element.vat_status, element):$event.stopPropagation()">
                         {{ vatItem.task }}
                       </button>
-                      <mat-icon [ngClass]="{'blink': element.vat_status[ind]?.escalated === '0'}" class="cursor-pointer"
+                      <mat-icon class="cursor-pointer" (click)="toggleClass(element.vat_status[ind], 'vat',element)" [class.blink]="element.vat_status[ind]?.escalated"
                         svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
                     </ng-container>
                   </ng-container>
@@ -251,8 +251,8 @@
                         (click)="ind < element.annual_accounts_status_1.length -1 ?getNextStatus('annual_accounts', ind,element.annual_accounts_status_1, element):$event.stopPropagation()">
                         {{ accItem.task }}
                       </button>
-                      <mat-icon [ngClass]="{'blink': element.annual_accounts_status_1[ind]?.escalated === '0'}"
-                        class="cursor-pointer" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                      <mat-icon  class="cursor-pointer" (click)="toggleClass(element.annual_accounts_status_1[ind], 'annual_accounts',element)" [class.blink]="element.annual_accounts_status_1[ind]?.escalated"
+                        svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
                     </ng-container>
                   </ng-container>
                 </div>
@@ -280,8 +280,8 @@
                         (click)="ind < element.annual_accounts_status_2.length -1 ?getNextStatus('accNew', ind,element.annual_accounts_status_2, element):$event.stopPropagation()">
                         {{ accItem.task }}
                       </button>
-                      <mat-icon [ngClass]="{'blink': element.annual_accounts_status_2[ind]?.escalated === '0'}"
-                        class="cursor-pointer" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                      <mat-icon  class="cursor-pointer" (click)="toggleClass(element.annual_accounts_status_2[ind], 'accNew',element)" [class.blink]="element.annual_accounts_status_2[ind]?.escalated"
+                        svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
                     </ng-container>
                   </ng-container>
                 </div>
@@ -377,10 +377,10 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"
               [ngClass]="{'bg-yellow-50': row?.client_status === '3'}"></tr>
           </table>
-          <p *ngIf="!clientResult.length && !isLoading" class="p-4 text-center font-semibold ">
+          <p *ngIf="!userTableList.length && !isLoading" class="p-4 text-center font-semibold ">
             Searched Result Not Found !!!
           </p>
-        </ng-container>
+        <!-- </ng-container> -->
       </div>
     </div>
     <div class="text-right mt-3.5">

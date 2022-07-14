@@ -32,8 +32,10 @@
                       (click)="ind < statusSaved.length -1 ?getNextStatus('self_assessment_status_1', ind, statusSaved, i):$event.stopPropagation()">
                       {{accItem.task}}
                     </button>
-                    <mat-icon [ngClass]="{'blink': accItem?.escalated === '0'}" class="cursor-pointer ml-2"
+                    <mat-icon class="cursor-pointer ml-2" (click)="toggleClass(statusSaved[ind],'self_assessment_status_1')" [class.blink]="accItem[ind]?.escalated"
                       svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                    <!-- <mat-icon [ngClass]="{'blink': accItem?.escalated === '0'}" class="cursor-pointer ml-2"
+                      svgIcon="heroicons_outline:exclamation-circle"></mat-icon> -->
                   </div>
                 </ng-conatiner>
               </ng-container>
@@ -51,8 +53,10 @@
                       (click)="ind < statusSaved.length -1 ?getNextStatus('self_assessment_status_1', ind, statusSaved, i):$event.stopPropagation()">
                       {{accItem.task}}
                     </button>
-                    <mat-icon [ngClass]="{'blink': accItem?.escalated === '0'}" class="cursor-pointer ml-2"
+                    <mat-icon class="cursor-pointer ml-2" (click)="toggleClass(statusSaved[ind],'self_assessment_status_1')" [class.blink]="accItem[ind]?.escalated"
                       svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                    <!-- <mat-icon [ngClass]="{'blink': accItem?.escalated === '0'}" class="cursor-pointer ml-2"
+                      svgIcon="heroicons_outline:exclamation-circle"></mat-icon> -->
                   </div>
                 </ng-conatiner>
               </ng-container>
@@ -80,8 +84,10 @@
                       (click)="ind < statusSaved.length -1 ?getNextStatus('self_assessment_status_2', ind, statusSaved, i):$event.stopPropagation()">
                       {{accItem.task}}
                     </button>
-                    <mat-icon [ngClass]="{'blink': accItem?.escalated === '0'}" class="cursor-pointer ml-2"
+                    <mat-icon (click)="toggleClass(statusSaved[ind],'self_assessment_status_2')" [class.blink]="accItem[ind]?.escalated" class="cursor-pointer ml-2"
                       svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                    <!-- <mat-icon [ngClass]="{'blink': accItem?.escalated === '0'}" class="cursor-pointer ml-2"
+                      svgIcon="heroicons_outline:exclamation-circle"></mat-icon> -->
                   </div>
                 </ng-conatiner>
               </ng-container>
@@ -99,8 +105,10 @@
                       (click)="ind < statusSaved.length -1 ?getNextStatus('self_assessment_status_2', ind, statusSaved, i):$event.stopPropagation()">
                       {{accItem.task}}
                     </button>
-                    <mat-icon [ngClass]="{'blink': accItem?.escalated === '0'}" class="cursor-pointer ml-2"
+                    <mat-icon class="cursor-pointer ml-2" (click)="toggleClass(statusSaved[ind],'self_assessment_status_2')" [class.blink]="accItem[ind]?.escalated"
                       svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                    <!-- <mat-icon [ngClass]="{'blink': accItem?.escalated === '0'}" class="cursor-pointer ml-2"
+                      svgIcon="heroicons_outline:exclamation-circle"></mat-icon> -->
                   </div>
                 </ng-conatiner>
               </ng-container>

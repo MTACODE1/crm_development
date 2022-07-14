@@ -145,4 +145,17 @@ export class AssessmentStatusComponent implements OnInit, OnDestroy {
     this.snackBar.openFromComponent(SuccessModalComponent, snackBarParams);
   }
 
+  public toggleClass(statusData, key): void {
+    const year = key === 'self_assessment_status_2'?this.today.year():this.today.year() -1;
+    const param = {
+      uid: this.data.data.id,
+      process: 'self_assessment',
+      month: 'Apr-' + year,
+      escalate: !statusData.escalated
+    }
+    this.userService.escalateStatusTask(param).pipe(takeUntil(this.destroyer$)).subscribe(_ => {
+      
+    });
+  }
+
 }
