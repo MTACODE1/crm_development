@@ -69,6 +69,7 @@ export class AssessmentStatusComponent implements OnInit, OnDestroy {
          this.data.data = response['rows'].find(item => item.id === this.data.data.id);
           this.loadOnboardingStatus();
           if(showSnackBar) this.triggerStatusSnackBar(item, key);
+          if(item.static_id === 5) this.dialogRef.close(true);
         });
       }
     });
