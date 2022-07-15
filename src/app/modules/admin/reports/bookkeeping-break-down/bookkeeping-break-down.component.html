@@ -1,0 +1,205 @@
+<div class="flex flex-col flex-auto min-w-0">
+  <div class="flex-auto p-6 sm:p-6">
+    <div class="sm:col-span-6 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden mb-3">
+      <div class="flex flex-col flex-auto overflow-auto table-container">
+        <app-vat-break-down></app-vat-break-down>
+      </div>
+    </div>
+    <div class="sm:col-span-6 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden mb-3">
+      <div class="flex flex-col flex-auto overflow-auto table-container">
+        <table class="min-w-240 overflow-y-visible bookkeeping-table" mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="accountant">
+            <th mat-header-cell *matHeaderCellDef> Accountant </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+
+          <ng-container matColumnDef="complete">
+            <th mat-header-cell *matHeaderCellDef class="package-col"> MR Complete </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+            <td mat-footer-cell *matFooterCellDef>5</td>
+          </ng-container>
+        
+          <ng-container matColumnDef="sentClient">
+            <th mat-header-cell *matHeaderCellDef class="book-col"> MR Sent to Client </th>
+            <td mat-cell *matCellDef="let element"> {{element.sent}} </td>
+            <td mat-footer-cell *matFooterCellDef>9</td>
+          </ng-container>
+        
+          <ng-container matColumnDef="review">
+            <th mat-header-cell *matHeaderCellDef class="book-col"> MR Reviewed by Accountant </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+            <td mat-footer-cell *matFooterCellDef>1</td>
+          </ng-container>
+        
+          <ng-container matColumnDef="createMr">
+            <th mat-header-cell *matHeaderCellDef class="book-col"> Bookkeeping and Create MR </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+            <td mat-footer-cell *matFooterCellDef>16</td>
+          </ng-container>
+        
+          <ng-container matColumnDef="querySent">
+            <th mat-header-cell *matHeaderCellDef class="vat-col"> Query Request sent to Client </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+            <td mat-footer-cell *matFooterCellDef>19</td>
+          </ng-container>
+        
+          <ng-container matColumnDef="queryRequest">
+            <th mat-header-cell *matHeaderCellDef class="vat-col"> Queries Requested </th>
+            <td mat-cell *matCellDef="let element"> {{element.req}} </td>
+            <td mat-footer-cell *matFooterCellDef>17</td>
+          </ng-container>
+        
+          <ng-container matColumnDef="wip">
+            <th mat-header-cell *matHeaderCellDef class="vat-col"> Bookkeeping WIP </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+            <td mat-footer-cell *matFooterCellDef>37</td>
+          </ng-container>
+        
+          <ng-container matColumnDef="informationsent">
+            <th mat-header-cell *matHeaderCellDef class="vat-col"> Information Request sent to Client </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+            <td mat-footer-cell *matFooterCellDef>57</td>
+          </ng-container>
+        
+          <ng-container matColumnDef="informationRequest">
+            <th mat-header-cell *matHeaderCellDef class="account-col"> Information Requested </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+            <td mat-footer-cell *matFooterCellDef>26</td>
+          </ng-container>
+        
+          <ng-container matColumnDef="start">
+            <th mat-header-cell *matHeaderCellDef class="account-col"> Bookkeeping Process Started </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+            <td mat-footer-cell *matFooterCellDef>51</td>
+          </ng-container>
+        
+          <ng-container matColumnDef="total">
+            <th mat-header-cell *matHeaderCellDef> Total </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+            <td mat-footer-cell *matFooterCellDef>238</td>
+          </ng-container>
+        
+          <ng-container matColumnDef="check">
+            <th mat-header-cell *matHeaderCellDef> Check </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+
+          <!-- footer -->
+          <ng-container matColumnDef="accountantf">
+            <td mat-footer-cell *matFooterCellDef> % Client at each status </td>
+          </ng-container>
+
+          <ng-container matColumnDef="completef">
+            <td mat-footer-cell *matFooterCellDef>2.1 %</td>
+          </ng-container>
+
+          <ng-container matColumnDef="sentClientf">
+            <td mat-footer-cell *matFooterCellDef>3.8%</td>
+          </ng-container>
+
+          <ng-container matColumnDef="reviewf">
+            <td mat-footer-cell *matFooterCellDef>0.4% </td>
+          </ng-container>
+
+          <ng-container matColumnDef="createMrf">
+            <td mat-footer-cell *matFooterCellDef>6.7%</td>
+          </ng-container>
+
+          <ng-container matColumnDef="querySentf">
+            <td mat-footer-cell *matFooterCellDef>8.0% </td>
+          </ng-container>
+
+          <ng-container matColumnDef="queryRequestf">
+            <td mat-footer-cell *matFooterCellDef> 7.1%</td>
+          </ng-container>
+
+          <ng-container matColumnDef="wipf">
+            <td mat-footer-cell *matFooterCellDef>15.5% </td>
+          </ng-container>
+
+          <ng-container matColumnDef="informationsentf">
+            <td mat-footer-cell *matFooterCellDef>23.9% </td>
+          </ng-container>
+
+          <ng-container matColumnDef="informationRequestf">
+            <td mat-footer-cell *matFooterCellDef> 10.9%</td>
+          </ng-container>
+
+          <ng-container matColumnDef="startf">
+            <td mat-footer-cell *matFooterCellDef> 21.4%</td>
+          </ng-container>
+
+          <!-- footer2 -->
+          <ng-container matColumnDef="title">
+            <td mat-footer-cell *matFooterCellDef>% Client at each stage </td>
+          </ng-container>
+          <ng-container matColumnDef="stage4">
+            <td mat-footer-cell *matFooterCellDef>2.1 % </td>
+          </ng-container>
+          <ng-container matColumnDef="stage3">
+            <td mat-footer-cell *matFooterCellDef> 10.9% </td>
+          </ng-container>
+          <ng-container matColumnDef="stage2">
+            <td mat-footer-cell *matFooterCellDef> 54.6% </td>
+          </ng-container>
+          <ng-container matColumnDef="stage1">
+            <td mat-footer-cell *matFooterCellDef> 32.4% </td>
+          </ng-container>
+          <ng-container matColumnDef="emptyFooter">
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+        
+
+          <ng-container matColumnDef="header-first-group">
+            <th mat-header-cell *matHeaderCellDef class="font-extrabold text-left border-r border-t"
+              [attr.colspan]="1">Bookkeeping</th>
+          </ng-container>
+
+          <ng-container matColumnDef="header-second-group">
+            <th mat-header-cell *matHeaderCellDef class="font-extrabold text-left border-r border-t"
+              [attr.colspan]="1">Stage 4</th>
+          </ng-container>
+
+          <ng-container matColumnDef="header-third-group">
+            <th mat-header-cell *matHeaderCellDef class="font-extrabold text-left border-r border-t"
+              [attr.colspan]="3">Stage 3</th>
+          </ng-container>
+
+          <ng-container matColumnDef="header-forth-group">
+            <th mat-header-cell *matHeaderCellDef class="font-extrabold text-left border-r border-t"
+              [attr.colspan]="4">Stage 2</th>
+          </ng-container>
+
+          <ng-container matColumnDef="header-fifth-group">
+            <th mat-header-cell *matHeaderCellDef class="font-extrabold text-left border-r border-t"
+              [attr.colspan]="2">Stage 1</th>
+          </ng-container>
+
+          <ng-container matColumnDef="header-six-group">
+            <th mat-header-cell *matHeaderCellDef class="font-extrabold text-left border-r border-t"
+              [attr.colspan]="2"> </th>
+          </ng-container>
+
+
+          <tr mat-header-row *matHeaderRowDef="['header-first-group', 'header-second-group','header-third-group',
+          'header-forth-group','header-fifth-group', 'header-six-group']"></tr>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr mat-footer-row *matFooterRowDef="displayedColumns" class="footer-row"></tr>
+          <tr mat-footer-row *matFooterRowDef="displayedFooter"></tr>
+          <tr mat-footer-row *matFooterRowDef="displayedFooter2"></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="sm:col-span-6 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden mb-3">
+      <div class="flex flex-col flex-auto overflow-auto table-container">
+        <app-individual></app-individual>
+      </div>
+    </div>
+    
+  </div>
+</div>

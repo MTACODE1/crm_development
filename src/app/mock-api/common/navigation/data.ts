@@ -22,7 +22,27 @@ export const defaultNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:check-circle',
         link : '/tasks'
-    }
+    },
+    {
+      id      : 'report',
+      title   : 'Reports',
+      type    : 'collapsable',
+      icon    : 'heroicons_outline:document-report',
+      children: [
+          {
+              id   : 'report.book',
+              title: 'Bookkeeping Breakdown',
+              type : 'basic',
+              link : '/reports/bookkeeping'
+          },
+          // {
+          //     id   : 'report.vat',
+          //     title: 'VAT Breakdown',
+          //     type : 'basic',
+          //     link : '/reports/vat'
+          // }
+      ]
+  },
 ];
 export const compactNavigation: FuseNavigationItem[] = [
     {
@@ -30,7 +50,7 @@ export const compactNavigation: FuseNavigationItem[] = [
         title: 'Example',
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
-        link : '/health'
+        link : '/dashboard'
     }
 ];
 export const futuristicNavigation: FuseNavigationItem[] = [
@@ -39,7 +59,7 @@ export const futuristicNavigation: FuseNavigationItem[] = [
         title: 'Example',
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
-        link : '/health'
+        link : '/dashboard'
     }
 ];
 export const horizontalNavigation: FuseNavigationItem[] = [
@@ -48,6 +68,6 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         title: 'Example',
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
-        link : '/health'
+        link : '/dashboard'
     }
 ];
