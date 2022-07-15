@@ -52,13 +52,13 @@ export class UserService {
   getColumns() {
     return ['companyName', 'logo', 'accountant', 'companyType', 'onboarding', 'saledate', 'package', 'quarters', 'frequency', 'bookkeeper', 'completionweek',
       'bookKeepingStatus', 'vatRegistered', 'vatQuarter', 'vatscheme', 'vatStatus', 'eoy', 'oneoff', 'endDate', 'duedate',
-      'accountsStatus1', 'accountsStatus2', 'number', 'self1', 'self2'];
+      'accountsStatus1', 'accountsStatus2', 'number', 'self1', 'self2', 'statementDate', 'dueBy', 'confirmationStatus'];
   }
 
   updateTaskStatus(taskParam) {
     return this._httpClient.post(`${environment.baseUrl}/process_status`, taskParam)
   }
-  
+
   escalateStatusTask(data) {
     return this._httpClient.post(`${environment.baseUrl}/escalate_status`, data)
   }
