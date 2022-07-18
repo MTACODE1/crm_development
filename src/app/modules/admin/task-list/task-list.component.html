@@ -5,7 +5,10 @@
       <mat-select [formControl]="username" class="text-lg text-gray-500" placeholder="Select Client"
         disableOptionCentering (selectionChange)="onClientChange($event)">
         <mat-option *ngFor="let item of users" [value]="item.id">
-          {{item?.name}} {{item?.surname}}
+          <ng-container *ngIf="item?.first_name; else nousername">
+            {{item?.first_name}} {{item?.last_name}}
+          </ng-container>
+          <ng-template #nousername> {{item?.username}} </ng-template>
         </mat-option>
       </mat-select>
     </mat-form-field>

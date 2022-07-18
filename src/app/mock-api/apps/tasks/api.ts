@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import { TaskListItems } from './data';
+import { SalesflowUser, TaskListItems } from './data';
 
 @Injectable({
   providedIn: 'root'
@@ -17,5 +17,9 @@ export class TasksMockApi {
 
   updateTaskStatus(taskParam) {
     return this.api.post<TaskListItems>(`${environment.baseUrl}/task_status`, taskParam);
+  }
+
+  userList(user) {
+    return this.api.post<SalesflowUser[]>(`${environment.baseUrl}/users-list`, user);
   }
 }

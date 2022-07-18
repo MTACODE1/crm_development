@@ -9,6 +9,14 @@ export interface TaskListItems {
   task_id?: string;
 }
 
+export interface SalesflowUser {
+  email: string;
+  first_name: string;
+  id: string;
+  last_name: string;
+  username: string;
+}
+
 export enum statusDataType {
   SETUP = 'setup',
   BOOK = 'book_keeping',

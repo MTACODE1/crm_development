@@ -2,10 +2,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { UserService } from 'app/core/user/user.service';
-import { TableModel } from 'app/core/user/user.types';
 import { TasksMockApi } from 'app/mock-api/apps/tasks/api';
-import { statusDataType, TaskListItems } from 'app/mock-api/apps/tasks/data';
+import { SalesflowUser, statusDataType, TaskListItems } from 'app/mock-api/apps/tasks/data';
 import * as moment from "moment";
 import { Subject, takeUntil } from 'rxjs';
 
@@ -26,8 +24,8 @@ import { Subject, takeUntil } from 'rxjs';
 
 export class TaskListComponent implements OnInit, OnDestroy {
   username = new FormControl();
-  public users = [];
-  selectedClient: TableModel;
+  public users: SalesflowUser[] = [];
+  selectedClient: SalesflowUser;
   public taskListArr: TaskListItems[] = [
     {
       color: 'gray',
@@ -58,8 +56,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
 
   private readonly destroyer$: Subject<void> = new Subject();
 
-  constructor(private _fuseConfirmationService: FuseConfirmationService, private taskService: TasksMockApi,
-    private userService: UserService) { }
+  constructor(private _fuseConfirmationService: FuseConfirmationService, private taskService: TasksMockApi) { }
 
   ngOnInit() {
     this.getTaskList({});
@@ -98,8 +95,8 @@ export class TaskListComponent implements OnInit, OnDestroy {
   }
 
   private getUserList(): void {
-    this.userService.getUserTable({ client_status: 1 }).pipe(takeUntil(this.destroyer$)).subscribe(response => {
-      this.users = response['rows'];
+    this.taskService.userList({}).pipe(takeUntil(this.destroyer$)).subscribe(response => {
+      this.users = response;
       this.selectedClient = this.users.find(item => item.id === this.username.value);
     });
   }
