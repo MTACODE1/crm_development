@@ -35,12 +35,12 @@ export const defaultNavigation: FuseNavigationItem[] = [
               type : 'basic',
               link : '/reports/bookkeeping'
           },
-          // {
-          //     id   : 'report.vat',
-          //     title: 'VAT Breakdown',
-          //     type : 'basic',
-          //     link : '/reports/vat'
-          // }
+          {
+              id   : 'report.task',
+              title: 'Task Completion Log',
+              type : 'basic',
+              link : '/reports/completed-task'
+          }
       ]
   },
 ];

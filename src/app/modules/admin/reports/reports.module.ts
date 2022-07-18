@@ -6,10 +6,11 @@ import { CommonModule } from '@angular/common';
 import { ReportsRoutingModule } from './reports-routing.module';
 import { VatBreakDownComponent } from './vat-break-down/vat-break-down.component';
 import { IndividualComponent } from './individual/individual.component';
+import { CompletedTaskComponent } from './completed-task/completed-task.component';
 
 
 @NgModule({
-  declarations: [BookkeepingBreakDownComponent, VatBreakDownComponent, IndividualComponent],
+  declarations: [BookkeepingBreakDownComponent, VatBreakDownComponent, IndividualComponent, CompletedTaskComponent],
   imports: [
     CommonModule,
     MatTableModule,

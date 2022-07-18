@@ -1,7 +1,7 @@
-import { VatBreakDownComponent } from './vat-break-down/vat-break-down.component';
-import { BookkeepingBreakDownComponent } from './bookkeeping-break-down/bookkeeping-break-down.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { BookkeepingBreakDownComponent } from './bookkeeping-break-down/bookkeeping-break-down.component';
+import { CompletedTaskComponent } from './completed-task/completed-task.component';
 
 const routes: Routes = [
   {
@@ -17,8 +17,8 @@ const routes: Routes = [
         component: BookkeepingBreakDownComponent
       },
       {
-        path: 'vat',
-        component: VatBreakDownComponent
+        path: 'completed-task',
+        component: CompletedTaskComponent
       },
     
     ]

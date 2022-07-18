@@ -51,6 +51,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   }
 
   private getTableDetails(additionalParams): void {
+    console.log(this.date.value.subtract(1, 'months'))
     const params = {
       month: this.date.value.format('MMM-yy'),
       limit: this.paginationConfig.limit,

@@ -1,0 +1,42 @@
+<div class="flex flex-col flex-auto min-w-0">
+  <div class="flex-auto p-6 sm:p-6">
+    <div class="sm:col-span-6 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden mb-3">
+      <div class="flex flex-col flex-auto overflow-auto table-container">
+        <table class="min-w-240 overflow-y-visible w-full individual-table" mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="username">
+            <th mat-header-cell *matHeaderCellDef> USer Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="company">
+            <th mat-header-cell *matHeaderCellDef class="package-col"> Company </th>
+            <td mat-cell *matCellDef="let element"> {{element.company}}</td>
+          </ng-container>
+        
+          <ng-container matColumnDef="taskType">
+            <th mat-header-cell *matHeaderCellDef class="book-col"> Task Type </th>
+            <td mat-cell *matCellDef="let element"> {{element.type}}</td>
+          </ng-container>
+        
+          <ng-container matColumnDef="task">
+            <th mat-header-cell *matHeaderCellDef class="vat-col"> Task </th>
+            <td mat-cell *matCellDef="let element"> {{element.task}}</td>
+          </ng-container>
+        
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef class="account-col"> Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.date}}</td>
+          </ng-container>
+        
+          <ng-container matColumnDef="time">
+            <th mat-header-cell *matHeaderCellDef > Time</th>
+            <td mat-cell *matCellDef="let element"> {{element.time}}</td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
