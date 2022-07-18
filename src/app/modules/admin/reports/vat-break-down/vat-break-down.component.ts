@@ -5,14 +5,14 @@ export interface PeriodicElement {
   id: number;
   weight: number;
   sent: number;
-  req: string;
+  req: number;
 }
 const ELEMENT_DATA: PeriodicElement[] = [
-  {id: 1, name: 'Rayan', weight: 0, sent: 0 ,req: 'H'},
-  {id: 2, name: 'David', weight: 1, sent: 4 , req: 'He'},
-  {id: 3, name: 'Tariq', weight: 3, sent: 5 , req: 'Li'},
-  {id: 4, name: 'Rizwan', weight: 2, sent: 0 , req: 'Be'},
-  {id: 5, name: 'Shital', weight: 0, sent: 0 , req: 'B'},
+  {id: 1, name: 'Rayan', weight: 0, sent: 0 ,req: 2},
+  {id: 2, name: 'David', weight: 1, sent: 4 , req: 14.1},
+  {id: 3, name: 'Tariq', weight: 3, sent: 5 , req: 3},
+  {id: 4, name: 'Rizwan', weight: 2, sent: 0 , req: 0},
+  {id: 5, name: 'Shital', weight: 0, sent: 6 , req: 0},
 ];
 
 @Component({
@@ -23,9 +23,14 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class VatBreakDownComponent implements OnInit {
   displayedColumns: string[] = ['accountant','filed', 'sentClient', 'review', 'sentAccountant', 'book',  'total'];
   dataSource = ELEMENT_DATA;
+  players = ELEMENT_DATA.slice();
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  public calculateTotal(type) {
+    return this.players.reduce((accum, curr) => accum + curr.weight, 0);
   }
 
 }
