@@ -18,31 +18,12 @@
   }
 
   table {
-    .mat-header-cell {
-      font-size: 14px;
-      padding: 0 8px 0;
-      &.info-col {
-        background: $gray100;
-      }
-      &.package-col {
-        background: #01950114;
-      }
-      &.book-col {
-        background: $yellow200;
-      }
-      &.vat-col {
-        background: $orange100;
-      }
-      &.account-col {
-        background: #ff4aa412;
-      }
-    }
     .mat-cell{
       font-size: 13px;
       padding: 8px;
     }
     .mat-header-cell, .mat-cell, .mat-footer-cell {
-      text-align: center;
+      text-align: center !important;
       min-width: 140px;
       &:first-child {
         min-width: 180px;

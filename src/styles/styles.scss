@@ -21,6 +21,32 @@ body {
   }
 }
 
+table {
+  .mat-header-cell {
+    font-size: 14px;
+    padding: 0 8px 0 !important;
+    
+    &.info-col {
+      background: $gray100;
+    }
+    &.package-col {
+      background: #01950114;
+    }
+    &.book-col {
+      background: $yellow200;
+    }
+    &.vat-col {
+      background: $orange100;
+    }
+    &.account-col {
+      background: #ff4aa412;
+    }
+    &.assessment-col {
+      background: $green100;
+    }
+  }
+}
+
 .form-switch {
   display: inline-block;
   cursor: pointer;
