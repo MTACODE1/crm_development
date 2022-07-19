@@ -124,7 +124,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
         alert(result['err_msg']);
       } else {
         this.getTableDetails({});
-        if (showSnackBar) this.triggerStatusSnackBar(item, key, element);
+        if (showSnackBar) this.triggerStatusSnackBar(item, key);
       }
     });
   }
@@ -187,12 +187,12 @@ export class ExampleComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe();
   }
 
-  private triggerStatusSnackBar(data, plan, element): void {
+  private triggerStatusSnackBar(data, plan): void {
     const snackBarParams: MatSnackBarConfig = {
       horizontalPosition: 'right',
       verticalPosition: 'bottom',
       panelClass: plan == 'bookkeeping' ? 'book-snack-bar' : plan == 'vat' ? 'vat-snack-bar' : plan == 'annual_accounts' || plan == 'accNew' ? 'acc-snack-bar' : 'default-snack-bar',
-      data: { item: data, plan: plan, username: element.name + element.surname }
+      data: { item: data, plan: plan }
     };
     this.snackBar.openFromComponent(SuccessModalComponent, snackBarParams);
   }

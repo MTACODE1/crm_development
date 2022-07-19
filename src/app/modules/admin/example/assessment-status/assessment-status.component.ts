@@ -140,7 +140,7 @@ export class AssessmentStatusComponent implements OnInit, OnDestroy {
       horizontalPosition: 'right',
       verticalPosition: 'bottom',
       panelClass:'self-snack-bar',
-      data: { item: data, plan: plan, username:this.data.data.name + this.data.data.surname }
+      data: { item: data, plan: plan }
     };
     this.snackBar.openFromComponent(SuccessModalComponent, snackBarParams);
   }
