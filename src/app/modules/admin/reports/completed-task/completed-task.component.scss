@@ -1,0 +1,16 @@
+@import "src/styles/variables";
+
+.mat-row {
+  &.bookkeeping-row {
+    background: $yellow200;
+  }
+  &.vat-row {
+    background: $orange100;
+  }
+  &.account-row {
+    background: #ff4aa412;
+  }
+  &.assessment-row {
+    background: $green100;
+  }
+}

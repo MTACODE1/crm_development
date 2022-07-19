@@ -1,6 +1,41 @@
 <div class="flex flex-col flex-auto min-w-0">
   <div class="flex-auto p-6 sm:p-6">
     <div class="sm:col-span-6 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden mb-3">
+      <div class="text-lg font-medium tracking-tight leading-6 truncate mb-2">
+        <div class="flex items-center justify-between flex-wrap pb-2">
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon svgIcon="heroicons_outline:filter"></mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+              <span class="w-3 h-3 mr-2 rounded-full bg-amber-200"></span>
+              <span>Bookkeeping Staus</span>
+            </button>
+            <button mat-menu-item>
+              <span class="w-3 h-3 mr-2 rounded-full bg-orange-300"></span>
+              <span>VAT Staus</span>
+            </button>
+            <button mat-menu-item>
+              <span class="w-3 h-3 mr-2 rounded-full bg-pink-300"></span>
+              <span>Account Status</span>
+            </button>
+            <button mat-menu-item>
+              <span class="w-3 h-3 mr-2 rounded-full bg-lime-300"></span>
+              <span>Self Assessment Status</span>
+            </button>
+          </mat-menu>
+          <mat-form-field appearance="none" id="status" class="w-36">
+            <mat-select  class="text-lg text-gray-500" placeholder="Select User" disableOptionCentering>
+              <mat-option *ngFor="let item of users" [value]="item.id">
+                <ng-container *ngIf="item?.first_name; else nousername">
+                  {{item?.first_name}} {{item?.last_name}}
+                </ng-container>
+                <ng-template #nousername> {{item?.username}} </ng-template>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
       <div class="flex flex-col flex-auto overflow-auto table-container">
         <table class="min-w-240 overflow-y-visible w-full individual-table" mat-table [dataSource]="dataSource">
           <ng-container matColumnDef="username">
@@ -9,34 +44,38 @@
           </ng-container>
         
           <ng-container matColumnDef="company">
-            <th mat-header-cell *matHeaderCellDef class="package-col"> Company </th>
+            <th mat-header-cell *matHeaderCellDef> Company </th>
             <td mat-cell *matCellDef="let element"> {{element.company}}</td>
           </ng-container>
         
           <ng-container matColumnDef="taskType">
-            <th mat-header-cell *matHeaderCellDef class="book-col"> Task Type </th>
+            <th mat-header-cell *matHeaderCellDef> Task Type </th>
             <td mat-cell *matCellDef="let element"> {{element.type}}</td>
           </ng-container>
         
           <ng-container matColumnDef="task">
-            <th mat-header-cell *matHeaderCellDef class="vat-col"> Task </th>
+            <th mat-header-cell *matHeaderCellDef> Task </th>
             <td mat-cell *matCellDef="let element"> {{element.task}}</td>
           </ng-container>
         
           <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef class="account-col"> Date </th>
+            <th mat-header-cell *matHeaderCellDef> Date </th>
             <td mat-cell *matCellDef="let element"> {{element.date}}</td>
           </ng-container>
         
           <ng-container matColumnDef="time">
             <th mat-header-cell *matHeaderCellDef > Time</th>
-            <td mat-cell *matCellDef="let element"> {{element.time}}</td>
+            <td mat-cell *matCellDef="let element"> {{element.time}} AM</td>
           </ng-container>
         
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="{{row.type}}-row"></tr>
         </table>
       </div>
+    </div>
+    <div class="text-right mt-3.5">
+      <app-paginator [pageSizes]="[10, 20, 30]" [count]="10" [perPage]="10">
+      </app-paginator>
     </div>
   </div>
 </div>
