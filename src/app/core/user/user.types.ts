@@ -44,4 +44,5 @@ export enum statusType {
   accNew = '2022 Accounts Status',
   self_assessment_status_1 = 'Self Assessment Status 1',
   self_assessment_status_2 = 'Self Assessment Status 2',
+  conf_stmt = 'Confirmation Statement Status',
 }

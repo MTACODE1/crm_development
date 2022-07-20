@@ -10,6 +10,9 @@
   .mat-snack-bar-container {
     padding: 10px;
     border-radius: 8px;
+    &.default-snack-bar {
+      background: #adaaaa !important;
+    }
     &.book-snack-bar {
       background: $yellow600 !important;
     }

@@ -47,6 +47,9 @@
   font-size: 12px;
   font-weight: normal;
   box-shadow: none !important;
+  &.confirmation-button {
+    width: 240px;
+  }
   &.complete {
     background-color: $green300 !important;
   }

@@ -342,7 +342,29 @@
 
             <ng-container matColumnDef="confirmationStatus">
               <th mat-header-cell *matHeaderCellDef class="info-col">{{date.value.format('YYYY')}} Confirmation Statement Status</th>
-              <td mat-cell *matCellDef="let element"> - </td>
+              <td mat-cell *matCellDef="let element">
+                <mat-icon *ngIf="!element.conf_stmt_saved" class="cursor-pointer"
+                  (click)="startUpdates('start','conf_stmt', element)" svgIcon="heroicons_outline:plus-sm">
+                </mat-icon>
+                <div *ngIf="element.conf_stmt_saved" class="flex items-center">
+                  <ng-container *ngFor="let confirmationItem of element.conf_stmt_status; let ind = index">
+                    <ng-container *ngIf="confirmationItem.static_id == element.conf_stmt_saved">
+                      <button mat-icon-button>
+                        <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left"
+                          (click)="ind > 0?openConfirmationDialog('conf_stmt', ind,element.conf_stmt_status, element):startUpdates('end','conf_stmt', element)">
+                        </mat-icon>
+                      </button>
+                      <button mat-raised-button class="confirmation-button"
+                        [ngClass]="{'start': confirmationItem.static_id == 1, 'complete':confirmationItem.static_id == 2 }"
+                        (click)="ind < element.conf_stmt_status.length -1 ?getNextStatus('conf_stmt', ind,element.conf_stmt_status, element):$event.stopPropagation()">
+                        {{ confirmationItem.task }}
+                      </button>
+                      <mat-icon class="cursor-pointer" (click)="toggleClass(element.conf_stmt_status[ind], 'conf_stmt',element)" [class.blink]="element.conf_stmt_status[ind]?.escalated"
+                        svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+                    </ng-container>
+                  </ng-container>
+                </div>
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="header-first-group">
