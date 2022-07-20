@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
@@ -18,6 +18,7 @@ import { OnbordingFormComponent } from './onbording-form/onbording-form.componen
   selector: 'example',
   templateUrl: './example.component.html',
   styleUrls: ['./example.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class ExampleComponent implements OnInit, OnDestroy {
@@ -37,7 +38,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   private readonly destroyer$: Subject<void> = new Subject();
 
   constructor(private userService: UserService, private _fuseConfirmationService: FuseConfirmationService,
-    public readonly dialog: MatDialog, private readonly snackBar: MatSnackBar) { }
+    public readonly dialog: MatDialog, private readonly snackBar: MatSnackBar, private readonly cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.displayedColumns = this.userService.getColumns();
@@ -64,6 +65,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
     this.userService.getUserTable(params).pipe(takeUntil(this.destroyer$)).subscribe(res => {
       this.userTableList = res['rows'].slice();
       this.paginationConfig.total = res['total_count'];
+      this.cd.detectChanges();
     });
   }
 
