@@ -97,6 +97,9 @@ export class TaskListComponent implements OnInit, OnDestroy {
   private getUserList(): void {
     this.taskService.userList({}).pipe(takeUntil(this.destroyer$)).subscribe(response => {
       this.users = response;
+      const loginUser = JSON.parse(localStorage.getItem('loginUser'));
+      const setUser = this.users.find(item => item.id === loginUser.user_id);
+      this.username.setValue(setUser.id);
       this.selectedClient = this.users.find(item => item.id === this.username.value);
     });
   }
