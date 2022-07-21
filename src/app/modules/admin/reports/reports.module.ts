@@ -8,10 +8,11 @@ import { CompletedTaskComponent } from './completed-task/completed-task.componen
 import { ReportsRoutingModule } from './reports-routing.module';
 import { VatBreakDownComponent } from './bookkeeping-break-down/vat-break-down/vat-break-down.component';
 import { IndividualComponent } from './bookkeeping-break-down/individual/individual.component';
+import { AccountantClientComponent } from './accountant-client/accountant-client.component';
 
 
 @NgModule({
-  declarations: [BookkeepingBreakDownComponent, VatBreakDownComponent, IndividualComponent, CompletedTaskComponent],
+  declarations: [BookkeepingBreakDownComponent, VatBreakDownComponent, IndividualComponent, CompletedTaskComponent, AccountantClientComponent],
   imports: [
     SharedModule,
     MatTableModule,

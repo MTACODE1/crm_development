@@ -1,4 +1,3 @@
-/* tslint:disable:max-line-length */
 import { FuseNavigationItem } from '@fuse/components/navigation';
 
 export const defaultNavigation: FuseNavigationItem[] = [
@@ -40,6 +39,12 @@ export const defaultNavigation: FuseNavigationItem[] = [
               title: 'Task Completion Log',
               type : 'basic',
               link : '/reports/completed-task'
+          },
+          {
+              id   : 'report.accountant',
+              title: 'Accountant Log',
+              type : 'basic',
+              link : '/reports/accountant'
           }
       ]
   },
