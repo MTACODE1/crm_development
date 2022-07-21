@@ -131,7 +131,7 @@
 
 
             <ng-container matColumnDef="bookKeepingStatus">
-              <th mat-header-cell *matHeaderCellDef class="book-col" mat-sort-header>{{date.value.format('MMM')}}
+              <th mat-header-cell *matHeaderCellDef class="book-col" mat-sort-header>{{lastMonth?lastMonth.format('MMM'):''}}
                 Bookkeeping Status</th>
               <td mat-cell *matCellDef="let element" class="text-center">
                 <mat-icon *ngIf="!element.bookkeeping_status_saved" class="cursor-pointer"
@@ -178,7 +178,7 @@
             </ng-container>
 
             <ng-container matColumnDef="vatStatus">
-              <th mat-header-cell *matHeaderCellDef class="vat-col" mat-sort-header>{{date.value.format('MMM')}} VAT
+              <th mat-header-cell *matHeaderCellDef class="vat-col" mat-sort-header>{{lastMonth?lastMonth.format('MMM'):''}} VAT
                 Status</th>
               <td mat-cell *matCellDef="let element" class="text-center">
                 <mat-icon *ngIf="!element.vat_status_saved" class="cursor-pointer"

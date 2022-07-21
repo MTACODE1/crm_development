@@ -29,7 +29,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   today = moment(new Date());
   searchTerm: string;
   date = new FormControl(moment());
-
+ lastMonth: any;
   public paginationConfig = {
     limit: 10,
     offset: 0,
@@ -65,6 +65,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
     this.userService.getUserTable(params).pipe(takeUntil(this.destroyer$)).subscribe(res => {
       this.userTableList = res['rows'].slice();
       this.paginationConfig.total = res['total_count'];
+      this.lastMonth = moment(this.date.value).subtract(1, 'month');
       this.cd.detectChanges();
     });
   }
