@@ -11,7 +11,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {id: 1, name: 'Rayan', weight: 0, sent: 0 ,req: 10},
   {id: 2, name: 'David', weight: 1, sent: 4 , req: 30},
   {id: 3, name: 'Tariq', weight: 3, sent: 5 , req: 0},
-  {id: 4, name: 'Rizwan', weight: 2, sent: 0 , req: 67},
+  {id: 4, name: 'Ram', weight: 2, sent: 0 , req: 67},
   {id: 5, name: 'Shital', weight: 0, sent: 0 , req: 4},
 ];
 
@@ -29,7 +29,18 @@ export class BookkeepingBreakDownComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-   
+
+  }
+
+  public calculateTotal(type) {
+    if(type === 'weight') {
+      return this.dataSource.reduce((accum, curr) => accum + curr.weight, 0);
+    } else if(type === 'sent') {
+      return this.dataSource.reduce((accum, curr) => accum + curr.sent, 0);
+    } else {
+      return this.dataSource.reduce((accum, curr) => accum + curr.req, 0);
+    }
+    
   }
 
 }

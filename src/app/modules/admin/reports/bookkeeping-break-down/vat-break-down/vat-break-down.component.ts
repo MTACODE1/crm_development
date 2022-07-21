@@ -39,4 +39,24 @@ export class VatBreakDownComponent implements OnInit {
     }
     
   }
+
+
+  calculation() {
+    const data =  this.dataSource.map(item => ({
+      weight: item.weight,
+      sent: item.sent,
+      req: item.req
+    }))
+    return VatBreakDownComponent.sum(data[0]);
+  }
+ 
+   private static sum( obj ) {
+     var sum = 0;
+     for( var el in obj ) {
+       if( obj.hasOwnProperty(el)) {
+         sum += parseFloat( obj[el] );
+       }
+     }
+     return sum;
+   }
 }

@@ -2,7 +2,7 @@
   <div class="flex flex-col px-6 pt-6">
     <label for="status" class="text-xl">Select User</label>
     <mat-form-field appearance="none" id="status" class="w-36">
-      <mat-select [formControl]="username" class="text-lg text-gray-500" placeholder="Select Client"
+      <mat-select [formControl]="username" class="text-lg text-gray-500" placeholder="Select User"
         disableOptionCentering (selectionChange)="onClientChange($event)">
         <mat-option *ngFor="let item of users" [value]="item.id">
           <ng-container *ngIf="item?.first_name; else nousername">
