@@ -50,7 +50,7 @@ export class UserService {
   }
 
   getColumns() {
-    return ['companyName', 'logo', 'accountant', 'companyType', 'onboarding', 'saledate', 'package', 'quarters', 'frequency', 'bookkeeper', 'completionweek',
+    return ['companyName', 'logo', 'accountant', 'companyType', 'onboarding', 'saledate', 'package', 'quarters', 'frequency', 'bookkeeper',
       'bookKeepingStatus', 'vatRegistered', 'vatQuarter', 'vatscheme', 'vatStatus', 'eoy', 'oneoff', 'endDate', 'duedate',
       'accountsStatus1', 'accountsStatus2', 'number', 'self1', 'self2', 'statementDate', 'dueBy', 'confirmationStatus'];
   }

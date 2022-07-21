@@ -125,14 +125,10 @@
             </ng-container>
 
             <ng-container matColumnDef="bookkeeper">
-              <th mat-header-cell *matHeaderCellDef class="book-col">Management Account</th>
+              <th mat-header-cell *matHeaderCellDef class="book-col">Management Accountant</th>
               <td mat-cell *matCellDef="let element"> {{element.management_accountant}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="completionweek">
-              <th mat-header-cell *matHeaderCellDef class="book-col">Target Completion Week</th>
-              <td mat-cell *matCellDef="let element"> {{element.completionweek}} </td>
-            </ng-container>
 
             <ng-container matColumnDef="bookKeepingStatus">
               <th mat-header-cell *matHeaderCellDef class="book-col" mat-sort-header>{{date.value.format('MMM')}}
