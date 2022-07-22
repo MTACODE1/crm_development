@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { UserService } from 'app/core/user/user.service';
+import { TasksMockApi } from 'app/mock-api/apps/tasks/api';
 import { OnboardingItems } from './onborading-item';
 
 export interface DialogData {
@@ -18,7 +18,7 @@ export class OnbordingFormComponent implements OnInit {
   taskList: OnboardingItems[] = [];
   
 
-  constructor(@Inject(MAT_DIALOG_DATA) public readonly data: DialogData, private userService: UserService,
+  constructor(@Inject(MAT_DIALOG_DATA) public readonly data: DialogData, private taskService: TasksMockApi,
     public readonly dialogRef: MatDialogRef<OnbordingFormComponent>, private _fuseConfirmationService: FuseConfirmationService) { }
 
   ngOnInit(): void {
@@ -42,7 +42,7 @@ export class OnbordingFormComponent implements OnInit {
   }
 
   private updateOnBordings(task) {
-    this.userService.updateTaskStatus(task).subscribe(result => {
+    this.taskService.updateTaskStatus(task).subscribe(result => {
       if (result['err_msg']) {
         alert(result['err_msg']);
       }
@@ -67,6 +67,7 @@ export class OnbordingFormComponent implements OnInit {
           t_status: status?1:0
         }
         this.updateOnBordings(task);
+        status?item.t_status = '1': item.t_status = '0';
       }
     });
   }
