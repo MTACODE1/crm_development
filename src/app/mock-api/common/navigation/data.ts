@@ -42,7 +42,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
           },
           {
               id   : 'report.accountant',
-              title: 'Accountant Log',
+              title: 'Number of Clients per Accountant',
               type : 'basic',
               link : '/reports/accountant'
           }
