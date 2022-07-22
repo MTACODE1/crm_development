@@ -1,7 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { OnboardingItems, ONBOARDING_FORM_ITEMS } from './onborading-item';
+import { UserService } from 'app/core/user/user.service';
+import { OnboardingItems } from './onborading-item';
+
+export interface DialogData {
+  typeForm: string;
+  stausList: OnboardingItems[];
+}
 
 @Component({
   selector: 'app-onbording-form',
@@ -9,50 +15,58 @@ import { OnboardingItems, ONBOARDING_FORM_ITEMS } from './onborading-item';
   styleUrls: ['./onbording-form.component.scss']
 })
 export class OnbordingFormComponent implements OnInit {
+  taskList: OnboardingItems[] = [];
+  
 
-  task: OnboardingItems[] = [];
-
-  constructor(@Inject(MAT_DIALOG_DATA) public readonly data: any, 
-    public readonly dialogRef: MatDialogRef<OnbordingFormComponent>, private _fuseConfirmationService: FuseConfirmationService) 
-    { }
+  constructor(@Inject(MAT_DIALOG_DATA) public readonly data: DialogData, private userService: UserService,
+    public readonly dialogRef: MatDialogRef<OnbordingFormComponent>, private _fuseConfirmationService: FuseConfirmationService) { }
 
   ngOnInit(): void {
     this.loadDataStatus();
   }
 
   private loadDataStatus(): void {
-    this.task = ONBOARDING_FORM_ITEMS.map(item => {
-      return item;
+    this.taskList = this.data.stausList.map(data => ({
+      ...data,
+      type: data.static_id <= 8 ? 'profession' : data.static_id >= 9 && data.static_id <= 11 ? 'vat' : 'software',
+      selected:data.t_status === '2'? true: false
+    }));
+  }
+
+  public statusChanged(event, item): void {
+    const task = {
+      id: item.task_id,
+      t_status: event?2:1
+    }
+   this.updateOnBordings(task);
+  }
+
+  private updateOnBordings(task) {
+    this.userService.updateTaskStatus(task).subscribe(result => {
+      if (result['err_msg']) {
+        alert(result['err_msg']);
+      }
     });
   }
 
-  public statusChanged(event): void {
-    console.log(event)
-  }
-
-  private toggleClass(item: OnboardingItems): void {
-    item.active = !item.active;
-  }
-
-  toggleData(item:OnboardingItems, status:boolean) {
-    const message = status?`Add <b>${item.text}</b> to onboarding for client name`:`Remove <b>${item.text}</b> from onboarding for client name?`
+  public toggleData(item: OnboardingItems, status: boolean): void {
+    const message = status ? `Add <b>${item.task}</b> to onboarding for client name` : `Remove <b>${item.task}</b> from onboarding for client name?`
     const dialogRef = this._fuseConfirmationService.open({
-      title : 'Are you sure?',
-      message : message,
+      title: 'Are you sure?',
+      message: message,
       dismissible: true,
-      actions:{
-        cancel:{
-          label:'No'
-        },
-        confirm :{
-          label: 'Yes',
-          color: 'warn'
-        }
+      actions: {
+        cancel: { label: 'No' },
+        confirm: { label: 'Yes', color: 'warn' }
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(result === 'confirmed') {
-        this.toggleClass(item);
+      if (result === 'confirmed') {
+        const task = {
+          id: item.task_id,
+          t_status: status?1:0
+        }
+        this.updateOnBordings(task);
       }
     });
   }
