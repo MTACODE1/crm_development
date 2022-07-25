@@ -181,16 +181,20 @@ export class ExampleComponent implements OnInit, OnDestroy {
     }
   }
 
-  public openOnboarding(status): void {
+  public openOnboarding(data): void {
+    const params = {
+      month: this.date.value.format('MMM-yy'),
+      limit: this.paginationConfig.limit,
+      offset: this.paginationConfig.offset,
+      id:data.id
+    }
     const dialogRef = this.dialog.open(OnbordingFormComponent, {
       width: '60vw',
       disableClose: true,
-      data: { typeForm: 'edit', stausList: status}
+      data: { typeForm: 'edit', stausList: data?.onboaring_status, username: `${data?.name} ${data?.surname}`,
+           params: params}
     });
-
-    dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(_ => {
-      this.getTableDetails({});
-    });
+    dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe();
   }
 
   private triggerStatusSnackBar(data, plan): void {

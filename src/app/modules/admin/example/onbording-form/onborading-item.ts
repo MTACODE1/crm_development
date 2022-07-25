@@ -9,3 +9,10 @@ export interface OnboardingItems {
   static_id: number;
   task: string;
 }
+
+export interface DialogData {
+  typeForm: string;
+  stausList: OnboardingItems[];
+  username: string;
+  params: any;
+}

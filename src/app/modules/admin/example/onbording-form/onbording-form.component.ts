@@ -1,13 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { UserService } from 'app/core/user/user.service';
 import { TasksMockApi } from 'app/mock-api/apps/tasks/api';
-import { OnboardingItems } from './onborading-item';
-
-export interface DialogData {
-  typeForm: string;
-  stausList: OnboardingItems[];
-}
+import { Subject, takeUntil } from 'rxjs';
+import { DialogData, OnboardingItems } from './onborading-item';
 
 @Component({
   selector: 'app-onbording-form',
@@ -16,41 +13,53 @@ export interface DialogData {
 })
 export class OnbordingFormComponent implements OnInit {
   taskList: OnboardingItems[] = [];
-  
+  private readonly destroyer$: Subject<void> = new Subject();
 
-  constructor(@Inject(MAT_DIALOG_DATA) public readonly data: DialogData, private taskService: TasksMockApi,
-    public readonly dialogRef: MatDialogRef<OnbordingFormComponent>, private _fuseConfirmationService: FuseConfirmationService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public readonly data: DialogData, private taskService: TasksMockApi, private userService: UserService,
+    private _fuseConfirmationService: FuseConfirmationService) { }
 
   ngOnInit(): void {
     this.loadDataStatus();
+  }
+
+  ngOnDestroy(): void {
+    this.destroyer$.next();
+    this.destroyer$.complete();
   }
 
   private loadDataStatus(): void {
     this.taskList = this.data.stausList.map(data => ({
       ...data,
       type: data.static_id <= 8 ? 'profession' : data.static_id >= 9 && data.static_id <= 11 ? 'vat' : 'software',
-      selected:data.t_status === '2'? true: false
+      selected: data.t_status === '2' ? true : false
     }));
   }
 
   public statusChanged(event, item): void {
-    const task = {
-      id: item.task_id,
-      t_status: event?2:1
-    }
-   this.updateOnBordings(task);
+    const task = { id: item.task_id, t_status: event ? 2 : 1 }
+    this.updateOnBordings(task);
   }
 
   private updateOnBordings(task) {
-    this.taskService.updateTaskStatus(task).subscribe(result => {
+    this.taskService.updateTaskStatus(task).pipe(takeUntil(this.destroyer$)).subscribe(result => {
       if (result['err_msg']) {
         alert(result['err_msg']);
+      } else {
+        this.getTableDetails();
       }
     });
   }
 
+  private getTableDetails(): void {
+    this.userService.getUserTable(this.data.params).pipe(takeUntil(this.destroyer$)).subscribe(result => {
+      const currentuser = result['rows'].find(item => item.id == this.data.params.id);
+      this.data.stausList = currentuser.onboaring_status;
+      this.loadDataStatus();
+    });
+  }
+
   public toggleData(item: OnboardingItems, status: boolean): void {
-    const message = status ? `Add <b>${item.task}</b> to onboarding for client name` : `Remove <b>${item.task}</b> from onboarding for client name?`
+    const message = status ? `Add <b>${item.task}</b> to onboarding for client <b>${this.data.username}</b>` : `Remove <b>${item.task}</b> from onboarding for client <b>${this.data.username}</b>?`
     const dialogRef = this._fuseConfirmationService.open({
       title: 'Are you sure?',
       message: message,
@@ -60,14 +69,10 @@ export class OnbordingFormComponent implements OnInit {
         confirm: { label: 'Yes', color: 'warn' }
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(result => {
       if (result === 'confirmed') {
-        const task = {
-          id: item.task_id,
-          t_status: status?1:0
-        }
+        const task = { id: item.task_id, t_status: status ? 1 : 0 }
         this.updateOnBordings(task);
-        status?item.t_status = '1': item.t_status = '0';
       }
     });
   }

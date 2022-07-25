@@ -26,6 +26,7 @@ export interface TableModel {
   vat_status: [stateStatusModel];
   annual_accounts_status_1: [stateStatusModel]
   annual_accounts_status_2: [stateStatusModel]
+  onboaring_status: any;
 }
 
 export interface stateStatusModel {

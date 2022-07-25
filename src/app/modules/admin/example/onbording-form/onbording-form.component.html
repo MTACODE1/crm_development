@@ -2,9 +2,9 @@
   <mat-icon mat-dialog-close svgIcon="heroicons_outline:x"></mat-icon>
 </h1>
 <mat-dialog-content>
-  <table class="table table-bordered">
+  <table class="w-full">
     <thead>
-      <tr>
+      <tr class="text-left">
         <th>Onboarding</th>
         <th>Completed</th>
         <th class="text-center">Date</th>
@@ -25,8 +25,8 @@
               <i></i>
             </label>
           </td>
-          <td><input type="datetime" value="" [id]="item?.static_id"></td>
-          <td></td>
+          <td>{{item?.completed_date !== '00-00-0000'?item?.completed_date:''}}</td>
+          <td>{{item?.completed_by}}</td>
         </ng-container>
       </tr>
 
@@ -46,8 +46,8 @@
               <i></i>
             </label>
           </td>
-          <td><input type="datetime" value="" [id]="item?.static_id"></td>
-          <td></td>
+          <td>{{item?.completed_date !== '00-00-0000'?item?.completed_date:''}}</td>
+          <td>{{item?.completed_by}}</td>
         </ng-container>
       </tr>
 
@@ -67,8 +67,8 @@
               <i></i>
             </label>
           </td>
-          <td><input type="datetime" value="" [id]="item?.static_id"></td>
-          <td></td>
+          <td>{{item?.completed_date !== '00-00-0000'?item?.completed_date:''}}</td>
+          <td>{{item?.completed_by}}</td>
         </ng-container>
       </tr>
     </tbody>
