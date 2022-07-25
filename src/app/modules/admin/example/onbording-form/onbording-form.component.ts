@@ -40,7 +40,7 @@ export class OnbordingFormComponent implements OnInit {
     this.updateOnBordings(task);
   }
 
-  private updateOnBordings(task) {
+  private updateOnBordings(task): void {
     this.taskService.updateTaskStatus(task).pipe(takeUntil(this.destroyer$)).subscribe(result => {
       if (result['err_msg']) {
         alert(result['err_msg']);

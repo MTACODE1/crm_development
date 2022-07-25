@@ -59,7 +59,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
   constructor(private _fuseConfirmationService: FuseConfirmationService, private taskService: TasksMockApi) { }
 
   ngOnInit() {
-    this.getTaskList({});
+    // this.getTaskList({});
     this.getUserList();
   }
 
@@ -101,6 +101,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
       const setUser = this.users.find(item => item.id === loginUser.user_id);
       this.username.setValue(setUser.id);
       this.selectedClient = this.users.find(item => item.id === this.username.value);
+      this.getTaskList({ uid: setUser.id, month: moment(new Date()).format('MMM-yyyy') });
     });
   }
 
