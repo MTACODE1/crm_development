@@ -153,9 +153,7 @@ export class AssessmentStatusComponent implements OnInit, OnDestroy {
       month: 'Apr-' + year,
       escalate: !statusData.escalated
     }
-    this.userService.escalateStatusTask(param).pipe(takeUntil(this.destroyer$)).subscribe(_ => {
-      
-    });
+    this.userService.escalateStatusTask(param).pipe(takeUntil(this.destroyer$)).subscribe();
   }
 
 }
