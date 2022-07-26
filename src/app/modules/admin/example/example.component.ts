@@ -197,6 +197,10 @@ export class ExampleComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe();
   }
 
+  public allCompleted(status): boolean {
+    return status.every(item => { item.t_status === '2' });
+  }
+
   private triggerStatusSnackBar(data, plan): void {
     const snackBarParams: MatSnackBarConfig = {
       horizontalPosition: 'right',
