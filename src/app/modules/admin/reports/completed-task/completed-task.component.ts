@@ -9,7 +9,7 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrls: ['./completed-task.component.scss']
 })
 export class CompletedTaskComponent implements OnInit {
-  displayedColumns: string[] = ['username','company', 'taskType', 'task', 'date', 'time'];
+  displayedColumns: string[] = ['username', 'company', 'taskType', 'task', 'date', 'time'];
   logList: CompletedLog[] = [];
   totalLogCount: number;
   public users: SalesflowUser[] = [];
@@ -24,7 +24,7 @@ export class CompletedTaskComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserList();
-    this.getTaskList();
+    this.getTaskList({});
   }
 
   ngOnDestroy(): void {
@@ -38,9 +38,15 @@ export class CompletedTaskComponent implements OnInit {
     });
   }
 
-  private getTaskList(): void {
+  private getTaskList(additionalParams): void {
     const params = {
       ...this.paginationConfig
+    }
+    if (additionalParams && additionalParams.status) {
+      params['status'] = additionalParams.status;
+    }
+    if (additionalParams && additionalParams.user) {
+      params['users'] = additionalParams.user;
     }
     this.taskService.taskCompletedLog(params).pipe(takeUntil(this.destroyer$)).subscribe(completedList => {
       this.logList = completedList['rows'];
@@ -50,8 +56,16 @@ export class CompletedTaskComponent implements OnInit {
 
   public onPageChange(event): void {
     this.paginationConfig = { ...this.paginationConfig, ...event };
-    this.getTaskList();
+    this.getTaskList({});
   }
 
- 
+  public statusFilter(item) {
+    const param = { status: item }
+    this.getTaskList(param);
+  }
+
+  public onClientChange(event) {
+    const param = { user: event.value }
+    this.getTaskList(param);
+  }
 }

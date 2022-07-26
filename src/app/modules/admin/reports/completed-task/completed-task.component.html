@@ -7,25 +7,25 @@
             <mat-icon svgIcon="heroicons_outline:filter"></mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item>
+            <button mat-menu-item (click)="statusFilter('bookkeeping')">
               <span class="w-3 h-3 mr-2 rounded-full bg-amber-200"></span>
               <span>Bookkeeping Status </span>
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="statusFilter('vat')">
               <span class="w-3 h-3 mr-2 rounded-full bg-orange-300"></span>
               <span>VAT Status </span>
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="statusFilter('account')">
               <span class="w-3 h-3 mr-2 rounded-full bg-pink-300"></span>
               <span>Account Status </span>
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="statusFilter('self_assessment')">
               <span class="w-3 h-3 mr-2 rounded-full bg-lime-300"></span>
               <span>Self Assessment Status </span>
             </button>
           </mat-menu>
           <mat-form-field appearance="fill" id="status" class="w-36">
-            <mat-select  class="text-lg text-gray-500" placeholder="Select User" disableOptionCentering>
+            <mat-select  class="text-lg text-gray-500" placeholder="Select User" (selectionChange)="onClientChange($event)" disableOptionCentering>
               <mat-option *ngFor="let item of users" [value]="item.id">
                 <ng-container *ngIf="item?.first_name; else nousername">
                   {{item?.first_name}} {{item?.last_name}}
@@ -50,7 +50,7 @@
         
           <ng-container matColumnDef="taskType">
             <th mat-header-cell *matHeaderCellDef> Task Type </th>
-            <td mat-cell *matCellDef="let element"> {{element.type}}</td>
+            <td mat-cell *matCellDef="let element" class="capitalize"> {{element.process}}</td>
           </ng-container>
         
           <ng-container matColumnDef="task">
@@ -65,11 +65,11 @@
         
           <ng-container matColumnDef="time">
             <th mat-header-cell *matHeaderCellDef > Time</th>
-            <td mat-cell *matCellDef="let element"> {{element.time}} AM</td>
+            <td mat-cell *matCellDef="let element"> {{element.time}}</td>
           </ng-container>
         
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="{{row.type}}-row"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="{{row.process}}-row"></tr>
         </table>
       </div>
     </div>
