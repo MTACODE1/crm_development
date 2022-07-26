@@ -1,24 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TasksMockApi } from 'app/mock-api/apps/tasks/api';
-import { SalesflowUser } from 'app/mock-api/apps/tasks/data';
+import { CompletedLog, SalesflowUser } from 'app/mock-api/apps/tasks/data';
 import { Subject, takeUntil } from 'rxjs';
-
-export interface PeriodicElement {
-  name: string;
-  id: number;
-  company: string;
-  type: string;
-  task: string;
-  date: string;
-  time: string;
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  {id: 1, name: 'Rayan', company: 'xero', type: 'bookkeeping' ,date: '11/11/2022', time:'10:20', task:'task here'},
-  {id: 2, name: 'David', company: 'xero', type: 'vat' , date:  '11/11/2022', time:'10:20', task:'task here'},
-  {id: 3, name: 'James', company: 'xero', type: 'bookkeeping' , date:  '11/11/2022', time:'10:20', task:'task here'},
-  {id: 4, name: 'Rasmus', company: 'xero', type: 'account' , date:  '11/11/2022', time:'10:20', task:'task here'},
-  {id: 5, name: 'Shital', company: 'xero', type: 'assessment' , date:  '11/11/2022', time:'10:20', task:'task here'},
-];
 
 @Component({
   selector: 'app-completed-task',
@@ -27,14 +10,21 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class CompletedTaskComponent implements OnInit {
   displayedColumns: string[] = ['username','company', 'taskType', 'task', 'date', 'time'];
-  dataSource = ELEMENT_DATA;
+  logList: CompletedLog[] = [];
+  totalLogCount: number;
   public users: SalesflowUser[] = [];
+
+  public paginationConfig = {
+    limit: 10,
+    offset: 0,
+  }
   private readonly destroyer$: Subject<void> = new Subject();
 
   constructor(private taskService: TasksMockApi) { }
 
   ngOnInit(): void {
     this.getUserList();
+    this.getTaskList();
   }
 
   ngOnDestroy(): void {
@@ -47,4 +37,21 @@ export class CompletedTaskComponent implements OnInit {
       this.users = response;
     });
   }
+
+  private getTaskList(): void {
+    const params = {
+      ...this.paginationConfig
+    }
+    this.taskService.taskCompletedLog(params).pipe(takeUntil(this.destroyer$)).subscribe(completedList => {
+      this.logList = completedList['rows'];
+      this.totalLogCount = completedList['total_count'];
+    })
+  }
+
+  public onPageChange(event): void {
+    this.paginationConfig = { ...this.paginationConfig, ...event };
+    this.getTaskList();
+  }
+
+ 
 }

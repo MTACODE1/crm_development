@@ -24,3 +24,12 @@ export enum statusDataType {
   ANNUAL = 'annual_accounts',
   SELF = 'self_assessment',
 }
+
+export interface CompletedLog {
+  client_id: string;
+  company: string;
+  date: string;
+  process: string;
+  task: string;
+  user: string;
+}
