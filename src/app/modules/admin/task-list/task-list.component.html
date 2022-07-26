@@ -38,20 +38,20 @@
             </div>
           </div>
           <div class="items-center justify-end flex-wrap icon-list mb-2 px-3" (click)="$event.stopImmediatePropagation()">
-            <a href="https://www.morethanaccountants.co.uk/salesflow/admin/v_lead.html?id={{selectedClient?.id}}"
+            <a href="https://www.morethanaccountants.co.uk/salesflow/admin/v_lead.html?id={{data?.client_id}}"
               target="_blank">
               <img class="h-auto w-12" src="assets/images/logo/logo.png" alt="logo">
             </a>
-            <a *ngIf="selectedClient?.xero" href="https://go.xero.com/organisationlogin/default.aspx?shortcode={{selectedClient?.xero}}"
+            <a *ngIf="data?.xero" href="https://go.xero.com/organisationlogin/default.aspx?shortcode={{data.xero}}"
               target="_blank">
               <img class="h-auto w-8" src="assets/images/logo/bespoke.png" alt="bespoke">
             </a>
-            <a *ngIf="selectedClient?.dext" href="https://app.dext.com/clients/{{selectedClient?.dext}}/gamma/costs/inbox"
+            <a *ngIf="data?.dext" href="https://app.dext.com/clients/{{data.dext}}/gamma/costs/inbox"
               target="_blank">
               <img class="h-auto w-9" src="assets/images/logo/dext.png" alt="dext">
             </a>
-            <a *ngIf="selectedClient?.crn"
-              href="https://find-and-update.company-information.service.gov.uk/company/{{selectedClient?.crn}}" target="_blank">
+            <a *ngIf="data?.crn"
+              href="https://find-and-update.company-information.service.gov.uk/company/{{data.crn}}" target="_blank">
               <img class="h-auto w-8" src="assets/images/logo/ltd.png" alt="ltd">
             </a>
           </div>

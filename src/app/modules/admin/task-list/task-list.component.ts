@@ -25,7 +25,6 @@ import { Subject, takeUntil } from 'rxjs';
 export class TaskListComponent implements OnInit, OnDestroy {
   username = new FormControl();
   public users: SalesflowUser[] = [];
-  selectedClient: SalesflowUser;
   public taskListArr: TaskListItems[] = [
     {
       color: 'gray',
@@ -59,7 +58,6 @@ export class TaskListComponent implements OnInit, OnDestroy {
   constructor(private _fuseConfirmationService: FuseConfirmationService, private taskService: TasksMockApi) { }
 
   ngOnInit() {
-    // this.getTaskList({});
     this.getUserList();
   }
 
@@ -69,10 +67,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
   }
 
   private getTaskList(additionalParams): void {
-    let param = {}
-    if (additionalParams) {
-      param = { ...additionalParams }
-    }
+    const  param = { ...additionalParams }
     this.taskService.getTaskList(param).pipe(takeUntil(this.destroyer$)).subscribe(taskResponse => {
       const tasksList = taskResponse;
       Object.keys(tasksList).forEach(element => {
@@ -100,7 +95,6 @@ export class TaskListComponent implements OnInit, OnDestroy {
       const loginUser = JSON.parse(localStorage.getItem('loginUser'));
       const setUser = this.users.find(item => item.id === loginUser.user_id);
       this.username.setValue(setUser.id);
-      this.selectedClient = this.users.find(item => item.id === this.username.value);
       this.getTaskList({ uid: setUser.id, month: moment(new Date()).format('MMM-yyyy') });
     });
   }
