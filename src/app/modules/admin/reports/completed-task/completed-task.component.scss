@@ -13,4 +13,7 @@
   &.self_assessment-row {
     background: $green100;
   }
+  &.onboarding-row, &.conf_stmt-row {
+    background: $gray100;
+  }
 }

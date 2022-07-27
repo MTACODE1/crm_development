@@ -39,4 +39,6 @@ export enum taskType {
   vat = 'VAT',
   annual_accounts = 'Annual accounts',
   self_assessment = 'Self Assessment',
+  onboarding = 'onboarding',
+  conf_stmt = 'Confirmation Statement',
 }
