@@ -192,7 +192,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
       width: '60vw',
       disableClose: true,
       data: {
-        typeForm: 'edit', stausList: data?.onboaring_status, username: `${data?.name} ${data?.surname}`,
+        typeForm: 'edit', stausList: data?.onboarding_status, username: `${data?.name} ${data?.surname}`,
         params: params
       }
     });
@@ -287,7 +287,6 @@ export class ExampleComponent implements OnInit, OnDestroy {
     });
   }
 
-
   private removeStatus(item, process): void {
     let lastYear = this.today.year() - 1;
     const statusParam = {
@@ -306,6 +305,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
     ctrlValue.year(normalizedMonthAndYear.year());
     this.date.setValue(ctrlValue);
     datepicker.close();
+    this.getTableDetails({});
   }
 
   public calculateMonth(value): void {

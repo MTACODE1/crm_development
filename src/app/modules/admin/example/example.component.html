@@ -101,8 +101,8 @@
                     <mat-icon class="cursor-pointer" svgIcon="heroicons_outline:plus-sm"  (click)="startUpdates('onboarding', element)"> </mat-icon>
                   </ng-container>
                   <ng-template #editOnbording>
-                    <mat-icon class="text-red-600 mr-2" svgIcon="heroicons_outline:x" *ngIf="!allCompleted(element?.onboaring_status)" ></mat-icon>
-                    <mat-icon class="text-green-600 mr-2" svgIcon="heroicons_outline:check" *ngIf="allCompleted(element?.onboaring_status)" ></mat-icon>
+                    <mat-icon class="text-red-600 mr-2" svgIcon="heroicons_outline:x" *ngIf="!allCompleted(element?.onboarding_status)" ></mat-icon>
+                    <mat-icon class="text-green-600 mr-2" svgIcon="heroicons_outline:check" *ngIf="allCompleted(element?.onboarding_status)" ></mat-icon>
                     <mat-icon class="cursor-pointer" svgIcon="heroicons_outline:pencil" (click)="openOnboarding(element)">
                     </mat-icon>
                   </ng-template>          

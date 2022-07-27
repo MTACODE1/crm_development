@@ -54,7 +54,7 @@ export class OnbordingFormComponent implements OnInit {
   private getTableDetails(): void {
     this.userService.getUserTable(this.data.params).pipe(takeUntil(this.destroyer$)).subscribe(result => {
       const currentuser = result['rows'].find(item => item.id == this.data.params.id);
-      this.data.stausList = currentuser.onboaring_status;
+      this.data.stausList = currentuser.onboarding_status;
       this.loadDataStatus();
     });
   }
