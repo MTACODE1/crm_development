@@ -29,7 +29,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   today = moment(new Date());
   searchTerm: string;
   date = new FormControl(moment());
- lastMonth: any;
+  lastMonth: any;
   public paginationConfig = {
     limit: 10,
     offset: 0,
@@ -70,9 +70,9 @@ export class ExampleComponent implements OnInit, OnDestroy {
     });
   }
 
-  
+
   public searchChange(value): void {
-    const params = {search: value};
+    const params = { search: value };
     this.getTableDetails(params);
   }
 
@@ -100,7 +100,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
 
   public onPageChange(event): void {
     this.paginationConfig = { ...this.paginationConfig, ...event };
-    const params = {search: this.searchTerm};
+    const params = { search: this.searchTerm };
     this.getTableDetails(params);
   }
 
@@ -120,7 +120,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
       uid: element.id,
       process: key === 'annual_accounts' || key === 'accNew' ? 'annual_accounts' : key,
       month: key === 'annual_accounts' ? element.annual_accounts_month + '-' + lastYear : key === 'accNew' ? element.annual_accounts_month + '-' + this.today.year() : this.date.value.format('MMM-yy'),
-      p_status: item.static_id
+      p_status: key === 'onboarding' ? 0 : item.static_id
     }
     this.userService.updateTaskStatus(task).subscribe(result => {
       if (result['err_msg']) {
@@ -166,16 +166,16 @@ export class ExampleComponent implements OnInit, OnDestroy {
 
   public statusChanged(toggle: boolean): void {
     if (toggle) {
-      this.displayedColumns = ['companyName', 'logo', 'onboarding', 'bookKeepingStatus', 'vatStatus', 'accountsStatus1', 'accountsStatus2', 'self1', 'self2','confirmationStatus'];
+      this.displayedColumns = ['companyName', 'logo', 'onboarding', 'bookKeepingStatus', 'vatStatus', 'accountsStatus1', 'accountsStatus2', 'self1', 'self2', 'confirmationStatus'];
     } else {
       this.displayedColumns = this.userService.getColumns();
     }
   }
 
   public slectMyClient(event: boolean): void {
-    if(event) {
+    if (event) {
       const user = JSON.parse(localStorage.getItem('loginUser'));
-      this.getTableDetails({user: user.user_id});
+      this.getTableDetails({ user: user.user_id });
     } else {
       this.getTableDetails({});
     }
@@ -186,13 +186,15 @@ export class ExampleComponent implements OnInit, OnDestroy {
       month: this.date.value.format('MMM-yy'),
       limit: this.paginationConfig.limit,
       offset: this.paginationConfig.offset,
-      id:data.id
+      id: data.id
     }
     const dialogRef = this.dialog.open(OnbordingFormComponent, {
       width: '60vw',
       disableClose: true,
-      data: { typeForm: 'edit', stausList: data?.onboaring_status, username: `${data?.name} ${data?.surname}`,
-           params: params}
+      data: {
+        typeForm: 'edit', stausList: data?.onboaring_status, username: `${data?.name} ${data?.surname}`,
+        params: params
+      }
     });
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe();
   }
@@ -222,13 +224,14 @@ export class ExampleComponent implements OnInit, OnDestroy {
   }
 
   public startUpdates(key, status, item): void {
+    const onboardingMessage = key === 'start' ? `Start Onboarding Process for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?` : '';
     const messgae = key === 'start' ? `Start Bookkeeping Process for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?` : `Cancel Bookkeeping Status for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?`;
     const vatMessgae = key === 'start' ? `Start VAT Process for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?` : `Cancel VAT Status for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?`;
     const accMessgae = key === 'start' ? 'Start Accounts Process for Bespoke Alpha Solutions ?' : 'Cancel Accounts Process for Bespoke Alpha Solutions?';
     const confirmMessgae = key === 'start' ? 'Start Confirmation Statement process for Bespoke Alpha Solutions ?' : 'Cancel Confirmation Statement Process for Bespoke Alpha Solutions?';
     const dialogRef = this._fuseConfirmationService.open({
       title: 'Are you sure?',
-      message: status === 'bookkeep' ? messgae : status === 'vat' ? vatMessgae: status === 'conf_stmt' ? confirmMessgae  : accMessgae,
+      message: status === 'bookkeep' ? messgae : status === 'vat' ? vatMessgae : status === 'conf_stmt' ? confirmMessgae : status === 'onboarding' ? onboardingMessage : accMessgae,
       dismissible: true,
       actions: {
         confirm: {
@@ -249,7 +252,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
         } else if (status === 'vat') {
           if (key === 'start') {
             this.updateStatus(item.vat_status[0], item, 'vat', true);
-            if(!item.bookkeeping_status_saved) {
+            if (!item.bookkeeping_status_saved) {
               this.updateStatus(item.bookkeeping_status[0], item, 'bookkeeping', true);
             }
           } else {
@@ -261,18 +264,20 @@ export class ExampleComponent implements OnInit, OnDestroy {
           } else {
             this.removeStatus(item, 'annual_accounts');
           }
-        } else if(status === 'accNew') {
+        } else if (status === 'accNew') {
           if (key === 'start') {
             this.updateStatus(item.annual_accounts_status_2[0], item, 'accNew', true);
           } else {
             this.removeStatus(item, 'accNew');
           }
-        } else {
+        } else if (status === 'conf_stmt') {
           if (key === 'start') {
             this.updateStatus(item.conf_stmt_status[0], item, 'conf_stmt', true);
           } else {
             this.removeStatus(item, 'conf_stmt');
           }
+        } else {
+          this.updateStatus(item.onboaring_status[0], item, 'onboarding', true);
         }
       }
     });

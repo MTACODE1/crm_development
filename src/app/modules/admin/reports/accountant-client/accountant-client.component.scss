@@ -1,0 +1,10 @@
+.mat-header-cell{
+  min-width: 55px;
+  padding-right: 4px;
+  &:not(:first-child) {
+    padding: 0 !important;
+  }
+  &:first-child {
+   min-width: 81px;
+  }
+}
