@@ -43,7 +43,7 @@ export class CompletedTaskComponent implements OnInit {
       ...this.paginationConfig
     }
     if (additionalParams && additionalParams.status) {
-      params['status'] = additionalParams.status;
+      params['process'] = additionalParams.status;
     }
     if (additionalParams && additionalParams.user) {
       params['users'] = additionalParams.user;
