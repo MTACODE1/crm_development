@@ -1,31 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
+import { Dashboard } from 'app/mock-api/apps/reports/report-data';
+import { ReportsService } from 'app/mock-api/apps/reports/reports.service';
 import * as moment from 'moment';
 import { ApexOptions } from 'ng-apexcharts';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-dshboard',
   templateUrl: './dshboard.component.html',
-  styleUrls: ['./dshboard.component.scss']
+  styleUrls: ['./dshboard.component.scss'],
 })
 
-export class DshboardComponent implements OnInit {
-  public chartGithubIssues: ApexOptions = {};
-  chartNewVsReturning: ApexOptions;
-
+export class DshboardComponent implements OnInit, OnDestroy {
+  chartCompleteOutstanding: ApexOptions = {};
+  chartSetupCompliance: ApexOptions;
   setups: number[] = [80, 20];
   chartBookKeep: ApexOptions;
   chartVat: ApexOptions;
   chartAccount: ApexOptions;
   chartAssessment: ApexOptions;
   date = new FormControl(moment());
+  dashboardResult: Dashboard;
 
-  constructor() { }
+  private readonly destroyer$: Subject<void> = new Subject();
+  constructor(private ReportService: ReportsService) { }
 
   ngOnInit(): void {
-    this.prepareChartData();
-    this.setupChartData();
+    this.getDashboardData();
+  }
+
+  ngOnDestroy(): void {
+    this.destroyer$.next();
+    this.destroyer$.complete();
   }
 
   public setMonthAndYear(normalizedMonthAndYear: moment.Moment, datepicker: MatDatepicker<moment.Moment>): void {
@@ -34,7 +42,6 @@ export class DshboardComponent implements OnInit {
     ctrlValue.year(normalizedMonthAndYear.year());
     this.date.setValue(ctrlValue);
     datepicker.close();
-    console.log(this.date.value)
   }
 
   public calculateMonth(value): void {
@@ -42,20 +49,24 @@ export class DshboardComponent implements OnInit {
     console.log(this.date.value.toISOString())
   }
 
+  private getDashboardData(): void {
+    this.ReportService.getDashboardDetails({}).pipe(takeUntil(this.destroyer$))
+      .subscribe(result => {
+        this.dashboardResult = result;
+        this.prepareChartData();
+        this.byProcessChartData();
+      });
+  }
 
   private prepareChartData(): void {
-    this.chartGithubIssues = {
+    this.chartCompleteOutstanding = {
       chart: {
         fontFamily: 'inherit',
         foreColor: 'inherit',
         height: '100%',
         type: 'line',
-        toolbar: {
-          show: false
-        },
-        zoom: {
-          enabled: false
-        }
+        toolbar: { show: false },
+        zoom: { enabled: false }
       },
       colors: ['#64748B', '#94A3B8'],
       dataLabels: {
@@ -79,14 +90,13 @@ export class DshboardComponent implements OnInit {
         {
           type: "line",
           name: 'Completed',
-          data: [42, 28, 43, 34, 20, 25, 22]
+          data: this.dashboardResult?.completed_outstanding?.map(({ completed }) => +completed)
         },
         {
           type: "column",
           name: 'Outstanding',
-          data: [11, 10, 8, 11, 8, 10, 17]
+          data: this.dashboardResult?.completed_outstanding?.map(({ outstanding }) => +outstanding)
         }
-
       ],
       states: {
         hover: {
@@ -101,35 +111,11 @@ export class DshboardComponent implements OnInit {
         followCursor: true,
         theme: 'dark'
       },
-      xaxis: {
-        axisBorder: {
-          show: false
-        },
-        axisTicks: {
-          color: 'var(--fuse-border)'
-        },
-        labels: {
-          style: {
-            colors: 'var(--fuse-text-secondary)'
-          }
-        },
-        tooltip: {
-          enabled: false
-        }
-      },
-      yaxis: {
-        labels: {
-          offsetX: -16,
-          style: {
-            colors: 'var(--fuse-text-secondary)'
-          }
-        }
-      }
     };
   }
 
-  private setupChartData(): void {
-    this.chartNewVsReturning = {
+  private byProcessChartData(): void {
+    this.chartSetupCompliance = {
       chart: {
         animations: {
           speed: 400,
@@ -137,8 +123,6 @@ export class DshboardComponent implements OnInit {
             enabled: false
           }
         },
-        fontFamily: 'inherit',
-        foreColor: 'inherit',
         height: '100%',
         type: 'donut',
         sparkline: {
@@ -146,7 +130,7 @@ export class DshboardComponent implements OnInit {
         }
       },
       colors: ['#9ca3af', '#d1d5db'],
-      labels: ['Completed', 'Pending'],
+      labels: Object.keys(this.dashboardResult.by_process.setup_compliance),
       plotOptions: {
         pie: {
           customScale: 0.9,
@@ -156,7 +140,9 @@ export class DshboardComponent implements OnInit {
           }
         }
       },
-      series: [80, 20],
+      series: Object.values(this.dashboardResult.by_process.setup_compliance).map(str => {
+        return Number(str);
+      }),
       states: {
         hover: {
           filter: {
@@ -183,7 +169,6 @@ export class DshboardComponent implements OnInit {
     };
 
     //bookeep
-
     this.chartBookKeep = {
       chart: {
         animations: {
@@ -192,8 +177,6 @@ export class DshboardComponent implements OnInit {
             enabled: false
           }
         },
-        fontFamily: 'inherit',
-        foreColor: 'inherit',
         height: '100%',
         type: 'donut',
         sparkline: {
@@ -201,17 +184,17 @@ export class DshboardComponent implements OnInit {
         }
       },
       colors: ['#fbbf24', '#fde68a'],
-      labels: ['Bookkeeping Pending', 'Bookkeeping Completed'],
+      labels: Object.keys(this.dashboardResult.by_process.bookkeeping),
       plotOptions: {
         pie: {
           customScale: 0.9,
           expandOnClick: false,
-          donut: {
-            size: '70%'
-          }
+          donut: { size: '70%' }
         }
       },
-      series: [55, 45],
+      series: Object.values(this.dashboardResult.by_process.bookkeeping).map(str => {
+        return Number(str);
+      }),
       states: {
         hover: {
           filter: {
@@ -219,9 +202,7 @@ export class DshboardComponent implements OnInit {
           }
         },
         active: {
-          filter: {
-            type: 'none'
-          }
+          filter: { type: 'none' }
         }
       },
       tooltip: {
@@ -245,8 +226,6 @@ export class DshboardComponent implements OnInit {
             enabled: false
           }
         },
-        fontFamily: 'inherit',
-        foreColor: 'inherit',
         height: '100%',
         type: 'donut',
         sparkline: {
@@ -254,7 +233,7 @@ export class DshboardComponent implements OnInit {
         }
       },
       colors: ['#fb923c', '#fdba74'],
-      labels: ['VAT Completed', 'VAT Pending'],
+      labels: Object.keys(this.dashboardResult.by_process.vat),
       plotOptions: {
         pie: {
           customScale: 0.9,
@@ -264,7 +243,9 @@ export class DshboardComponent implements OnInit {
           }
         }
       },
-      series: [35, 65],
+      series: Object.values(this.dashboardResult.by_process.vat).map(str => {
+        return Number(str);
+      }),
       states: {
         hover: {
           filter: {
@@ -298,8 +279,6 @@ export class DshboardComponent implements OnInit {
             enabled: false
           }
         },
-        fontFamily: 'inherit',
-        foreColor: 'inherit',
         height: '100%',
         type: 'donut',
         sparkline: {
@@ -307,7 +286,7 @@ export class DshboardComponent implements OnInit {
         }
       },
       colors: ['#f9a8d4', '#f472b6'],
-      labels: ['Accounts Completed', 'Accounts Pending'],
+      labels: Object.keys(this.dashboardResult.by_process.annual_accounts),
       plotOptions: {
         pie: {
           customScale: 0.9,
@@ -317,7 +296,9 @@ export class DshboardComponent implements OnInit {
           }
         }
       },
-      series: [25, 75],
+      series: Object.values(this.dashboardResult.by_process.annual_accounts).map(str => {
+        return Number(str);
+      }),
       states: {
         hover: {
           filter: {
@@ -351,8 +332,6 @@ export class DshboardComponent implements OnInit {
             enabled: false
           }
         },
-        fontFamily: 'inherit',
-        foreColor: 'inherit',
         height: '100%',
         type: 'donut',
         sparkline: {
@@ -360,7 +339,7 @@ export class DshboardComponent implements OnInit {
         }
       },
       colors: ['#22c55e', '#86efac'],
-      labels: ['Assessment Completed', 'Assessment Pending'],
+      labels: Object.keys(this.dashboardResult.by_process.self_assessments),
       plotOptions: {
         pie: {
           customScale: 0.9,
@@ -370,7 +349,9 @@ export class DshboardComponent implements OnInit {
           }
         }
       },
-      series: [35, 65],
+      series: Object.values(this.dashboardResult.by_process.self_assessments).map(str => {
+        return Number(str);
+      }),
       states: {
         hover: {
           filter: {
