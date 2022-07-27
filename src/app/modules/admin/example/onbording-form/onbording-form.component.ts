@@ -37,13 +37,14 @@ export class OnbordingFormComponent implements OnInit {
 
   public statusChanged(event, item): void {
     const task = { id: item.task_id, t_status: event ? 2 : 1 }
-    this.updateOnBordings(task);
+    this.updateOnBordings(task, item);
   }
 
-  private updateOnBordings(task): void {
+  private updateOnBordings(task, item?): void {
     this.taskService.updateTaskStatus(task).pipe(takeUntil(this.destroyer$)).subscribe(result => {
       if (result['err_msg']) {
         alert(result['err_msg']);
+       item.selected = false;
       } else {
         this.getTableDetails();
       }
