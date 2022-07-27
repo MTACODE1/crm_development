@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
@@ -223,65 +223,70 @@ export class ExampleComponent implements OnInit, OnDestroy {
     });
   }
 
-  public startUpdates(key, status, item): void {
-    const onboardingMessage = key === 'start' ? `Start Onboarding Process for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?` : '';
-    const messgae = key === 'start' ? `Start Bookkeeping Process for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?` : `Cancel Bookkeeping Status for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?`;
-    const vatMessgae = key === 'start' ? `Start VAT Process for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?` : `Cancel VAT Status for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?`;
-    const accMessgae = key === 'start' ? 'Start Accounts Process for Bespoke Alpha Solutions ?' : 'Cancel Accounts Process for Bespoke Alpha Solutions?';
-    const confirmMessgae = key === 'start' ? 'Start Confirmation Statement process for Bespoke Alpha Solutions ?' : 'Cancel Confirmation Statement Process for Bespoke Alpha Solutions?';
+  public startUpdates(status, item): void {
+    const onboardingMessage = `Start Onboarding Process for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?`;
+    const messgae = `Start Bookkeeping Process for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?`;
+    const vatMessgae = `Start VAT Process for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?`;
+    const accMessgae = 'Start Accounts Process for Bespoke Alpha Solutions ?';
+    const confirmMessgae = 'Start Confirmation Statement process for Bespoke Alpha Solutions ?';
     const dialogRef = this._fuseConfirmationService.open({
       title: 'Are you sure?',
-      message: status === 'bookkeep' ? messgae : status === 'vat' ? vatMessgae : status === 'conf_stmt' ? confirmMessgae : status === 'onboarding' ? onboardingMessage : accMessgae,
+      message: status === 'bookkeeping' ? messgae : status === 'vat' ? vatMessgae : status === 'conf_stmt' ? confirmMessgae : status === 'onboarding' ? onboardingMessage : accMessgae,
       dismissible: true,
       actions: {
         confirm: {
           show: true,
-          label: key === 'start' ? 'Start' : 'Yes',
+          label: 'Start',
           color: 'warn'
         }
       },
     });
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(result => {
       if (result === 'confirmed') {
-        if (status === 'bookkeep') {
-          if (key === 'start') {
-            this.updateStatus(item.bookkeeping_status[0], item, 'bookkeeping', true);
-          } else {
-            this.removeStatus(item, 'bookkeeping');
-          }
+        if (status === 'bookkeeping') {
+          this.updateStatus(item.bookkeeping_status[0], item, 'bookkeeping', true);
         } else if (status === 'vat') {
-          if (key === 'start') {
-            this.updateStatus(item.vat_status[0], item, 'vat', true);
-            if (!item.bookkeeping_status_saved) {
-              this.updateStatus(item.bookkeeping_status[0], item, 'bookkeeping', true);
-            }
-          } else {
-            this.removeStatus(item, 'vat');
+          this.updateStatus(item.vat_status[0], item, 'vat', true);
+          if (!item.bookkeeping_status_saved) {
+            this.updateStatus(item.bookkeeping_status[0], item, 'bookkeeping', true);
           }
         } else if (status === 'annual_accounts') {
-          if (key === 'start') {
-            this.updateStatus(item.annual_accounts_status_1[0], item, 'annual_accounts', true);
-          } else {
-            this.removeStatus(item, 'annual_accounts');
-          }
+          this.updateStatus(item.annual_accounts_status_1[0], item, 'annual_accounts', true);
         } else if (status === 'accNew') {
-          if (key === 'start') {
-            this.updateStatus(item.annual_accounts_status_2[0], item, 'accNew', true);
-          } else {
-            this.removeStatus(item, 'accNew');
-          }
+          this.updateStatus(item.annual_accounts_status_2[0], item, 'accNew', true);
         } else if (status === 'conf_stmt') {
-          if (key === 'start') {
-            this.updateStatus(item.conf_stmt_status[0], item, 'conf_stmt', true);
-          } else {
-            this.removeStatus(item, 'conf_stmt');
-          }
+          this.updateStatus(item.conf_stmt_status[0], item, 'conf_stmt', true);
         } else {
           this.updateStatus(item.onboaring_status[0], item, 'onboarding', true);
         }
       }
     });
   }
+
+  public endUpdates(status, item): void {
+    const messgae = `Cancel Bookkeeping Status for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?`;
+    const vatMessgae = `Cancel VAT Status for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?`;
+    const accMessgae = 'Cancel Accounts Process for Bespoke Alpha Solutions?';
+    const confirmMessgae = 'Cancel Confirmation Statement Process for Bespoke Alpha Solutions?';
+    const dialogRef = this._fuseConfirmationService.open({
+      title: 'Are you sure?',
+      message: status === 'bookkeeping' ? messgae : status === 'vat' ? vatMessgae : status === 'conf_stmt' ? confirmMessgae : accMessgae,
+      dismissible: true,
+      actions: {
+        confirm: {
+          show: true,
+          label: 'Yes',
+          color: 'warn'
+        }
+      },
+    });
+    dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(result => {
+      if (result === 'confirmed') {
+        this.removeStatus(item, status);
+      }
+    });
+  }
+
 
   private removeStatus(item, process): void {
     let lastYear = this.today.year() - 1;

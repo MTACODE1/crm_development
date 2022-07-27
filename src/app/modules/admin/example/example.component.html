@@ -98,7 +98,7 @@
               <td mat-cell *matCellDef="let element">
                 <div class="flex justify-center">
                   <ng-container *ngIf="element.onboarding_status_saved === null; else editOnbording">
-                    <mat-icon class="cursor-pointer" svgIcon="heroicons_outline:plus-sm"  (click)="startUpdates('start', 'onboarding', element)"> </mat-icon>
+                    <mat-icon class="cursor-pointer" svgIcon="heroicons_outline:plus-sm"  (click)="startUpdates('onboarding', element)"> </mat-icon>
                   </ng-container>
                   <ng-template #editOnbording>
                     <mat-icon class="text-red-600 mr-2" svgIcon="heroicons_outline:x" *ngIf="!allCompleted(element?.onboaring_status)" ></mat-icon>
@@ -141,7 +141,7 @@
                 Bookkeeping Status</th>
               <td mat-cell *matCellDef="let element" class="text-center">
                 <mat-icon *ngIf="!element?.bookkeeping_status_saved" class="cursor-pointer"
-                  (click)="startUpdates('start', 'bookkeep',  element)"
+                  (click)="startUpdates('bookkeeping',  element)"
                   svgIcon="heroicons_outline:plus-sm">
                 </mat-icon>
                 <div *ngIf="element.bookkeeping_status_saved" class="flex items-center">
@@ -149,7 +149,7 @@
                     <ng-container *ngIf="statusItem.static_id == element?.bookkeeping_status_saved">
                       <button mat-icon-button>
                         <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left"
-                          (click)="ind > 0?openConfirmationDialog('bookkeeping', ind,element?.bookkeeping_status, element):startUpdates('end','bookkeep', element)">
+                          (click)="ind > 0?openConfirmationDialog('bookkeeping', ind,element?.bookkeeping_status, element):endUpdates('bookkeeping', element)">
                         </mat-icon>
                       </button>
                       <button mat-raised-button
@@ -188,14 +188,14 @@
                 Status</th>
               <td mat-cell *matCellDef="let element" class="text-center">
                 <mat-icon *ngIf="!element?.vat_status_saved" class="cursor-pointer"
-                  (click)="startUpdates('start','vat', element)" svgIcon="heroicons_outline:plus-sm">
+                  (click)="startUpdates('vat', element)" svgIcon="heroicons_outline:plus-sm">
                 </mat-icon>
                 <div *ngIf="element.vat_status_saved" class="flex items-center">
                   <ng-container *ngFor="let vatItem of element?.vat_status; let ind = index">
                     <ng-container *ngIf="vatItem.static_id == element?.vat_status_saved">
                       <button mat-icon-button>
                         <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left"
-                          (click)="ind > 0?openConfirmationDialog('vat', ind,element?.vat_status, element):startUpdates('end','vat', element)">
+                          (click)="ind > 0?openConfirmationDialog('vat', ind,element?.vat_status, element):endUpdates('vat', element)">
                         </mat-icon>
                       </button>
                       <button mat-raised-button
@@ -236,7 +236,7 @@
                 Accounts Status</th>
               <td mat-cell *matCellDef="let element">
                 <mat-icon *ngIf="!element?.annual_accounts_saved_1" class="cursor-pointer"
-                  (click)="startUpdates('start','annual_accounts', element)"
+                  (click)="startUpdates('annual_accounts', element)"
                   svgIcon="heroicons_outline:plus-sm">
                 </mat-icon>
                 <div *ngIf="element?.annual_accounts_saved_1" class="flex items-center">
@@ -244,7 +244,7 @@
                     <ng-container *ngIf="accItem.static_id == element?.annual_accounts_saved_1">
                       <button mat-icon-button>
                         <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left"
-                          (click)="ind > 0?openConfirmationDialog('annual_accounts', ind,element?.annual_accounts_status_1, element):startUpdates('end','annual_accounts', element)">
+                          (click)="ind > 0?openConfirmationDialog('annual_accounts', ind,element?.annual_accounts_status_1, element):endUpdates('annual_accounts', element)">
                         </mat-icon>
                       </button>
                       <button mat-raised-button
@@ -265,7 +265,7 @@
                 Accounts Status</th>
               <td mat-cell *matCellDef="let element">
                 <mat-icon *ngIf="!element?.annual_accounts_saved_2" class="cursor-pointer"
-                  (click)="startUpdates('start','accNew', element)"
+                  (click)="startUpdates('accNew', element)"
                   svgIcon="heroicons_outline:plus-sm">
                 </mat-icon>
                 <div *ngIf="element?.annual_accounts_saved_2" class="flex items-center">
@@ -273,7 +273,7 @@
                     <ng-container *ngIf="accItem.static_id == element?.annual_accounts_saved_2">
                       <button mat-icon-button>
                         <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left"
-                          (click)="ind > 0?openConfirmationDialog('accNew', ind,element?.annual_accounts_status_2, element):startUpdates('end','accNew', element)">
+                          (click)="ind > 0?openConfirmationDialog('accNew', ind,element?.annual_accounts_status_2, element):endUpdates('accNew', element)">
                         </mat-icon>
                       </button>
                       <button mat-raised-button
@@ -346,14 +346,14 @@
               <th mat-header-cell *matHeaderCellDef class="info-col">{{date.value.format('YYYY')}} Confirmation Statement Status</th>
               <td mat-cell *matCellDef="let element">
                 <mat-icon *ngIf="!element?.conf_stmt_saved" class="cursor-pointer"
-                  (click)="startUpdates('start','conf_stmt', element)" svgIcon="heroicons_outline:plus-sm">
+                  (click)="startUpdates('conf_stmt', element)" svgIcon="heroicons_outline:plus-sm">
                 </mat-icon>
                 <div *ngIf="element.conf_stmt_saved" class="flex items-center">
                   <ng-container *ngFor="let confirmationItem of element?.conf_stmt_status; let ind = index">
                     <ng-container *ngIf="confirmationItem.static_id == element.conf_stmt_saved">
                       <button mat-icon-button>
                         <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left"
-                          (click)="ind > 0?openConfirmationDialog('conf_stmt', ind,element?.conf_stmt_status, element):startUpdates('end','conf_stmt', element)">
+                          (click)="ind > 0?openConfirmationDialog('conf_stmt', ind,element?.conf_stmt_status, element):endUpdates('conf_stmt', element)">
                         </mat-icon>
                       </button>
                       <button mat-raised-button class="confirmation-button"
