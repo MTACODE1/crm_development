@@ -47,7 +47,7 @@ export class CompletedTaskComponent implements OnInit {
       params['process'] = additionalParams.status;
     }
     if (additionalParams && additionalParams.user) {
-      params['users'] = additionalParams.user;
+      params['user'] = additionalParams.user;
     }
     this.taskService.taskCompletedLog(params).pipe(takeUntil(this.destroyer$)).subscribe(completedList => {
       this.logList = completedList['rows'];
