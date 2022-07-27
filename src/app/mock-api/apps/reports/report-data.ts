@@ -6,8 +6,14 @@ export interface ReportData {
 }
 
 export interface Dashboard {
-  by_process: any;
-  completed_outstanding: outstanding[];
+  by_process: {
+    annual_accounts: ByProcessGraph;
+    bookkeeping: ByProcessGraph;
+    self_assessments: ByProcessGraph;
+    setup_compliance: ByProcessGraph;
+    vat: ByProcessGraph;
+  };
+  completed_outstanding: ByProcessGraph[];
   overview: {
     bookkeeping_stage: string;
     return_review_accountant: string;
@@ -18,8 +24,8 @@ export interface Dashboard {
   };
 }
 
-interface outstanding {
-  completed: any;
-  date: any;
-  outstanding: any;
+interface ByProcessGraph {
+  completed: string;
+  date?: string;
+  outstanding: string;
 }

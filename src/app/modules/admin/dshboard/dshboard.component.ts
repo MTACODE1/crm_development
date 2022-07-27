@@ -167,7 +167,6 @@ export class DshboardComponent implements OnInit, OnDestroy {
             </div>`
       }
     };
-
     //bookeep
     this.chartBookKeep = {
       chart: {
@@ -216,7 +215,6 @@ export class DshboardComponent implements OnInit, OnDestroy {
         </div>`
       }
     };
-
     //vat
     this.chartVat = {
       chart: {
@@ -269,7 +267,6 @@ export class DshboardComponent implements OnInit, OnDestroy {
       </div>`
       }
     };
-
     //annual accounts
     this.chartAccount = {
       chart: {
@@ -322,7 +319,6 @@ export class DshboardComponent implements OnInit, OnDestroy {
     </div>`
       }
     };
-
     //assessment
     this.chartAssessment = {
       chart: {
@@ -375,6 +371,5 @@ export class DshboardComponent implements OnInit, OnDestroy {
     </div>`
       }
     };
-
   }
 }
