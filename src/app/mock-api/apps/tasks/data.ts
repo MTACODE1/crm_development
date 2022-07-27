@@ -33,3 +33,10 @@ export interface CompletedLog {
   task: string;
   user: string;
 }
+
+export enum taskType {
+  bookkeeping = 'Bookkeeping',
+  vat = 'VAT',
+  annual_accounts = 'Annual accounts',
+  self_assessment = 'Self Assessment',
+}

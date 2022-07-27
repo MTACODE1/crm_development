@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TasksMockApi } from 'app/mock-api/apps/tasks/api';
-import { CompletedLog, SalesflowUser } from 'app/mock-api/apps/tasks/data';
+import { CompletedLog, SalesflowUser, taskType } from 'app/mock-api/apps/tasks/data';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -13,6 +13,7 @@ export class CompletedTaskComponent implements OnInit {
   logList: CompletedLog[] = [];
   totalLogCount: number;
   public users: SalesflowUser[] = [];
+  public ProcessTypeEnum = taskType;
 
   public paginationConfig = {
     limit: 10,
