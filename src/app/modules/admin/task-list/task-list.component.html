@@ -25,7 +25,7 @@
       </div>
       <ng-container *ngFor="let data of item.text; let index= index">
         <div *ngIf="data.description" class="flex flex-col border-b overflow-hidden priority_{{item.color}}_{{data.priority}} cursor-pointer list-item"
-          [@myTrigger]='state' (click)="markCompleted(data)">
+          [@myTrigger]='state'>
           <div class="flex flex-auto flex-col px-4 py-3 mb-4">
             <div class="flex">
               <button mat-icon-button>
