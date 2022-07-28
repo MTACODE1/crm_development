@@ -17,4 +17,8 @@ export class ReportsService {
   getDashboardDetails(data){
     return this.http.post<Dashboard>(`${environment.baseUrl}/dashboard`, data);
   }
+
+  getBreakdownData(params){
+    return this.http.post(`${environment.baseUrl}/breakdown`, params);
+  }
 }

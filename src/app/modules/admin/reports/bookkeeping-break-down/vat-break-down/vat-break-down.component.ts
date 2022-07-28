@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Breakdown } from 'app/mock-api/apps/reports/report-data';
+import { ReportsService } from 'app/mock-api/apps/reports/reports.service';
 
 export interface PeriodicElement {
   name: string;
@@ -24,9 +26,13 @@ export class VatBreakDownComponent implements OnInit {
   displayedColumns: string[] = ['accountant','filed', 'sentClient', 'review', 'sentAccountant', 'book',  'total'];
   dataSource = ELEMENT_DATA;
   players = ELEMENT_DATA.slice();
-  constructor() { }
+ 
+  vatBreakDownList:Breakdown[]=[];
+
+  constructor(private reportService:ReportsService) { }
 
   ngOnInit(): void {
+    this.getVatBreakdownList();
   }
 
   public calculateTotal(type) {
@@ -37,15 +43,19 @@ export class VatBreakDownComponent implements OnInit {
     } else {
       return this.players.reduce((accum, curr) => accum + curr.req, 0);
     }
-    
   }
 
+  private getVatBreakdownList(){
+    this.reportService.getBreakdownData({}).subscribe(listResponse =>{
+      this.vatBreakDownList = listResponse['vat_breakdown']
+    })
+  }
 
   calculation() {
     const data =  this.dataSource.map(item => ({
       weight: item.weight,
       sent: item.sent,
-      req: item.req
+      req: item.req,
     }))
     return VatBreakDownComponent.sum(data[0]);
   }

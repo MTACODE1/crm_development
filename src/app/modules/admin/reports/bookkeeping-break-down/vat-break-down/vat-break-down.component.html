@@ -1,48 +1,48 @@
 <p class="font-bold">VAT Breakdown</p>
-<table class="min-w-240 overflow-y-visible w-full vat-table" mat-table [dataSource]="dataSource">
+<table class="min-w-240 overflow-y-visible w-full vat-table" mat-table [dataSource]="vatBreakDownList">
   <ng-container matColumnDef="accountant">
     <th mat-header-cell *matHeaderCellDef> Accountant </th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.accountant}} </td>
     <td mat-footer-cell *matFooterCellDef></td>
   </ng-container>
 
   <ng-container matColumnDef="filed">
     <th mat-header-cell *matHeaderCellDef class="package-col"> Filed </th>
-    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-    <td mat-footer-cell *matFooterCellDef>{{calculateTotal('weight')}}</td>
+    <td mat-cell *matCellDef="let element"> {{element.filed}} </td>
+    <!-- <td mat-footer-cell *matFooterCellDef>{{calculateTotal('filed')}}</td> -->
   </ng-container>
 
   <ng-container matColumnDef="sentClient">
     <th mat-header-cell *matHeaderCellDef class="book-col"> VAT Return sent to client </th>
-    <td mat-cell *matCellDef="let element"> {{element.sent}} </td>
-    <td mat-footer-cell *matFooterCellDef>{{calculateTotal('sent')}}</td>
+    <td mat-cell *matCellDef="let element"> {{element.vat_sent_client}} </td>
+    <!-- <td mat-footer-cell *matFooterCellDef>{{calculateTotal('sent')}}</td> -->
   </ng-container>
 
   <ng-container matColumnDef="review">
     <th mat-header-cell *matHeaderCellDef class="vat-col"> VAT Return Review from Accountatnt </th>
-    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-    <td mat-footer-cell *matFooterCellDef>{{calculateTotal('weight')}}</td>
+    <td mat-cell *matCellDef="let element"> {{element.vat_review_accountant}} </td>
+    <!-- <td mat-footer-cell *matFooterCellDef>{{calculateTotal('weight')}}</td> -->
   </ng-container>
 
   <ng-container matColumnDef="sentAccountant">
     <th mat-header-cell *matHeaderCellDef class="vat-col"> VAT Return Sent to Accountatnt </th>
-    <td mat-cell *matCellDef="let element"> {{element.req}} </td>
-    <td mat-footer-cell *matFooterCellDef>{{calculateTotal('req')}}</td>
+    <td mat-cell *matCellDef="let element"> {{element.vat_sent_accountant}} </td>
+    <!-- <td mat-footer-cell *matFooterCellDef>{{calculateTotal('req')}}</td> -->
   </ng-container>
 
   <ng-container matColumnDef="book">
     <th mat-header-cell *matHeaderCellDef class="account-col"> At Bookkeeping Stage </th>
-    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-    <td mat-footer-cell *matFooterCellDef>{{calculateTotal('weight')}}</td>
+    <td mat-cell *matCellDef="let element"> {{element.bookkeeping_stage}} </td>
+    <!-- <td mat-footer-cell *matFooterCellDef>{{calculateTotal('weight')}}</td> -->
   </ng-container>
 
   <ng-container matColumnDef="total">
     <th mat-header-cell *matHeaderCellDef> Total </th>
-    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-    <td mat-footer-cell *matFooterCellDef>{{calculation()}}</td>
+    <td mat-cell *matCellDef="let element"> {{element.total}} </td>
+    <!-- <td mat-footer-cell *matFooterCellDef>{{calculation()}}</td> -->
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+  <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr> -->
 </table>
