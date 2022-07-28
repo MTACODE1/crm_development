@@ -42,17 +42,26 @@ export class DshboardComponent implements OnInit, OnDestroy {
     ctrlValue.year(normalizedMonthAndYear.year());
     this.date.setValue(ctrlValue);
     datepicker.close();
+    this.getDashboardData();
   }
 
   public calculateMonth(value): void {
     value === 'decrement' ? this.date.setValue(this.date.value.subtract(1, 'month')) : this.date.setValue(this.date.value.add(1, 'month'));
-    console.log(this.date.value.toISOString())
+    // console.log(this.date.value.toISOString())
+    this.getDashboardData();
   }
 
   private getDashboardData(): void {
-    this.ReportService.getDashboardDetails({}).pipe(takeUntil(this.destroyer$))
+    const params = {
+      month: this.date.value.format('MMM-yy'),
+    }
+    this.ReportService.getDashboardDetails(params).pipe(takeUntil(this.destroyer$))
       .subscribe(result => {
         this.dashboardResult = result;
+        // var a = moment(this.dashboardResult.completed_outstanding[0].date, 'YYYY-MM-DD').days();
+        // console.log(a);
+        // const b = this.dashboardResult?.completed_outstanding?.map(({ date }) => moment(date, 'YYYY-mm-dd').day());
+        // console.log(b);
         this.prepareChartData();
         this.byProcessChartData();
       });
@@ -115,6 +124,21 @@ export class DshboardComponent implements OnInit, OnDestroy {
   }
 
   private byProcessChartData(): void {
+    let customObj1 = this.dashboardResult.by_process.setup_compliance[0];
+    delete customObj1.user;
+
+    let customObj2 = this.dashboardResult.by_process.bookkeeping[0];
+    delete customObj2.user;
+
+    let customObj3 = this.dashboardResult.by_process.vat[0];
+    delete customObj3.user;
+
+    let customObj4 = this.dashboardResult.by_process.annual_accounts[0];
+    delete customObj4.user;
+
+    let customObj5 = this.dashboardResult.by_process.self_assessments[0];
+    delete customObj5.user;
+
     this.chartSetupCompliance = {
       chart: {
         animations: {
@@ -130,7 +154,8 @@ export class DshboardComponent implements OnInit, OnDestroy {
         }
       },
       colors: ['#9ca3af', '#d1d5db'],
-      labels: Object.keys(this.dashboardResult.by_process.setup_compliance),
+      labels: Object.keys(customObj1),
+      // labels:['Completed', 'Pending'],
       plotOptions: {
         pie: {
           customScale: 0.9,
@@ -140,7 +165,11 @@ export class DshboardComponent implements OnInit, OnDestroy {
           }
         }
       },
-      series: Object.values(this.dashboardResult.by_process.setup_compliance).map(str => {
+      // series: [80, 20],
+      // series: Object.values(this.dashboardResult?.by_process?.setup_compliance[0]).map(str => {
+      //   return Number(str);
+      // }),
+      series: Object.values(customObj1).map(str=>{
         return Number(str);
       }),
       states: {
@@ -183,7 +212,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
         }
       },
       colors: ['#fbbf24', '#fde68a'],
-      labels: Object.keys(this.dashboardResult.by_process.bookkeeping),
+      labels: Object.keys(customObj2),
       plotOptions: {
         pie: {
           customScale: 0.9,
@@ -191,7 +220,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
           donut: { size: '70%' }
         }
       },
-      series: Object.values(this.dashboardResult.by_process.bookkeeping).map(str => {
+      series: Object.values(customObj2).map(str => {
         return Number(str);
       }),
       states: {
@@ -231,7 +260,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
         }
       },
       colors: ['#fb923c', '#fdba74'],
-      labels: Object.keys(this.dashboardResult.by_process.vat),
+      labels: Object.keys(customObj3),
       plotOptions: {
         pie: {
           customScale: 0.9,
@@ -241,7 +270,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
           }
         }
       },
-      series: Object.values(this.dashboardResult.by_process.vat).map(str => {
+      series: Object.values(customObj3).map(str => {
         return Number(str);
       }),
       states: {
@@ -283,7 +312,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
         }
       },
       colors: ['#f9a8d4', '#f472b6'],
-      labels: Object.keys(this.dashboardResult.by_process.annual_accounts),
+      labels: Object.keys(customObj4),
       plotOptions: {
         pie: {
           customScale: 0.9,
@@ -293,7 +322,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
           }
         }
       },
-      series: Object.values(this.dashboardResult.by_process.annual_accounts).map(str => {
+      series: Object.values(customObj4).map(str => {
         return Number(str);
       }),
       states: {
@@ -335,7 +364,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
         }
       },
       colors: ['#22c55e', '#86efac'],
-      labels: Object.keys(this.dashboardResult.by_process.self_assessments),
+      labels: Object.keys(customObj5),
       plotOptions: {
         pie: {
           customScale: 0.9,
@@ -345,7 +374,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
           }
         }
       },
-      series: Object.values(this.dashboardResult.by_process.self_assessments).map(str => {
+      series: Object.values(customObj5).map(str => {
         return Number(str);
       }),
       states: {
