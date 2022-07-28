@@ -3,11 +3,6 @@ import { ReportData } from 'app/mock-api/apps/reports/report-data';
 import { ReportsService } from 'app/mock-api/apps/reports/reports.service';
 import { Subject, takeUntil } from 'rxjs';
 
-const MANAGEMENT_DATA: ReportData[] = [
-  { user: 'Akkil', live: '80', suspended: '5', total: '85', },
-  { user: 'Ethisham', live: '50', suspended: '2', total: '48' },
-];
-
 @Component({
   selector: 'app-accountant-client',
   templateUrl: './accountant-client.component.html',
@@ -18,7 +13,7 @@ export class AccountantClientComponent implements OnInit, OnDestroy {
   managementColumns: string[] = ['management', 'mlive', 'msuspended', 'mtotal'];
   endofyearColumns: string[] = ['eaccountant', 'elive', 'esuspended', 'etotal'];
 
-  managementData = MANAGEMENT_DATA;
+  managementList: ReportData[] = [];
   accountantList: ReportData[] = [];
   endofyearList: ReportData[] = [];
 
@@ -39,6 +34,7 @@ export class AccountantClientComponent implements OnInit, OnDestroy {
     this.reportService.getClientNumber({}).pipe(takeUntil(this.destroyer$)).subscribe(listResponse => {
       this.accountantList = listResponse['accountant'];
       this.endofyearList = listResponse['eoy_accountant'];
+      this.managementList = listResponse['mgmt_accountant'];
     });
   }
 
