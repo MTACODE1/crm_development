@@ -30,13 +30,13 @@ interface ByProcessGraph {
   outstanding: string;
 }
 
-export interface ByProcess{
+export interface ByProcess {
   completed: string;
   outstanding: string;
   user?: string;
 }
 
-export interface Breakdown {
+export interface VatBreakdown {
   accountant: string;
   bookkeeping_stage: string;
   filed: string;
@@ -44,4 +44,29 @@ export interface Breakdown {
   vat_review_accountant: string;
   vat_sent_accountant: string;
   vat_sent_client: string;
+}
+
+export interface IndividualStage {
+  accountant: string;
+  stage_1: string;
+  stage_2: string;
+  stage_3: string;
+  stage_4: string;
+  stage_3_4: string;
+}
+
+export interface BreakDown {
+  accountant: string;
+  mr_sent_client: string;
+  mr_reviewed_accountant: string;
+  bookkeeping_create_mr: string;
+  query_sent_client: string;
+  queries_requested: string;
+  bookkeeping_wip: string;
+  request_sent_client: string;
+  bookkeeping_process_started: string;
+  information_requested: string;
+  total: string;
+  check: string;
+  mr_complete: string;
 }
