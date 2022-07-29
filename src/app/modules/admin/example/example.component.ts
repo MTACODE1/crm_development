@@ -224,13 +224,14 @@ export class ExampleComponent implements OnInit, OnDestroy {
   }
 
   public startUpdates(status, item): void {
+    const onboardingMessage = `Start Onboarding Process for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?`;
     const messgae = `Start Bookkeeping Process for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?`;
     const vatMessgae = `Start VAT Process for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?`;
     const accMessgae = 'Start Accounts Process for Bespoke Alpha Solutions ?';
     const confirmMessgae = 'Start Confirmation Statement process for Bespoke Alpha Solutions ?';
     const dialogRef = this._fuseConfirmationService.open({
       title: 'Are you sure?',
-      message: status === 'bookkeeping' ? messgae : status === 'vat' ? vatMessgae : status === 'conf_stmt' ? confirmMessgae : accMessgae,
+      message: status === 'bookkeeping' ? messgae : status === 'vat' ? vatMessgae : status === 'conf_stmt' ? confirmMessgae : status === 'onboarding' ? onboardingMessage : accMessgae,
       dismissible: true,
       actions: {
         confirm: {
@@ -253,8 +254,10 @@ export class ExampleComponent implements OnInit, OnDestroy {
           this.updateStatus(item.annual_accounts_status_1[0], item, 'annual_accounts', true);
         } else if (status === 'accNew') {
           this.updateStatus(item.annual_accounts_status_2[0], item, 'accNew', true);
-        } else {
+        } else if (status === 'conf_stmt'){
           this.updateStatus(item.conf_stmt_status[0], item, 'conf_stmt', true);
+        } else{
+          this.updateStatus(item.onboarding_status[0], item, 'onboarding', true);
         }
       }
     });
