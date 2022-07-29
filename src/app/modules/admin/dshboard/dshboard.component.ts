@@ -124,21 +124,9 @@ export class DshboardComponent implements OnInit, OnDestroy {
   }
 
   private byProcessChartData(): void {
-    let customObj1 = this.dashboardResult.by_process.setup_compliance[0];
-    delete customObj1.user;
-
-    let customObj2 = this.dashboardResult.by_process.bookkeeping[0];
-    delete customObj2.user;
-
-    let customObj3 = this.dashboardResult.by_process.vat[0];
-    delete customObj3.user;
-
-    let customObj4 = this.dashboardResult.by_process.annual_accounts[0];
-    delete customObj4.user;
-
-    let customObj5 = this.dashboardResult.by_process.self_assessments[0];
-    delete customObj5.user;
-
+    let obj1 = (this.dashboardResult.by_process.setup_compliance[0]);
+    // delete obj1.user;
+    console.log(obj1);
     this.chartSetupCompliance = {
       chart: {
         animations: {
@@ -154,7 +142,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
         }
       },
       colors: ['#9ca3af', '#d1d5db'],
-      labels: Object.keys(customObj1),
+      labels: Object.keys(this.dashboardResult.by_process.setup_compliance[0]).slice(1),
       // labels:['Completed', 'Pending'],
       plotOptions: {
         pie: {
@@ -165,13 +153,11 @@ export class DshboardComponent implements OnInit, OnDestroy {
           }
         }
       },
-      // series: [80, 20],
-      // series: Object.values(this.dashboardResult?.by_process?.setup_compliance[0]).map(str => {
+      series: [80, 20],
+
+      // series: Object.values(obj1).map(str =>{
       //   return Number(str);
       // }),
-      series: Object.values(customObj1).map(str=>{
-        return Number(str);
-      }),
       states: {
         hover: {
           filter: {
@@ -212,7 +198,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
         }
       },
       colors: ['#fbbf24', '#fde68a'],
-      labels: Object.keys(customObj2),
+      labels: Object.keys(this.dashboardResult.by_process.bookkeeping[0]).slice(1),
       plotOptions: {
         pie: {
           customScale: 0.9,
@@ -220,9 +206,10 @@ export class DshboardComponent implements OnInit, OnDestroy {
           donut: { size: '70%' }
         }
       },
-      series: Object.values(customObj2).map(str => {
-        return Number(str);
-      }),
+      series:[80,20],
+      // series: Object.values(customObj2).map(str => {
+      //   return Number(str);
+      // }),
       states: {
         hover: {
           filter: {
@@ -260,7 +247,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
         }
       },
       colors: ['#fb923c', '#fdba74'],
-      labels: Object.keys(customObj3),
+      labels: Object.keys(this.dashboardResult.by_process.vat[0]).slice(1),
       plotOptions: {
         pie: {
           customScale: 0.9,
@@ -270,9 +257,10 @@ export class DshboardComponent implements OnInit, OnDestroy {
           }
         }
       },
-      series: Object.values(customObj3).map(str => {
-        return Number(str);
-      }),
+      series: [80,20],
+      // series: Object.values(customObj3).map(str => {
+      //   return Number(str);
+      // }),
       states: {
         hover: {
           filter: {
@@ -312,7 +300,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
         }
       },
       colors: ['#f9a8d4', '#f472b6'],
-      labels: Object.keys(customObj4),
+      labels: Object.keys(this.dashboardResult.by_process.annual_accounts[0]).slice(1),
       plotOptions: {
         pie: {
           customScale: 0.9,
@@ -322,9 +310,10 @@ export class DshboardComponent implements OnInit, OnDestroy {
           }
         }
       },
-      series: Object.values(customObj4).map(str => {
-        return Number(str);
-      }),
+      series: [80,20],
+      // series: Object.values(customObj4).map(str => {
+      //   return Number(str);
+      // }),
       states: {
         hover: {
           filter: {
@@ -364,7 +353,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
         }
       },
       colors: ['#22c55e', '#86efac'],
-      labels: Object.keys(customObj5),
+      labels: Object.keys(this.dashboardResult.by_process.self_assessments[0]).slice(1),
       plotOptions: {
         pie: {
           customScale: 0.9,
@@ -374,9 +363,13 @@ export class DshboardComponent implements OnInit, OnDestroy {
           }
         }
       },
-      series: Object.values(customObj5).map(str => {
-        return Number(str);
-      }),
+      series: [80,20],
+      // series: Object.values(customObj5).map(str => {
+      //   return Number(str);
+      // }),
+      // series: Object.values(this.dashboardResult?.by_process?.setup_compliance[0]).map(str => {
+      //     return Number(str);
+      //   }),
       states: {
         hover: {
           filter: {
