@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ReportData } from 'app/mock-api/apps/reports/report-data';
 import { ReportsService } from 'app/mock-api/apps/reports/reports.service';
 import { Subject, takeUntil } from 'rxjs';
@@ -17,9 +17,15 @@ export class AccountantClientComponent implements OnInit, OnDestroy {
   accountantList: ReportData[] = [];
   endofyearList: ReportData[] = [];
 
+  totalCount:number;
+  public paginationConfig = {
+    limit: 10,
+    offset: 0,
+  }
+
   private readonly destroyer$: Subject<void> = new Subject();
 
-  constructor(private reportService: ReportsService) { }
+  constructor(private reportService: ReportsService, private cd:ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.clientList();
@@ -35,7 +41,8 @@ export class AccountantClientComponent implements OnInit, OnDestroy {
       this.accountantList = listResponse['accountant'];
       this.endofyearList = listResponse['eoy_accountant'];
       this.managementList = listResponse['mgmt_accountant'];
+      console.log(listResponse);
+      this.cd.detectChanges();
     });
   }
-
 }
