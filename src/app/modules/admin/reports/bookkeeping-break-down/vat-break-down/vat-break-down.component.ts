@@ -24,15 +24,18 @@ export class VatBreakDownComponent implements OnInit {
   public calculateTotal(type) {
 
     if (type === 'filed')
-        return this.vatBreakDownList.map(t => +t.filed).reduce((acc, value) => acc + value, 0);
+      return this.vatBreakDownList.map(t => +t.filed).reduce((acc, value) => acc + value, 0);
     if (type === 'vatsent')
       return this.vatBreakDownList.map(t => +t.vat_sent_client).reduce((acc, value) => acc + value, 0);
     if (type === 'vatreview')
       return this.vatBreakDownList.map(t => +t.vat_review_accountant).reduce((acc, value) => acc + value, 0);
     if (type === 'sentaccountant')
       return this.vatBreakDownList.map(t => +t.vat_sent_accountant).reduce((acc, value) => acc + value, 0);
-    else {
+    if (type === 'bookkeepstage') {
       return this.vatBreakDownList.map(t => +t.bookkeeping_stage).reduce((acc, value) => acc + value, 0);
+    }
+    else {
+      return this.vatBreakDownList.map(t => +t.total).reduce((acc, value) => acc + value, 0);
     }
   }
 
@@ -43,6 +46,25 @@ export class VatBreakDownComponent implements OnInit {
   }
 
   calculation() {
-   return this.vatBreakDownList.map(t => +t.total).reduce((acc, value) => acc + value, 0);
+    const data = this.vatBreakDownList.map(item => ({
+      filed: item.filed,
+      vatsent: item.vat_sent_client,
+      vatreview: item.vat_review_accountant,
+      sentaccountant: item.vat_sent_accountant,
+      bookkeepstage: item.bookkeeping_stage,
+    }))
+    return VatBreakDownComponent.sum(data[0]);
+
   }
+
+  private static sum(obj) {
+    var sum = 0;
+    for (var el in obj) {
+      if (obj.hasOwnProperty(el)) {
+        sum += parseFloat(obj[el]);
+      }
+    }
+    return sum;
+  }
+
 }

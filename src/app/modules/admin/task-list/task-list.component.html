@@ -16,7 +16,7 @@
   <div class="flex w-full p-6 sm:p-6 flex-wrap h-fit task-lists">
     <div class="flex-1 mx-2 bg-white rounded-md drop-shadow-lg  mb-3" *ngFor="let item of taskListArr; let i = index">
       <div class="relative overflow-hidden">
-        <h1 class="mb-4 text-xl font-bold py-3 px-4 text-center">{{item.name}}</h1>
+        <h1 class="mb-4 text-xl font-bold py-3 px-2 text-center">{{item.name}}</h1>
         <div class="absolute bottom-0 right-0 w-18 h-18 -m-6">
           <mat-icon class="icon-size-18 opacity-25 text-{{item.color}}-800 dark:text-{{item.color}}-800"
             svgIcon="heroicons_outline:check-circle">

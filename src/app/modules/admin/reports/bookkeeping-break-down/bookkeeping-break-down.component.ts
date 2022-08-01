@@ -24,25 +24,25 @@ export class BookkeepingBreakDownComponent implements OnInit {
 
   public calculateTotal(type) {
     if (type === 'mrComplete')
-    return this.breakdownList.map(t => +t.mr_complete).reduce((acc, value) => acc + value, 0);
+      return this.breakdownList.map(t => +t.mr_complete).reduce((acc, value) => acc + value, 0);
     if (type === 'mrSent')
-    return this.breakdownList.map(t => +t.mr_sent_client).reduce((acc, value) => acc + value, 0);
+      return this.breakdownList.map(t => +t.mr_sent_client).reduce((acc, value) => acc + value, 0);
     if (type === 'mrReviewed')
-    return this.breakdownList.map(t => +t.mr_reviewed_accountant).reduce((acc, value) => acc + value, 0);
+      return this.breakdownList.map(t => +t.mr_reviewed_accountant).reduce((acc, value) => acc + value, 0);
     if (type === 'mrBookkeeping')
-    return this.breakdownList.map(t => +t.bookkeeping_create_mr).reduce((acc, value) => acc + value, 0);
+      return this.breakdownList.map(t => +t.bookkeeping_create_mr).reduce((acc, value) => acc + value, 0);
     if (type === 'querySent')
-    return this.breakdownList.map(t => +t.query_sent_client).reduce((acc, value) => acc + value, 0);
+      return this.breakdownList.map(t => +t.query_sent_client).reduce((acc, value) => acc + value, 0);
     if (type === 'queryRequested')
-    return this.breakdownList.map(t => +t.queries_requested).reduce((acc, value) => acc + value, 0);
+      return this.breakdownList.map(t => +t.queries_requested).reduce((acc, value) => acc + value, 0);
     if (type === 'wipBookkeeping')
-    return this.breakdownList.map(t => +t.bookkeeping_wip).reduce((acc, value) => acc + value, 0);
+      return this.breakdownList.map(t => +t.bookkeeping_wip).reduce((acc, value) => acc + value, 0);
     if (type === 'requestSent')
-    return this.breakdownList.map(t => +t.request_sent_client).reduce((acc, value) => acc + value, 0);
+      return this.breakdownList.map(t => +t.request_sent_client).reduce((acc, value) => acc + value, 0);
     if (type === 'infoRequested')
-    return this.breakdownList.map(t => +t.information_requested).reduce((acc, value) => acc + value, 0);
+      return this.breakdownList.map(t => +t.information_requested).reduce((acc, value) => acc + value, 0);
     if (type === 'bookkeepingStarted')
-    return this.breakdownList.map(t => +t.bookkeeping_process_started).reduce((acc, value) => acc + value, 0);
+      return this.breakdownList.map(t => +t.bookkeeping_process_started).reduce((acc, value) => acc + value, 0);
     else {
       return this.breakdownList.map(t => +t.total).reduce((acc, value) => acc + value, 0);
     }
@@ -54,7 +54,29 @@ export class BookkeepingBreakDownComponent implements OnInit {
     })
   }
 
-  // calculation() {
-  //   return this.breakdownList.map(t => +t.total).reduce((acc, value) => acc + value, 0);
-  //  }
+  calculation() {
+    const data = this.breakdownList.map(item => ({
+      mrComplete: item.mr_complete,
+      mrSent: item.mr_sent_client,
+      mrReviewed: item.mr_reviewed_accountant,
+      mrBookkeeping: item.bookkeeping_create_mr,
+      querySent: item.query_sent_client,
+      queryRequested: item.queries_requested,
+      wipBookkeeping: item.bookkeeping_wip,
+      requestSent: item.request_sent_client,
+      infoRequested: item.information_requested,
+      bookkeepingStarted: item.bookkeeping_process_started,
+    }))
+    return BookkeepingBreakDownComponent.sum(data[0]);
+  }
+
+  private static sum(obj) {
+    var sum = 0;
+    for (var el in obj) {
+      if (obj.hasOwnProperty(el)) {
+        sum += parseFloat(obj[el]);
+      }
+    }
+    return sum;
+  }
 }
