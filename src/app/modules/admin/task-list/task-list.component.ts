@@ -67,7 +67,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
   }
 
   private getTaskList(additionalParams): void {
-    const  param = { ...additionalParams }
+    const param = { ...additionalParams }
     this.taskService.getTaskList(param).pipe(takeUntil(this.destroyer$)).subscribe(taskResponse => {
       const tasksList = taskResponse;
       Object.keys(tasksList).forEach(element => {
@@ -100,36 +100,36 @@ export class TaskListComponent implements OnInit, OnDestroy {
   }
 
 
-  public markCompleted(item: TaskListItems): void {
-    const dialogRef = this._fuseConfirmationService.open({
-      title: 'Are you sure?',
-      message: item.t_status !== '2' ? `Mark <b>${item.text}</b> as completed ?` : `Mark <b>${item.text}</b> as uncompleted?`,
-      dismissible: true,
-      actions: {
-        cancel: { label: 'No' },
-        confirm: { label: 'Yes', color: 'warn' }
-      }
-    });
-    dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(result => {
-      if (result === 'confirmed') {
-        if (item.t_status !== '2') {
-          this.moveCompleted(item, true);
-        } else {
-          this.moveCompleted(item, false);
-        }
-      }
-    });
-  }
+  // public markCompleted(item: TaskListItems): void {
+  //   const dialogRef = this._fuseConfirmationService.open({
+  //     title: 'Are you sure?',
+  //     message: item.t_status !== '2' ? `Mark <b>${item.text}</b> as completed ?` : `Mark <b>${item.text}</b> as uncompleted?`,
+  //     dismissible: true,
+  //     actions: {
+  //       cancel: { label: 'No' },
+  //       confirm: { label: 'Yes', color: 'warn' }
+  //     }
+  //   });
+  //   dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(result => {
+  //     if (result === 'confirmed') {
+  //       if (item.t_status !== '2') {
+  //         this.moveCompleted(item, true);
+  //       } else {
+  //         this.moveCompleted(item, false);
+  //       }
+  //     }
+  //   });
+  // }
 
 
-  private moveCompleted(item: TaskListItems, completed: boolean): void {
-    const task = {
-      id: item.task_id,
-      t_status: completed ? 2 : 1
-    }
-    this.taskService.updateTaskStatus(task).pipe(takeUntil(this.destroyer$)).subscribe(_ => {
-      this.getTaskList({ uid: this.username.value, month: moment(new Date()).format('MMM-yyyy') });
-    });
-  }
+  // private moveCompleted(item: TaskListItems, completed: boolean): void {
+  //   const task = {
+  //     id: item.task_id,
+  //     t_status: completed ? 2 : 1
+  //   }
+  //   this.taskService.updateTaskStatus(task).pipe(takeUntil(this.destroyer$)).subscribe(_ => {
+  //     this.getTaskList({ uid: this.username.value, month: moment(new Date()).format('MMM-yyyy') });
+  //   });
+  // }
 
 }
