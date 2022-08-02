@@ -18,9 +18,13 @@ export class AccountantClientComponent implements OnInit, OnDestroy {
   endofyearList: ReportData[] = [];
 
   totalCount:number;
+  totalCount1:number;
+  totalCount2:number;
   public paginationConfig = {
     limit: 10,
-    offset: 0,
+    offset_acct: 10,
+    offset_mgmt:0,
+    offset_eoy:0,
   }
 
   private readonly destroyer$: Subject<void> = new Subject();
@@ -37,23 +41,32 @@ export class AccountantClientComponent implements OnInit, OnDestroy {
   }
 
   private clientList(): void {
+    console.log('****** this.paginationConfig =>', this.paginationConfig)
     const params ={
       ...this.paginationConfig
     }
     console.log(params)
     this.reportService.getClientNumber(params).pipe(takeUntil(this.destroyer$)).subscribe(listResponse => {
       this.accountantList = listResponse['accountant'];
+      console.log(listResponse)
       this.endofyearList = listResponse['eoy_accountant'];
       this.managementList = listResponse['mgmt_accountant'];
-      this.totalCount = this.accountantList.length;
+      this.totalCount = listResponse['total_accountant'];
+      this.totalCount1 = listResponse['total_mgmt_accountant'];
+      this.totalCount2 = listResponse['total_eoy_accountant'];
       console.log(this.totalCount)
       this.cd.detectChanges();
     });
   }
 
   public onPageChange(event): void {
-   this.paginationConfig = { ...this.paginationConfig, ...event}
-   console.log(this.paginationConfig);
-   this.clientList();
+    console.log('event =>',event);
+    delete event.offset
+   const params = { ...this.paginationConfig, ...event}
+   console.log(params);
+   this.reportService.getClientNumber(params).subscribe(response =>{
+    this.managementList = response['mgmt_accountant'];
+    this.totalCount1 = response['total_mgmt_accountant'];
+   })
   }
 }
