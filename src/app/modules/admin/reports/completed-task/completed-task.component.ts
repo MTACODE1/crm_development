@@ -12,6 +12,8 @@ export class CompletedTaskComponent implements OnInit {
   displayedColumns: string[] = ['username', 'company', 'taskType', 'task', 'date', 'time'];
   logList: CompletedLog[] = [];
   totalLogCount: number;
+  userTerm: string;
+  searchTerm: string;
   public users: SalesflowUser[] = [];
   public ProcessTypeEnum = taskType;
 
@@ -50,23 +52,31 @@ export class CompletedTaskComponent implements OnInit {
       params['user'] = additionalParams.user;
     }
     this.taskService.taskCompletedLog(params).pipe(takeUntil(this.destroyer$)).subscribe(completedList => {
+      console.log(completedList)
       this.logList = completedList['rows'];
       this.totalLogCount = completedList['total_count'];
     })
   }
 
   public onPageChange(event): void {
-    this.paginationConfig = { ...this.paginationConfig, ...event };
-    this.getTaskList({});
+    const params = {
+      ...this.paginationConfig,
+      ...event,
+      user: this.userTerm,
+    }
+    console.log(params);
+    this.taskService.taskCompletedLog(params).subscribe(response => {
+      this.logList = response['rows'];
+    });
   }
 
   public statusFilter(item) {
-    const param = { status: item }
-    this.getTaskList(param);
+    const params = { status: item }
+    this.getTaskList(params);
   }
 
   public onClientChange(event) {
-    const param = { user: event.value }
-    this.getTaskList(param);
+    const params = { user: event.value }
+    this.getTaskList(params);
   }
 }

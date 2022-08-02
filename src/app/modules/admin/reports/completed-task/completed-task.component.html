@@ -3,9 +3,15 @@
     <div class="sm:col-span-6 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden mb-3">
       <div class="text-lg font-medium tracking-tight leading-6 truncate mb-2">
         <div class="flex items-center justify-between flex-wrap pb-2">
-          <button mat-icon-button [matMenuTriggerFor]="menu">
-            <mat-icon svgIcon="heroicons_outline:filter"></mat-icon>
-          </button>
+          <div class="social-links d-flex">
+            <div class="social-btn d-flex">
+              <button mat-icon-button [matMenuTriggerFor]="menu"  class="pl-3 pt-2">
+                <mat-icon svgIcon="heroicons_outline:filter"></mat-icon>             
+              </button>
+              <span>Apply Filter</span>
+            </div>
+          </div>
+          
           <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="statusFilter('bookkeeping')">
               <span class="w-3 h-3 mr-2 rounded-full bg-amber-200"></span>
@@ -29,7 +35,7 @@
             </button>
           </mat-menu>
           <mat-form-field appearance="fill" id="status" class="w-36">
-            <mat-select  class="text-lg text-gray-500" placeholder="Select User" (selectionChange)="onClientChange($event)" disableOptionCentering>
+            <mat-select  class="text-lg text-gray-500" placeholder="Select User" (selectionChange)="onClientChange($event)" [(ngModel)]="userTerm" disableOptionCentering>
               <mat-option *ngFor="let item of users" [value]="item.id">
                 <ng-container *ngIf="item?.first_name; else nousername">
                   {{item?.first_name}} {{item?.last_name}}
@@ -43,8 +49,8 @@
       <div class="flex flex-col flex-auto overflow-auto table-container">
         <table class="min-w-240 overflow-y-visible w-full individual-table" mat-table [dataSource]="logList">
           <ng-container matColumnDef="username">
-            <th mat-header-cell *matHeaderCellDef> USer Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.user}} </td>
+            <th mat-header-cell *matHeaderCellDef> User Name </th>
+            <td mat-cell *matCellDef="let element" class="pl-2"> {{element.user}} </td>
           </ng-container>
         
           <ng-container matColumnDef="company">
@@ -77,7 +83,8 @@
         </table>
       </div>
     </div>
-    <div class="text-right mt-3.5">
+
+    <div class="paginator text-right mt-3.5" >
       <app-paginator [pageSizes]="[10, 20, 30]" [count]="totalLogCount" [perPage]="paginationConfig.limit"
       (pageChange)="onPageChange($event)">
     </app-paginator>
