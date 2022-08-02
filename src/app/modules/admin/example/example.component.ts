@@ -102,6 +102,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
     this.paginationConfig = { ...this.paginationConfig, ...event };
     const params = { search: this.searchTerm };
     this.getTableDetails(params);
+    console.log(params)
   }
 
   public getNextStatus(data, i, statsuName, item): void {
@@ -224,14 +225,16 @@ export class ExampleComponent implements OnInit, OnDestroy {
   }
 
   public startUpdates(status, item): void {
-    const onboardingMessage = `Start Onboarding Process for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?`;
+    let lastYear = this.today.year() - 1;
+    const onboardingMessage = `Start Onboarding Process for Bespoke Alpha Solutions for ${this.date.value.format('YYYY')}?`;
     const messgae = `Start Bookkeeping Process for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?`;
     const vatMessgae = `Start VAT Process for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?`;
-    const accMessgae = 'Start Accounts Process for Bespoke Alpha Solutions ?';
-    const confirmMessgae = 'Start Confirmation Statement process for Bespoke Alpha Solutions ?';
+    const accMessgae = `Start Accounts Process for Bespoke Alpha Solutions for ${this.date.value.format('YYYY')}?`;
+    const accStatMessage = `Start Accounts Process for Bespoke Alpha Solutions for ${lastYear}?`;
+    const confirmMessgae = `Start Confirmation Statement process for Bespoke Alpha Solutions for ${this.date.value.format('YYYY')}?`;
     const dialogRef = this._fuseConfirmationService.open({
       title: 'Are you sure?',
-      message: status === 'bookkeeping' ? messgae : status === 'vat' ? vatMessgae : status === 'conf_stmt' ? confirmMessgae : status === 'onboarding' ? onboardingMessage : accMessgae,
+      message: status === 'bookkeeping' ? messgae : status === 'vat' ? vatMessgae : status === 'conf_stmt' ? confirmMessgae : status === 'onboarding' ? onboardingMessage: status ==='annual_accounts' ? accStatMessage : accMessgae,
       dismissible: true,
       actions: {
         confirm: {
@@ -256,7 +259,8 @@ export class ExampleComponent implements OnInit, OnDestroy {
           this.updateStatus(item.annual_accounts_status_2[0], item, 'accNew', true);
         } else if (status === 'conf_stmt'){
           this.updateStatus(item.conf_stmt_status[0], item, 'conf_stmt', true);
-        } else{
+        } 
+        else{
           this.updateStatus(item.onboarding_status[0], item, 'onboarding', true);
         }
       }
