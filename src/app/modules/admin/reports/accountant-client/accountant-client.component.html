@@ -8,17 +8,17 @@
             <th mat-header-cell *matHeaderCellDef class="w-80"> Accountant </th>
             <td mat-cell *matCellDef="let element" class="pl-2 w-80"> {{element.user}} </td>
           </ng-container>
-        
+
           <ng-container matColumnDef="live">
             <th mat-header-cell *matHeaderCellDef class="text-center"> Live </th>
             <td mat-cell *matCellDef="let element" class="text-center"> {{element.live}}</td>
           </ng-container>
-        
+
           <ng-container matColumnDef="suspended">
             <th mat-header-cell *matHeaderCellDef class="text-center"> Suspended </th>
             <td mat-cell *matCellDef="let element" class="text-center"> {{element.suspended}}</td>
           </ng-container>
-        
+
           <ng-container matColumnDef="total">
             <th mat-header-cell *matHeaderCellDef class="text-center"> Total </th>
             <td mat-cell *matCellDef="let element" class="text-center"> {{element.total}}</td>
@@ -26,6 +26,11 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+      </div>
+      <div class="text-right mt-3.5">
+        <app-paginator [pageSizes]="[10, 20, 30]" [count]="totalCount" [perPage]="paginationConfig.limit"
+          (pageChange)="onPageChange($event)">
+        </app-paginator>
       </div>
     </div>
 
@@ -37,25 +42,30 @@
             <th mat-header-cell *matHeaderCellDef class="w-80"> Accountant </th>
             <td mat-cell *matCellDef="let element" class="pl-2 w-80"> {{element.user}} </td>
           </ng-container>
-        
+
           <ng-container matColumnDef="mlive">
             <th mat-header-cell *matHeaderCellDef class="text-center"> Live </th>
             <td mat-cell *matCellDef="let element" class="text-center"> {{element.live}}</td>
           </ng-container>
-        
+
           <ng-container matColumnDef="msuspended">
             <th mat-header-cell *matHeaderCellDef class="text-center"> Suspended </th>
             <td mat-cell *matCellDef="let element" class="text-center"> {{element.suspended}}</td>
           </ng-container>
-        
+
           <ng-container matColumnDef="mtotal">
             <th mat-header-cell *matHeaderCellDef class="text-center"> Total </th>
             <td mat-cell *matCellDef="let element" class="text-center"> {{element.total}}</td>
           </ng-container>
-        
+
           <tr mat-header-row *matHeaderRowDef="managementColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: managementColumns;"></tr>
         </table>
+      </div>
+      <div class="text-right mt-3.5">
+        <app-paginator [pageSizes]="[10, 20, 30]" [count]="totalCount" [perPage]="paginationConfig.limit"
+          (pageChange)="onPageChange($event)">
+        </app-paginator>
       </div>
     </div>
 
@@ -67,30 +77,31 @@
             <th mat-header-cell *matHeaderCellDef class="w-80">Accountant </th>
             <td mat-cell *matCellDef="let element" class="pl-2 w-80"> {{element.user}} </td>
           </ng-container>
-        
+
           <ng-container matColumnDef="elive">
             <th mat-header-cell *matHeaderCellDef class="text-center"> Live </th>
             <td mat-cell *matCellDef="let element" class="text-center"> {{element.live}}</td>
           </ng-container>
-        
+
           <ng-container matColumnDef="esuspended">
             <th mat-header-cell *matHeaderCellDef class="text-center"> Suspended </th>
             <td mat-cell *matCellDef="let element" class="text-center"> {{element.suspended}}</td>
           </ng-container>
-        
+
           <ng-container matColumnDef="etotal">
             <th mat-header-cell *matHeaderCellDef class="text-center"> Total </th>
             <td mat-cell *matCellDef="let element" class="text-center"> {{element.total}}</td>
           </ng-container>
-        
+
           <tr mat-header-row *matHeaderRowDef="endofyearColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: endofyearColumns;"></tr>
         </table>
       </div>
+      <div class="text-right mt-3.5">
+        <app-paginator [pageSizes]="[10, 20, 30]" [count]="totalCount" [perPage]="paginationConfig.limit"
+          (pageChange)="onPageChange($event)">
+        </app-paginator>
+      </div>
     </div>
-    <!-- <div class="text-right mt-3.5">
-      <app-paginator [pageSizes]="[10, 20, 30]" [count]="10" [perPage]="10">
-      </app-paginator>
-    </div> -->
   </div>
 </div>

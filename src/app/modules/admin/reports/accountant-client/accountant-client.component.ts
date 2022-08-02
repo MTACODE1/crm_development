@@ -37,12 +37,23 @@ export class AccountantClientComponent implements OnInit, OnDestroy {
   }
 
   private clientList(): void {
-    this.reportService.getClientNumber({}).pipe(takeUntil(this.destroyer$)).subscribe(listResponse => {
+    const params ={
+      ...this.paginationConfig
+    }
+    console.log(params)
+    this.reportService.getClientNumber(params).pipe(takeUntil(this.destroyer$)).subscribe(listResponse => {
       this.accountantList = listResponse['accountant'];
       this.endofyearList = listResponse['eoy_accountant'];
       this.managementList = listResponse['mgmt_accountant'];
-      console.log(listResponse);
+      this.totalCount = this.accountantList.length;
+      console.log(this.totalCount)
       this.cd.detectChanges();
     });
+  }
+
+  public onPageChange(event): void {
+   this.paginationConfig = { ...this.paginationConfig, ...event}
+   console.log(this.paginationConfig);
+   this.clientList();
   }
 }
