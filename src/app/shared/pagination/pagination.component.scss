@@ -28,7 +28,7 @@
   align-items: center;
   text-decoration: none;
   border: 1px solid #dee2e6;
-  margin-left: -1px;
+  // margin-left: -1px;
   color: #64748b;
   background-color: $white;
 }
@@ -52,5 +52,38 @@
   }
   &:focus {
     box-shadow: none !important;
+  }
+}
+
+@media(min-width:320px) and (max-width:425px){
+  .pagination{
+    margin-left: -47px;
+  }
+}
+
+@media(max-width:320px){
+  .page-item {
+    .page-link {
+      width: 23px !important;
+      height: 25px !important;
+    }
+  }
+}
+
+@media(max-width:375px){
+  .page-item {
+    .page-link {
+      width: 23px !important;
+      height: 25px !important;
+    }
+  }
+}
+
+@media(max-width:425px){
+  .page-item {
+    .page-link {
+      width: 33px;
+      height: 32px;
+    }
   }
 }

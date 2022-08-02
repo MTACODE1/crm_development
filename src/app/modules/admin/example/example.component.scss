@@ -72,3 +72,51 @@
     color: $gray200;
   }
 }
+
+@media(min-width:320px){
+  .search{
+    margin-left: 10px;
+  }
+  .dateinput{
+    margin-left: 25px;
+  }
+}
+
+@media(min-width:375px){
+  .search{
+    margin-left: 45px;
+  }
+  .dateinput{
+    margin-left: 63px;
+  }
+}
+
+@media(min-width:425px){
+  .search{
+    margin-left: 68px;
+  }
+  .dateinput{
+    margin-left: 84px;
+  }
+  .selection{
+    margin-left: 36px;
+  }
+}
+
+@media(min-width:768px){
+  .search{
+    margin-left: 0px;
+  }
+  .dateinput{
+    margin-left: 0px;
+  }
+  .selection{
+    margin-left: 0px;
+  }
+}
+
+@media(min-width:375px) and (max-width:424px){
+  .paginator{
+    margin-left: 22px;
+  }
+}
