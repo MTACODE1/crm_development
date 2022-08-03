@@ -28,7 +28,6 @@ export class PaginationComponent implements OnChanges {
 
   constructor(private breakpointObserver: BreakpointObserver){
     this.breakpointObserver.observe(["(max-width: 525px)"]).subscribe((result: BreakpointState) => {
-      console.log(result);
       if (result.matches) {
         this.maxSize =3;
       }

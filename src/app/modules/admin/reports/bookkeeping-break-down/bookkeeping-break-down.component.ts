@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { BreakDown } from 'app/mock-api/apps/reports/report-data';
 import { ReportsService } from 'app/mock-api/apps/reports/reports.service';
+import moment from 'moment';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -14,6 +16,7 @@ export class BookkeepingBreakDownComponent implements OnInit {
   displayedFooter2: string[] = ['title', 'stage4', 'stage3', 'emptyFooter', 'emptyFooter', 'stage2', 'emptyFooter', 'emptyFooter', 'emptyFooter', 'stage1'];
 
   breakdownList: BreakDown[] = [];
+  date = new FormControl(moment());
 
   private readonly destroyer$: Subject<void> = new Subject();
   constructor(private reportService: ReportsService) { }
@@ -49,7 +52,10 @@ export class BookkeepingBreakDownComponent implements OnInit {
   }
 
   private getBreakdownDetails() {
-    this.reportService.getBreakdownData({}).pipe(takeUntil(this.destroyer$)).subscribe(listResponse => {
+    const params = {
+      month: this.date.value.format('MMM-yy'),
+    }
+    this.reportService.getBreakdownData(params).pipe(takeUntil(this.destroyer$)).subscribe(listResponse => {
       this.breakdownList = listResponse['bookkeeping'];
     })
   }

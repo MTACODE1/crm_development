@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { VatBreakdown } from 'app/mock-api/apps/reports/report-data';
 import { ReportsService } from 'app/mock-api/apps/reports/reports.service';
 import { values } from 'lodash';
+import moment from 'moment';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -13,6 +15,7 @@ export class VatBreakDownComponent implements OnInit {
   displayedColumns: string[] = ['accountant', 'filed', 'sentClient', 'review', 'sentAccountant', 'book', 'total'];
 
   vatBreakDownList: VatBreakdown[] = [];
+  date = new FormControl(moment());
 
   private readonly destroyer$: Subject<void> = new Subject();
   constructor(private reportService: ReportsService) { }
@@ -40,7 +43,10 @@ export class VatBreakDownComponent implements OnInit {
   }
 
   private getVatBreakdownList() {
-    this.reportService.getBreakdownData({}).pipe(takeUntil(this.destroyer$)).subscribe(listResponse => {
+    const params = {
+      month: this.date.value.format('MMM-yy'),
+    }
+    this.reportService.getBreakdownData(params).pipe(takeUntil(this.destroyer$)).subscribe(listResponse => {
       this.vatBreakDownList = listResponse['vat_breakdown']
     })
   }

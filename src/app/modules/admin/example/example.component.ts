@@ -42,7 +42,6 @@ export class ExampleComponent implements OnInit, OnDestroy {
   constructor(private userService: UserService, private _fuseConfirmationService: FuseConfirmationService,
     public readonly dialog: MatDialog, private readonly snackBar: MatSnackBar, private readonly cd: ChangeDetectorRef, private breakpointObserver: BreakpointObserver) {
     this.breakpointObserver.observe(["(max-width: 525px)"]).subscribe((result: BreakpointState) => {
-      console.log(result);
       if (result.matches) {
         this.isSticky = false;
       }
