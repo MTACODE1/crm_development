@@ -55,8 +55,9 @@ fuse-alert {
         /* Content */
         .fuse-alert-content {
             display: flex;
+            flex-wrap: wrap;
             flex-direction: column;
-            justify-content: center;
+            // justify-content: center;
             line-height: 1;
 
             /* Title */

@@ -52,7 +52,6 @@ export class CompletedTaskComponent implements OnInit {
       params['user'] = additionalParams.user;
     }
     this.taskService.taskCompletedLog(params).pipe(takeUntil(this.destroyer$)).subscribe(completedList => {
-      console.log(completedList)
       this.logList = completedList['rows'];
       this.totalLogCount = completedList['total_count'];
     })

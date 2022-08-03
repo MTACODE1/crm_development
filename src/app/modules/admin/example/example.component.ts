@@ -1,3 +1,4 @@
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
@@ -30,6 +31,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   searchTerm: string;
   date = new FormControl(moment());
   lastMonth: any;
+  isSticky: boolean;
   public paginationConfig = {
     limit: 10,
     offset: 0,
@@ -38,7 +40,17 @@ export class ExampleComponent implements OnInit, OnDestroy {
   private readonly destroyer$: Subject<void> = new Subject();
 
   constructor(private userService: UserService, private _fuseConfirmationService: FuseConfirmationService,
-    public readonly dialog: MatDialog, private readonly snackBar: MatSnackBar, private readonly cd: ChangeDetectorRef) { }
+    public readonly dialog: MatDialog, private readonly snackBar: MatSnackBar, private readonly cd: ChangeDetectorRef, private breakpointObserver: BreakpointObserver) {
+    this.breakpointObserver.observe(["(max-width: 525px)"]).subscribe((result: BreakpointState) => {
+      console.log(result);
+      if (result.matches) {
+        this.isSticky = false;
+      }
+      else {
+        this.isSticky = true;
+      }
+    })
+  }
 
   ngOnInit(): void {
     this.displayedColumns = this.userService.getColumns();
@@ -102,7 +114,6 @@ export class ExampleComponent implements OnInit, OnDestroy {
     this.paginationConfig = { ...this.paginationConfig, ...event };
     const params = { search: this.searchTerm };
     this.getTableDetails(params);
-    console.log(params)
   }
 
   public getNextStatus(data, i, statsuName, item): void {
@@ -234,7 +245,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
     const confirmMessgae = `Start Confirmation Statement process for Bespoke Alpha Solutions for ${this.date.value.format('YYYY')}?`;
     const dialogRef = this._fuseConfirmationService.open({
       title: 'Are you sure?',
-      message: status === 'bookkeeping' ? messgae : status === 'vat' ? vatMessgae : status === 'conf_stmt' ? confirmMessgae : status === 'onboarding' ? onboardingMessage: status ==='annual_accounts' ? accStatMessage : accMessgae,
+      message: status === 'bookkeeping' ? messgae : status === 'vat' ? vatMessgae : status === 'conf_stmt' ? confirmMessgae : status === 'onboarding' ? onboardingMessage : status === 'annual_accounts' ? accStatMessage : accMessgae,
       dismissible: true,
       actions: {
         confirm: {
@@ -257,10 +268,10 @@ export class ExampleComponent implements OnInit, OnDestroy {
           this.updateStatus(item.annual_accounts_status_1[0], item, 'annual_accounts', true);
         } else if (status === 'accNew') {
           this.updateStatus(item.annual_accounts_status_2[0], item, 'accNew', true);
-        } else if (status === 'conf_stmt'){
+        } else if (status === 'conf_stmt') {
           this.updateStatus(item.conf_stmt_status[0], item, 'conf_stmt', true);
-        } 
-        else{
+        }
+        else {
           this.updateStatus(item.onboarding_status[0], item, 'onboarding', true);
         }
       }

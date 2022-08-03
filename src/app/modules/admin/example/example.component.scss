@@ -2,44 +2,55 @@
 
 :host ::ng-deep {
   table {
-    .mat-cell{
+    .mat-cell {
       font-size: 13px;
       padding: 8px;
     }
-    .mat-header-cell, .mat-cell {
+
+    .mat-header-cell,
+    .mat-cell {
       text-align: center;
       min-width: 140px;
+
       &:first-child {
         min-width: 180px;
       }
     }
-    .mat-sort-header-container{
+
+    .mat-sort-header-container {
       justify-content: center;
     }
+
     svg {
       width: 16px;
       height: 16px;
     }
   }
-  .fuse-alert-content{
+
+  .fuse-alert-content {
     flex-direction: row !important;
-    .fuse-alert-message{
+
+    .fuse-alert-message {
       margin-top: 0 !important;
     }
   }
+
   .mat-sort-header-container:not(.mat-sort-header-sorted) .mat-sort-header-arrow {
     opacity: 0.54 !important;
     transform: translateY(0px) !important;
   }
 }
+
 .table-container {
   max-height: calc(100vh - 340px);
+
   .logo-container {
     :nth-child(2) {
       margin: 0 8px;
     }
   }
 }
+
 .mat-raised-button {
   background-color: $red !important;
   color: $white !important;
@@ -47,17 +58,21 @@
   font-size: 12px;
   font-weight: normal;
   box-shadow: none !important;
+
   &.confirmation-button {
     width: 240px;
   }
+
   &.complete {
     background-color: $green300 !important;
   }
+
   &.in-progress {
     background-color: $yellow400 !important;
   }
+
   &.start {
-    background-color: $orange300  !important;
+    background-color: $orange300 !important;
   }
 }
 
@@ -68,55 +83,74 @@
     border: 1px solid $gray200;
     width: 200px;
   }
+
   .mat-icon {
     color: $gray200;
   }
 }
 
-@media(min-width:320px){
-  .search{
+@media(min-width:320px) {
+  .search {
     margin-left: 10px;
   }
-  .dateinput{
+
+  .dateinput {
     margin-left: 25px;
+  }
+
+}
+
+@media(max-width:320px) {
+  .selection {
+    margin-left: 43px;
+    flex-wrap: wrap;
+  }
+
+  .form-switch-1 {
+    margin-left: 11px;
   }
 }
 
-@media(min-width:375px){
-  .search{
+@media(min-width:375px) {
+  .search {
     margin-left: 45px;
   }
-  .dateinput{
+
+  .dateinput {
     margin-left: 63px;
   }
 }
 
-@media(min-width:425px){
-  .search{
+@media(min-width:425px) {
+  .search {
     margin-left: 68px;
   }
-  .dateinput{
+
+  .dateinput {
     margin-left: 84px;
   }
-  .selection{
-    margin-left: 36px;
+
+  .selection {
+    margin-left: 32px;
   }
 }
 
-@media(min-width:768px){
-  .search{
+@media(min-width:768px) {
+  .search {
     margin-left: 0px;
   }
-  .dateinput{
+
+  .dateinput {
     margin-left: 0px;
   }
-  .selection{
+
+  .selection {
     margin-left: 0px;
   }
 }
 
-@media(min-width:375px) and (max-width:424px){
-  .paginator{
+@media(min-width:375px) and (max-width:424px) {
+  .paginator {
     margin-left: 22px;
   }
 }

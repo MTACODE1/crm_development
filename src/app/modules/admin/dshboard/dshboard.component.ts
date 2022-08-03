@@ -126,7 +126,6 @@ export class DshboardComponent implements OnInit, OnDestroy {
   private byProcessChartData(): void {
     let obj1 = (this.dashboardResult.by_process.setup_compliance[0]);
     // delete obj1.user;
-    console.log(obj1);
     this.chartSetupCompliance = {
       chart: {
         animations: {
@@ -206,7 +205,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
           donut: { size: '70%' }
         }
       },
-      series:[80,20],
+      series: [80, 20],
       // series: Object.values(customObj2).map(str => {
       //   return Number(str);
       // }),
@@ -257,7 +256,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
           }
         }
       },
-      series: [80,20],
+      series: [80, 20],
       // series: Object.values(customObj3).map(str => {
       //   return Number(str);
       // }),
@@ -310,7 +309,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
           }
         }
       },
-      series: [80,20],
+      series: [80, 20],
       // series: Object.values(customObj4).map(str => {
       //   return Number(str);
       // }),
@@ -363,7 +362,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
           }
         }
       },
-      series: [80,20],
+      series: [80, 20],
       // series: Object.values(customObj5).map(str => {
       //   return Number(str);
       // }),
