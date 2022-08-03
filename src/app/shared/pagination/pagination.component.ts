@@ -1,3 +1,4 @@
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { getValueInRange, isNumber } from '../pipe/util';
 
@@ -17,12 +18,25 @@ export class PaginationComponent implements OnChanges {
   @Input() ellipses = true;
   @Input() rotate = true;
   @Input() collectionSize: number;
-  @Input() maxSize = 5;
+  @Input() maxSize: number;
   @Input() page = 1;
   @Input() pageSize: number;
 
   @Output() pageChange = new EventEmitter<number>(true);
   @Input() size: 'sm' | 'lg' = 'sm';
+
+
+  constructor(private breakpointObserver: BreakpointObserver){
+    this.breakpointObserver.observe(["(max-width: 525px)"]).subscribe((result: BreakpointState) => {
+      console.log(result);
+      if (result.matches) {
+        this.maxSize =3;
+      }
+      else {
+        this.maxSize = 5;
+      }
+    })
+  }
 
   public hasPrevious(): boolean {
     return this.page > 1;
