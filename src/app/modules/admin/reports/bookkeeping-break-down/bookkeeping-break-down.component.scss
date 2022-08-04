@@ -28,6 +28,9 @@
       &:first-child {
         min-width: 180px;
       }
+      &:last-child{
+        border-right: none;
+      }
     }
   }
 }
