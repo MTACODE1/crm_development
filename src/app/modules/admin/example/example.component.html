@@ -5,7 +5,7 @@
       Bespoke Alpha Solutions Suspended {{today | date: 'EEEE, MMMM d, y'}}
     </fuse-alert>
     <div class="sm:col-span-6 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
-      <div class="text-lg font-medium tracking-tight leading-6 truncate mb-2">
+      <div class="text-lg font-medium tracking-tight leading-6 truncate">
         <div class="flex items-center justify-between flex-wrap pb-2">
           <div class="selection flex items-center">
             <div class="flex items-center mt-2">
@@ -39,18 +39,20 @@
             </div>
           </div>
 
-          <div class="search relative mt-2 mb-1">
+          <div class="search relative mt-2">
             <label for="search" class="absolute top-2.5 left-3.5 text-xl">
               <mat-icon>search</mat-icon>
             </label>
             <input id="search" type="text" class="rounded-full text-lg h-10" placeholder="Search"
               [(ngModel)]="searchTerm" (ngModelChange)="searchChange($event)">
           </div>
-
         </div>
       </div>
+      <div class="flex justify-end my-4 download-button">
+        <button mat-stroked-button color="primary" (click)="exportTable()"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp; Download</button>
+     </div>
       <div class="flex flex-col flex-auto overflow-auto table-container">
-        <table class="min-w-240 overflow-y-visible" mat-table [dataSource]="userTableList" matSort
+        <table class="min-w-240 overflow-y-visible" id="ExampleMaterialTable" mat-table matTableExporter [dataSource]="userTableList" #exporter="matTableExporter" matSort
           (matSortChange)="sortData($event)">
           <ng-container matColumnDef="companyName" [sticky]="isSticky">
             <th mat-header-cell *matHeaderCellDef class="pl-0 info-col" > Company Name</th>
@@ -429,6 +431,7 @@
         </table>
       </div>
     </div>
+   
     <div class="paginator text-right mt-3.5">
       <app-paginator [pageSizes]="[10, 20, 30]" [count]="paginationConfig.total" [perPage]="paginationConfig.limit"
         (pageChange)="onPageChange($event)">

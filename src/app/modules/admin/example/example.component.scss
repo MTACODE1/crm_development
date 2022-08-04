@@ -90,10 +90,6 @@
 }
 
 @media(min-width:320px) {
-  .search {
-    margin-left: 10px;
-  }
-
   .dateinput {
     margin-left: 25px;
   }
@@ -105,27 +101,23 @@
     margin-left: 43px;
     flex-wrap: wrap;
   }
-
   .form-switch-1 {
     margin-left: 11px;
   }
+  .search {
+    input[id="search"] {
+      width: 221px;
+    }}
 }
 
 @media(min-width:375px) {
-  .search {
-    margin-left: 45px;
-  }
-
   .dateinput {
     margin-left: 63px;
   }
+  
 }
 
 @media(min-width:425px) {
-  .search {
-    margin-left: 68px;
-  }
-
   .dateinput {
     margin-left: 84px;
   }
@@ -136,10 +128,6 @@
 }
 
 @media(min-width:768px) {
-  .search {
-    margin-left: 0px;
-  }
-
   .dateinput {
     margin-left: 0px;
   }
@@ -153,10 +141,21 @@
   .paginator {
     margin-left: 22px;
   }
+  .search {
+        input[id="search"] {
+          width: 276px;
+        }}
 }
 
 @media(min-width:425px){
   .paginator{
     margin-left: 23px;
   }
+}
+
+@media(min-width:425px) and (max-width:767px){
+  .search {
+    input[id="search"] {
+      width: 325px;
+    }}
 }

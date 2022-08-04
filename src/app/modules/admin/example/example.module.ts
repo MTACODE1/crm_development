@@ -13,6 +13,7 @@ import { Route, RouterModule } from '@angular/router';
 import { FuseAlertModule } from '@fuse/components/alert';
 import { ExampleComponent } from 'app/modules/admin/example/example.component';
 import { SharedModule } from 'app/shared/shared.module';
+import { MatTableExporterModule } from 'mat-table-exporter';
 import { AssessmentStatusComponent } from './assessment-status/assessment-status.component';
 import { BookkeepingStatusComponent } from './bookkeeping-status/bookkeeping-status.component';
 import { OnbordingFormComponent } from './onbording-form/onbording-form.component';
@@ -55,7 +56,8 @@ const exampleRoutes: Route[] = [
     MatRadioModule,
     MatDatepickerModule,
     MatSortModule,
-    RouterModule.forChild(exampleRoutes)
+    RouterModule.forChild(exampleRoutes),
+    MatTableExporterModule
   ],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

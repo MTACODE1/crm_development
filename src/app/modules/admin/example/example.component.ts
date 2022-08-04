@@ -14,6 +14,7 @@ import { TableModel } from './../../../core/user/user.types';
 import { AssessmentStatusComponent } from './assessment-status/assessment-status.component';
 import { BookkeepingStatusComponent } from './bookkeeping-status/bookkeeping-status.component';
 import { OnbordingFormComponent } from './onbording-form/onbording-form.component';
+import { TableUtil } from './TableUtil';
 
 @Component({
   selector: 'example',
@@ -61,6 +62,10 @@ export class ExampleComponent implements OnInit, OnDestroy {
     this.destroyer$.complete();
   }
 
+  exportTable() {
+    TableUtil.exportTableToExcel("ExampleMaterialTable");
+  }
+  
   private getTableDetails(additionalParams): void {
     const params = {
       month: this.date.value.format('MMM-yy'),
