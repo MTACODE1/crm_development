@@ -693,6 +693,7 @@
                         display: inline-flex;
                         align-items: center;
                         width: 100%;
+                        // margin-right: -14px !important;
 
                         .mat-select-value {
                             display: flex;
@@ -1231,19 +1232,20 @@
     .mat-select-trigger {
         display: inline-flex;
         align-items: center;
-        width: 100%;
+        width: 80%;
         height: auto;
 
         .mat-select-value {
             display: flex;
             position: relative;
             max-width: none;
+            // width: 75% !important;
 
             .mat-select-value-text {
                 display: inline-flex;
 
                 > * {
-                    overflow: hidden;
+                    // overflow: hidden;
                     white-space: nowrap;
                     text-overflow: ellipsis;
                 }
