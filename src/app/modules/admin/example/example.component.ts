@@ -65,7 +65,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   exportTable() {
     TableUtil.exportTableToExcel("ExampleMaterialTable");
   }
-  
+
   private getTableDetails(additionalParams): void {
     const params = {
       month: this.date.value.format('MMM-yy'),
@@ -135,7 +135,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
     const task = {
       uid: element.id,
       process: key === 'annual_accounts' || key === 'accNew' ? 'annual_accounts' : key,
-      month: key === 'annual_accounts' ? element.annual_accounts_month + '-' + lastYear : key === 'accNew' ? element.annual_accounts_month + '-' + this.today.year() : this.date.value.format('MMM-yy'),
+      month: key === 'annual_accounts' ? element.annual_accounts_month + '-' + lastYear : key === 'accNew' ? element.annual_accounts_month + '-' + this.today.year() : key === 'bookkeeping' || key === 'vat' ? this.lastMonth.format('MMM-yy') : this.date.value.format('MMM-yy'),
       p_status: key === 'onboarding' ? 0 : item.static_id
     }
     this.userService.updateTaskStatus(task).subscribe(result => {
