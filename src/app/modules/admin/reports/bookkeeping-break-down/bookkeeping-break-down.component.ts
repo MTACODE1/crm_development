@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { BreakDown } from 'app/mock-api/apps/reports/report-data';
+import { MatDatepicker } from '@angular/material/datepicker';
+import { BreakDown, IndividualStage, VatBreakdown } from 'app/mock-api/apps/reports/report-data';
 import { ReportsService } from 'app/mock-api/apps/reports/reports.service';
 import moment from 'moment';
 import { Subject, takeUntil } from 'rxjs';
@@ -15,7 +16,14 @@ export class BookkeepingBreakDownComponent implements OnInit {
   displayedFooter: string[] = ['accountantf', 'completef', 'sentClientf', 'reviewf', 'createMrf', 'querySentf', 'queryRequestf', 'wipf', 'informationsentf', 'informationRequestf', 'startf', 'emptyFooter'];
   displayedFooter2: string[] = ['title', 'stage4', 'stage3', 'emptyFooter', 'emptyFooter', 'stage2', 'emptyFooter', 'emptyFooter', 'emptyFooter', 'stage1'];
 
+  vatColumns: string[] = ['accountant', 'filed', 'sentClient', 'review', 'sentAccountant', 'book', 'total'];
+
+  individualColumns: string[] = ['accountant', 'filed', 'sentClient', 'review', 'sentAccountant', 'book'];
+
+  vatBreakDownList: VatBreakdown[] = [];
   breakdownList: BreakDown[] = [];
+  individualStageList: IndividualStage[] = [];
+
   date = new FormControl(moment());
 
   private readonly destroyer$: Subject<void> = new Subject();
@@ -51,38 +59,46 @@ export class BookkeepingBreakDownComponent implements OnInit {
     }
   }
 
+  public calculateVatTotal(type) {
+    if (type === 'filed')
+      return this.vatBreakDownList.map(t => +t.filed).reduce((acc, value) => acc + value, 0);
+    if (type === 'vatsent')
+      return this.vatBreakDownList.map(t => +t.vat_sent_client).reduce((acc, value) => acc + value, 0);
+    if (type === 'vatreview')
+      return this.vatBreakDownList.map(t => +t.vat_review_accountant).reduce((acc, value) => acc + value, 0);
+    if (type === 'sentaccountant')
+      return this.vatBreakDownList.map(t => +t.vat_sent_accountant).reduce((acc, value) => acc + value, 0);
+    if (type === 'bookkeepstage') {
+      return this.vatBreakDownList.map(t => +t.bookkeeping_stage).reduce((acc, value) => acc + value, 0);
+    }
+    else {
+      return this.vatBreakDownList.map(t => +t.total).reduce((acc, value) => acc + value, 0);
+    }
+  }
+
   private getBreakdownDetails() {
     const params = {
       month: this.date.value.format('MMM-yy'),
     }
     this.reportService.getBreakdownData(params).pipe(takeUntil(this.destroyer$)).subscribe(listResponse => {
       this.breakdownList = listResponse['bookkeeping'];
+      this.vatBreakDownList = listResponse['vat_breakdown'];
+      this.individualStageList = listResponse['individual_stage'];
     })
   }
 
-  calculation() {
-    const data = this.breakdownList.map(item => ({
-      mrComplete: item.mr_complete,
-      mrSent: item.mr_sent_client,
-      mrReviewed: item.mr_reviewed_accountant,
-      mrBookkeeping: item.bookkeeping_create_mr,
-      querySent: item.query_sent_client,
-      queryRequested: item.queries_requested,
-      wipBookkeeping: item.bookkeeping_wip,
-      requestSent: item.request_sent_client,
-      infoRequested: item.information_requested,
-      bookkeepingStarted: item.bookkeeping_process_started,
-    }))
-    return BookkeepingBreakDownComponent.sum(data[0]);
+  public chosenMonthHandler(normalizedMonthAndYear: moment.Moment, datepicker: MatDatepicker<moment.Moment>): void {
+    const ctrlValue = this.date.value!;
+    ctrlValue.month(normalizedMonthAndYear.month());
+    ctrlValue.year(normalizedMonthAndYear.year());
+    this.date.setValue(ctrlValue);
+    datepicker.close();
+    console.log(this.date.setValue(ctrlValue))
+    this.getBreakdownDetails();
   }
 
-  private static sum(obj) {
-    var sum = 0;
-    for (var el in obj) {
-      if (obj.hasOwnProperty(el)) {
-        sum += parseFloat(obj[el]);
-      }
-    }
-    return sum;
+  public calculateMonth(value): void {
+    value === 'decrement' ? this.date.setValue(this.date.value.subtract(1, 'month')) : this.date.setValue(this.date.value.add(1, 'month'));
+    this.getBreakdownDetails();
   }
 }

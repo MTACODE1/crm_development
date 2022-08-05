@@ -1,52 +1,72 @@
 @import "src/styles/variables";
+
 :host ::ng-deep {
   .bookkeeping-table {
-    .mat-cell{
-      &:nth-child(2){
-        background-color:#01950114;
+    .mat-cell {
+      &:nth-child(2) {
+        background-color: #01950114;
       }
-      &:nth-child(n+3):nth-child(-n+5){
+
+      &:nth-child(n+3):nth-child(-n+5) {
         background-color: $yellow200;
       }
-      &:nth-child(n+6):nth-child(-n+9){
+
+      &:nth-child(n+6):nth-child(-n+9) {
         background-color: $orange100;
       }
-      &:nth-child(n+10):nth-child(-n+11){
+
+      &:nth-child(n+10):nth-child(-n+11) {
         background-color: #ff4aa412;
       }
     }
   }
 
   table {
-    .mat-cell{
+    .mat-cell {
       font-size: 13px;
       padding: 8px;
     }
-    .mat-header-cell, .mat-cell, .mat-footer-cell {
+
+    .mat-header-cell,
+    .mat-cell,
+    .mat-footer-cell {
       text-align: center !important;
       min-width: 140px;
+
       &:first-child {
         min-width: 180px;
       }
-      &:last-child{
+
+      &:last-child {
         border-right: none;
       }
     }
   }
 }
+
 .footer-row {
   .mat-footer-cell {
-    &:nth-child(2){
-      background-color:#01950114;
+    &:nth-child(2) {
+      background-color: #01950114;
     }
-    &:nth-child(n+3):nth-child(-n+5){
+
+    &:nth-child(n+3):nth-child(-n+5) {
       background-color: $yellow200;
     }
-    &:nth-child(n+6):nth-child(-n+9){
+
+    &:nth-child(n+6):nth-child(-n+9) {
       background-color: $orange100;
     }
-    &:nth-child(n+10):nth-child(-n+11){
+
+    &:nth-child(n+10):nth-child(-n+11) {
       background-color: #ff4aa412;
     }
   }
+}
+.dateInput {
+  margin-right: 25px;
+}
+.monthInput {
+  margin-left: 3px;
+  margin-right: -6px;
 }

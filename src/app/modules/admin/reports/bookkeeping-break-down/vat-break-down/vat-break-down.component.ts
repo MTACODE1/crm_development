@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { VatBreakdown } from 'app/mock-api/apps/reports/report-data';
 import { ReportsService } from 'app/mock-api/apps/reports/reports.service';
-import { values } from 'lodash';
 import moment from 'moment';
 import { Subject, takeUntil } from 'rxjs';
 
