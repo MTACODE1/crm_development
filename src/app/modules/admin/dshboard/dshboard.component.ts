@@ -88,7 +88,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
       grid: {
         borderColor: 'var(--fuse-border)'
       },
-      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      labels: this.dashboardResult?.completed_outstanding?.map(({ date }) => date),
       legend: { show: false },
       plotOptions: {
         bar: {
@@ -115,7 +115,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
           }
         }
       },
-      stroke: { width: [3, 0] },
+      stroke: { width: [5, 0] },
       tooltip: {
         followCursor: true,
         theme: 'dark'
