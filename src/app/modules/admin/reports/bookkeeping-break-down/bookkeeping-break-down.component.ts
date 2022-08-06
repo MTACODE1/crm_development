@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
+import { Router, RouterLink } from '@angular/router';
 import { BreakDown, IndividualStage, VatBreakdown } from 'app/mock-api/apps/reports/report-data';
 import { ReportsService } from 'app/mock-api/apps/reports/reports.service';
 import moment from 'moment';
@@ -27,7 +28,7 @@ export class BookkeepingBreakDownComponent implements OnInit {
   date = new FormControl(moment());
 
   private readonly destroyer$: Subject<void> = new Subject();
-  constructor(private reportService: ReportsService) { }
+  constructor(private reportService: ReportsService, private router:Router) { }
 
   ngOnInit(): void {
     this.getBreakdownDetails();
@@ -76,6 +77,10 @@ export class BookkeepingBreakDownComponent implements OnInit {
     }
   }
 
+  logIndex(id){
+    this.router.navigate(['/health', id]);
+  }
+  
   private getBreakdownDetails() {
     const params = {
       month: this.date.value.format('MMM-yy'),

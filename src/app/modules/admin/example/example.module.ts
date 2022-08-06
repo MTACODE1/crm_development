@@ -33,9 +33,23 @@ export const MY_FORMATS = {
 
 const exampleRoutes: Route[] = [
   {
-    path : '',
-    component: ExampleComponent
+    path: '',
+    component: ExampleComponent, children: [
+      // {
+      //   path: '', redirectTo: 'health', pathMatch: 'full',
+      // },
+      {
+        path: ':id',
+        component: ExampleComponent
+      }
+    ]
   }
+  
+  // {
+  //   path: 'health',
+  //   component: ExampleComponent
+  // },
+
 ];
 
 @NgModule({
@@ -61,7 +75,7 @@ const exampleRoutes: Route[] = [
   ],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
 })
 export class ExampleModule { }

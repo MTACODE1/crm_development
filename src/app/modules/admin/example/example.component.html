@@ -28,13 +28,13 @@
             <div class="cursor-pointer mt-1" (click)="calculateMonth('decrement')">
               <mat-icon svgIcon="heroicons_outline:chevron-left"></mat-icon>
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center selectmonth">
               <input matInput [matDatepicker]="dp" [formControl]="date" class="w-20 text-lg" readonly>
               <mat-datepicker #dp startView="multi-year" (monthSelected)="chosenMonthHandler($event, dp)">
               </mat-datepicker>
               <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
             </div>
-            <div class="cursor-pointer mt-1" (click)="calculateMonth('increment')">
+            <div class="cursor-pointer mt-1 mr-0" (click)="calculateMonth('increment')">
               <mat-icon svgIcon="heroicons_outline:chevron-right"></mat-icon>
             </div>
           </div>
