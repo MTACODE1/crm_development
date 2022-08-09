@@ -81,7 +81,6 @@ export class BookkeepingBreakDownComponent implements OnInit {
   }
 
   public vatIndex(element,value,name){
-    console.log(name);
     let data={
       title : null,
       count : null,
@@ -113,6 +112,7 @@ export class BookkeepingBreakDownComponent implements OnInit {
       data.clients = element.bookkeeping_stage_clients
     }
     this.dialog.open(ViewDetailsComponent, {
+      width: '30vw',
       data:data
     })
   }
@@ -174,6 +174,7 @@ export class BookkeepingBreakDownComponent implements OnInit {
       data.clients = element.bookkeeping_process_started_clients
     }
     this.dialog.open(ViewBookkeepingDetailsComponent, {
+      width: '30vw',
       data: data,
     })
   }

@@ -39,23 +39,30 @@
             </div>
           </div>
 
-          <div class="search relative mt-2">
-            <label for="search" class="absolute top-2.5 left-3.5 text-xl">
+          <div class="flex">
+            <div class="search relative mt-2">
+              <label for="search" class="absolute top-2.5 right-0 mr-3 text-xl">
+                <mat-icon (click)="searchTerm = ''; searchChange(searchTerm)">{{searchTerm? 'close' : ''}}</mat-icon>
+              </label>
+              <input id="search" type="text" class="rounded-full text-lg h-10" placeholder="Enter keyword"
+                [(ngModel)]="searchTerm">
+            </div>
+            <button mat-mini-fab color="primary" *ngIf="searchTerm" (click)="searchChange(searchTerm)"
+              class="flex items-center mt-2 ml-1">
               <mat-icon>search</mat-icon>
-            </label>
-            <input id="search" type="text" class="rounded-full text-lg h-10" placeholder="Search"
-              [(ngModel)]="searchTerm" (ngModelChange)="searchChange($event)">
+            </button>
           </div>
         </div>
       </div>
       <div class="flex justify-end my-4 download-button">
-        <button mat-stroked-button color="primary" (click)="exportTable()"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp; Download</button>
-     </div>
+        <button mat-stroked-button color="primary" (click)="exportTable()"><i class="fa fa-file-excel-o"
+            aria-hidden="true"></i>&nbsp; Download</button>
+      </div>
       <div class="flex flex-col flex-auto overflow-auto table-container">
-        <table class="min-w-240 overflow-y-visible" id="ExampleMaterialTable" mat-table matTableExporter [dataSource]="userTableList" #exporter="matTableExporter" matSort
-          (matSortChange)="sortData($event)">
+        <table class="min-w-240 overflow-y-visible" id="ExampleMaterialTable" mat-table matTableExporter
+          [dataSource]="userTableList" #exporter="matTableExporter" matSort (matSortChange)="sortData($event)">
           <ng-container matColumnDef="companyName" [sticky]="isSticky">
-            <th mat-header-cell *matHeaderCellDef class="pl-0 info-col" > Company Name</th>
+            <th mat-header-cell *matHeaderCellDef class="pl-0 info-col"> Company Name</th>
             <td mat-cell *matCellDef="let element" class="z-10">
               <div>
                 <a href="https://www.morethanaccountants.co.uk/salesflow/admin/v_lead.html?id={{element.id}}"
@@ -431,7 +438,7 @@
         </table>
       </div>
     </div>
-   
+
     <div class="paginator text-right mt-3.5">
       <app-paginator [pageSizes]="[10, 20, 30]" [count]="paginationConfig.total" [perPage]="paginationConfig.limit"
         (pageChange)="onPageChange($event)">
