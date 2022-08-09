@@ -1,0 +1,23 @@
+<div>
+  <p class="font-black text-center text-xl">VAT Breakdown</p>
+  <p class="font-semibold text-center text-lg mt-4">{{data.title}}</p>
+  <div class="mt-6">
+    <ng-container *ngIf="data.count === 0; else details">
+      <p class="font-medium text-center text-lg">No data found !!!</p>
+    </ng-container>
+    <ng-template #details>
+      <div class="flex">
+        <p class="font-semibold text-lg">Total Count - &nbsp;</p><p>{{data.count}}</p>
+      </div>
+      <div class="flex flex-col mt-4">
+        <p class="font-semibold text-lg">Clients - &nbsp;</p>
+        <div *ngFor="let item of data.clients; let i = index">
+          <div class="flex">
+            <p class="mr-2">{{i+1}}.</p>
+            <p>{{item}}</p> <br>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

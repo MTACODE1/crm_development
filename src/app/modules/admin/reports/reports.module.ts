@@ -13,10 +13,12 @@ import { IndividualComponent } from './bookkeeping-break-down/individual/individ
 import { VatBreakDownComponent } from './bookkeeping-break-down/vat-break-down/vat-break-down.component';
 import { CompletedTaskComponent } from './completed-task/completed-task.component';
 import { ReportsRoutingModule } from './reports-routing.module';
+import { ViewDetailsComponent } from './bookkeeping-break-down/view-details/view-details.component';
+import { ViewBookkeepingDetailsComponent } from './bookkeeping-break-down/view-bookkeeping-details/view-bookkeeping-details.component';
 
 
 @NgModule({
-  declarations: [BookkeepingBreakDownComponent, VatBreakDownComponent, IndividualComponent, CompletedTaskComponent, AccountantClientComponent],
+  declarations: [BookkeepingBreakDownComponent, VatBreakDownComponent, IndividualComponent, CompletedTaskComponent, AccountantClientComponent, ViewDetailsComponent, ViewBookkeepingDetailsComponent],
   imports: [
     SharedModule,
     MatTableModule,

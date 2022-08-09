@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
+import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterLink } from '@angular/router';
 import { BreakDown, IndividualStage, VatBreakdown } from 'app/mock-api/apps/reports/report-data';
 import { ReportsService } from 'app/mock-api/apps/reports/reports.service';
 import moment from 'moment';
 import { Subject, takeUntil } from 'rxjs';
+import { ViewBookkeepingDetailsComponent } from './view-bookkeeping-details/view-bookkeeping-details.component';
+import { ViewDetailsComponent } from './view-details/view-details.component';
 
 @Component({
   selector: 'app-bookkeeping-break-down',
@@ -28,7 +31,7 @@ export class BookkeepingBreakDownComponent implements OnInit {
   date = new FormControl(moment());
 
   private readonly destroyer$: Subject<void> = new Subject();
-  constructor(private reportService: ReportsService, private router:Router) { }
+  constructor(private reportService: ReportsService, private router:Router, public dialog:MatDialog) { }
 
   ngOnInit(): void {
     this.getBreakdownDetails();
@@ -77,10 +80,104 @@ export class BookkeepingBreakDownComponent implements OnInit {
     }
   }
 
-  logIndex(id){
-    this.router.navigate(['/health', id]);
+  public vatIndex(element,value,name){
+    console.log(name);
+    let data={
+      title : null,
+      count : null,
+      clients : null
+    };
+    if(value === 'filed'){
+      data.title = name,
+      data.count = element.filed,
+      data.clients = element.filed_clients
+    }
+    else if(value === 'sentClient'){
+      data.title = name,
+      data.count = element.vat_sent_client,
+      data.clients = element.vat_sent_client_clients
+    }
+    else if(value === 'review'){
+      data.title = name,
+      data.count = element.vat_review_accountant,
+      data.clients = element.vat_review_accountant_clients
+    }
+    else if(value === 'sentAccountant'){
+      data.title = name,
+      data.count = element.vat_sent_accountant,
+      data.clients = element.vat_sent_accountant_clients
+    }
+    else {
+      data.title = name,
+      data.count = element.bookkeeping_stage,
+      data.clients = element.bookkeeping_stage_clients
+    }
+    this.dialog.open(ViewDetailsComponent, {
+      data:data
+    })
   }
   
+  public bookkeepingIndex(element, value, name){
+    let data={
+      title: null,
+      count : null,
+      clients : null
+    };
+    if(value === 'complete'){
+      data.title = name,
+      data.count = element.mr_complete,
+      data.clients = element.mr_complete_clients
+    }
+    else if(value === 'sentClient'){
+      data.title = name,
+      data.count = element.mr_sent_client,
+      data.clients = element.mr_sent_client_clients
+    }
+    else if(value === 'review'){
+      data.title = name,
+      data.count = element.mr_reviewed_accountant,
+      data.clients = element.mr_reviewed_accountant_clients
+    }
+    else if(value === 'createMr'){
+      data.title = name,
+      data.count = element.bookkeeping_create_mr,
+      data.clients = element.bookkeeping_create_mr_clients
+    }
+    else if(value === 'querySent'){
+      data.title = name,
+      data.count = element.query_sent_client,
+      data.clients = element.query_sent_client_clients
+    }
+    else if(value === 'queryRequest'){
+      data.title = name,
+      data.count = element.queries_requested,
+      data.clients = element.queries_requested_clients
+    }
+    else if(value === 'wip'){
+      data.title = name,
+      data.count = element.bookkeeping_wip,
+      data.clients = element.bookkeeping_wip_clients
+    }
+    else if(value === 'informationsent'){
+      data.title = name,
+      data.count = element.request_sent_client,
+      data.clients = element.request_sent_client_clients
+    }
+    else if(value === 'informationRequest'){
+      data.title = name,
+      data.count = element.information_requested,
+      data.clients = element.information_requested_clients
+    }
+    else {
+      data.title = name,
+      data.count = element.bookkeeping_process_started,
+      data.clients = element.bookkeeping_process_started_clients
+    }
+    this.dialog.open(ViewBookkeepingDetailsComponent, {
+      data: data,
+    })
+  }
+
   private getBreakdownDetails() {
     const params = {
       month: this.date.value.format('MMM-yy'),
@@ -98,7 +195,6 @@ export class BookkeepingBreakDownComponent implements OnInit {
     ctrlValue.year(normalizedMonthAndYear.year());
     this.date.setValue(ctrlValue);
     datepicker.close();
-    console.log(this.date.setValue(ctrlValue))
     this.getBreakdownDetails();
   }
 
