@@ -1,3 +1,4 @@
+import { MatTableDataSource } from '@angular/material/table';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
@@ -25,6 +26,7 @@ import { TableUtil } from './TableUtil';
 
 export class ExampleComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [];
+  dataSource: MatTableDataSource<TableModel>;
   userTableList: TableModel[] = [];
   featureStatus: boolean = false;
   myclientSelected: boolean = false;
@@ -55,6 +57,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.displayedColumns = this.userService.getColumns();
     this.getTableDetails({});
+    this.cd.detectChanges();
   }
 
   ngOnDestroy(): void {
@@ -78,7 +81,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
     if (additionalParams && additionalParams.search) {
       params['search'] = additionalParams.search;
     }
-    this.userService.getUserTable(params).pipe(takeUntil(this.destroyer$)).subscribe(res => { 
+    this.userService.getUserTable(params).pipe(takeUntil(this.destroyer$)).subscribe(res => {
       this.userTableList = res['rows'];
       this.paginationConfig.total = res['total_count'];
       this.lastMonth = moment(this.date.value).subtract(1, 'month');
@@ -131,7 +134,6 @@ export class ExampleComponent implements OnInit, OnDestroy {
   }
 
   private updateStatus(item, element, key, showSnackBar: boolean): void {
-    console.log(element)
     let lastYear = this.today.year() - 1;
     const task = {
       uid: element.id,
@@ -140,13 +142,14 @@ export class ExampleComponent implements OnInit, OnDestroy {
       p_status: key === 'onboarding' ? 0 : item.static_id
     }
     this.userService.updateTaskStatus(task).subscribe(result => {
-      console.log(result['client']);
-      this.searchTerm ='';
+        if(this.searchTerm){
+          this.searchChange(this.searchTerm);
+        }else {
+          this.getTableDetails({});
+        }
       if (result['err_msg']) {
         alert(result['err_msg']);
       } else {
-        element = result['client']
-        // this.getTableDetails({});
         if (showSnackBar) this.triggerStatusSnackBar(item, key);
       }
     });
