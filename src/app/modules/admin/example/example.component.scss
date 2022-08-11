@@ -101,6 +101,9 @@
 }
 
 @media(max-width:320px) {
+  .myclient{
+    margin-left: 0px !important;
+  }
   .selection {
     margin-left: 43px;
     flex-wrap: wrap;
