@@ -73,6 +73,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
         fontFamily: 'inherit',
         foreColor: 'inherit',
         height: '100%',
+        width:'100%',
         type: 'line',
         toolbar: { show: false },
         zoom: { enabled: false }
@@ -89,7 +90,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
         borderColor: 'var(--fuse-border)'
       },
       labels: this.dashboardResult?.completed_outstanding?.map(({ date }) => date),
-      legend: { show: false },
+      legend: { show: true },
       plotOptions: {
         bar: {
           columnWidth: '50%'
@@ -143,6 +144,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
       colors: ['#9ca3af', '#d1d5db'],
       labels: Object.keys(this.dashboardResult.by_process.setup_compliance[0]).slice(1),
       // labels:['Completed', 'Pending'],
+      legend: { show: true },
       plotOptions: {
         pie: {
           customScale: 0.9,
@@ -198,6 +200,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
       },
       colors: ['#fbbf24', '#fde68a'],
       labels: Object.keys(this.dashboardResult.by_process.bookkeeping[0]).slice(1),
+      legend: { show: true },
       plotOptions: {
         pie: {
           customScale: 0.9,
@@ -247,6 +250,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
       },
       colors: ['#fb923c', '#fdba74'],
       labels: Object.keys(this.dashboardResult.by_process.vat[0]).slice(1),
+      legend: { show: true },
       plotOptions: {
         pie: {
           customScale: 0.9,
@@ -298,8 +302,9 @@ export class DshboardComponent implements OnInit, OnDestroy {
           enabled: true
         }
       },
-      colors: ['#f9a8d4', '#f472b6'],
+      colors: ['#f472b6','#f9a8d4'],
       labels: Object.keys(this.dashboardResult.by_process.annual_accounts[0]).slice(1),
+      legend: { show: true },
       plotOptions: {
         pie: {
           customScale: 0.9,
@@ -353,6 +358,7 @@ export class DshboardComponent implements OnInit, OnDestroy {
       },
       colors: ['#22c55e', '#86efac'],
       labels: Object.keys(this.dashboardResult.by_process.self_assessments[0]).slice(1),
+      legend: { show: true },
       plotOptions: {
         pie: {
           customScale: 0.9,

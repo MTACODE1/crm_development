@@ -22,8 +22,8 @@
     <div class="grid grid-cols-1 lg:grid-cols-1 grid-flow-row gap-6 w-full mt-8 sm:mt-4">
       <div class="flex flex-col flex-auto">
         <div class="font-medium text-secondary">Completed vs Outstanding</div>
-        <div *ngIf="chartCompleteOutstanding.chart" class="flex flex-col flex-auto">
-          <apx-chart class="flex-auto w-full h-80" [chart]="chartCompleteOutstanding.chart" [colors]="chartCompleteOutstanding.colors"
+        <div *ngIf="chartCompleteOutstanding.chart" class="flex flex-col flex-auto apex-div">
+          <apx-chart class="flex-auto apex-chart h-80" [chart]="chartCompleteOutstanding.chart" [colors]="chartCompleteOutstanding.colors"
             [dataLabels]="chartCompleteOutstanding.dataLabels" [grid]="chartCompleteOutstanding.grid"
             [labels]="chartCompleteOutstanding.labels" [legend]="chartCompleteOutstanding.legend"
             [plotOptions]="chartCompleteOutstanding.plotOptions" [series]="chartCompleteOutstanding.series"
@@ -88,7 +88,7 @@
       <div class="text-lg font-medium tracking-tight leading-6 truncate text-center font-bold">Setup & Compliance</div>
       <div *ngIf="chartSetupCompliance" class="flex flex-col flex-auto mt-6 h-44">
         <apx-chart class="flex flex-auto items-center justify-center w-full h-full" [chart]="chartSetupCompliance.chart"
-          [colors]="chartSetupCompliance.colors" [labels]="chartSetupCompliance.labels"
+          [colors]="chartSetupCompliance.colors" [labels]="chartSetupCompliance.labels" [legend]="chartSetupCompliance.legend"
           [plotOptions]="chartSetupCompliance.plotOptions" [series]="chartSetupCompliance.series"
           [states]="chartSetupCompliance.states" [tooltip]="chartSetupCompliance.tooltip"></apx-chart>
       </div>
@@ -113,7 +113,7 @@
       <div class="text-lg font-medium tracking-tight leading-6 truncate text-center font-bold">Bookkeeping</div>
       <div *ngIf="chartBookKeep" class="flex flex-col flex-auto mt-6 h-44">
         <apx-chart class="flex flex-auto items-center justify-center w-full h-full" [chart]="chartBookKeep.chart"
-          [colors]="chartBookKeep.colors" [labels]="chartBookKeep.labels" [plotOptions]="chartBookKeep.plotOptions"
+          [colors]="chartBookKeep.colors" [labels]="chartBookKeep.labels" [legend]="chartBookKeep.legend" [plotOptions]="chartBookKeep.plotOptions"
           [series]="chartBookKeep.series" [states]="chartBookKeep.states" [tooltip]="chartBookKeep.tooltip"></apx-chart>
       </div>
       <div class="mt-8">
@@ -136,7 +136,7 @@
       <div class="text-lg font-medium tracking-tight leading-6 truncate text-center font-bold">VAT</div>
       <div *ngIf="chartVat"  class="flex flex-col flex-auto mt-6 h-44">
         <apx-chart class="flex flex-auto items-center justify-center w-full h-full" [chart]="chartVat.chart"
-          [colors]="chartVat.colors" [labels]="chartVat.labels" [plotOptions]="chartVat.plotOptions"
+          [colors]="chartVat.colors" [labels]="chartVat.labels" [legend]="chartVat.legend" [plotOptions]="chartVat.plotOptions"
           [series]="chartVat.series" [states]="chartVat.states" [tooltip]="chartVat.tooltip"></apx-chart>
       </div>
       <div class="mt-8">
@@ -159,7 +159,7 @@
       <div class="text-lg font-medium tracking-tight leading-6 truncate text-center font-bold">Annual Accounts</div>
       <div *ngIf="chartAccount" class="flex flex-col flex-auto mt-6 h-44">
         <apx-chart class="flex flex-auto items-center justify-center w-full h-full" [chart]="chartAccount.chart"
-          [colors]="chartAccount.colors" [labels]="chartAccount.labels" [plotOptions]="chartAccount.plotOptions"
+          [colors]="chartAccount.colors" [labels]="chartAccount.labels" [legend]="chartAccount.legend" [plotOptions]="chartAccount.plotOptions"
           [series]="chartAccount.series" [states]="chartAccount.states" [tooltip]="chartAccount.tooltip"></apx-chart>
       </div>
       <div class="mt-8">
@@ -182,7 +182,7 @@
       <div class="text-lg font-medium tracking-tight leading-6 truncate text-center font-bold">Self Assessments</div>
       <div *ngIf="chartAssessment" class="flex flex-col flex-auto mt-6 h-44">
         <apx-chart class="flex flex-auto items-center justify-center w-full h-full" [chart]="chartAssessment.chart"
-          [colors]="chartAssessment.colors" [labels]="chartAssessment.labels"
+          [colors]="chartAssessment.colors" [labels]="chartAssessment.labels" [legend]="chartAssessment.legend"
           [plotOptions]="chartAssessment.plotOptions" [series]="chartAssessment.series"
           [states]="chartAssessment.states" [tooltip]="chartAssessment.tooltip"></apx-chart>
       </div>
