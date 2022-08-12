@@ -23,6 +23,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link : '/tasks'
     },
     {
+      id   : 'jobmanager',
+      title: 'Job-Manager',
+      type : 'basic',
+      icon : 'heroicons_outline:pencil-alt',
+      link : '/jobmanager'
+  },
+    {
       id      : 'report',
       title   : 'Reports',
       type    : 'collapsable',
