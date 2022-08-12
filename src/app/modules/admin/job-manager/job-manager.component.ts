@@ -13,19 +13,19 @@ export interface PeriodicElement {
   freeFromNotes: string
 }
 
-const ELEMENT_DATA: PeriodicElement[] =  [
-  { jobType: 'AP', clientName: 'Andrew', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
-  { jobType: 'BK', clientName: 'Andrew', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
-  { jobType: 'AP', clientName: 'Andrew', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
-  { jobType: 'VAT', clientName: 'Andrew', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
-  { jobType: 'PT', clientName: 'Andrew', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
-  { jobType: 'VAT', clientName: 'Andrew', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
-  { jobType: 'CS', clientName: 'Andrew', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
-  { jobType: 'BK', clientName: 'Andrew', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
-  { jobType: 'VAT', clientName: 'Andrew', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
-  { jobType: 'CS', clientName: 'Andrew', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
-  { jobType: 'PT', clientName: 'Andrew', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
-  { jobType: 'CS', clientName: 'Andrew', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' }
+const ELEMENT_DATA: PeriodicElement[] = [
+  { jobType: 'AP', clientName: 'Heading Out', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
+  { jobType: 'BK', clientName: 'Heading Out', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
+  { jobType: 'AP', clientName: 'Heading Out', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
+  { jobType: 'VAT', clientName: 'Heading Out', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
+  { jobType: 'PT', clientName: 'Heading Out', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
+  { jobType: 'VAT', clientName: 'Heading Out', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
+  { jobType: 'CS', clientName: 'Heading Out', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
+  { jobType: 'BK', clientName: 'Heading Out', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
+  { jobType: 'VAT', clientName: 'Heading Out', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
+  { jobType: 'CS', clientName: 'Heading Out', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
+  { jobType: 'PT', clientName: 'Heading Out', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
+  { jobType: 'CS', clientName: 'Heading Out', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' }
 ];
 
 @Component({
@@ -37,7 +37,7 @@ const ELEMENT_DATA: PeriodicElement[] =  [
 export class JobManagerComponent implements OnInit {
 
   displayedColumns: string[] = ['jobType', 'clientName', 'periodEnd', 'MTAdeadline', 'statutoryDate', 'jobStage', 'clientManager', 'jobAssignee', 'freeFromNotes'];
-  dataSource  = ELEMENT_DATA;
+  dataSource = ELEMENT_DATA;
   public ProcessTypeEnum = jobType;
 
   constructor() { }

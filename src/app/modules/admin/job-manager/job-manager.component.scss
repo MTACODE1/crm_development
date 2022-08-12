@@ -2,7 +2,7 @@
 
 table {
   .mat-cell {
-    font-size: 13px;
+    font-size: 14px;
     padding: 8px;
   }
 
@@ -11,19 +11,28 @@ table {
   .mat-footer-cell {
     text-align: center !important;
     min-width: 200px;
+    padding: 15px !important;
+    // min-height: 150px;
 
     &:first-child {
       min-width: 180px;
     }
-
-    &:last-child{
+    &:nth-child(2) {
       min-width: 250px;
+    }
+    &:last-child{
+      min-width: 300px;
     }
   }
 }
 
 .table-container {
   max-height: calc(100vh - 340px);
+  .logo-container {
+    :nth-child(2) {
+      margin: 0 8px;
+    }
+  }
 }
 
 .example-tooltip-red {
