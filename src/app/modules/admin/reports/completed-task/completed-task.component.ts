@@ -63,7 +63,6 @@ export class CompletedTaskComponent implements OnInit {
       ...event,
       user: this.userTerm,
     }
-    console.log(params);
     this.taskService.taskCompletedLog(params).subscribe(response => {
       this.logList = response['rows'];
     });

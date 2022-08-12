@@ -42,3 +42,11 @@ export enum taskType {
   onboarding = 'onboarding',
   conf_stmt = 'Confirmation Statement',
 }
+
+export enum jobType {
+  VAT = 'VAT',
+  AP = 'Annual Accounts',
+  PT = 'Self Assessment',
+  BK = 'Bookkeeping',
+  CS = 'Confirmation Statement'
+}

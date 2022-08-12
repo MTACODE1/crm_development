@@ -70,3 +70,35 @@
   margin-left: 3px;
   margin-right: -6px;
 }
+.vat-table {
+  .mat-cell, .mat-footer-cell {
+    &:nth-child(2){
+      background-color:#01950114;
+    }
+    &:nth-child(3) {
+      background-color: $yellow200;
+    }
+    &:nth-child(n+4):nth-child(-n+5){
+      background-color: $orange100;
+    }
+    &:nth-child(6){
+      background-color: #ff4aa412;
+    }
+  }
+}
+.individual-table {
+  .mat-cell {
+    &:nth-child(2){
+      background-color:#01950114;
+    }
+    &:nth-child(3) {
+      background-color: $yellow200;
+    }
+    &:nth-child(4) {
+      background-color: $orange100;
+    }
+    &:nth-child(5) {
+      background-color: #ff4aa412;
+    }
+  }
+}
