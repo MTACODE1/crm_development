@@ -82,6 +82,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
       params['search'] = additionalParams.search;
     }
     this.userService.getUserTable(params).pipe(takeUntil(this.destroyer$)).subscribe(res => {
+      debugger;
       this.userTableList = res['rows'];
       this.paginationConfig.total = res['total_count'];
       this.lastMonth = moment(this.date.value).subtract(1, 'month');

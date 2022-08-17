@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { ViewBookkeepingDetailsComponent } from 'app/modules/admin/reports/bookkeeping-break-down/view-bookkeeping-details/view-bookkeeping-details.component';
 import { ViewDetailsComponent } from 'app/modules/admin/reports/bookkeeping-break-down/view-details/view-details.component';
 import { BreakDown } from './report-data';
@@ -11,7 +12,7 @@ export class BreakdownTableDetailsService {
 
   breakdownList: BreakDown[] = [];
 
-  constructor(public dialog:MatDialog) { }
+  constructor(public dialog:MatDialog,private _router: Router) { }
 
   getVatBreakdownDetails(element, value, name){
     let data={
@@ -44,10 +45,13 @@ export class BreakdownTableDetailsService {
       data.count = element.bookkeeping_stage,
       data.clients = element.bookkeeping_stage_clients
     }
-    this.dialog.open(ViewDetailsComponent, {
-      width: '30vw',
-      data:data
-    })
+    let id:number=1;
+    //this._router.navigate(['/health']);
+    this._router.navigate(['/health/'+id])
+    // this.dialog.open(ViewDetailsComponent, {
+    //   width: '30vw',
+    //   data:data
+    // })
   }
 
   getBookkeepingBreakdownDetails(element, value, name){
@@ -105,7 +109,8 @@ export class BreakdownTableDetailsService {
       data.title = name,
       data.count = element.bookkeeping_process_started,
       data.clients = element.bookkeeping_process_started_clients
-    }
+    }   
+
     this.dialog.open(ViewBookkeepingDetailsComponent, {
       width: '30vw',
       data: data,
