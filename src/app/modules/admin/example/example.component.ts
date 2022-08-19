@@ -16,6 +16,8 @@ import { AssessmentStatusComponent } from './assessment-status/assessment-status
 import { BookkeepingStatusComponent } from './bookkeeping-status/bookkeeping-status.component';
 import { OnbordingFormComponent } from './onbording-form/onbording-form.component';
 import { TableUtil } from './TableUtil';
+// import { ActivatedRoute, Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap, Route } from '@angular/router';
 
 @Component({
   selector: 'example',
@@ -32,18 +34,22 @@ export class ExampleComponent implements OnInit, OnDestroy {
   myclientSelected: boolean = false;
   today = moment(new Date());
   searchTerm: string;
+  accountant_id:any;
   date = new FormControl(moment());
   lastMonth: any;
   isSticky: boolean;
   public paginationConfig = {
     limit: 10,
     offset: 0,
-    total: 10
+    total: 10,
+  
   }
   private readonly destroyer$: Subject<void> = new Subject();
+  id: string;
 
-  constructor(private userService: UserService, private _fuseConfirmationService: FuseConfirmationService,
-    public readonly dialog: MatDialog, private readonly snackBar: MatSnackBar, private readonly cd: ChangeDetectorRef, private breakpointObserver: BreakpointObserver) {
+
+  constructor(private userService: UserService, private _fuseConfirmationService: FuseConfirmationService, private acivate:ActivatedRoute,
+    public readonly dialog: MatDialog, private readonly snackBar: MatSnackBar, private readonly cd: ChangeDetectorRef, private breakpointObserver: BreakpointObserver,private router: Router) {
     this.breakpointObserver.observe(["(max-width: 525px)"]).subscribe((result: BreakpointState) => {
       if (result.matches) {
         this.isSticky = false;
@@ -55,9 +61,16 @@ export class ExampleComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.displayedColumns = this.userService.getColumns();
-    this.getTableDetails({});
+    this.displayedColumns = this.userService.getColumns(); 
     this.cd.detectChanges();
+    let id =  this.router.url.split('/')[2];
+    if(id){
+      const params = { accountId: id };
+      this.getTableDetails(params);
+    }else{
+      this.getTableDetails({});
+    }
+
   }
 
   ngOnDestroy(): void {
@@ -74,6 +87,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
       month: this.date.value.format('MMM-yy'),
       limit: this.paginationConfig.limit,
       offset: this.paginationConfig.offset,
+      
     }
     if (additionalParams && additionalParams.user) {
       params['user'] = additionalParams.user;
@@ -81,8 +95,11 @@ export class ExampleComponent implements OnInit, OnDestroy {
     if (additionalParams && additionalParams.search) {
       params['search'] = additionalParams.search;
     }
+    if (additionalParams && additionalParams.accountId) {
+      params['accountant_id'] = Number(additionalParams.accountId);
+    }
+    
     this.userService.getUserTable(params).pipe(takeUntil(this.destroyer$)).subscribe(res => {
-      debugger;
       this.userTableList = res['rows'];
       this.paginationConfig.total = res['total_count'];
       this.lastMonth = moment(this.date.value).subtract(1, 'month');

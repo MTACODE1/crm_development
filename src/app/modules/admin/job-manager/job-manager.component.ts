@@ -1,32 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { PeriodicElement } from 'app/mock-api/apps/reports/report-data';
+import { ReportsService } from 'app/mock-api/apps/reports/reports.service';
 import { jobType } from 'app/mock-api/apps/tasks/data';
+import { Subject, takeUntil } from 'rxjs';
 
-export interface PeriodicElement {
-  jobType: string;
-  clientName: string;
-  periodEnd: string;
-  MTAdeadline: string;
-  statutoryDate: string;
-  jobStage: string;
-  clientManager: string;
-  jobAssignee: string;
-  freeFromNotes: string
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { jobType: 'AP', clientName: 'Heading Out', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
-  { jobType: 'BK', clientName: 'Heading Out', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
-  { jobType: 'AP', clientName: 'Heading Out', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
-  { jobType: 'VAT', clientName: 'Heading Out', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
-  { jobType: 'PT', clientName: 'Heading Out', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
-  { jobType: 'VAT', clientName: 'Heading Out', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
-  { jobType: 'CS', clientName: 'Heading Out', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
-  { jobType: 'BK', clientName: 'Heading Out', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
-  { jobType: 'VAT', clientName: 'Heading Out', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
-  { jobType: 'CS', clientName: 'Heading Out', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
-  { jobType: 'PT', clientName: 'Heading Out', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' },
-  { jobType: 'CS', clientName: 'Heading Out', periodEnd: '11/08/2022', MTAdeadline: '31/08/2022', statutoryDate: '31/08/2022', jobStage: 'At Bookkeeping Stage', clientManager: 'Hannah Mccabe Barnes', jobAssignee: 'Hira Rathor', freeFromNotes: 'Client is not sending information' }
-];
 
 @Component({
   selector: 'app-job-manager',
@@ -35,14 +12,43 @@ const ELEMENT_DATA: PeriodicElement[] = [
   encapsulation: ViewEncapsulation.None,
 })
 export class JobManagerComponent implements OnInit {
-
-  displayedColumns: string[] = ['jobType', 'clientName', 'periodEnd', 'MTAdeadline', 'statutoryDate', 'jobStage', 'clientManager', 'jobAssignee', 'freeFromNotes'];
-  dataSource = ELEMENT_DATA;
+  totalLogCount: number;
+  displayedColumns: string[] = ['job_type', 'client_name','logo', 'period_end', 'mta_deadline', 'statutory_deadline', 'job_stage', 'client_manager', 'job_assignee', 'notes'];
+  userTerm: string;
   public ProcessTypeEnum = jobType;
+  
+  public jobManagerList: PeriodicElement[] = [];
 
-  constructor() { }
+  public paginationConfig = {
+    limit: 10,
+    offset: 0,
+  }
+  private readonly destroyer$: Subject<void> = new Subject();
+
+  constructor( private reportService:ReportsService) { }
 
   ngOnInit(): void {
+    this.getJobMangerList();
+  }
+  private getJobMangerList(): void {
+    this.reportService.getJobManagerData({}).pipe(takeUntil(this.destroyer$)).subscribe(response => {
+   this.jobManagerList = response['rows'];
+   this.totalLogCount = response['total_count'];
+    });
+  }
+  ngOnDestroy(): void {
+    this.destroyer$.next();
+    this.destroyer$.complete();
+  }
+  public onPageChange(event): void {
+    const params = {
+      ...this.paginationConfig,
+      ...event,
+      user: this.userTerm,
+    }
+    this.reportService.getJobManagerData(params).subscribe(response => {
+      this.jobManagerList = response['rows'];
+    });
   }
 
 }

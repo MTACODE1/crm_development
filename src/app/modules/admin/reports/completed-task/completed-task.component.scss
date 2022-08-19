@@ -1,5 +1,18 @@
 @import "src/styles/variables";
+table {
+  .mat-cell {
+    font-size: 14px;
+    padding: 8px;
+  }
 
+  .mat-header-cell,
+  .mat-cell,
+  .mat-footer-cell {
+    min-width: 200px;
+    padding: 15px !important;
+  
+  }
+}
 .mat-row {
   &.bookkeeping-row {
     background: $yellow200;

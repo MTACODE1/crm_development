@@ -15,13 +15,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         icon : 'heroicons_solid:heart',
         link : '/health'
     },
-    {
-        id   : 'task',
-        title: 'Tasks',
-        type : 'basic',
-        icon : 'heroicons_outline:check-circle',
-        link : '/tasks'
-    },
+    // {
+    //     id   : 'task',
+    //     title: 'Tasks',
+    //     type : 'basic',
+    //     icon : 'heroicons_outline:check-circle',
+    //     link : '/tasks'
+    // },
     {
       id   : 'jobmanager',
       title: 'Job-Manager',

@@ -45,13 +45,9 @@ export class BreakdownTableDetailsService {
       data.count = element.bookkeeping_stage,
       data.clients = element.bookkeeping_stage_clients
     }
-    let id:number=1;
-    //this._router.navigate(['/health']);
-    this._router.navigate(['/health/'+id])
-    // this.dialog.open(ViewDetailsComponent, {
-    //   width: '30vw',
-    //   data:data
-    // })
+
+    this._router.navigate(['/health/'+ element.accountant_id]);
+  
   }
 
   getBookkeepingBreakdownDetails(element, value, name){
@@ -111,10 +107,10 @@ export class BreakdownTableDetailsService {
       data.clients = element.bookkeeping_process_started_clients
     }   
 
-    this.dialog.open(ViewBookkeepingDetailsComponent, {
-      width: '30vw',
-      data: data,
-    })
+    this._router.navigate(['/health/'+ element.accountant_id]);
+    // this.dialog.open(ViewBookkeepingDetailsComponent, {
+    //   width: '30vw',
+    //   data: data,
+    // })
   }
-
 }

@@ -1,7 +1,7 @@
 <div class="w-full">
   <div class="flex flex-col px-6 pt-6">
     <label for="status" class="text-xl">Select User</label>
-    <mat-form-field appearance="none" id="status" class="w-36">
+    <mat-form-field appearance="none" id="status" class="w-40">
       <mat-select [formControl]="username" class="text-lg text-gray-500" placeholder="Select User"
         disableOptionCentering (selectionChange)="onClientChange($event)">
         <mat-option *ngFor="let item of users" [value]="item.id">

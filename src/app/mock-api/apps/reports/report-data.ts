@@ -70,3 +70,15 @@ export interface BreakDown {
   check: string;
   mr_complete: string;
 }
+export interface PeriodicElement {
+  job_type: string;
+  client_name: string;
+  logo:string;
+  period_end: string;
+  mta_deadline: string;
+  statutory_deadline: string;
+  job_stage: string;
+  client_manager: string;
+  job_assignee: string;
+  notes: string
+}

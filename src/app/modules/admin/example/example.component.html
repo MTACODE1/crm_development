@@ -42,13 +42,13 @@
           <div class="flex">
             <div class="search relative mt-2">
               <label for="search" class="absolute top-2.5 right-0 mr-3 text-xl">
-                <mat-icon (click)="searchTerm = ''; searchChange(searchTerm)">{{searchTerm? 'close' : ''}}</mat-icon>
+                <mat-icon class="cursor-pointer" (click)="searchTerm = ''; searchChange(searchTerm)">{{searchTerm? 'close' : ''}}</mat-icon>
               </label>
-              <input id="search" type="text" class="rounded-full text-lg h-10" placeholder="Enter keyword"
+              <input id="search" type="text"  class="rounded-full text-lg h-10" placeholder="Enter keyword" appNoWhiteSpaceAllow
                 [(ngModel)]="searchTerm">
             </div>
             <button mat-mini-fab color="primary" *ngIf="searchTerm" (click)="searchChange(searchTerm)"
-              class="flex items-center mt-2 ml-1">
+              class="flex items-center mt-2 ml-1 ">
               <mat-icon>search</mat-icon>
             </button>
           </div>
@@ -104,20 +104,18 @@
           <ng-container matColumnDef="onboarding">
             <th mat-header-cell *matHeaderCellDef class="info-col">Onboarding Stage</th>
             <td mat-cell *matCellDef="let element">
-              <div class="flex justify-center">
                 <ng-container *ngIf="element.onboarding_status_saved === null; else editOnbording">
                   <mat-icon class="cursor-pointer" svgIcon="heroicons_outline:plus-sm"
                     (click)="startUpdates('onboarding', element)"> </mat-icon>
                 </ng-container>
                 <ng-template #editOnbording>
-                  <mat-icon class="text-red-600 mr-2" svgIcon="heroicons_outline:x"
+                  <mat-icon class="text-red-600 mr-2 cursor-pointer" svgIcon="heroicons_outline:x"
                     *ngIf="!allCompleted(element?.onboarding_status)"></mat-icon>
-                  <mat-icon class="text-green-600 mr-2" svgIcon="heroicons_outline:check"
+                  <mat-icon class="text-green-600 mr-2 cursor-pointer" svgIcon="heroicons_outline:check"
                     *ngIf="allCompleted(element?.onboarding_status)"></mat-icon>
                   <mat-icon class="cursor-pointer" svgIcon="heroicons_outline:pencil" (click)="openOnboarding(element)">
                   </mat-icon>
                 </ng-template>
-              </div>
             </td>
           </ng-container>
 
@@ -316,7 +314,6 @@
             <th mat-header-cell *matHeaderCellDef class="assessment-col">{{(date.value.format('YY')-2)}}/{{(date.value.format('YY')-1)}} Self
               Assessment Stage</th>
             <td mat-cell *matCellDef="let element">
-              <div class="flex justify-center">
                 <ng-container
                   *ngIf="(element?.self_assessment_status_1?.length -1 == element?.self_assessment_saved_1_dir_1 && (element?.self_assessment_status_1.length -1 == element?.self_assessment_saved_1_dir_2 || element?.self_assessment_saved_1_dir_2 ==null) )|| 
                   (element?.self_assessment_status_1?.length -1 == element?.self_assessment_saved_1_dir_2 && (element?.self_assessment_status_1?.length -1 == element?.self_assessment_saved_1_dir_1 || element?.self_assessment_saved_1_dir_1 ==null)); else incomplete">
@@ -327,7 +324,6 @@
                 </ng-template>
                 <mat-icon class="cursor-pointer" svgIcon="heroicons_outline:pencil"
                   (click)="editAssessment(element, 'self_assessment_1')"></mat-icon>
-              </div>
             </td>
           </ng-container>
 
@@ -335,8 +331,7 @@
             <th mat-header-cell *matHeaderCellDef class="assessment-col">{{date.value.format('YY')-1}}/{{date.value.format('YY')}} Self Assessment
               Stage</th>
             <td mat-cell *matCellDef="let element">
-              <div class="flex justify-center">
-                <ng-container
+              <ng-container
                   *ngIf="(element?.self_assessment_status_2?.length -1 == element?.self_assessment_saved_2_dir_1 && (element?.self_assessment_status_2?.length -1 == element?.self_assessment_saved_2_dir_2 || element?.self_assessment_saved_2_dir_2 ==null) )|| 
                   (element?.self_assessment_status_2?.length -1 == element?.self_assessment_saved_2_dir_2 && (element?.self_assessment_status_2.length -1 == element?.self_assessment_saved_2_dir_1 || element?.self_assessment_saved_2_dir_1 ==null)); else incomplete">
                   <mat-icon class="text-green-600" svgIcon="heroicons_outline:check"></mat-icon>
@@ -346,7 +341,6 @@
                 </ng-template>
                 <mat-icon class="cursor-pointer" svgIcon="heroicons_outline:pencil"
                   (click)="editAssessment(element,'self_assessment_2')"></mat-icon>
-              </div>
             </td>
           </ng-container>
 
@@ -446,3 +440,4 @@
     </div>
   </div>
 </div>
+

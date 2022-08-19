@@ -6,12 +6,12 @@
       font-size: 13px;
       padding: 8px;
     }
-
     .mat-header-cell,
+    .mat-footer-cell ,
     .mat-cell {
-      text-align: center;
+      //text-align: center;
       min-width: 140px;
-
+      padding: 15px !important;
       &:first-child {
         min-width: 180px;
       }
@@ -50,7 +50,6 @@
     }
   }
 }
-
 .mat-raised-button {
   background-color: $red !important;
   color: $white !important;

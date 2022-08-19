@@ -6,6 +6,7 @@ import { MatTableModule } from '@angular/material/table';
 import { JobManagerComponent } from './job-manager.component';
 import { SharedModule } from 'app/shared/shared.module';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     JobManagerRoutingModule,
     MatTableModule,
     SharedModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatButtonModule
   ]
 })
 export class JobManagerModule { }
