@@ -1,35 +1,37 @@
 <div class="flex flex-col flex-auto min-w-0 p-8">
   <div class="sm:col-span-6 flex flex-col  p-6 bg-card shadow rounded-2xl overflow-hidden mb-3">
     <p class="font-bold">Job Manager</p>
-    <div class="flex flex-col flex-auto overflow-auto table-container mt-6 h-auto">
-      <table class="min-w-240 overflow-y-visible w-50" mat-table [dataSource]="jobManagerList" class="mat-elevation-z8">
+    <div class="flex flex-col flex-auto overflow-auto table-container mt-6 h-auto ">
+      <table class="min-w-240 overflow-y-visible w-50 " mat-table [dataSource]="jobManagerList"
+        class="mat-elevation-z8">
         <ng-container matColumnDef="job_type">
-          <th mat-header-cell *matHeaderCellDef class="w-40">Job Type </th>
-          <td  class="w-40" mat-cell *matCellDef="let element" matTooltip="{{ProcessTypeEnum[element.job_type]}}"
-            matTooltipClass="example-tooltip-red">{{element.job_type}}</td>
+          <th mat-header-cell *matHeaderCellDef class="w-40"><span class="ml-3"> Job Type</span> </th>
+          <td class="w-40 bg-yellow-50" mat-cell *matCellDef="let element"
+            matTooltip="{{ProcessTypeEnum[element.job_type]}}" matTooltipClass="example-tooltip-red"><span
+              class="ml-2.5"> {{element.job_type}}</span></td>
         </ng-container>
 
-        <ng-container matColumnDef="client_name" >
+        <ng-container matColumnDef="client_name">
           <th mat-header-cell *matHeaderCellDef>Client Name </th>
-          <td mat-cell *matCellDef="let element" class="items-center">
+          <td mat-cell *matCellDef="let element" class="items-center bg-yellow-50">
             <div class="flex items-center">
               <p class="mr-5">{{element.client_name}}</p>
-          
+
             </div>
           </td>
         </ng-container>
-        <ng-container matColumnDef="logo" >
+        <ng-container matColumnDef="logo">
           <th mat-header-cell *matHeaderCellDef class="w-50"> </th>
-          <td mat-cell *matCellDef="let element" class="items-center w-50">
-            <div class="flex items-center">           
+          <td mat-cell *matCellDef="let element" class="items-center w-50 bg-yellow-50">
+            <div class="flex items-center">
               <div class="logo-container flex items-center">
-                <a>
+                <a class="cursor-pointer">
                   <img class="h-auto w-7" src="assets/images/logo/bespoke.png" alt="bespoke">
                 </a>
-                <a>
+                <a class="cursor-pointer">
                   <img class="h-auto w-7" src="assets/images/logo/dext.png" alt="dext">
                 </a>
-                <a>
+                <a class="cursor-pointer">
                   <img class="h-auto w-7" src="assets/images/logo/ltd.png" alt="ltd">
                 </a>
               </div>
@@ -39,54 +41,57 @@
 
         <ng-container matColumnDef="period_end">
           <th mat-header-cell *matHeaderCellDef>Period End </th>
-          <td mat-cell *matCellDef="let element">{{element.period_end}}</td>
+          <td mat-cell *matCellDef="let element" class="bg-yellow-50">{{element.period_end}}</td>
         </ng-container>
 
         <ng-container matColumnDef="mta_deadline">
           <th mat-header-cell *matHeaderCellDef>MTA Deadline</th>
-          <td mat-cell *matCellDef="let element">{{element.mta_deadline}}</td>
+          <td mat-cell *matCellDef="let element" class="bg-yellow-50">{{element.mta_deadline}}</td>
         </ng-container>
 
         <ng-container matColumnDef="statutory_deadline">
           <th mat-header-cell *matHeaderCellDef>Statutory Date</th>
-          <td mat-cell *matCellDef="let element">{{element.statutory_deadline}}</td>
+          <td mat-cell *matCellDef="let element" class="bg-yellow-50">{{element.statutory_deadline}}</td>
         </ng-container>
 
         <ng-container matColumnDef="job_stage">
           <th mat-header-cell *matHeaderCellDef>Job Stage</th>
-          <td mat-cell *matCellDef="let element">
+          <td mat-cell *matCellDef="let element" class="bg-yellow-50">
             <button mat-raised-button>
               {{element.job_stage}}
-            </button>          
+            </button>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="current_task">
+          <th mat-header-cell *matHeaderCellDef>Current Task</th>
+          <td mat-cell *matCellDef="let element" class="bg-yellow-50">{{element.current_task}}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="client_manager">
           <th mat-header-cell *matHeaderCellDef>Client Manager</th>
-          <td mat-cell *matCellDef="let element">{{element.client_manager}}</td>
+          <td mat-cell *matCellDef="let element" class="bg-yellow-50">{{element.client_manager}}</td>
         </ng-container>
 
         <ng-container matColumnDef="job_assignee">
           <th mat-header-cell *matHeaderCellDef>Job Assignee</th>
-          <td mat-cell *matCellDef="let element">{{element.job_assignee}}</td>
+          <td mat-cell *matCellDef="let element" class="bg-yellow-50">{{element.job_assignee}}</td>
         </ng-container>
 
         <ng-container matColumnDef="notes">
           <th mat-header-cell *matHeaderCellDef>Free From Notes </th>
-          <td mat-cell *matCellDef="let element">{{element.notes}}</td>
+          <td mat-cell *matCellDef="let element" class="bg-yellow-50">{{element.notes}}</td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="{{row.jobType}}-row"></tr>
       </table>
     </div>
-    
+
   </div>
-  <div class="paginator text-right mt-3.5" >
+  <div class="paginator text-right mt-3.5">
     <app-paginator [pageSizes]="[10, 20, 30]" [count]="totalLogCount" [perPage]="paginationConfig.limit"
-    (pageChange)="onPageChange($event)">
-  </app-paginator>
+      (pageChange)="onPageChange($event)">
+    </app-paginator>
   </div>
 </div>
-
-
