@@ -30,6 +30,7 @@
         "highlight.js": "11.5.1",
         "jquery": "^3.6.0",
         "lodash-es": "4.17.21",
+        "mat-table-exporter": "^10.2.4",
         "moment": "2.29.3",
         "ng-apexcharts": "1.7.1",
         "ng-inline-svg": "^13.1.2",

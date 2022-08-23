@@ -1,8 +1,61 @@
 <div class="flex flex-col flex-auto min-w-0 p-8">
   <div class="sm:col-span-6 flex flex-col  p-6 bg-card shadow rounded-2xl overflow-hidden mb-3">
     <p class="font-bold">Job Manager</p>
+
+    <!-- filters -->
+    <div class="flex flex-wrap mt-4 space-x-2">
+      <mat-form-field appearance="fill" id="status" class="w-50">
+        <mat-select class="text-lg text-gray-500" placeholder="Select Job Type" [(ngModel)]="flt_job_type"
+          disableOptionCentering (selectionChange)="onJobTypeChange($event)">
+          <mat-option *ngFor="let item of jobTypesList" [value]="item">
+            {{item.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill" id="status" class="w-60">
+        <mat-select class="text-lg text-gray-500" placeholder="Select Client Manager" [(ngModel)]="flt_client_manager"
+          disableOptionCentering>
+          <mat-option>
+            Not Found
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill" id="status" class="w-60">
+        <mat-select class="text-lg text-gray-500" placeholder="Select Job Assignee" [(ngModel)]="flt_job_asg"
+          disableOptionCentering>
+          <mat-option>
+            Not Found
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div >
+        <div class="mr-3 mb-0">Statutory Deadline</div>
+        <label class="form-switch form-switch-1">
+          <input type="checkbox" [(ngModel)]="statutory_deadline" (ngModelChange)="toggleStatutoryDeadline($event)">
+          <i></i>
+        </label>
+      </div>
+      <!-- <mat-slide-toggle [(ngModel)]="statutory_deadline" (change)="toggleStatutoryDeadline($event)">Statutory Deadline</mat-slide-toggle> -->
+    </div>
+    <!-- end filters -->
+
+
+    <div class="flex w-100 flex-wrap" *ngIf="filterList.length">
+      <mat-chip-list class="example-chip" *ngFor="let item of filterList">
+        <mat-chip class="example-box" *ngIf="item.value">
+          {{item.value}}
+          <mat-icon (click)="removeFliter(item)" class="cursor-pointer">cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+    <div class="flex justify-end my-4 download-button">
+      <button mat-stroked-button color="primary" (click)="exportTable()"><i class="fa fa-file-excel-o"
+          aria-hidden="true"></i>&nbsp; Download</button>
+    </div>
+
+
     <div class="flex flex-col flex-auto overflow-auto table-container mt-6 h-auto ">
-      <table class="min-w-240 overflow-y-visible w-50 " mat-table [dataSource]="jobManagerList"
+      <table class="min-w-240 overflow-y-visible w-50 " id="jobMangerTable" mat-table [dataSource]="jobManagerList"
         class="mat-elevation-z8">
         <ng-container matColumnDef="job_type">
           <th mat-header-cell *matHeaderCellDef class="w-40"><span class="ml-3"> Job Type</span> </th>
