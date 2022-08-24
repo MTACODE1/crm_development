@@ -3,41 +3,25 @@
 table {
   .mat-cell {
     font-size: 14px;
-   // padding: 8px;
+    padding: 8px;
   }
-  .mat-header-cell{
-    padding-top: 8px !important;
-    padding-left: 0px !important;
-    &:nth-child(8) { 
-      padding-left: 14px !important;
-    //  padding-right: 15px !important;
-    }
-  }
+
+  .mat-header-cell,
   .mat-cell,
   .mat-footer-cell {
    //text-align: center !important;
-    min-width: 130px;
-     padding: 0px !important;
+    min-width: 200px;
+    padding: 15px !important;
+    // min-height: 150px;
 
     &:first-child {
-      min-width: 100px;
+      min-width: 135px;
     }
     &:nth-child(2) {
       min-width: 214px;
     }
-    &:nth-child(4) {
-      min-width: 100px;
-    }
-    &:nth-child(5) {
-       min-width: 120px;
-    }
-    &:nth-child(8) {
-      min-width: 214px;
-      padding-left: 15px !important;
-      padding-right: 15px !important;
-    }
     &:last-child{
-      min-width: 120px;
+      min-width: 300px;
     }
   }
 }

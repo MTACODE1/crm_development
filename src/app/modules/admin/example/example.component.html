@@ -430,6 +430,9 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"
             [ngClass]="{'bg-yellow-50': row?.client_status === '3'}"></tr>
         </table>
+        <ng-container *ngIf="userTableList.length === 0">
+          <p class="font-medium text-center text-lg">No data found !!!</p>
+        </ng-container>
       </div>
     </div>
 

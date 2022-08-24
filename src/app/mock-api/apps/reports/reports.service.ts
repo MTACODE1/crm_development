@@ -8,32 +8,22 @@ import { Dashboard, PeriodicElement, ReportData } from './report-data';
 })
 export class ReportsService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http:HttpClient) { }
 
   getClientNumber(params) {
     return this.http.post<ReportData[]>(`${environment.baseUrl}/number_clients`, params);
   }
 
-  getDashboardDetails(data) {
+  getDashboardDetails(data){
     return this.http.post<Dashboard>(`${environment.baseUrl}/dashboard`, data);
   }
 
-  getBreakdownData(params) {
+  getBreakdownData(params){
     return this.http.post(`${environment.baseUrl}/breakdown`, params);
   }
-  
-  getJobManagerData(params) {
+  getJobManagerData(params)
+  {
     return this.http.post<PeriodicElement>(`${environment.baseUrl}/job_manager`, params);
-  }
-
-  getJobTypes() {
-    return [
-      { name: 'VAT', value: 'vat' },
-      { name: 'Annual Accounts', value: 'annual_accounts' },
-      { name: 'Self Assessment', value: 'self_assessment' },
-      { name: 'Bookkeeping', value: 'bookkeeping' },
-      { name: 'Confirmation Statement', value: 'confirmation_statement' }
-    ]
   }
 
 }

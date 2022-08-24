@@ -78,6 +78,7 @@ export interface PeriodicElement {
   mta_deadline: string;
   statutory_deadline: string;
   job_stage: string;
+  current_task:string;
   client_manager: string;
   job_assignee: string;
   notes: string
