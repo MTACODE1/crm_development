@@ -8,7 +8,8 @@ import { SearchPipe } from './pipe/search.pipe';
 import { NoWhiteSpaceAllowDirective } from './no-white-space-allow.directive';
 import { MatChipsModule } from '@angular/material/chips';
 import { HttpClientModule } from '@angular/common/http';
-import { CustomTooltip } from 'app/modules/admin/ag-grid-job-manager/custom-tooltip-component';
+
+
 
 const common = [
   SearchPipe,
@@ -37,7 +38,9 @@ const common = [
     ...common,
     PaginationComponent,
     NoWhiteSpaceAllowDirective,
-    CustomTooltip
+    
+    
+    
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

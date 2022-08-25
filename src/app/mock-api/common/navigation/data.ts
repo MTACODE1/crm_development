@@ -34,7 +34,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
     title: 'Ag-Grid-job-Manager',
     type : 'basic',
     icon : 'heroicons_outline:pencil-alt',
-    link : '/aggridjobmanager'
+    link : '/ag-grid-job-manager'
 },
     {
       id      : 'report',

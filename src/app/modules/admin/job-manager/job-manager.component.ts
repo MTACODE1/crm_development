@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { PeriodicElement } from 'app/mock-api/apps/reports/report-data';
+import { JobManager } from 'app/mock-api/apps/reports/report-data';
 import { ReportsService } from 'app/mock-api/apps/reports/reports.service';
 import { jobType } from 'app/mock-api/apps/tasks/data';
 import { Subject, takeUntil } from 'rxjs';
@@ -17,7 +17,7 @@ export class JobManagerComponent implements OnInit {
   userTerm: string;
   public ProcessTypeEnum = jobType;
   
-  public jobManagerList: PeriodicElement[] = [];
+  public jobManagerList: JobManager[] = [];
 
   public paginationConfig = {
     limit: 10,

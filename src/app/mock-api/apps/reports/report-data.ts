@@ -70,7 +70,8 @@ export interface BreakDown {
   check: string;
   mr_complete: string;
 }
-export interface PeriodicElement {
+export interface JobManager {
+  message: string;
   job_type: string;
   client_name: string;
   logo:string;
@@ -82,4 +83,9 @@ export interface PeriodicElement {
   client_manager: string;
   job_assignee: string;
   notes: string
+}
+
+export interface TableTheme {
+  id: number,
+  name: string
 }

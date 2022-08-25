@@ -5,17 +5,22 @@ import { AgGridJobManagerRoutingModule } from './ag-grid-job-manager-routing.mod
 import { MatButtonModule } from '@angular/material/button';
 import { AgGridJobManagerComponent } from './ag-grid-job-manager.component';
 import { AgGridModule } from 'ag-grid-angular';
-
-
+import { LicenseManager } from 'ag-grid-enterprise'
+import { MatIconModule } from '@angular/material/icon';
+import { environment } from 'environments/environment';
+import { LogoImages } from './logo-images.component';
+import { CustomTooltip } from './custom-tooltip-component';
+LicenseManager.setLicenseKey(environment.agGridLicensedKey);
 
 @NgModule({
-  declarations: [AgGridJobManagerComponent],
+  declarations: [AgGridJobManagerComponent,LogoImages,CustomTooltip],
   imports: [
     CommonModule,
     SharedModule,
     MatButtonModule,
     AgGridJobManagerRoutingModule,
     AgGridModule,
+    MatIconModule
   ]
 })
 export class AgGridJobManagerModule { }
