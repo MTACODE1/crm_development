@@ -10,10 +10,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { environment } from 'environments/environment';
 import { LogoImages } from './logo-images.component';
 import { CustomTooltip } from './custom-tooltip-component';
+import { CurrentTask } from './current-task.component';
 LicenseManager.setLicenseKey(environment.agGridLicensedKey);
 
 @NgModule({
-  declarations: [AgGridJobManagerComponent,LogoImages,CustomTooltip],
+  declarations: [AgGridJobManagerComponent, LogoImages, CustomTooltip, CurrentTask],
   imports: [
     CommonModule,
     SharedModule,

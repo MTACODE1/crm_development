@@ -35,5 +35,6 @@ export class CustomTooltip implements ITooltipAngularComp {
     this.params = params;
 
     this.data = params.api!.getDisplayedRowAtIndex(params.rowIndex!)!.data;
+
   }
 }

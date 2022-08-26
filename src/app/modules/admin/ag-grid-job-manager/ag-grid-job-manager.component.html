@@ -1,13 +1,13 @@
 
 <div class="flex flex-col flex-auto min-w-0 p-8">
     <div class="sm:col-span-6 flex flex-col  p-6 bg-card shadow rounded-2xl overflow-hidden mb-3">
-        <h1 class="font-bold">Job Manager</h1>     
+        <h1 class="font-bold">Job Manager</h1>    
         <div class="text-lg font-medium tracking-tight leading-6 truncate mb-2">
           <div class="flex items-center justify-between flex-wrap pb-2">
             <div class="mt-4 mx-4">
               <mat-form-field appearance="fill" id="status" class="w-50">
                 <mat-select  class="text-lg text-gray-500" placeholder="Select Theme" (selectionChange)="onThemeChange($event)" disableOptionCentering>
-                  <mat-option *ngFor="let item of themesList" [value]="item.id">
+                  <mat-option *ngFor="let item of themesList" [value]="item.value">
                     <ng-container >
                      {{item.name}}
                     </ng-container>
@@ -25,7 +25,8 @@
               aria-hidden="true"></i>&nbsp; Download</button>
         </div>
         <div >
-<ag-grid-angular id="ag-grid-container"  [defaultColDef]="defaultColDef" style="width:100%; height: 550px; padding-top: 10px;" class="ag-theme-alpine ag-grid-container"
+          
+<ag-grid-angular id="ag-grid"  [defaultColDef]="defaultColDef" style="width:100%; height: 550px; padding-top: 10px;" class="ag-theme-alpine"
 [animateRows]="true"
 [rowData]="rowData" [columnDefs]="columnDefs"
 [pagination]="true"

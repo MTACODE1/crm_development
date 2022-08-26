@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AgGridAngular } from 'ag-grid-angular';
-import { ColDef, GridOptions, GridApi, GridReadyEvent, } from 'ag-grid-community';
+import { AgGridAngular, ICellRendererAngularComp, IFilterAngularComp, ITooltipAngularComp } from 'ag-grid-angular';
+import { ColDef, GridOptions, GridApi, GridReadyEvent, ITooltipParams, ICellRendererParams, IFilterParams, IDoesFilterPassParams, } from 'ag-grid-community';
 import { JobManager, TableTheme } from 'app/mock-api/apps/reports/report-data';
 import { ReportsService } from 'app/mock-api/apps/reports/reports.service';
 import { CustomTooltip } from 'app/modules/admin/ag-grid-job-manager/custom-tooltip-component';
@@ -21,7 +21,7 @@ export class AgGridJobManagerComponent implements OnInit {
   public defaultColDef: ColDef = {
     sortable: true,
     filter: true,
-    floatingFilter: true,
+    floatingFilter: true, 
     tooltipComponent: CustomTooltip,
   };
   public rowSelection: 'single' | 'multiple' = 'multiple';
@@ -31,12 +31,13 @@ export class AgGridJobManagerComponent implements OnInit {
   public themesList: TableTheme[] = [];
   public columnDefs: ColDef[];
   public searchTerm: string;
-
-  constructor(private reportService: ReportsService, private agGridService: AgGridServiceService) { }
+  public selectTheme : string;
+  constructor( private agGridService: AgGridServiceService) { }
 
   ngOnInit(): void {
+   
     this.getJobMangerList();
-    this.columnDefs = this.agGridService.getColumens();
+    this.columnDefs = this.agGridService.columnDefs;
     this.themesList = this.agGridService.themes();
   }
 
@@ -55,7 +56,8 @@ export class AgGridJobManagerComponent implements OnInit {
   }
 
  getJobMangerList() {
-    this.reportService.getJobManagerData({}).subscribe(response => {
+  
+    this.agGridService.getJobManagerData({}).subscribe(response => {
       if (response['rows'].length)
         this.rowData = response['rows'];
     }, error => {});
@@ -67,16 +69,19 @@ export class AgGridJobManagerComponent implements OnInit {
         job_id: event.data.job_id,
         notes: event.newValue
       }
-      this.reportService.updateJobManagerNote(param).subscribe(response => {
+      this.agGridService.updateJobManagerNote(param).subscribe(response => {
         if (response.message = 'success') {
-
         }
       }, error => { })
     }
   }
 
-  public onThemeChange(event) { }
-
+  public onThemeChange(event) { 
+    const themeValue=document.getElementById('ag-grid')
+    themeValue.classList.remove(themeValue.classList.value);
+    themeValue.classList.add(event.value);
+  }
 }
+
 
 
