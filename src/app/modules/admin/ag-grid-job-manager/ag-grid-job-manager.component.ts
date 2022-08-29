@@ -1,8 +1,8 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AgGridAngular, ICellRendererAngularComp, IFilterAngularComp, ITooltipAngularComp } from 'ag-grid-angular';
-import { ColDef, GridOptions, GridApi, GridReadyEvent, ITooltipParams, ICellRendererParams, IFilterParams, IDoesFilterPassParams, } from 'ag-grid-community';
+import { AgGridAngular } from 'ag-grid-angular';
+import { ColDef, GridOptions, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { JobManager, TableTheme } from 'app/mock-api/apps/reports/report-data';
-import { ReportsService } from 'app/mock-api/apps/reports/reports.service';
 import { CustomTooltip } from 'app/modules/admin/ag-grid-job-manager/custom-tooltip-component';
 import { AgGridServiceService } from './ag-grid-service.service';
 
@@ -16,12 +16,11 @@ export class AgGridJobManagerComponent implements OnInit {
   public gridOptions: GridOptions;
   public tooltipShowDelay = 0;
   public tooltipHideDelay = 2000;
-  public notesList: []
   @ViewChild(AgGridAngular) agGrid!: AgGridAngular;
   public defaultColDef: ColDef = {
     sortable: true,
     filter: true,
-    floatingFilter: true, 
+    floatingFilter: true,
     tooltipComponent: CustomTooltip,
   };
   public rowSelection: 'single' | 'multiple' = 'multiple';
@@ -31,11 +30,11 @@ export class AgGridJobManagerComponent implements OnInit {
   public themesList: TableTheme[] = [];
   public columnDefs: ColDef[];
   public searchTerm: string;
-  public selectTheme : string;
-  constructor( private agGridService: AgGridServiceService) { }
+  public selectTheme: string;
+  constructor(private agGridService: AgGridServiceService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
-   
+
     this.getJobMangerList();
     this.columnDefs = this.agGridService.columnDefs;
     this.themesList = this.agGridService.themes();
@@ -55,15 +54,22 @@ export class AgGridJobManagerComponent implements OnInit {
     this.gridApi = params.api;
   }
 
- getJobMangerList() {
-  
-    this.agGridService.getJobManagerData({}).subscribe(response => {
-      if (response['rows'].length)
-        this.rowData = response['rows'];
-    }, error => {});
+  getJobMangerList() {
+    let params={
+      sort_by:"mta_deadline",
+      sort_order:"asc"
+    }
+    this.agGridService.getJobManagerData(params).subscribe(response => {
+      this.rowData = response['rows']
+      if (response['rows'].length) {
+        let data = response['rows']
+      }
+
+    }, error => { });
   }
 
   onCellEditingStopped(event) {
+    debugger
     if (event.type == "cellEditingStopped") {
       let param = {
         job_id: event.data.job_id,
@@ -76,12 +82,9 @@ export class AgGridJobManagerComponent implements OnInit {
     }
   }
 
-  public onThemeChange(event) { 
-    const themeValue=document.getElementById('ag-grid')
+  public onThemeChange(event) {
+    const themeValue = document.getElementById('ag-grid')
     themeValue.classList.remove(themeValue.classList.value);
     themeValue.classList.add(event.value);
   }
 }
-
-
-

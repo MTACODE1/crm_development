@@ -6,3 +6,42 @@
       width: 200px;
     }
   }
+  @media(min-width:425px) and (max-width:767px){
+    .search {
+      input[id="filter-text-box"] {
+        width: 200px;
+      }}
+  }
+  @media(max-width:320px) {
+    .search {
+      input[id="filter-text-box"] {
+        width: 205px;
+      }}
+      .full-width{
+        display: block !important;
+         text-align: center !important;
+         button{
+           width: 100% !important;
+         }
+       }
+      
+  }
+  @media(min-width:360px) and (max-width:426px) {
+    .search {
+          input[id="filter-text-box"] {
+            width: 200px;
+          }}
+          .full-width{
+           display: block !important;
+            text-align: center !important;
+            button {
+              width: 100% !important;
+            }
+            input{
+              width: 100% !important;
+            }
+            mat-form-field{
+              width: 100% !important;
+            }
+          }
+  }

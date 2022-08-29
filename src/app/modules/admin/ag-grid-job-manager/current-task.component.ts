@@ -10,7 +10,7 @@ import { AgGridServiceService } from "./ag-grid-service.service";
     <div *ngIf="params['data'].current_task=='-' " class="flex">
         <span>-</span>
     </div>
-     <div *ngIf="!(params['data'].current_task=='-') " class="flex">
+     <div *ngIf="(params['data'].current_task) && params['data'].current_task!='-' " class="flex">
         <div [value]="params['data'].current_task ">
     <span>{{params['data'].current_task }}</span>
         </div>

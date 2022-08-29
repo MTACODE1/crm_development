@@ -3,8 +3,8 @@
     <div class="sm:col-span-6 flex flex-col  p-6 bg-card shadow rounded-2xl overflow-hidden mb-3">
         <h1 class="font-bold">Job Manager</h1>    
         <div class="text-lg font-medium tracking-tight leading-6 truncate mb-2">
-          <div class="flex items-center justify-between flex-wrap pb-2">
-            <div class="mt-4 mx-4">
+          <div class="flex items-center justify-between flex-wrap pb-2 full-width">
+            <div class="mt-4">
               <mat-form-field appearance="fill" id="status" class="w-50">
                 <mat-select  class="text-lg text-gray-500" placeholder="Select Theme" (selectionChange)="onThemeChange($event)" disableOptionCentering>
                   <mat-option *ngFor="let item of themesList" [value]="item.value">
@@ -13,6 +13,7 @@
                     </ng-container>
                   </mat-option>
                 </mat-select>
+               
               </mat-form-field>
             </div>
           <div class="search relative ">
@@ -20,7 +21,7 @@
           </div>
         </div>
         </div>
-        <div class="flex justify-end  download-button">
+        <div class="flex justify-end  download-button full-width ">
           <button mat-stroked-button color="primary" (click)="onBtExport()"><i class="fa fa-file-excel-o"
               aria-hidden="true"></i>&nbsp; Download</button>
         </div>
@@ -28,7 +29,8 @@
           
 <ag-grid-angular id="ag-grid"  [defaultColDef]="defaultColDef" style="width:100%; height: 550px; padding-top: 10px;" class="ag-theme-alpine"
 [animateRows]="true"
-[rowData]="rowData" [columnDefs]="columnDefs"
+[rowData]="rowData" 
+[columnDefs]="columnDefs"
 [pagination]="true"
 [tooltipShowDelay]="tooltipShowDelay"
 [tooltipHideDelay]="tooltipHideDelay"

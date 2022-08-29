@@ -129,3 +129,19 @@ table {
     opacity: 0;
   }
 }
+
+@media(min-width:320px) and (max-width:375px) {
+  .ag-tool-panel-wrapper{
+    width:87% !important
+  }
+}
+@media (width:320px) {
+  .ag-paging-page-summary-panel {
+    margin-right:-24px !important;
+  }
+  .ag-paging-row-summary-panel{
+    margin-right:-24px !important;
+
+  }
+  
+}
