@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef, GridOptions, GridApi, GridReadyEvent } from 'ag-grid-community';
@@ -31,7 +30,7 @@ export class AgGridJobManagerComponent implements OnInit {
   public columnDefs: ColDef[];
   public searchTerm: string;
   public selectTheme: string;
-  constructor(private agGridService: AgGridServiceService, private datePipe: DatePipe) { }
+  constructor(private agGridService: AgGridServiceService) { }
 
   ngOnInit(): void {
 
@@ -69,7 +68,6 @@ export class AgGridJobManagerComponent implements OnInit {
   }
 
   onCellEditingStopped(event) {
-    debugger
     if (event.type == "cellEditingStopped") {
       let param = {
         job_id: event.data.job_id,
