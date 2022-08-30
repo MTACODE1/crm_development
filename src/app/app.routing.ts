@@ -63,7 +63,7 @@ export const appRoutes: Route[] = [
         {path: 'dashboard', loadChildren: () => import('app/modules/admin/dshboard/dshboard.module').then(m => m.DshboardModule)},
         {path: 'reports', loadChildren: () => import('app/modules/admin/reports/reports.module').then(m => m.ReportsModule)},
         {path: 'jobmanager', loadChildren: () => import('app/modules/admin/job-manager/job-manager.module').then(m => m.JobManagerModule)},
-        {path: 'ag-grid-job-manager', loadChildren: () => import('app/modules/admin/ag-grid-job-manager/ag-grid-job-manager.module').then(m => m.AgGridJobManagerModule)},
+        {path: 'job-manager', loadChildren: () => import('app/modules/admin/ag-grid-job-manager/ag-grid-job-manager.module').then(m => m.AgGridJobManagerModule)},
       ]
     },
     {path: '404-not-found', pathMatch: 'full', loadChildren: () => import('app/modules/not-found/not-found.module').then(m => m.NotFoundModule)},

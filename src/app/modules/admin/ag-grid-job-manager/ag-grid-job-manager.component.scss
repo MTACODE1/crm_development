@@ -24,6 +24,10 @@
            width: 100% !important;
          }
        }
+       mat-form-field{
+        margin: 0px !important;
+        width: 100% !important;
+      }
       
   }
   @media(min-width:360px) and (max-width:426px) {
@@ -41,6 +45,7 @@
               width: 100% !important;
             }
             mat-form-field{
+              margin: 0px !important;
               width: 100% !important;
             }
           }

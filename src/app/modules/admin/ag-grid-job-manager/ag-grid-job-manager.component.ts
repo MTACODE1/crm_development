@@ -1,3 +1,4 @@
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef, GridOptions, GridApi, GridReadyEvent } from 'ag-grid-community';
@@ -12,6 +13,8 @@ import { AgGridServiceService } from './ag-grid-service.service';
 })
 export class AgGridJobManagerComponent implements OnInit {
   private gridApi!: GridApi<JobManager>;
+  filteredJobAssigne:any;
+  jobManagerList: Array<JobManager> = [];
   public gridOptions: GridOptions;
   public tooltipShowDelay = 0;
   public tooltipHideDelay = 2000;
@@ -20,6 +23,11 @@ export class AgGridJobManagerComponent implements OnInit {
     sortable: true,
     filter: true,
     floatingFilter: true,
+    enableValue: true,
+    // enableRowGroup: true,
+    // rowGroup: true,
+     enableRowGroup: true,
+    
     tooltipComponent: CustomTooltip,
   };
   public rowSelection: 'single' | 'multiple' = 'multiple';
@@ -30,10 +38,13 @@ export class AgGridJobManagerComponent implements OnInit {
   public columnDefs: ColDef[];
   public searchTerm: string;
   public selectTheme: string;
+  selected:any;
+  pageSize = 10;
+blockSize = 100;
   constructor(private agGridService: AgGridServiceService) { }
 
   ngOnInit(): void {
-
+this.getJobAssignee();
     this.getJobMangerList();
     this.columnDefs = this.agGridService.columnDefs;
     this.themesList = this.agGridService.themes();
@@ -60,6 +71,8 @@ export class AgGridJobManagerComponent implements OnInit {
     }
     this.agGridService.getJobManagerData(params).subscribe(response => {
       this.rowData = response['rows']
+      this.jobManagerList=response['rows']
+      // this.filteredJobAssigne=this.jobManagerList
       if (response['rows'].length) {
         let data = response['rows']
       }
@@ -85,4 +98,20 @@ export class AgGridJobManagerComponent implements OnInit {
     themeValue.classList.remove(themeValue.classList.value);
     themeValue.classList.add(event.value);
   }
+  public getJobAssignee(){
+   this.agGridService.getJobAssignee({}).subscribe(response => {
+    this.filteredJobAssigne = response['rows']
+  });
 }
+public onClientChange(event) {  
+  console.log("event",event.value)
+  // const params = { user: event.value }
+  this.getJobAssignee();
+}
+  onPageSizeChanged(event: any): void {
+    this.pageSize = Number(event.currentTarget.value);
+    this.gridApi.paginationSetPageSize(this.pageSize);
+  }
+  
+}
+

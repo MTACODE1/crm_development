@@ -22,19 +22,19 @@ export const defaultNavigation: FuseNavigationItem[] = [
     //     icon : 'heroicons_outline:check-circle',
     //     link : '/tasks'
     // },
-    {
-      id   : 'jobmanager',
-      title: 'Job-Manager',
-      type : 'basic',
-      icon : 'heroicons_outline:pencil-alt',
-      link : '/jobmanager'
-  },
+  //   {
+  //     id   : 'jobmanager',
+  //     title: 'Job-Manager',
+  //     type : 'basic',
+  //     icon : 'heroicons_outline:pencil-alt',
+  //     link : '/jobmanager'
+  // },
   {
     id   : 'aggridjobmanager',
-    title: 'Ag-Grid-job-Manager',
+    title: 'Job-Manager',
     type : 'basic',
     icon : 'heroicons_outline:pencil-alt',
-    link : '/ag-grid-job-manager'
+    link : '/job-manager'
 },
     {
       id      : 'report',
