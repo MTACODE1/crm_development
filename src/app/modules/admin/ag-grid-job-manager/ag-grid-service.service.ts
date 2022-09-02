@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ColDef } from 'ag-grid-community';
 import { JobManager } from 'app/mock-api/apps/reports/report-data';
 import { environment } from 'environments/environment';
+import { CompanyLink } from './company-link-component';
 import { CurrentTask } from './current-task.component';
 import { LogoImages } from './logo-images.component';
 
@@ -32,9 +33,8 @@ export class AgGridServiceService {
   public columnDefs: ColDef[]=
  [
       { headerName: 'Job Type', field: 'job_type', checkboxSelection: true, headerCheckboxSelection: true, 
-       tooltipField: 'job_type', width: 150,
-       filter: 'agMultiColumnFilter', rowDrag:true },
-      { headerName: 'Client Name', field: 'client_name', filter: 'agMultiColumnFilter', width: 150, },
+       tooltipField: 'job_type', width: 200, filter: 'agMultiColumnFilter', rowDrag:true },
+     { headerName: 'Client Name', field: 'client_name', filter: 'agMultiColumnFilter', width: 150 ,cellRenderer:CompanyLink},
       { headerName: '', field: 'Image', floatingFilter: false, filter: false, sortable: false, cellRenderer: LogoImages, width: 130, },
       { headerName: 'Period End', field: 'period_end', filter: 'agDateColumnFilter', width: 130, filterParams: {
  
@@ -117,9 +117,10 @@ export class AgGridServiceService {
         },
       },
       { headerName: 'Job Stage', field: 'job_stage', filter: 'agMultiColumnFilter' },
+      { headerName: 'Task Assignee', field: 'job_assignee', filter: 'agMultiColumnFilter', width: 150, },
       { headerName: 'Current Task', field: 'current_task', filter: 'agMultiColumnFilter', width: 300 ,cellRenderer:CurrentTask },
       { headerName: 'Client Manager', field: 'client_manager', filter: 'agMultiColumnFilter', width: 150, },
-      { headerName: 'Task Assignee', field: 'job_assignee', filter: 'agMultiColumnFilter', width: 150, },
+      
       { headerName: 'Free Form Notes', field: 'notes', filter: 'agMultiColumnFilter', editable: true, width: 150, },
     ];
 

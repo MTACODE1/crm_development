@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ITooltipAngularComp } from 'ag-grid-angular';
 import { ITooltipParams } from 'ag-grid-community';
-import { jobType, taskType } from 'app/mock-api/apps/tasks/data';
+import { jobType } from 'app/mock-api/apps/tasks/data';
 
 @Component({
   selector: 'tooltip-component',
@@ -33,7 +33,6 @@ export class CustomTooltip implements ITooltipAngularComp {
 
   agInit(params: { color: string } & ITooltipParams): void {
     this.params = params;
-
     this.data = params.api!.getDisplayedRowAtIndex(params.rowIndex!)!.data;
 
   }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IFilterAngularComp } from 'ag-grid-angular';
-import { AgPromise, IAfterGuiAttachedParams, IDoesFilterPassParams, IFilterParams } from 'ag-grid-community';
+import { AgPromise, IDoesFilterPassParams, IFilterParams } from 'ag-grid-community';
 
 @Component({
   selector: 'logo-images-component',
@@ -36,18 +36,7 @@ export class LogoImages implements IFilterAngularComp {
   setModel(model: any): void | AgPromise<void> {
     throw new Error('Method not implemented.');
   }
-  onNewRowsLoaded?(): void {
-    throw new Error('Method not implemented.');
-  }
-  onAnyFilterChanged?(): void {
-    throw new Error('Method not implemented.');
-  }
-  getModelAsString?(model: any): string {
-    throw new Error('Method not implemented.');
-  }
-  afterGuiAttached?(params?: IAfterGuiAttachedParams): void {
-    throw new Error('Method not implemented.');
-  }
+
   params: IFilterParams<any>;
   agInit(params: IFilterParams): void {
       this.params = params

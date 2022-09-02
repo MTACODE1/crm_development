@@ -1,9 +1,11 @@
 
+import { formatDate } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
-import { ColDef, GridApi, GridOptions, GridReadyEvent } from 'ag-grid-community';
-import { JobAssignee, JobManager, TablePageSize, TableTheme } from 'app/mock-api/apps/reports/report-data';
+import { ColDef, GridOptions, GridApi, GridReadyEvent  } from 'ag-grid-community';
+import { JobManager, TableTheme, TablePageSize, JobAssignee } from 'app/mock-api/apps/reports/report-data';
 import { CustomTooltip } from 'app/modules/admin/ag-grid-job-manager/custom-tooltip-component';
+import moment from 'moment';
 import { AgGridServiceService } from './ag-grid-service.service';
 
 @Component({
@@ -23,15 +25,13 @@ export class AgGridJobManagerComponent implements OnInit {
     sortable: true,
     filter: true,
     floatingFilter: true,
-    // enableValue: true,
+    enableValue: true,
     // rowClassRules:true,
     // enableRowGroup: true,
     // rowGroup: true,
-
-
-
     tooltipComponent: CustomTooltip,
   };
+  
   public rowSelection: 'single' | 'multiple' = 'multiple';
   public rowData = [{}];
   public rowGroupPanelShow = 'always';
@@ -44,53 +44,55 @@ export class AgGridJobManagerComponent implements OnInit {
   public selected: any;
   public pageSize = 10;
   public blockSize = 100;
-  profileData: any;
-  user_id: any;
-  profile;
+  public profileData: any;
+  public user_id: any;
+  public profile;
   rowClassRules: { 'row-fail': (params: any) => boolean; };
   constructor(private agGridService: AgGridServiceService) {
-
   }
 
   ngOnInit(): void {
     this.profileData = localStorage.getItem('loginUser');
     this.profile = JSON.parse(this.profileData);
-    console.log("this.profile",this.profile.first_name)
-    // let user_id = this.profile.user_id;
-    // if(user_id){
-    //   const params = { flt_job_asg: user_id };
-    //   this.getJobMangerList(params);
-    // }else{
-    //   this.getJobMangerList({});
-    // }
+    let user_id = this.profile.user_id;
+    if(user_id){
+      const params = { flt_job_asg: user_id };
+      this.getJobMangerList(params);
+    }else{
+      this.getJobMangerList({});
+    }
 
 
     // this.rowClassRules = {
     //   'row-fail': function (params) {
-    //     const currentDate = formatDate(new Date(), 'dd-MM-yyyy', 'en-US');
+    //     const currentDate = formatDate(new Date(), 'yyyy-MM-dd', 'en-US');
     //     // const MtA_DeadlineDateFormated= formatDate(new Date(MtA_DeadlineDate), 'dd-MM-yyyy', 'en-US')
-    //     var MtA_DeadlineDate = params.data.mta_deadline;
+        
+    //     var MtA_DeadlineDate = moment(params.data.mta_deadline).format('yyyy-MM-dd')
     //     var period_end = params.data.period_end;
     //     var statutory_deadline = params.data.statutory_deadline;
-       
-
     //     var date: boolean = false;
-    //     if (MtA_DeadlineDate != '-' && MtA_DeadlineDate != '') {
+    //     if ((MtA_DeadlineDate != '-' && MtA_DeadlineDate != '') && (period_end != '-' && period_end != '') && (statutory_deadline != '-' && statutory_deadline != '')) {
     //       if (currentDate > MtA_DeadlineDate) {
     //         date = true;
     //       }
-    //     }
-    //     if (period_end != '-' && period_end != '') {
     //       if (currentDate > period_end) {
     //         date = true;
     //       }
-    //     }
-    //     if (statutory_deadline != '-' && statutory_deadline != '') {
     //       if (currentDate > statutory_deadline) {
     //         date = true;
     //       }
     //     }
-
+    //     // if (period_end != '-' && period_end != '') {
+    //     //   if (currentDate > period_end) {
+    //     //     date = true;
+    //     //   }
+    //     // }
+    //     // if (statutory_deadline != '-' && statutory_deadline != '') {
+    //     //   if (currentDate > statutory_deadline) {
+    //     //     date = true;
+    //     //   }
+    //     // }
     //     //main case
     //     if (date == true) {
 
@@ -101,10 +103,10 @@ export class AgGridJobManagerComponent implements OnInit {
     //     }
 
     //   },
+      
 
     // };
     this.getJobAssignee();
-    
     this.columnDefs = this.agGridService.columnDefs;
     this.themesList = this.agGridService.themes();
     this.pageSizeList = this.agGridService.pageSize();
@@ -124,7 +126,6 @@ export class AgGridJobManagerComponent implements OnInit {
   }
 
   getJobMangerList(additionalParams) {
-
     let params = {
       sort_by: "mta_deadline",
       sort_order: "asc",
@@ -177,9 +178,7 @@ export class AgGridJobManagerComponent implements OnInit {
   }
   remove()
   {
-   this.profile.first_name='',
-   this.profile.last_name='',
-     this.profile='';
+    this.profile='';
     this.getJobMangerList({});
   }
 }

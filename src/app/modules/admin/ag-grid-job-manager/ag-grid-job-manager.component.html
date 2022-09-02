@@ -1,71 +1,72 @@
-
 <div class="flex flex-col flex-auto min-w-0 p-8">
-    <div class="sm:col-span-6 flex flex-col  p-6 bg-card shadow rounded-2xl overflow-hidden mb-3">
-        <h1 class="font-bold">Job Manager</h1>       
-        <div >
-          <div class="row flex items-center justify-between flex-wrap full-width pt-2">
-            <div class="col-md-8 col-sm-12 ">
-              <mat-form-field appearance="fill" id="status" class="w-50  ">
-                <mat-select  class="text-base  text-gray-400" placeholder="Select Theme" (selectionChange)="onThemeChange($event)" disableOptionCentering>
-                  <mat-option *ngFor="let item of themesList" [value]="item.value">
-                    <ng-container >
-                     {{item.name}}
-                    </ng-container>
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-               <!-- <mat-form-field appearance="fill" id="status" class="w-50 mx-2">
-                <mat-select  class="text-base  text-gray-400" placeholder="Select Job Assignee" [(ngModel)]="userTerm" (selectionChange)="onClientChange($event)"   disableOptionCentering>
-                  <mat-option  *ngFor="let item of filteredJobAssigne" [value]="item.ja_id" >
-                    <ng-container >
-                     {{item.ja_name}}
-                    </ng-container>
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>   -->
-            </div>
-            <div class="col-md-4 col-sm-12">
-              <div class="search relative mb-4">
-                <input id="filter-text-box"  type="text" (input)="onFilterTextBoxChanged()"  class="rounded-full text-base h-10" placeholder="Filter any column"   >
-              </div>
-            </div>
+  <div class="sm:col-span-6 flex flex-col  p-6 bg-card shadow rounded-2xl overflow-hidden mb-1 ">
+    <h1 class="text-lg font-bold my-2">Job Manager</h1>
+    <div>
+      <div class="row flex items-center justify-start flex-wrap full-width  ">
+        <div class="col-md-8 col-sm-12">
+          <div>
+            <mat-form-field appearance="fill" id="status" class="w-50  ">
+              <mat-select class="text-base  text-gray-400" placeholder="Select Theme"
+                (selectionChange)="onThemeChange($event)" disableOptionCentering>
+                <mat-option *ngFor="let item of themesList" [value]="item.value">
+                  <ng-container>
+                    {{item.name}}
+                  </ng-container>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
-             <div class="row flex items-center justify-between flex-wrap full-width pt-2 ">
-             <div>
-              <mat-chip-list *ngIf="profile" #chipList aria-label="Fruit selection">
-                <mat-chip [value]="profile" (removed)="remove()">
-                  {{profile.first_name}} {{profile.last_name}}
-                  <button matChipRemove>
-                    <mat-icon>cancel</mat-icon>
-                  </button>
-                </mat-chip>
-              </mat-chip-list>
-            </div>
-           <div>
-          <button mat-stroked-button color="primary" (click)="onBtExport()"><i class="fa fa-file-excel-o"
-              aria-hidden="true"></i>&nbsp; Download</button>
-            </div>
-        </div> 
-        <div class="page-size-selector pt-3">
-          Page Size:
-          <select   (change)="onPageSizeChanged($event)" [ngModel]="pageSize">
-            <option *ngFor="let item of pageSizeList"  [value]="item.pagesize" >{{item.pagesize}}</option>
-          </select>
         </div>
-<ag-grid-angular id="ag-grid"  [defaultColDef]="defaultColDef" style="width:100%; height: 550px; padding-top: 10px;" class="ag-theme-alpine"
-[rowDragManaged]="true"
-[animateRows]="true"
-[rowData]="rowData" 
-[columnDefs]="columnDefs"
-[pagination]="true"
-[rowClassRules]="rowClassRules"
-[paginationPageSize]="10"
-[pivotPanelShow]="pivotPanelShow"
-[debug]="true"
-[sideBar]="true"
-[cacheQuickFilter]="true"
-(cellEditingStopped)="onCellEditingStopped($event)"
-(gridReady)="onGridReady($event)">
-</ag-grid-angular>
+        <div class="col-md-4 col-sm-12">
+          <div class="search relative mb-4 mx-2">
+            <input id="filter-text-box" type="text" (input)="onFilterTextBoxChanged()"
+              class="rounded-full text-base h-10" placeholder="Filter any column">
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-12 justify-end">
+          <button class="mb-3" mat-stroked-button color="primary" (click)="onBtExport()"><i class="fa fa-file-excel-o"
+              aria-hidden="true"></i>&nbsp; Download</button>
+
+        </div>
+      </div>
+      <div class="row flex items-center justify-between flex-wrap full-width pt-2 ">
+        <div>
+          <mat-chip-list *ngIf="profile" #chipList aria-label="profile selection">
+            <mat-chip [value]="profile" (removed)="remove()">
+              {{profile.first_name}} {{profile.last_name}}
+              <button matChipRemove>
+                <mat-icon class="pb-1">cancel</mat-icon>
+              </button>
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+
+
+      </div>
+      <div class="page-size-selector pt-3 my-2">
+        Page Size:
+        <select (change)="onPageSizeChanged($event)" [ngModel]="pageSize">
+          <option *ngFor="let item of pageSizeList" [value]="item.pagesize">{{item.pagesize}}</option>
+        </select>
+      </div>
+      <ag-grid-angular id="ag-grid" [defaultColDef]="defaultColDef"
+        style="width:100%; height: 800px; padding-top: 10px;" class="ag-theme-alpine" 
+        [rowDragEntireRow]="true"
+        [rowDragMultiRow]="true" 
+        [animateRows]="true"
+        [rowGroupPanelShow]="true"
+        [rowData]="rowData"
+        [columnDefs]="columnDefs" 
+        [pagination]="true" 
+        [rowClassRules]="rowClassRules"
+        [paginationPageSize]="10"
+        [pivotPanelShow]="pivotPanelShow"
+        [debug]="true" 
+        [sideBar]="true"
+        [cacheQuickFilter]="true" 
+        (cellEditingStopped)="onCellEditingStopped($event)" 
+        (gridReady)="onGridReady($event)">
+      </ag-grid-angular>
+    </div>
+  </div>
 </div>
-</div></div>

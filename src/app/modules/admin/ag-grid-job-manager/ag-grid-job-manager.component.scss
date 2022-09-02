@@ -8,20 +8,31 @@
   }
   @media(min-width:425px) and (max-width:767px){
     .search {
+      margin-left: 0px !important;
+      margin-right: 0px !important;
       input[id="filter-text-box"] {
         width: 200px;
+        
       }}
   }
   @media(max-width:320px) {
     .search {
+      margin-left: 0px !important;
+      margin-right: 0px !important;
       input[id="filter-text-box"] {
         width: 205px;
+        
       }}
       .full-width{
         display: block !important;
          text-align: center !important;
          button{
            width: 100% !important;
+         }
+         input{
+    
+            width: 100% !important;
+         
          }
        }
        mat-form-field{
@@ -32,8 +43,11 @@
   }
   @media(min-width:360px) and (max-width:426px) {
     .search {
+      margin-left: 0px !important;
+      margin-right: 0px !important;
           input[id="filter-text-box"] {
             width: 200px;
+           
           }}
           .full-width{
            display: block !important;

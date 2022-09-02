@@ -2,27 +2,17 @@ import { IFilterAngularComp } from "ag-grid-angular";
 import { Component } from '@angular/core';
 import { AgPromise, IAfterGuiAttachedParams, IDoesFilterPassParams, IFilterParams } from "ag-grid-community";
 import { AgGridServiceService } from "./ag-grid-service.service";
-
 @Component({
-    selector: 'current-task',
+    selector: 'company-link',
     template: ` 
-    <div *ngIf="params['data'].current_task=='-' " class="flex">
-        <span>-</span>
-    </div>
-     <div *ngIf="(params['data'].current_task) && params['data'].current_task!='-' " class="flex">
-      
-        <div (click)="onCurrentTaskChange(params['data'])" class=pt-2>
-     <mat-icon class="text-green-600 " svgIcon="heroicons_outline:arrow-sm-left">
-      </mat-icon>
-        </div>
-        <div [value]="params['data'].current_task ">
-    <span>{{params['data'].current_task }}</span>
-        </div>
+    <div *ngIf="params['data'] " class="flex">
+                  <a href="https://www.morethanaccountants.co.uk/salesflow/admin/v_lead.html?id={{params['data'].client_id}}"
+                    target="_blank">{{params['data'].client_name}}</a>              
     </div> 
     `
-})
-
-export class CurrentTask implements IFilterAngularComp {
+  })
+  
+  export class CompanyLink implements IFilterAngularComp {
     isFilterActive(): boolean {
         throw new Error('Method not implemented.');
     }
@@ -54,4 +44,4 @@ export class CurrentTask implements IFilterAngularComp {
           }, error => { })
     }
     constructor( private agGridService: AgGridServiceService) { }
-}
+  }
