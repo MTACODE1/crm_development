@@ -32,7 +32,7 @@ export class AgGridServiceService {
   public columnDefs: ColDef[]=
  [
       { headerName: 'Job Type', field: 'job_type', checkboxSelection: true, headerCheckboxSelection: true, 
-       tooltipField: 'job_type', width: 150, 
+       tooltipField: 'job_type', width: 150,
        filter: 'agMultiColumnFilter', rowDrag:true },
       { headerName: 'Client Name', field: 'client_name', filter: 'agMultiColumnFilter', width: 150, },
       { headerName: '', field: 'Image', floatingFilter: false, filter: false, sortable: false, cellRenderer: LogoImages, width: 130, },
@@ -123,7 +123,6 @@ export class AgGridServiceService {
       { headerName: 'Free Form Notes', field: 'notes', filter: 'agMultiColumnFilter', editable: true, width: 150, },
     ];
 
-  
 
   public themes() {
     return [
@@ -134,5 +133,16 @@ export class AgGridServiceService {
       { id: 5, name: 'Material' ,value:'ag-theme-material' },
     ]
   }
+  public pageSize() {
+    return [
+      { id: 1, pagesize:10 },
+      { id: 2, pagesize:25  },
+      { id: 3, pagesize:50  },
+      { id: 4, pagesize:100  },
+      { id: 5, pagesize:500 },
+      { id: 6, pagesize:1000 },
+    ]
+  }
+  
 
 }

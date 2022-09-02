@@ -89,3 +89,11 @@ export interface TableTheme {
   id: number,
   name: string
 }
+export interface TablePageSize {
+  id: number,
+  pagesize: number,
+}
+export interface JobAssignee {
+  ja_id: string,
+  ja_name: string,
+}

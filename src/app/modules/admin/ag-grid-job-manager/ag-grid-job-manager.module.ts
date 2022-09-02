@@ -21,7 +21,7 @@ LicenseManager.setLicenseKey(environment.agGridLicensedKey);
     MatButtonModule,
     AgGridJobManagerRoutingModule,
     AgGridModule,
-    MatIconModule
+    MatIconModule,
   ]
 })
 export class AgGridJobManagerModule { }

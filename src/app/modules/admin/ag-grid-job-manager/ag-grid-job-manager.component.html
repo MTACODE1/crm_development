@@ -14,15 +14,15 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              <!-- <mat-form-field appearance="fill" id="status" class="w-50 mx-2">
-                <mat-select  class="text-base  text-gray-400" placeholder="Select Job Assignee" [(ngModel)]="selected" (selectionChange)="onClientChange($event)"   disableOptionCentering>
+               <!-- <mat-form-field appearance="fill" id="status" class="w-50 mx-2">
+                <mat-select  class="text-base  text-gray-400" placeholder="Select Job Assignee" [(ngModel)]="userTerm" (selectionChange)="onClientChange($event)"   disableOptionCentering>
                   <mat-option  *ngFor="let item of filteredJobAssigne" [value]="item.ja_id" >
                     <ng-container >
                      {{item.ja_name}}
                     </ng-container>
                   </mat-option>
                 </mat-select>
-              </mat-form-field>  -->
+              </mat-form-field>   -->
             </div>
             <div class="col-md-4 col-sm-12">
               <div class="search relative mb-4">
@@ -30,30 +30,35 @@
               </div>
             </div>
           </div>
-             <div class="flex justify-end  download-button full-width ">
+             <div class="row flex items-center justify-between flex-wrap full-width pt-2 ">
+             <div>
+              <mat-chip-list *ngIf="profile" #chipList aria-label="Fruit selection">
+                <mat-chip [value]="profile" (removed)="remove()">
+                  {{profile.first_name}} {{profile.last_name}}
+                  <button matChipRemove>
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+           <div>
           <button mat-stroked-button color="primary" (click)="onBtExport()"><i class="fa fa-file-excel-o"
               aria-hidden="true"></i>&nbsp; Download</button>
+            </div>
         </div> 
-        <div class="page-size-selector">
+        <div class="page-size-selector pt-3">
           Page Size:
-          <select (change)="onPageSizeChanged($event)" [ngModel]="pageSize">
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-            <option value="500">500</option>
-            <option value="1000">1000</option>
+          <select   (change)="onPageSizeChanged($event)" [ngModel]="pageSize">
+            <option *ngFor="let item of pageSizeList"  [value]="item.pagesize" >{{item.pagesize}}</option>
           </select>
         </div>
 <ag-grid-angular id="ag-grid"  [defaultColDef]="defaultColDef" style="width:100%; height: 550px; padding-top: 10px;" class="ag-theme-alpine"
-[rowDragMultiRow]="true"
+[rowDragManaged]="true"
 [animateRows]="true"
 [rowData]="rowData" 
 [columnDefs]="columnDefs"
 [pagination]="true"
-
-[tooltipShowDelay]="tooltipShowDelay"
-[tooltipHideDelay]="tooltipHideDelay"
+[rowClassRules]="rowClassRules"
 [paginationPageSize]="10"
 [pivotPanelShow]="pivotPanelShow"
 [debug]="true"

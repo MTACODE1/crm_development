@@ -1,8 +1,8 @@
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
-import { ColDef, GridOptions, GridApi, GridReadyEvent } from 'ag-grid-community';
-import { JobManager, TableTheme } from 'app/mock-api/apps/reports/report-data';
+import { ColDef, GridApi, GridOptions, GridReadyEvent } from 'ag-grid-community';
+import { JobAssignee, JobManager, TablePageSize, TableTheme } from 'app/mock-api/apps/reports/report-data';
 import { CustomTooltip } from 'app/modules/admin/ag-grid-job-manager/custom-tooltip-component';
 import { AgGridServiceService } from './ag-grid-service.service';
 
@@ -13,7 +13,7 @@ import { AgGridServiceService } from './ag-grid-service.service';
 })
 export class AgGridJobManagerComponent implements OnInit {
   private gridApi!: GridApi<JobManager>;
-  filteredJobAssigne:any;
+  filteredJobAssigne: Array<JobAssignee> = []
   jobManagerList: Array<JobManager> = [];
   public gridOptions: GridOptions;
   public tooltipShowDelay = 0;
@@ -23,11 +23,13 @@ export class AgGridJobManagerComponent implements OnInit {
     sortable: true,
     filter: true,
     floatingFilter: true,
-    enableValue: true,
+    // enableValue: true,
+    // rowClassRules:true,
     // enableRowGroup: true,
     // rowGroup: true,
-     enableRowGroup: true,
-    
+
+
+
     tooltipComponent: CustomTooltip,
   };
   public rowSelection: 'single' | 'multiple' = 'multiple';
@@ -35,21 +37,78 @@ export class AgGridJobManagerComponent implements OnInit {
   public rowGroupPanelShow = 'always';
   public pivotPanelShow = 'always';
   public themesList: TableTheme[] = [];
+  public pageSizeList: TablePageSize[] = [];
   public columnDefs: ColDef[];
-  public searchTerm: string;
+  public userTerm: string;
   public selectTheme: string;
-  selected:any;
-  pageSize = 10;
-blockSize = 100;
-  constructor(private agGridService: AgGridServiceService) { }
+  public selected: any;
+  public pageSize = 10;
+  public blockSize = 100;
+  profileData: any;
+  user_id: any;
+  profile;
+  rowClassRules: { 'row-fail': (params: any) => boolean; };
+  constructor(private agGridService: AgGridServiceService) {
 
-  ngOnInit(): void {
-this.getJobAssignee();
-    this.getJobMangerList();
-    this.columnDefs = this.agGridService.columnDefs;
-    this.themesList = this.agGridService.themes();
   }
 
+  ngOnInit(): void {
+    this.profileData = localStorage.getItem('loginUser');
+    this.profile = JSON.parse(this.profileData);
+    console.log("this.profile",this.profile.first_name)
+    // let user_id = this.profile.user_id;
+    // if(user_id){
+    //   const params = { flt_job_asg: user_id };
+    //   this.getJobMangerList(params);
+    // }else{
+    //   this.getJobMangerList({});
+    // }
+
+
+    // this.rowClassRules = {
+    //   'row-fail': function (params) {
+    //     const currentDate = formatDate(new Date(), 'dd-MM-yyyy', 'en-US');
+    //     // const MtA_DeadlineDateFormated= formatDate(new Date(MtA_DeadlineDate), 'dd-MM-yyyy', 'en-US')
+    //     var MtA_DeadlineDate = params.data.mta_deadline;
+    //     var period_end = params.data.period_end;
+    //     var statutory_deadline = params.data.statutory_deadline;
+       
+
+    //     var date: boolean = false;
+    //     if (MtA_DeadlineDate != '-' && MtA_DeadlineDate != '') {
+    //       if (currentDate > MtA_DeadlineDate) {
+    //         date = true;
+    //       }
+    //     }
+    //     if (period_end != '-' && period_end != '') {
+    //       if (currentDate > period_end) {
+    //         date = true;
+    //       }
+    //     }
+    //     if (statutory_deadline != '-' && statutory_deadline != '') {
+    //       if (currentDate > statutory_deadline) {
+    //         date = true;
+    //       }
+    //     }
+
+    //     //main case
+    //     if (date == true) {
+
+    //       return true;
+    //     }
+    //     else {
+    //       return false;
+    //     }
+
+    //   },
+
+    // };
+    this.getJobAssignee();
+    
+    this.columnDefs = this.agGridService.columnDefs;
+    this.themesList = this.agGridService.themes();
+    this.pageSizeList = this.agGridService.pageSize();
+  }
   onFilterTextBoxChanged() {
     this.gridApi.setQuickFilter(
       (document.getElementById('filter-text-box') as HTMLInputElement).value
@@ -64,15 +123,19 @@ this.getJobAssignee();
     this.gridApi = params.api;
   }
 
-  getJobMangerList() {
-    let params={
-      sort_by:"mta_deadline",
-      sort_order:"asc"
+  getJobMangerList(additionalParams) {
+
+    let params = {
+      sort_by: "mta_deadline",
+      sort_order: "asc",
+
+    }
+    if (additionalParams && additionalParams.flt_job_asg) {
+      params['flt_job_asg'] = additionalParams.flt_job_asg;
     }
     this.agGridService.getJobManagerData(params).subscribe(response => {
       this.rowData = response['rows']
-      this.jobManagerList=response['rows']
-      // this.filteredJobAssigne=this.jobManagerList
+      this.jobManagerList = response['rows']
       if (response['rows'].length) {
         let data = response['rows']
       }
@@ -98,20 +161,30 @@ this.getJobAssignee();
     themeValue.classList.remove(themeValue.classList.value);
     themeValue.classList.add(event.value);
   }
-  public getJobAssignee(){
-   this.agGridService.getJobAssignee({}).subscribe(response => {
-    this.filteredJobAssigne = response['rows']
-  });
-}
-public onClientChange(event) {  
-  console.log("event",event.value)
-  // const params = { user: event.value }
-  this.getJobAssignee();
-}
+  public getJobAssignee() {
+    this.agGridService.getJobAssignee({}).subscribe(response => {
+      this.filteredJobAssigne = response['rows']
+    });
+  }
+  public onClientChange(event) {
+    const params = { flt_job_asg: event.value }
+    this.getJobMangerList(params);
+
+  }
   onPageSizeChanged(event: any): void {
     this.pageSize = Number(event.currentTarget.value);
     this.gridApi.paginationSetPageSize(this.pageSize);
   }
-  
+  remove()
+  {
+   this.profile.first_name='',
+   this.profile.last_name='',
+     this.profile='';
+    this.getJobMangerList({});
+  }
 }
+
+
+
+
 
