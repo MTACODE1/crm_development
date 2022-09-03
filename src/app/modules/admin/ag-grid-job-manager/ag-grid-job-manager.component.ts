@@ -2,7 +2,7 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
-import { ColDef, GridOptions, GridApi, GridReadyEvent  } from 'ag-grid-community';
+import { ColDef, GridOptions, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { JobManager, TableTheme, TablePageSize, JobAssignee } from 'app/mock-api/apps/reports/report-data';
 import { CustomTooltip } from 'app/modules/admin/ag-grid-job-manager/custom-tooltip-component';
 import moment from 'moment';
@@ -31,7 +31,7 @@ export class AgGridJobManagerComponent implements OnInit {
     // rowGroup: true,
     tooltipComponent: CustomTooltip,
   };
-  
+
   public rowSelection: 'single' | 'multiple' = 'multiple';
   public rowData = [{}];
   public rowGroupPanelShow = 'always';
@@ -42,7 +42,7 @@ export class AgGridJobManagerComponent implements OnInit {
   public userTerm: string;
   public selectTheme: string;
   public selected: any;
-  public pageSize = 10;
+  public pageSize = 50;
   public blockSize = 100;
   public profileData: any;
   public user_id: any;
@@ -55,10 +55,10 @@ export class AgGridJobManagerComponent implements OnInit {
     this.profileData = localStorage.getItem('loginUser');
     this.profile = JSON.parse(this.profileData);
     let user_id = this.profile.user_id;
-    if(user_id){
+    if (user_id) {
       const params = { flt_job_asg: user_id };
       this.getJobMangerList(params);
-    }else{
+    } else {
       this.getJobMangerList({});
     }
 
@@ -67,7 +67,7 @@ export class AgGridJobManagerComponent implements OnInit {
     //   'row-fail': function (params) {
     //     const currentDate = formatDate(new Date(), 'yyyy-MM-dd', 'en-US');
     //     // const MtA_DeadlineDateFormated= formatDate(new Date(MtA_DeadlineDate), 'dd-MM-yyyy', 'en-US')
-        
+
     //     var MtA_DeadlineDate = moment(params.data.mta_deadline).format('yyyy-MM-dd')
     //     var period_end = params.data.period_end;
     //     var statutory_deadline = params.data.statutory_deadline;
@@ -103,13 +103,16 @@ export class AgGridJobManagerComponent implements OnInit {
     //     }
 
     //   },
-      
+
 
     // };
     this.getJobAssignee();
     this.columnDefs = this.agGridService.columnDefs;
     this.themesList = this.agGridService.themes();
     this.pageSizeList = this.agGridService.pageSize();
+    this.agGridService.getAfterCurrentTaskUpdatedRow().subscribe(data => {
+      this.updateRow(data);
+    })
   }
   onFilterTextBoxChanged() {
     this.gridApi.setQuickFilter(
@@ -123,6 +126,7 @@ export class AgGridJobManagerComponent implements OnInit {
 
   onGridReady(params: GridReadyEvent<JobManager>) {
     this.gridApi = params.api;
+    console.log('grid api ', this.gridApi);
   }
 
   getJobMangerList(additionalParams) {
@@ -136,7 +140,7 @@ export class AgGridJobManagerComponent implements OnInit {
     }
     this.agGridService.getJobManagerData(params).subscribe(response => {
       this.rowData = response['rows']
-      this.jobManagerList = response['rows']
+      console.log('first row =>', this.rowData[0]);
       if (response['rows'].length) {
         let data = response['rows']
       }
@@ -162,24 +166,32 @@ export class AgGridJobManagerComponent implements OnInit {
     themeValue.classList.remove(themeValue.classList.value);
     themeValue.classList.add(event.value);
   }
+
   public getJobAssignee() {
     this.agGridService.getJobAssignee({}).subscribe(response => {
       this.filteredJobAssigne = response['rows']
     });
   }
+
   public onClientChange(event) {
     const params = { flt_job_asg: event.value }
     this.getJobMangerList(params);
 
   }
+
   onPageSizeChanged(event: any): void {
     this.pageSize = Number(event.currentTarget.value);
     this.gridApi.paginationSetPageSize(this.pageSize);
   }
-  remove()
-  {
-    this.profile='';
+
+  remove() {
+    this.profile = '';
     this.getJobMangerList({});
+  }
+
+  updateRow(data) {
+    let rowNode = this.gridApi.getRowNode(data.rowIndex);
+    rowNode.setData(data.data);
   }
 }
 
