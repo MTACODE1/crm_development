@@ -8,24 +8,7 @@ import { AgGridServiceService } from "./ag-grid-service.service";
     template: ` 
     <div *ngIf="params['data'] " class="flex">
                   <a href="https://www.morethanaccountants.co.uk/salesflow/admin/v_lead.html?id={{params['data'].client_id}}"
-                    target="_blank" class="flex items-center">{{params['data'].client_name | slice:0:10}}...</a>     
-                    
-                    <div class="logo-container flex items-center ml-2">
-
-                    <a *ngIf="params['data'].xero && params['data'].xero!='-'" class="cursor-pointer"
-                    href="https://go.xero.com/organisationlogin/default.aspx?shortcode={{params['data'].xero}}" target="_blank">
-                    <img class="h-auto w-7 mx-1" src="assets/images/logo/bespoke.png" alt="bespoke">
-                  </a>
-                  <a *ngIf="params['data'].dext && params['data'].dext!='-'" class="cursor-pointer" href="https://app.dext.com/clients/{{params['data'].dext}}/gamma/costs/inbox"
-                    target="_blank">
-                    <img class="h-auto w-7 mx-1" src="assets/images/logo/dext.png" alt="dext">
-                  </a>
-                  <a *ngIf="params['data'].crn && params['data'].crn!='-'" class="cursor-pointer"
-                    href="https://find-and-update.company-information.service.gov.uk/company/{{params['data'].crn}}"
-                    target="_blank">
-                    <img class="h-auto w-7 mx-1" src="assets/images/logo/ltd.png" alt="ltd">
-                  </a>
-    </div>
+                    target="_blank" class="flex items-center">{{params['data'].client_name }}</a>
     </div> 
     `
 })

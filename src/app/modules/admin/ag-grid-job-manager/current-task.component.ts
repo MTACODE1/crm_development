@@ -14,7 +14,7 @@ import { AgGridServiceService } from "./ag-grid-service.service";
      <div *ngIf="(params['data'].current_task) && params['data'].current_task!='-' " class="flex" >
     
     
-     <div (click)="onCurrentTaskChange(params['data'])" class="flex items-center pointer">
+     <div (click)="onCurrentTaskChange(params['data'], $event)" class="flex items-center pointer">
      <mat-icon class="text-green-600 text-xs" svgIcon="heroicons_outline:arrow-sm-right">
      </mat-icon>
      </div>
@@ -49,28 +49,18 @@ export class CurrentTask implements IFilterAngularComp {
     agInit(params: IFilterParams): void {
         this.params = params;
     }
-    onCurrentTaskChange(value) {
+    onCurrentTaskChange(value, event) {
         let param = {
             job_id: value.job_id,
             p_status: Number(value.p_status) + 1
         }
 
-        console.log(this.params)
+
         this.agGridService.updateJobmanagerStatus(param).subscribe(response => {
             if (response.message == 'success') {
                 this.agGridService.setAfterCurrentTaskUpdatedRow(this.params['rowIndex'], response['job']);
-                //     alert('test');
-                //     console.log(this.params['rowIndex'])
-                //     console.log('grid api ' + this.gridApi)
-
-
-                //     // this.params['data'] = response['job'];
-                //     var rowNode = this.gridApi?.getRowNode(this.params['rowIndex']);
-                //     rowNode.setData(response['job']);
-
-                //     console.log('rowNode', rowNode)
             }
-        }, error => { })
+        }, error => { });
     }
     constructor(private agGridService: AgGridServiceService) { }
 }

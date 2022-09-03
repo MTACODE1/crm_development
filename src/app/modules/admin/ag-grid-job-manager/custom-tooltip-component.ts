@@ -7,7 +7,7 @@ import { jobType } from 'app/mock-api/apps/tasks/data';
   selector: 'tooltip-component',
   template: ` <div class="custom-tooltip bg-gray-600">
     <p class="p-3 whitespace-nowrap font-bold text-white">
-      <span>{{ProcessTypeEnum[data.job_type]}}</span>
+      <span >{{tootipText}}</span>
     </p>
  
   </div>`,
@@ -27,13 +27,18 @@ import { jobType } from 'app/mock-api/apps/tasks/data';
 })
 
 export class CustomTooltip implements ITooltipAngularComp {
-  public ProcessTypeEnum = jobType; 
+  public ProcessTypeEnum = jobType;
   private params!: { color: string } & ITooltipParams;
   public data!: any;
+  tootipText: string;
 
   agInit(params: { color: string } & ITooltipParams): void {
     this.params = params;
     this.data = params.api!.getDisplayedRowAtIndex(params.rowIndex!)!.data;
-
+    if (this.params.colDef['tooltipField'] == "job_type") {
+      this.tootipText = this.ProcessTypeEnum[this.data.job_type];
+    } else if (this.params.colDef['tooltipField'] == "current_task") {
+      this.tootipText = this.data.current_task;
+    }
   }
 }
