@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import { Dashboard, PeriodicElement, ReportData } from './report-data';
+import { Dashboard, ReportData, JobManager } from './report-data';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +18,16 @@ export class ReportsService {
     return this.http.post<Dashboard>(`${environment.baseUrl}/dashboard`, data);
   }
 
-  getBreakdownData(params) {
+  getBreakdownData(params){
     return this.http.post(`${environment.baseUrl}/breakdown`, params);
   }
-  getJobManagerData(params) {
-    return this.http.post<PeriodicElement>(`${environment.baseUrl}/job_manager`, params);
+  getJobManagerData(params)
+  {
+    return this.http.post<JobManager>(`${environment.baseUrl}/job_manager`, params);
+  }
+  updateJobManagerNote(params)
+  {
+    return this.http.post<JobManager>(`${environment.baseUrl}/job_notes`,params);
   }
 
   getJobTypes() {

@@ -70,7 +70,8 @@ export interface BreakDown {
   check: string;
   mr_complete: string;
 }
-export interface PeriodicElement {
+export interface JobManager {
+  message: string;
   job_type: string;
   client_name: string;
   logo:string;
@@ -78,7 +79,21 @@ export interface PeriodicElement {
   mta_deadline: string;
   statutory_deadline: string;
   job_stage: string;
+  current_task:string;
   client_manager: string;
   job_assignee: string;
   notes: string
+}
+
+export interface TableTheme {
+  id: number,
+  name: string
+}
+export interface TablePageSize {
+  id: number,
+  pagesize: number,
+}
+export interface JobAssignee {
+  ja_id: string,
+  ja_name: string,
 }

@@ -3,6 +3,10 @@
 /*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
 /* ----------------------------------------------------------------------------------------------------- */
 @import "variables";
+@import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
+@import 'ag-grid-community/styles/ag-theme-alpine.css'; // Optional theme CSS
+@import "ag-grid-community/styles/ag-theme-material.css";
+@import "ag-grid-community/styles/ag-theme-balham.css";
 
 body {
   &::-webkit-scrollbar {
@@ -124,4 +128,20 @@ table {
   50% {
     opacity: 0;
   }
+}
+
+@media(min-width:320px) and (max-width:375px) {
+  .ag-tool-panel-wrapper{
+    width:87% !important
+  }
+}
+@media (width:320px) {
+  .ag-paging-page-summary-panel {
+    margin-right:-24px !important;
+  }
+  .ag-paging-row-summary-panel{
+    margin-right:-24px !important;
+
+  }
+  
 }

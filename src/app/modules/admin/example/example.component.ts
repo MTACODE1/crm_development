@@ -16,7 +16,6 @@ import { AssessmentStatusComponent } from './assessment-status/assessment-status
 import { BookkeepingStatusComponent } from './bookkeeping-status/bookkeeping-status.component';
 import { OnbordingFormComponent } from './onbording-form/onbording-form.component';
 import { TableUtil } from './TableUtil';
-// import { ActivatedRoute, Router } from '@angular/router';
 import { Router, ActivatedRoute, ParamMap, Route } from '@angular/router';
 
 @Component({

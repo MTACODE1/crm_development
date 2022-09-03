@@ -103,7 +103,7 @@
 
           <ng-container matColumnDef="onboarding">
             <th mat-header-cell *matHeaderCellDef class="info-col">Onboarding Stage</th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="text-center">
                 <ng-container *ngIf="element.onboarding_status_saved === null; else editOnbording">
                   <mat-icon class="cursor-pointer" svgIcon="heroicons_outline:plus-sm"
                     (click)="startUpdates('onboarding', element)"> </mat-icon>
@@ -248,7 +248,7 @@
           <ng-container matColumnDef="accountsStatus1">
             <th mat-header-cell *matHeaderCellDef class="account-col" mat-sort-header>{{date.value.format('YYYY')-1}}
               Accounts Stage</th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="text-center">
               <mat-icon *ngIf="!element?.annual_accounts_saved_1" class="cursor-pointer"
                 (click)="startUpdates('annual_accounts', element)" svgIcon="heroicons_outline:plus-sm">
               </mat-icon>
@@ -278,7 +278,7 @@
           <ng-container matColumnDef="accountsStatus2">
             <th mat-header-cell *matHeaderCellDef class="account-col" mat-sort-header>{{date.value.format('YYYY')}}
               Accounts Stage</th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="text-center">
               <mat-icon *ngIf="!element?.annual_accounts_saved_2" class="cursor-pointer"
                 (click)="startUpdates('accNew', element)" svgIcon="heroicons_outline:plus-sm">
               </mat-icon>
@@ -357,7 +357,7 @@
           <ng-container matColumnDef="confirmationStatus">
             <th mat-header-cell *matHeaderCellDef class="info-col">{{date.value.format('YYYY')}} Confirmation Statement
               Stage</th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="text-center">
               <mat-icon *ngIf="!element?.conf_stmt_saved" class="cursor-pointer"
                 (click)="startUpdates('conf_stmt', element)" svgIcon="heroicons_outline:plus-sm">
               </mat-icon>
@@ -430,6 +430,9 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"
             [ngClass]="{'bg-yellow-50': row?.client_status === '3'}"></tr>
         </table>
+        <ng-container *ngIf="userTableList.length === 0">
+          <p class="font-medium text-center text-lg">No data found !!!</p>
+        </ng-container>
       </div>
     </div>
 

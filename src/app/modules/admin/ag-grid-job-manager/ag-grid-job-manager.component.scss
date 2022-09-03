@@ -1,0 +1,70 @@
+.search {
+    input[id="filter-text-box"] {
+      color:gray;
+      padding: 13px 10px 13px 15px;
+      border: 1px solid gray;
+      width: 200px;
+    }
+  }
+  @media(min-width:425px) and (max-width:767px){
+    .search {
+      margin-left: 0px !important;
+      margin-right: 0px !important;
+      input[id="filter-text-box"] {
+        width: 200px;
+        
+      }}
+  }
+  @media(max-width:320px) {
+    .search {
+      margin-left: 0px !important;
+      margin-right: 0px !important;
+      input[id="filter-text-box"] {
+        width: 205px;
+        
+      }}
+      .full-width{
+        display: block !important;
+         text-align: center !important;
+         button{
+           width: 100% !important;
+         }
+         input{
+    
+            width: 100% !important;
+         
+         }
+       }
+       mat-form-field{
+        margin: 0px !important;
+        width: 100% !important;
+      }
+      
+  }
+  @media(min-width:360px) and (max-width:426px) {
+    .search {
+      margin-left: 0px !important;
+      margin-right: 0px !important;
+          input[id="filter-text-box"] {
+            width: 200px;
+           
+          }}
+          .full-width{
+           display: block !important;
+            text-align: center !important;
+            button {
+              width: 100% !important;
+            }
+            input{
+              width: 100% !important;
+            }
+            mat-form-field{
+              margin: 0px !important;
+              width: 100% !important;
+            }
+          }
+          .example-chip-list {
+            width: 100%;
+          }
+  }
+
