@@ -59,9 +59,8 @@ export class AgGridJobManagerComponent implements OnInit {
       const params = { flt_job_asg: user_id };
       this.getJobMangerList(params);
     } else {
-      this.getJobMangerList({});
+    this.getJobMangerList({});
     }
-
 
     // this.rowClassRules = {
     //   'row-fail': function (params) {
@@ -126,7 +125,6 @@ export class AgGridJobManagerComponent implements OnInit {
 
   onGridReady(params: GridReadyEvent<JobManager>) {
     this.gridApi = params.api;
-    console.log('grid api ', this.gridApi);
   }
 
   getJobMangerList(additionalParams) {
@@ -140,7 +138,6 @@ export class AgGridJobManagerComponent implements OnInit {
     }
     this.agGridService.getJobManagerData(params).subscribe(response => {
       this.rowData = response['rows']
-      console.log('first row =>', this.rowData[0]);
       if (response['rows'].length) {
         let data = response['rows']
       }
@@ -190,8 +187,13 @@ export class AgGridJobManagerComponent implements OnInit {
   }
 
   updateRow(data) {
-    let rowNode = this.gridApi.getRowNode(data.rowIndex);
-    rowNode.setData(data.data);
+    let jobId = data.data['job_id'];
+    this.gridApi.forEachNode((rowNode, index) => {
+      let job_Id = rowNode.data['job_id'];
+      if (job_Id === jobId) {
+        rowNode.setData(data.data);
+      }
+    });
   }
 }
 

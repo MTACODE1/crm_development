@@ -1,3 +1,4 @@
+import { CustomTooltip } from 'app/modules/admin/ag-grid-job-manager/custom-tooltip-component';
 import { Subject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -35,6 +36,7 @@ export class AgGridServiceService {
         tooltipField: 'job_type', width: 150, filter: 'agMultiColumnFilter', rowDrag: true
       },
       { headerName: 'Client Name', field: 'client_name', filter: 'agMultiColumnFilter', width: 275, cellRenderer: CompanyLink },
+      { headerName: '', field: 'Image', floatingFilter: false, filter: false, sortable: false, cellRenderer: LogoImages, width: 130, },
       {
         headerName: 'Period End', field: 'period_end', filter: 'agDateColumnFilter', width: 130, filterParams: {
 
@@ -122,7 +124,7 @@ export class AgGridServiceService {
       },
       { headerName: 'Job Stage', field: 'job_stage', filter: 'agMultiColumnFilter' },
 
-      { headerName: 'Current Task', field: 'current_task', filter: 'agMultiColumnFilter', width: 300, cellRenderer: CurrentTask },
+      { headerName: 'Current Task', field: 'current_task', filter: 'agMultiColumnFilter', width: 300, cellRenderer: CurrentTask, tooltipField: 'current_task' },
       { headerName: 'Client Manager', field: 'client_manager', filter: 'agMultiColumnFilter', width: 150, },
       { headerName: 'Task Assignee', field: 'job_assignee', filter: 'agMultiColumnFilter', width: 150, },
       { headerName: 'Free Form Notes', field: 'notes', filter: 'agMultiColumnFilter', editable: true, width: 150, },
@@ -157,7 +159,7 @@ export class AgGridServiceService {
     };
     this.currentTaskChange.next(param)
   }
-  
+
   public getAfterCurrentTaskUpdatedRow(): Observable<any> {
     return this.currentTaskChange.asObservable();
   }
