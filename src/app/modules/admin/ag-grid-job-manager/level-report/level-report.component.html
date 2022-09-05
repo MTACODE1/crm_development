@@ -1,0 +1,17 @@
+<h1 mat-dialog-tilte align="end" class="cursor-pointer">
+    <mat-icon mat-dialog-close svgIcon="heroicons_outline:x"></mat-icon>
+</h1>
+<mat-dialog-content>
+    <h1 class="font-bold text-lg mb-3">What level of Management Report has been sent ?</h1>
+    <mat-radio-group color="primary" class="flex flex-col">
+        <mat-radio-button class="mb-3 mr-3" *ngFor="let section of optionOne" [value]="section.static_id"
+            (change)="radioChange(section)">
+            {{section.task}}
+        </mat-radio-button>
+    </mat-radio-group>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close color="warn">Close</button>
+    <button mat-raised-button color="primary" (click)="setStatus()">Submit</button>
+</mat-dialog-actions>
