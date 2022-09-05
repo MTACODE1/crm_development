@@ -1,3 +1,5 @@
+import { MatDialog } from '@angular/material/dialog';
+import { LevelReportComponent } from './level-report/level-report.component';
 import { JobManager } from 'app/mock-api/apps/reports/report-data';
 import { style } from '@angular/animations';
 import { IFilterAngularComp } from "ag-grid-angular";
@@ -50,29 +52,49 @@ export class CurrentTask implements IFilterAngularComp {
         this.params = params;
     }
     onCurrentTaskChange(value, event) {
+        console.log(event);
+        console.log(value);
         let pStatus;
-        if (Number(value.p_status) <= 7) {
+        if (value.job_type == 'BK') {
+            if (Number(value.p_status) <= 7) {
+                pStatus = Number(value.p_status) + 1;
+               
+            } else {
+                const dialogRef = this.dialog.open(LevelReportComponent, {
+                    width: '600px',
+                    disableClose: true,
+                    data: {
+                        params: value
+                    }
+                });
+            }
+
+            //     
+            // } else if (value.p_status == 8) {
+            //     pStatus = 11;
+
+            // } else if (value.p_status == 9) {
+            //     pStatus = 12;
+
+            // } else if (value.p_status == 10) {
+            //     pStatus = 13;
+            // }
+        } else {
             pStatus = Number(value.p_status) + 1;
-        } else if (value.p_status == 8) {
-            pStatus = 11;
-
-        } else if (value.p_status == 9) {
-            pStatus = 12;
-
-        } else if (value.p_status == 10) {
-            pStatus = 13;
+           
         }
-
         let param = {
             job_id: value.job_id,
             p_status: pStatus
         }
 
-            this.agGridService.updateJobmanagerStatus(param).subscribe(response => {
-                if (response.message == 'success') {
-                    this.agGridService.setAfterCurrentTaskUpdatedRow(this.params['rowIndex'], response['job']);
-                }
-            }, error => { });
+        this.agGridService.updateJobmanagerStatus(param).subscribe(response => {
+            if (response.message == 'success') {
+                this.agGridService.setAfterCurrentTaskUpdatedRow(this.params['rowIndex'], response['job']);
+            }
+        }, error => { });
+
+
     }
-    constructor(private agGridService: AgGridServiceService) { }
+    constructor(private agGridService: AgGridServiceService, public readonly dialog: MatDialog) { }
 }

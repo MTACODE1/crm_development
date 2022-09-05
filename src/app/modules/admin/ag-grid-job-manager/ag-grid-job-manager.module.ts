@@ -1,3 +1,5 @@
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDialogModule } from '@angular/material/dialog';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'app/shared/shared.module';
@@ -12,10 +14,11 @@ import { LogoImages } from './logo-images.component';
 import { CustomTooltip } from './custom-tooltip-component';
 import { CurrentTask } from './current-task.component';
 import { CompanyLink } from './company-link-component';
+import { LevelReportComponent } from './level-report/level-report.component';
 LicenseManager.setLicenseKey(environment.agGridLicensedKey);
 
 @NgModule({
-  declarations: [AgGridJobManagerComponent, LogoImages, CustomTooltip, CurrentTask,CompanyLink],
+  declarations: [AgGridJobManagerComponent, LogoImages, CustomTooltip, CurrentTask, CompanyLink, LevelReportComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -23,6 +26,8 @@ LicenseManager.setLicenseKey(environment.agGridLicensedKey);
     AgGridJobManagerRoutingModule,
     AgGridModule,
     MatIconModule,
+    MatDialogModule,
+    MatRadioModule,
   ]
 })
 export class AgGridJobManagerModule { }
