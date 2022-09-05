@@ -33,7 +33,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
   myclientSelected: boolean = false;
   today = moment(new Date());
   searchTerm: string;
-  accountant_id:any;
+  accountant_id: any;
   date = new FormControl(moment());
   lastMonth: any;
   isSticky: boolean;
@@ -41,14 +41,14 @@ export class ExampleComponent implements OnInit, OnDestroy {
     limit: 10,
     offset: 0,
     total: 10,
-  
+
   }
   private readonly destroyer$: Subject<void> = new Subject();
   id: string;
 
 
-  constructor(private userService: UserService, private _fuseConfirmationService: FuseConfirmationService, private acivate:ActivatedRoute,
-    public readonly dialog: MatDialog, private readonly snackBar: MatSnackBar, private readonly cd: ChangeDetectorRef, private breakpointObserver: BreakpointObserver,private router: Router) {
+  constructor(private userService: UserService, private _fuseConfirmationService: FuseConfirmationService, private acivate: ActivatedRoute,
+    public readonly dialog: MatDialog, private readonly snackBar: MatSnackBar, private readonly cd: ChangeDetectorRef, private breakpointObserver: BreakpointObserver, private router: Router) {
     this.breakpointObserver.observe(["(max-width: 525px)"]).subscribe((result: BreakpointState) => {
       if (result.matches) {
         this.isSticky = false;
@@ -60,13 +60,13 @@ export class ExampleComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.displayedColumns = this.userService.getColumns(); 
+    this.displayedColumns = this.userService.getColumns();
     this.cd.detectChanges();
-    let id =  this.router.url.split('/')[2];
-    if(id){
+    let id = this.router.url.split('/')[2];
+    if (id) {
       const params = { accountId: id };
       this.getTableDetails(params);
-    }else{
+    } else {
       this.getTableDetails({});
     }
 
@@ -86,7 +86,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
       month: this.date.value.format('MMM-yy'),
       limit: this.paginationConfig.limit,
       offset: this.paginationConfig.offset,
-      
+
     }
     if (additionalParams && additionalParams.user) {
       params['user'] = additionalParams.user;
@@ -97,7 +97,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
     if (additionalParams && additionalParams.accountId) {
       params['accountant_id'] = Number(additionalParams.accountId);
     }
-    
+
     this.userService.getUserTable(params).pipe(takeUntil(this.destroyer$)).subscribe(res => {
       this.userTableList = res['rows'];
       this.paginationConfig.total = res['total_count'];
@@ -159,11 +159,11 @@ export class ExampleComponent implements OnInit, OnDestroy {
       p_status: key === 'onboarding' ? 0 : item.static_id
     }
     this.userService.updateTaskStatus(task).subscribe(result => {
-        if(this.searchTerm){
-          this.searchChange(this.searchTerm);
-        }else {
-          this.getTableDetails({});
-        }
+      if (this.searchTerm) {
+        this.searchChange(this.searchTerm);
+      } else {
+        this.getTableDetails({});
+      }
       if (result['err_msg']) {
         alert(result['err_msg']);
       } else {
@@ -306,7 +306,7 @@ export class ExampleComponent implements OnInit, OnDestroy {
     });
   }
 
-  public endUpdates(status, item): void {
+  public endUpdates(status, item, stage?: any): void {
     const messgae = `Cancel Bookkeeping Status for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?`;
     const vatMessgae = `Cancel VAT Status for Bespoke Alpha Solutions for ${this.date.value.format('MMMM')}?`;
     const accMessgae = 'Cancel Accounts Process for Bespoke Alpha Solutions?';
@@ -325,17 +325,36 @@ export class ExampleComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().pipe(takeUntil(this.destroyer$)).subscribe(result => {
       if (result === 'confirmed') {
-        this.removeStatus(item, status);
+        this.removeStatus(item, status, stage);
       }
     });
   }
 
-  private removeStatus(item, process): void {
-    let lastYear = this.today.year() - 1;
+  private removeStatus(item, process, stage?: any): void {
+    console.log('item =>', item);
+    console.log('item =>', process);
+    let taskId;
+
+    if (process == 'bookkeeping') {
+      taskId = item.bookkeeping_status[0].task_id;
+    } else if (process == 'vat') {
+      taskId = item.vat_status[0].task_id;
+    } else if (process == 'conf_stmt') {
+      taskId = item.conf_stmt_status[0].task_id;
+
+    } else if (stage == 'accountsStatus1') {
+      taskId = item.annual_accounts_status_1[0].task_id;
+
+    } else if (stage == 'accountsStatus2') {
+      taskId = item.annual_accounts_status_2[0].task_id;
+
+    } else if (stage == 'accountsStatus2') {
+      taskId = item.annual_accounts_status_2[0].task_id;
+    }
+
+    // let lastYear = this.today.year() - 1;
     const statusParam = {
-      uid: item.id,
-      month: process === 'annual_accounts' ? item.annual_accounts_month + '-' + lastYear : process === 'accNew' ? item.annual_accounts_month + '-' + this.today.year() : this.date.value.format('MMM-yy'),
-      process: process === 'annual_accounts' || process === 'accNew' ? 'annual_accounts' : process,
+      task_id : taskId
     }
     this.userService.cancelStatus(statusParam).pipe(takeUntil(this.destroyer$)).subscribe(_ => {
       this.getTableDetails({});

@@ -257,7 +257,7 @@
                   <ng-container *ngIf="accItem.static_id == element?.annual_accounts_saved_1">
                     <button mat-icon-button>
                       <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left"
-                        (click)="ind > 0?openConfirmationDialog('annual_accounts', ind,element?.annual_accounts_status_1, element):endUpdates('annual_accounts', element)">
+                        (click)="ind > 0?openConfirmationDialog('annual_accounts', ind,element?.annual_accounts_status_1, element):endUpdates('annual_accounts', element, accountsStatus1)">
                       </mat-icon>
                     </button>
                     <button mat-raised-button
@@ -287,7 +287,7 @@
                   <ng-container *ngIf="accItem.static_id == element?.annual_accounts_saved_2">
                     <button mat-icon-button>
                       <mat-icon class="text-red-600" svgIcon="heroicons_outline:arrow-sm-left"
-                        (click)="ind > 0?openConfirmationDialog('accNew', ind,element?.annual_accounts_status_2, element):endUpdates('accNew', element)">
+                        (click)="ind > 0?openConfirmationDialog('accNew', ind,element?.annual_accounts_status_2, element):endUpdates('accNew', element, accountsStatus2)">
                       </mat-icon>
                     </button>
                     <button mat-raised-button
