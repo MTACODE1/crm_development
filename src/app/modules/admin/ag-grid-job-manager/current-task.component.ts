@@ -50,17 +50,29 @@ export class CurrentTask implements IFilterAngularComp {
         this.params = params;
     }
     onCurrentTaskChange(value, event) {
-        let param = {
-            job_id: value.job_id,
-            p_status: Number(value.p_status) + 1
+        let pStatus;
+        if (Number(value.p_status) <= 7) {
+            pStatus = Number(value.p_status) + 1;
+        } else if (value.p_status == 8) {
+            pStatus = 11;
+
+        } else if (value.p_status == 9) {
+            pStatus = 12;
+
+        } else if (value.p_status == 10) {
+            pStatus = 13;
         }
 
+        let param = {
+            job_id: value.job_id,
+            p_status: pStatus
+        }
 
-        this.agGridService.updateJobmanagerStatus(param).subscribe(response => {
-            if (response.message == 'success') {
-                this.agGridService.setAfterCurrentTaskUpdatedRow(this.params['rowIndex'], response['job']);
-            }
-        }, error => { });
+            this.agGridService.updateJobmanagerStatus(param).subscribe(response => {
+                if (response.message == 'success') {
+                    this.agGridService.setAfterCurrentTaskUpdatedRow(this.params['rowIndex'], response['job']);
+                }
+            }, error => { });
     }
     constructor(private agGridService: AgGridServiceService) { }
 }

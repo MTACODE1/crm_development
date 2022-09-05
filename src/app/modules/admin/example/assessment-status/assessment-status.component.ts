@@ -33,7 +33,6 @@ export class AssessmentStatusComponent implements OnInit, OnDestroy {
   }
 
   private loadOnboardingStatus(): void {
-    debugger;
     if(this.data.type === 'self_assessment_1') {
       this.statusSaved = this.data.data.self_assessment_status_1;
       this.directors = this.data.data.self_assessment_directors_1;
