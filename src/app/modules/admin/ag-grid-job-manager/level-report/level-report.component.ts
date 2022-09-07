@@ -25,13 +25,13 @@ export class LevelReportComponent implements OnInit {
   radioChange(section) {
     let pStatus;
     if (section.p_status == 8) {
-      pStatus = 11;
+      pStatus = 8;
 
     } else if (section.p_status == 9) {
-      pStatus = 12;
+      pStatus = 9;
 
     } else if (section.p_status == 10) {
-      pStatus = 13;
+      pStatus = 10;
     }
     this.sendParams = {
       job_id: this.data.params.job_id,

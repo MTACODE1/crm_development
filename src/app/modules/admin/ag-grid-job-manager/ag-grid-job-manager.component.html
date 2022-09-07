@@ -23,11 +23,27 @@
               class="rounded-full text-base h-10" placeholder="Filter any column">
           </div>
         </div>
-        <div class="col-md-4 col-sm-12 justify-end">
+        <div class="col-md-4 col-sm-12 ">
           <button class="mb-3" mat-stroked-button color="primary" (click)="onBtExport()"><i class="fa fa-file-excel-o"
               aria-hidden="true"></i>&nbsp; Download</button>
-
+  
         </div>
+        <div class="col-md-4 col-sm-12">
+          <div class="mr-3">Suspended Clients</div>
+          <label class="form-switch">
+            <input type="checkbox" [(ngModel)]="chksupendedClients" (ngModelChange)="suspendedClients($event)">
+            <i></i>
+          </label>
+        </div>
+
+        <div class="col-md-4 col-sm-12 justify-end">
+          <div class="mr-3">Completed Jobs</div>
+          <label class="form-switch">
+            <input type="checkbox" [(ngModel)]="chkcompletedJobs" (ngModelChange)="completedJobs($event)">
+            <i></i>
+          </label>
+        </div>        
+
       </div>
       <div class="row flex items-center justify-between flex-wrap full-width pt-2 ">
         <div>

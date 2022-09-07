@@ -56,10 +56,10 @@ export class CurrentTask implements IFilterAngularComp {
         console.log(value);
         let pStatus;
         if (value.job_type == 'BK') {
-            if (Number(value.p_status) <= 7) {
+            if (Number(value.p_status) < 7) {
                 pStatus = Number(value.p_status) + 1;
                
-            } else {
+            } else if (value.p_status == 7){
                 const dialogRef = this.dialog.open(LevelReportComponent, {
                     width: '600px',
                     disableClose: true,
@@ -67,18 +67,18 @@ export class CurrentTask implements IFilterAngularComp {
                         params: value
                     }
                 });
-            }
+            
 
             //     
-            // } else if (value.p_status == 8) {
-            //     pStatus = 11;
+             } else if (value.p_status == 8) {
+                 pStatus = 11;
 
-            // } else if (value.p_status == 9) {
-            //     pStatus = 12;
+             } else if (value.p_status == 9) {
+                 pStatus = 12;
 
-            // } else if (value.p_status == 10) {
-            //     pStatus = 13;
-            // }
+             } else if (value.p_status == 10) {
+                 pStatus = 13;
+             }
         } else {
             pStatus = Number(value.p_status) + 1;
            

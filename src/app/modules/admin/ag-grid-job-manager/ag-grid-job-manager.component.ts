@@ -47,6 +47,8 @@ export class AgGridJobManagerComponent implements OnInit {
   public profileData: any;
   public user_id: any;
   public profile;
+  chksupendedClients: boolean = false;
+  chkcompletedJobs: boolean = false;
   rowClassRules: { 'row-fail': (params: any) => boolean; };
   constructor(private agGridService: AgGridServiceService) {
   }
@@ -136,6 +138,12 @@ export class AgGridJobManagerComponent implements OnInit {
     if (additionalParams && additionalParams.flt_job_asg) {
       params['flt_job_asg'] = additionalParams.flt_job_asg;
     }
+    if (additionalParams && additionalParams.flt_cli_sts) {
+      params['flt_cli_sts'] = additionalParams.flt_cli_sts;
+    }   
+    if (additionalParams && additionalParams.flt_completed) {
+      params['flt_completed'] = additionalParams.flt_completed;
+    }       
     this.agGridService.getJobManagerData(params).subscribe(response => {
       this.rowData = response['rows']
       if (response['rows'].length) {
@@ -174,6 +182,33 @@ export class AgGridJobManagerComponent implements OnInit {
     const params = { flt_job_asg: event.value }
     this.getJobMangerList(params);
 
+  }
+
+  public suspendedClients(event: boolean): void {
+    if (event) {
+//      const user = JSON.parse(localStorage.getItem('loginUser'));
+//      this.getTableDetails({ user: user.user_id });
+      const params = { flt_cli_sts: '1|3' }
+      this.getJobMangerList(params);
+  
+    } else {
+      const params = { }
+      this.getJobMangerList(params);  
+    }
+  }
+
+
+  public completedJobs(event: boolean): void {
+    if (event) {
+//      const user = JSON.parse(localStorage.getItem('loginUser'));
+//      this.getTableDetails({ user: user.user_id });
+      const params = { flt_completed: 1 }
+      this.getJobMangerList(params);
+  
+    } else {
+      const params = { }
+      this.getJobMangerList(params);  
+    }
   }
 
   onPageSizeChanged(event: any): void {
